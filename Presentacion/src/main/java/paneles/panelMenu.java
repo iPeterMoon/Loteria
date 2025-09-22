@@ -2,32 +2,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package itson.edu.mx.jPanels;
+package paneles;
 
-import itson.edu.mx.controls.control;
+import controladores.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Luis Rafael Lagarda Encinas 252605
  */
-public class panelMenu extends javax.swing.JPanel {
+public class PanelMenu extends JPanel {
+
     private Image iconFondo;
-    
-    private control control;
-    
+
+    private ControlNavegacion control;
+
     private ImageIcon iconoButtonAyuda;
-    
-    public panelMenu(control control) {
+
+    public PanelMenu(ControlNavegacion control) {
         this.control = control;
         initComponents();
         obtenerFondo();
-        
-        iconoButtonAyuda= new ImageIcon(getClass().getClassLoader().getResource("iconos/interrogacion.png"));
+
+        iconoButtonAyuda = new ImageIcon(getClass().getClassLoader().getResource("iconos/interrogacion.png"));
         buttonAyuda.setIcon(iconoButtonAyuda);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -39,6 +42,7 @@ public class panelMenu extends javax.swing.JPanel {
 
         etiquetaTituloMenu.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
         etiquetaTituloMenu.setForeground(new java.awt.Color(102, 204, 0));
+        etiquetaTituloMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etiquetaTituloMenu.setText("LOTERIA MEXICANA");
 
         buttonCrearSala.setBackground(new java.awt.Color(153, 0, 153));
@@ -63,48 +67,44 @@ public class panelMenu extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(248, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(buttonBuscarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(396, 396, 396))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(etiquetaTituloMenu)
-                        .addGap(245, 245, 245))))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(buttonAyuda)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(etiquetaTituloMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(577, 577, 577)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonBuscarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(583, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
+                .addGap(118, 118, 118)
                 .addComponent(etiquetaTituloMenu)
-                .addGap(150, 150, 150)
+                .addGap(77, 77, 77)
                 .addComponent(buttonCrearSala)
-                .addGap(32, 32, 32)
+                .addGap(30, 30, 30)
                 .addComponent(buttonBuscarSala)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                 .addComponent(buttonAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonBuscarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarSalaActionPerformed
         // TODO add your handling code here:
-        control.generarSala();
+        control.mostrarPanelBuscarSala();
     }//GEN-LAST:event_buttonBuscarSalaActionPerformed
-    private void obtenerFondo(){
+    private void obtenerFondo() {
         iconFondo = new ImageIcon(getClass().getResource("/fondos/fondo1.png")).getImage();
     }
-    
+
     @Override
-    protected void paintComponent(Graphics g){
-       super.paintComponent(g);
-       if (iconFondo != null){
-           g.drawImage(iconFondo, 0, 0, getWidth(), getHeight(), this);
-       }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (iconFondo != null) {
+            g.drawImage(iconFondo, 0, 0, getWidth(), getHeight(), this);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAyuda;

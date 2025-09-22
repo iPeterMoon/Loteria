@@ -2,20 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package itson.edu.mx.jPanels;
+package paneles;
 
-import itson.edu.mx.controls.control;
+import controladores.ControlNavegacion;
 
 /**
  *
  * @author Luis Rafael Lagarda Encinas 252605
  */
-public class panelSala extends javax.swing.JPanel {
-    private control control;
+public class PanelSala extends javax.swing.JPanel {
+    private ControlNavegacion control;
     /**
      * Creates new form panelSala
      */
-    public panelSala(control control) {
+    public PanelSala(ControlNavegacion control) {
         this.control = control;
         initComponents();
     }
