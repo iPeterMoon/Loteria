@@ -1,14 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package paneles;
 
 import controladores.ControlNavegacion;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import java.awt.Font;
+import java.awt.FontFormatException;
 
 /**
  *
@@ -20,27 +22,23 @@ public class PanelMenu extends JPanel {
 
     private ControlNavegacion control;
 
-    private ImageIcon iconoButtonAyuda;
-
     public PanelMenu(ControlNavegacion control) {
         this.control = control;
         initComponents();
         obtenerFondo();
-
-        iconoButtonAyuda = new ImageIcon(getClass().getClassLoader().getResource("iconos/interrogacion.png"));
-        buttonAyuda.setIcon(iconoButtonAyuda);
     }
 
-    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         etiquetaTituloMenu = new javax.swing.JLabel();
         buttonCrearSala = new javax.swing.JButton();
         buttonBuscarSala = new javax.swing.JButton();
-        buttonAyuda = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        etiquetaTituloMenu.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
+        etiquetaTituloMenu.setFont(new Font("Voltaire",Font.PLAIN, 128));
         etiquetaTituloMenu.setForeground(new java.awt.Color(102, 204, 0));
         etiquetaTituloMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etiquetaTituloMenu.setText("LOTERIA MEXICANA");
@@ -60,41 +58,46 @@ public class PanelMenu extends JPanel {
             }
         });
 
-        buttonAyuda.setOpaque(true);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/interrogacion.png"))); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(buttonAyuda)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(etiquetaTituloMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(577, 577, 577)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonBuscarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(583, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(488, 488, 488)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonBuscarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(488, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
+                .addGap(46, 46, 46)
                 .addComponent(etiquetaTituloMenu)
-                .addGap(77, 77, 77)
-                .addComponent(buttonCrearSala)
-                .addGap(30, 30, 30)
-                .addComponent(buttonBuscarSala)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
-                .addComponent(buttonAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addComponent(buttonCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(buttonBuscarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonBuscarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuscarSalaActionPerformed
+    private void buttonBuscarSalaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buttonBuscarSalaActionPerformed
         // TODO add your handling code here:
         control.mostrarPanelBuscarSala();
-    }//GEN-LAST:event_buttonBuscarSalaActionPerformed
+    }// GEN-LAST:event_buttonBuscarSalaActionPerformed
+
     private void obtenerFondo() {
         iconFondo = new ImageIcon(getClass().getResource("/fondos/fondo1.png")).getImage();
     }
@@ -106,10 +109,11 @@ public class PanelMenu extends JPanel {
             g.drawImage(iconFondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonAyuda;
     private javax.swing.JButton buttonBuscarSala;
     private javax.swing.JButton buttonCrearSala;
     private javax.swing.JLabel etiquetaTituloMenu;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

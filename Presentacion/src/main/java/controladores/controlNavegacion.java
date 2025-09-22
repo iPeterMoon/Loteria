@@ -38,6 +38,7 @@ public class ControlNavegacion {
 
         cardLayout.show(panelContenedor, MENU);
         ventanaPrincipal.setVisible(true);
+        ventanaPrincipal.setLocationRelativeTo(null);
     }
 
     public void mostrarPanelMenu() {

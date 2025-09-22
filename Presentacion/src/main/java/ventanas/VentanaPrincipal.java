@@ -66,6 +66,7 @@ public class VentanaPrincipal extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Loteria Mexicana");
         setPreferredSize(new java.awt.Dimension(1366, 768));
+        setResizable(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
