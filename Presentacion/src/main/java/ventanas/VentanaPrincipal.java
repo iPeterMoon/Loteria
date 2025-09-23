@@ -41,9 +41,10 @@ public class VentanaPrincipal extends JFrame {
     }
 
     private void setLayout() {
+        setLayout(new java.awt.BorderLayout()); // <-- Cambia el layout del JFrame
         cardLayout = new CardLayout();
         panelContenedor = new JPanel(cardLayout);
-        add(panelContenedor);
+        add(panelContenedor,java.awt.BorderLayout.CENTER);
     }
 
     private void setIconImage() {
@@ -65,8 +66,9 @@ public class VentanaPrincipal extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Loteria Mexicana");
-        setPreferredSize(new java.awt.Dimension(1366, 768));
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1336, 768));
+        setMinimumSize(new java.awt.Dimension(1336, 768));
+        setPreferredSize(new java.awt.Dimension(1336, 768));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
