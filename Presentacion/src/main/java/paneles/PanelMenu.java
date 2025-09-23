@@ -32,12 +32,6 @@ public class PanelMenu extends JPanel {
 
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -47,6 +41,8 @@ public class PanelMenu extends JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 178, 0));
+        setMaximumSize(new java.awt.Dimension(1336, 768));
+        setMinimumSize(new java.awt.Dimension(1336, 768));
 
         try {
             // Carga la fuente desde el classpath (resources/fuentes/Voltaire-Regular.ttf)
@@ -61,6 +57,7 @@ public class PanelMenu extends JPanel {
             // Si falla, usa la fuente por defecto
             etiquetaTituloMenu.setFont(new java.awt.Font("Serif", Font.PLAIN, 128));
         }
+
         etiquetaTituloMenu.setForeground(new java.awt.Color(206, 232, 13));
         etiquetaTituloMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etiquetaTituloMenu.setText("LOTERIA MEXICANA");
@@ -69,11 +66,15 @@ public class PanelMenu extends JPanel {
         buttonCrearSala.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         buttonCrearSala.setForeground(new java.awt.Color(255, 255, 255));
         buttonCrearSala.setText("Crear Sala");
+        buttonCrearSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buttonCrearSala.setFocusPainted(false);
 
         buttonBuscarSala.setBackground(new java.awt.Color(100, 13, 95));
         buttonBuscarSala.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         buttonBuscarSala.setForeground(new java.awt.Color(255, 255, 255));
         buttonBuscarSala.setText("Buscar Sala");
+        buttonBuscarSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buttonBuscarSala.setFocusPainted(false);
         buttonBuscarSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBuscarSalaActionPerformed(evt);
@@ -81,7 +82,7 @@ public class PanelMenu extends JPanel {
         });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/interrogacion.png"))); // NOI18N
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,15 +109,15 @@ public class PanelMenu extends JPanel {
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
+                                .addGap(71, 71, 71)
                                 .addComponent(etiquetaTituloMenu)
-                                .addGap(44, 44, 44)
+                                .addGap(70, 70, 70)
                                 .addComponent(buttonCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 70,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(34, 34, 34)
                                 .addComponent(buttonBuscarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 69,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416,
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365,
                                         Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addContainerGap()));
