@@ -11,4 +11,11 @@
         <exec.mainClass>main.LoteriaMexicana</exec.mainClass>
     </properties>
     <name>Presentacion_Config</name>
+    <dependencies>
+        <dependency>
+            <groupId>com</groupId>
+            <artifactId>Presentacion_Juego</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>
