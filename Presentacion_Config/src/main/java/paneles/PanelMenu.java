@@ -25,7 +25,6 @@ public class PanelMenu extends JPanel {
 
     public PanelMenu(ControlNavegacion control) {
         this.control = control;
-        setLayout(new BorderLayout());
         initComponents();
         obtenerFondo();
     }
