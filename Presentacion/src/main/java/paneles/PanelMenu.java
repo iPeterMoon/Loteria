@@ -38,7 +38,7 @@ public class PanelMenu extends JPanel {
         etiquetaTituloMenu = new javax.swing.JLabel();
         buttonCrearSala = new javax.swing.JButton();
         buttonBuscarSala = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        iconoInterrogacion = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 178, 0));
         setMaximumSize(new java.awt.Dimension(1336, 768));
@@ -60,7 +60,7 @@ public class PanelMenu extends JPanel {
 
         etiquetaTituloMenu.setForeground(new java.awt.Color(206, 232, 13));
         etiquetaTituloMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        etiquetaTituloMenu.setText("LOTERIA MEXICANA");
+        etiquetaTituloMenu.setText("LOTERÍA MEXICANA");
 
         buttonCrearSala.setBackground(new java.awt.Color(100, 13, 95));
         buttonCrearSala.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
@@ -81,8 +81,8 @@ public class PanelMenu extends JPanel {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/interrogacion.png"))); // NOI18N
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        iconoInterrogacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/interrogacion.png"))); // NOI18N
+        iconoInterrogacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -104,7 +104,7 @@ public class PanelMenu extends JPanel {
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(20, 20, 20)
-                                                .addComponent(jLabel1)))
+                                                .addComponent(iconoInterrogacion)))
                                 .addContainerGap(488, Short.MAX_VALUE)));
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +119,7 @@ public class PanelMenu extends JPanel {
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365,
                                         Short.MAX_VALUE)
-                                .addComponent(jLabel1)
+                                .addComponent(iconoInterrogacion)
                                 .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -143,6 +143,6 @@ public class PanelMenu extends JPanel {
     private javax.swing.JButton buttonBuscarSala;
     private javax.swing.JButton buttonCrearSala;
     private javax.swing.JLabel etiquetaTituloMenu;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel iconoInterrogacion;
     // End of variables declaration//GEN-END:variables
 }
