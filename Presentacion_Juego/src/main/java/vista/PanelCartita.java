@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vista;
 
 import java.awt.Dimension;
@@ -21,18 +17,20 @@ import javax.swing.JLabel;
  */
 public class PanelCartita extends javax.swing.JPanel {
 
-    private static final int CARTA_ANCHO = 78;
-    private static final int CARTA_ALTO = 128;
+    private static final int CARTA_ANCHO_TARJETA = 78;
+    private static final int CARTA_ALTO_TARJETA = 128;
+    private static final int CARTA_ANCHO_CANTADOR = 160;
+    private static final int CARTA_ALTO_CANTADOR = 240;
     private static final int FICHA_ANCHO = 50;
     private static final int FICHA_ALTO = 50;
 
     private static final float FACTOR_BRILLO = 1.2f;
 
     private int numeroCarta;
-    private int posicion;
     private ImageIcon iconoOriginal;
     private ImageIcon iconoHover;
     private ImageIcon iconoActual;
+    private boolean flagCantador;
     private JLabel ficha;
 
     /**
@@ -43,15 +41,24 @@ public class PanelCartita extends javax.swing.JPanel {
     public PanelCartita(int numeroCarta) {
         initComponents();
         this.numeroCarta = numeroCarta;
+        this.flagCantador = false;
+        iniciar();
+    }
+    public PanelCartita(){
+        initComponents();
+        this.flagCantador = true;
+        this.numeroCarta = 1;
         iniciar();
     }
 
     private void iniciar() {
         iconoOriginal = cargarCarta(numeroCarta);
-        iconoHover = crearBrillo(iconoOriginal, FACTOR_BRILLO);
-        ficha = cargarFicha();
+        if(!flagCantador){
+            iconoHover = crearBrillo(iconoOriginal, FACTOR_BRILLO);
+            ficha = cargarFicha();
+            agregarEventosMouse();
+        }
         iconoActual = iconoOriginal;
-        agregarEventosMouse();
     }
 
     private void agregarEventosMouse() {
@@ -89,7 +96,13 @@ public class PanelCartita extends javax.swing.JPanel {
             System.err.println("No se encontró la imagen: " + url);
         }
         ImageIcon original = new ImageIcon(recurso);
-        Image imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO, CARTA_ALTO, Image.SCALE_SMOOTH);
+        Image imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA, Image.SCALE_SMOOTH);
+        if(flagCantador){
+            imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_CANTADOR, CARTA_ALTO_CANTADOR, Image.SCALE_SMOOTH);
+            setMinimumSize(new Dimension(160,240));
+            setMaximumSize(new Dimension(160,240));
+            setPreferredSize(new Dimension(160,240));
+        } 
         return new ImageIcon(imagenEscalada);
     }
 
@@ -128,6 +141,14 @@ public class PanelCartita extends javax.swing.JPanel {
 
     }
 
+    public boolean isFlagCantador() {
+        return flagCantador;
+    }
+
+    public void setFlagCantador(boolean flagCantador) {
+        this.flagCantador = flagCantador;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -138,9 +159,9 @@ public class PanelCartita extends javax.swing.JPanel {
     private void initComponents() {
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        setMinimumSize(new Dimension(CARTA_ANCHO, CARTA_ALTO));
+        setMinimumSize(new Dimension(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA));
         setOpaque(false);
-        setPreferredSize(new Dimension(CARTA_ANCHO, CARTA_ALTO));
+        setPreferredSize(new Dimension(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA));
         setLayout(null);
     }// </editor-fold>//GEN-END:initComponents
 
