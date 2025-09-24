@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vista;
+
+import java.awt.Graphics;
+import java.awt.Image;
 
 /**
  *
@@ -10,11 +9,14 @@ package vista;
  */
 public class PanelTarjeta extends javax.swing.JPanel {
 
+    private Image imagenFondo;
+    
     /**
      * Creates new form PanelTarjeta
      */
     public PanelTarjeta() {
         initComponents();
+        dibujarFondo();
         for (int i = 0; i < 16; i++) {
             add(new PanelCartita(i + 1));
         }
@@ -29,13 +31,25 @@ public class PanelTarjeta extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(new java.awt.Color(235, 235, 235));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMinimumSize(new java.awt.Dimension(400, 533));
-        setPreferredSize(new java.awt.Dimension(400, 533));
-        setLayout(new java.awt.GridLayout(4, 4, 5, 5));
+        setMinimumSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(359, 759));
+        setLayout(new java.awt.GridLayout(4, 4, 10, 12));
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void dibujarFondo() {
+        imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_tarjeta_loteria.png"))
+                .getImage();
+    }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (imagenFondo != null) {
+            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
