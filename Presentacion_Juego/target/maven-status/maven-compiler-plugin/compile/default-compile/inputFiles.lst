@@ -1,18 +1,18 @@
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\main\Main.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\CantadorSubject.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\IModeloControl.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\IModeloVista.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\JugadaSubject.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\JugadorSubject.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\ModeloControlImp.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\ModeloVistaFacade.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\Subject.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\modelo\TarjetaSubject.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\BotonJugada.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\FrameJuego.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\IObserver.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\PanelCartita.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\PanelJuego.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\PanelJugadorPrincipal.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\PanelJugadorSecundario.java
-C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre V\Arquitectura de software\Loteria\Presentacion_Juego\src\main\java\vista\PanelTarjeta.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\main\Main.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\CantadorSubject.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\IModeloControl.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\IModeloVista.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\JugadaSubject.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\JugadorSubject.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\ModeloControlImp.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\ModeloVistaFacade.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\Subject.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\TarjetaSubject.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\BotonJugada.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\FrameJuego.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\IObserver.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelCartita.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelJuego.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelJugadorPrincipal.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelJugadorSecundario.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelTarjeta.java

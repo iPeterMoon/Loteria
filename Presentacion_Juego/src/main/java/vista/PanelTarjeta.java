@@ -18,7 +18,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         initComponents();
         dibujarFondo();
         for (int i = 0; i < 16; i++) {
-            add(new PanelCartita(i + 1));
+            panelCartitas.add(new PanelCartita(i + 1));
         }
     }
 
@@ -31,11 +31,25 @@ public class PanelTarjeta extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        panelCartitas = new javax.swing.JPanel();
+
         setBackground(new java.awt.Color(235, 235, 235));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMinimumSize(new java.awt.Dimension(0, 0));
+        setMaximumSize(new java.awt.Dimension(359, 759));
+        setMinimumSize(new java.awt.Dimension(359, 759));
         setPreferredSize(new java.awt.Dimension(359, 759));
-        setLayout(new java.awt.GridLayout(4, 4, 10, 12));
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setMaximumSize(new java.awt.Dimension(359, 22));
+        jPanel1.setMinimumSize(new java.awt.Dimension(359, 22));
+        jPanel1.setOpaque(false);
+        jPanel1.setPreferredSize(new java.awt.Dimension(359, 22));
+        add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        panelCartitas.setBackground(new java.awt.Color(235, 235, 235));
+        panelCartitas.setLayout(new java.awt.GridLayout(4, 4, 10, 10));
+        add(panelCartitas, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     
     private void dibujarFondo() {
@@ -52,5 +66,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel panelCartitas;
     // End of variables declaration//GEN-END:variables
 }

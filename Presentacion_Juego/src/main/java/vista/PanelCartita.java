@@ -21,10 +21,10 @@ import javax.swing.JLabel;
  */
 public class PanelCartita extends javax.swing.JPanel {
 
-    private static final int CARTA_ANCHO = 80;
-    private static final int CARTA_ALTO = 100;
-    private static final int FICHA_ANCHO = 40;
-    private static final int FICHA_ALTO = 40;
+    private static final int CARTA_ANCHO = 78;
+    private static final int CARTA_ALTO = 128;
+    private static final int FICHA_ANCHO = 50;
+    private static final int FICHA_ALTO = 50;
 
     private static final float FACTOR_BRILLO = 1.2f;
 
@@ -137,6 +137,7 @@ public class PanelCartita extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setMinimumSize(new Dimension(CARTA_ANCHO, CARTA_ALTO));
         setOpaque(false);
         setPreferredSize(new Dimension(CARTA_ANCHO, CARTA_ALTO));
