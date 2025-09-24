@@ -27,7 +27,9 @@
                       <Component id="panelJugadorPrincipal2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="965" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+              <Component id="PanelContenedorTarjeta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="847" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,6 +41,11 @@
               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" pref="53" max="-2" attributes="0"/>
               <EmptySpace pref="141" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="PanelContenedorTarjeta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,5 +68,9 @@
     </Component>
     <Component class="vista.PanelJugadorPrincipal" name="panelJugadorPrincipal2">
     </Component>
+    <Container class="javax.swing.JPanel" name="PanelContenedorTarjeta">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+    </Container>
   </SubComponents>
 </Form>

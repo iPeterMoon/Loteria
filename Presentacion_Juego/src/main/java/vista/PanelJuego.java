@@ -1,6 +1,7 @@
 
 package vista;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -17,7 +18,9 @@ public class PanelJuego extends javax.swing.JPanel {
      */
     public PanelJuego() {
         initComponents();
+        
         dibujarFondo();
+        ponerTarjeta();
     }
 
     /**
@@ -32,12 +35,15 @@ public class PanelJuego extends javax.swing.JPanel {
 
         jButton1 = new javax.swing.JButton();
         panelJugadorPrincipal2 = new vista.PanelJugadorPrincipal();
+        PanelContenedorTarjeta = new javax.swing.JPanel();
 
         jButton1.setBackground(new java.awt.Color(235, 91, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Abandonar");
         jButton1.setFocusPainted(false);
+
+        PanelContenedorTarjeta.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -51,7 +57,9 @@ public class PanelJuego extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addComponent(panelJugadorPrincipal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(965, Short.MAX_VALUE))
+                .addGap(118, 118, 118)
+                .addComponent(PanelContenedorTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(847, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,11 +69,22 @@ public class PanelJuego extends javax.swing.JPanel {
                 .addGap(59, 59, 59)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(141, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelContenedorTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondoPantalla.png")).getImage();
+    }
+    
+    private void ponerTarjeta(){
+        PanelTarjeta panelTarjeta = new PanelTarjeta();
+        PanelContenedorTarjeta.add(panelTarjeta, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     @Override
@@ -77,6 +96,7 @@ public class PanelJuego extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelContenedorTarjeta;
     private javax.swing.JButton jButton1;
     private vista.PanelJugadorPrincipal panelJugadorPrincipal2;
     // End of variables declaration//GEN-END:variables
