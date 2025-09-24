@@ -49,6 +49,9 @@ public class PanelJuego extends javax.swing.JPanel {
         panelJugadorSecundario2 = new vista.PanelJugadorSecundario();
         panelJugadorSecundario3 = new vista.PanelJugadorSecundario();
 
+        setMaximumSize(new java.awt.Dimension(1336, 768));
+        setMinimumSize(new java.awt.Dimension(1336, 768));
+        setPreferredSize(new java.awt.Dimension(1336, 768));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setBackground(new java.awt.Color(235, 91, 0));
@@ -57,16 +60,16 @@ public class PanelJuego extends javax.swing.JPanel {
         jButton1.setText("Abandonar");
         jButton1.setFocusPainted(false);
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 574, 206, 53));
-        add(panelJugadorPrincipal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 195, -1, -1));
+        add(panelJugadorPrincipal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
 
         PanelContenedorTarjeta.setBackground(new java.awt.Color(204, 204, 204));
         PanelContenedorTarjeta.setMinimumSize(new java.awt.Dimension(400, 533));
         PanelContenedorTarjeta.setPreferredSize(new java.awt.Dimension(400, 533));
         PanelContenedorTarjeta.setLayout(new java.awt.BorderLayout());
         add(PanelContenedorTarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 204, -1, -1));
-        add(panelJugadorSecundario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 14, -1, 148));
-        add(panelJugadorSecundario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 14, -1, 148));
-        add(panelJugadorSecundario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(941, 14, -1, 148));
+        add(panelJugadorSecundario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, 148));
+        add(panelJugadorSecundario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, -1, 148));
+        add(panelJugadorSecundario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, 148));
     }// </editor-fold>//GEN-END:initComponents
 
     private void dibujarFondo() {
