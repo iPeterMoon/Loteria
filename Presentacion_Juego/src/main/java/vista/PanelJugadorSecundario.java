@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vista;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -14,7 +12,9 @@ import java.awt.Image;
 public class PanelJugadorSecundario extends javax.swing.JPanel {
 
     private Image imagenFondo;
-
+    private static final int ANCHO_ALTO = 80;
+    private ImageIcon fotoJugador;
+    
     /**
      * Creates new form PanelJugadorSecundario
      */
@@ -22,6 +22,7 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         setOpaque(true);
         initComponents();
         dibujarFondo();
+        cargarFotoJugador();
     }
 
     public void setNombre(String nombre) {
@@ -99,6 +100,23 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
+    
+    private void cargarFotoJugador(){
+        fotoJugador = cargarFoto();
+        lblFoto.setIcon(fotoJugador);
+    }
+    
+    private ImageIcon cargarFoto() {
+        String url = "/imagenes_alt/icon_imagen.png";
+        URL recurso = getClass().getResource(url);
+        if (recurso == null) {
+            System.err.println("No se encontró la imagen: " + url);
+        }
+        ImageIcon original = new ImageIcon(recurso);
+        Image imagenEscalada = original.getImage().getScaledInstance(ANCHO_ALTO, ANCHO_ALTO, Image.SCALE_SMOOTH);
+        return new ImageIcon(imagenEscalada);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblFoto;
