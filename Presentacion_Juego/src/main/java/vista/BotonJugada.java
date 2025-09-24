@@ -35,6 +35,7 @@ public class BotonJugada extends javax.swing.JPanel {
 
     public void setNombreJugada(String nombreJugada) {
         this.nombreJugada = nombreJugada;
+        this.jButton1.setText(nombreJugada);
     }
 
     /**

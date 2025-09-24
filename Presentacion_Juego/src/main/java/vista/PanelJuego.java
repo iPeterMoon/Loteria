@@ -30,6 +30,11 @@ public class PanelJuego extends javax.swing.JPanel {
 
         panelJugadorSecundario3.setNombre("Fernando");
         panelJugadorSecundario3.setPuntaje(100);
+        
+        botonCuatroEsquinas.setNombreJugada("Cuatro esquinas");
+        botonChorro.setNombreJugada("Chorro");
+        botonCentro.setNombreJugada("Centro");
+        botonLlena.setNombreJugada("Llena");
     }
 
     /**
@@ -42,12 +47,17 @@ public class PanelJuego extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        botonJugada4 = new vista.BotonJugada();
         jButton1 = new javax.swing.JButton();
         panelJugadorPrincipal2 = new vista.PanelJugadorPrincipal();
         PanelContenedorTarjeta = new javax.swing.JPanel();
         panelJugadorSecundario1 = new vista.PanelJugadorSecundario();
         panelJugadorSecundario2 = new vista.PanelJugadorSecundario();
         panelJugadorSecundario3 = new vista.PanelJugadorSecundario();
+        botonCuatroEsquinas = new vista.BotonJugada();
+        botonChorro = new vista.BotonJugada();
+        botonCentro = new vista.BotonJugada();
+        botonLlena = new vista.BotonJugada();
 
         setMaximumSize(new java.awt.Dimension(1336, 768));
         setMinimumSize(new java.awt.Dimension(1336, 768));
@@ -70,6 +80,10 @@ public class PanelJuego extends javax.swing.JPanel {
         add(panelJugadorSecundario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, 148));
         add(panelJugadorSecundario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, -1, 148));
         add(panelJugadorSecundario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, 148));
+        add(botonCuatroEsquinas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 570, -1, -1));
+        add(botonChorro, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 630, -1, -1));
+        add(botonCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 630, -1, 50));
+        add(botonLlena, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 690, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void dibujarFondo() {
@@ -93,6 +107,11 @@ public class PanelJuego extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelContenedorTarjeta;
+    private vista.BotonJugada botonCentro;
+    private vista.BotonJugada botonChorro;
+    private vista.BotonJugada botonCuatroEsquinas;
+    private vista.BotonJugada botonJugada4;
+    private vista.BotonJugada botonLlena;
     private javax.swing.JButton jButton1;
     private vista.PanelJugadorPrincipal panelJugadorPrincipal2;
     private vista.PanelJugadorSecundario panelJugadorSecundario1;
