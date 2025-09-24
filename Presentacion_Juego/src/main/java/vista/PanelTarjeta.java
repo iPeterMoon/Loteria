@@ -31,7 +31,8 @@ public class PanelTarjeta extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(204, 204, 204));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMinimumSize(new java.awt.Dimension(300, 400));
+        setMinimumSize(new java.awt.Dimension(400, 533));
+        setPreferredSize(new java.awt.Dimension(400, 533));
         setLayout(new java.awt.GridLayout(4, 4, 5, 5));
     }// </editor-fold>//GEN-END:initComponents
 

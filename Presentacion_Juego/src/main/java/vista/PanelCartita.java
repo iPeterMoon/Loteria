@@ -4,13 +4,16 @@
  */
 package vista;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
+import java.net.URL;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,13 +21,19 @@ import javax.swing.ImageIcon;
  */
 public class PanelCartita extends javax.swing.JPanel {
 
+    private static final int CARTA_ANCHO = 80;
+    private static final int CARTA_ALTO = 100;
+    private static final int FICHA_ANCHO = 40;
+    private static final int FICHA_ALTO = 40;
+
+    private static final float FACTOR_BRILLO = 1.2f;
+
     private int numeroCarta;
     private int posicion;
     private ImageIcon iconoOriginal;
     private ImageIcon iconoHover;
     private ImageIcon iconoActual;
-    private ImageIcon ficha;
-    private boolean mostrarFicha = false;
+    private JLabel ficha;
 
     /**
      * Creates new form PanelCartita
@@ -33,18 +42,19 @@ public class PanelCartita extends javax.swing.JPanel {
      */
     public PanelCartita(int numeroCarta) {
         initComponents();
-
         this.numeroCarta = numeroCarta;
+        iniciar();
+    }
 
+    private void iniciar() {
         iconoOriginal = cargarCarta(numeroCarta);
-        iconoHover = crearBrillo(iconoOriginal, 1.2f);
-        iconoActual = iconoOriginal;
-
+        iconoHover = crearBrillo(iconoOriginal, FACTOR_BRILLO);
         ficha = cargarFicha();
+        iconoActual = iconoOriginal;
+        agregarEventosMouse();
+    }
 
-        setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(80, 100));
-
+    private void agregarEventosMouse() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -60,33 +70,38 @@ public class PanelCartita extends javax.swing.JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                mostrarFicha = !mostrarFicha;
-                repaint();
+                if (ficha != null && ficha.getParent() == null) {
+                    int x = (getWidth() - FICHA_ANCHO) / 2;
+                    int y = (getHeight() - FICHA_ALTO) / 2;
+                    ficha.setBounds(x, y, FICHA_ANCHO, FICHA_ALTO);
+                    add(ficha);
+                    revalidate();
+                    repaint();
+                }
             }
         });
     }
 
     private ImageIcon cargarCarta(int numero) {
         String url = "/cartas/" + numero + ".jpeg";
-        java.net.URL recurso = getClass().getResource(url);
+        URL recurso = getClass().getResource(url);
         if (recurso == null) {
             System.err.println("No se encontró la imagen: " + url);
         }
         ImageIcon original = new ImageIcon(recurso);
-        Image imagenEscalada = original.getImage().getScaledInstance(80, 100, Image.SCALE_SMOOTH);
+        Image imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO, CARTA_ALTO, Image.SCALE_SMOOTH);
         return new ImageIcon(imagenEscalada);
     }
 
-    private ImageIcon cargarFicha() {
+    private JLabel cargarFicha() {
         String url = "/otros/ficha.png";
-        java.net.URL recurso = getClass().getResource(url);
+        URL recurso = getClass().getResource(url);
         if (recurso == null) {
             System.err.println("No se encontró la ficha: " + url);
-            return null;
         }
         ImageIcon original = new ImageIcon(recurso);
-        Image imagenEscalada = original.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        return new ImageIcon(imagenEscalada);
+        Image imagenEscalada = original.getImage().getScaledInstance(FICHA_ANCHO, FICHA_ALTO, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(imagenEscalada));
     }
 
     private ImageIcon crearBrillo(ImageIcon icono, float factor) {
@@ -111,11 +126,6 @@ public class PanelCartita extends javax.swing.JPanel {
             g.drawImage(iconoActual.getImage(), 0, 0, getWidth(), getHeight(), this);
         }
 
-        if (mostrarFicha && ficha != null) {
-            int x = (getWidth() - ficha.getIconWidth()) / 2;
-            int y = (getHeight() - ficha.getIconHeight()) / 2;
-            g.drawImage(ficha.getImage(), x, y, this);
-        }
     }
 
     /**
@@ -127,16 +137,10 @@ public class PanelCartita extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        setMinimumSize(new Dimension(CARTA_ANCHO, CARTA_ALTO));
+        setOpaque(false);
+        setPreferredSize(new Dimension(CARTA_ANCHO, CARTA_ALTO));
+        setLayout(null);
     }// </editor-fold>//GEN-END:initComponents
 
 
