@@ -2,7 +2,7 @@ package modelo;
 
 /**
  *
- * @author pedro
+ * @author Pedro Luna Esquer
  */
 public interface IModeloJuego {
     public void colocarFicha();
