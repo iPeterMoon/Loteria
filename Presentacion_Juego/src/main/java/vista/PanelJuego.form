@@ -35,25 +35,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="217" pref="217" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" pref="914" max="-2" attributes="0"/>
+              <Component id="panelContenedorSecundarios" min="-2" pref="914" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace min="160" pref="160" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panelJugadorPrincipal2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="206" max="-2" attributes="0"/>
+                  <Component id="panelJugadorPrincipal" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonAbandonar" min="-2" pref="206" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="114" pref="114" max="-2" attributes="0"/>
-              <Component id="panelTarjeta3" min="-2" max="-2" attributes="0"/>
+              <Component id="panelTarjeta" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="52" pref="52" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblCarta" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
-                      <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelContenedorCantador" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
@@ -76,21 +76,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="panelContenedorSecundarios" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="31" pref="31" max="-2" attributes="0"/>
-                      <Component id="panelJugadorPrincipal2" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelJugadorPrincipal" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="62" pref="62" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="53" max="-2" attributes="0"/>
+                      <Component id="botonAbandonar" min="-2" pref="53" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="panelTarjeta3" min="-2" pref="579" max="-2" attributes="0"/>
+                  <Component id="panelTarjeta" min="-2" pref="579" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblCarta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelContenedorCantador" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="75" pref="75" max="-2" attributes="0"/>
                       <Component id="botonCuatroEsquinas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="botonAbandonar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="5b" red="eb" type="rgb"/>
@@ -122,9 +122,12 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="vista.PanelJugadorPrincipal" name="panelJugadorPrincipal2">
+    <Component class="vista.PanelJugadorPrincipal" name="panelJugadorPrincipal">
     </Component>
     <Component class="vista.BotonJugada" name="botonCuatroEsquinas">
+      <Properties>
+        <Property name="requestFocusEnabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="vista.BotonJugada" name="botonChorro">
     </Component>
@@ -132,7 +135,7 @@
     </Component>
     <Component class="vista.BotonJugada" name="botonLlena">
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="panelContenedorSecundarios">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="b2" red="ff" type="rgb"/>
@@ -152,9 +155,9 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="vista.PanelTarjeta" name="panelTarjeta3">
+    <Component class="vista.PanelTarjeta" name="panelTarjeta">
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel2">
+    <Container class="javax.swing.JPanel" name="panelContenedorCantador">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -166,7 +169,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="18" max="32767" attributes="0"/>
-                  <Component id="panelCartita1" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelCartaCantador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -175,14 +178,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="21" max="32767" attributes="0"/>
-                  <Component id="panelCartita1" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelCartaCantador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="vista.PanelCartita" name="panelCartita1">
+        <Container class="vista.PanelCartita" name="panelCartaCantador">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Carta Cantada"/>
           </Properties>
@@ -193,7 +196,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblCarta">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>

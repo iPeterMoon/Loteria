@@ -38,61 +38,63 @@ public class PanelJuego extends javax.swing.JPanel {
 
         botonJugada4 = new vista.BotonJugada();
         panelTarjeta1 = new vista.PanelTarjeta();
-        jButton1 = new javax.swing.JButton();
-        panelJugadorPrincipal2 = new vista.PanelJugadorPrincipal();
+        botonAbandonar = new javax.swing.JButton();
+        panelJugadorPrincipal = new vista.PanelJugadorPrincipal();
         botonCuatroEsquinas = new vista.BotonJugada();
         botonChorro = new vista.BotonJugada();
         botonCentro = new vista.BotonJugada();
         botonLlena = new vista.BotonJugada();
-        jPanel1 = new javax.swing.JPanel();
+        panelContenedorSecundarios = new javax.swing.JPanel();
         panelJugadorSecundario2 = new vista.PanelJugadorSecundario();
         panelJugadorSecundario3 = new vista.PanelJugadorSecundario();
         panelJugadorSecundario4 = new vista.PanelJugadorSecundario();
-        panelTarjeta3 = new vista.PanelTarjeta();
-        jPanel2 = new javax.swing.JPanel();
-        panelCartita1 = new vista.PanelCartita();
-        jLabel1 = new javax.swing.JLabel();
+        panelTarjeta = new vista.PanelTarjeta();
+        panelContenedorCantador = new javax.swing.JPanel();
+        panelCartaCantador = new vista.PanelCartita();
+        lblCarta = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1336, 768));
         setMinimumSize(new java.awt.Dimension(1336, 768));
         setPreferredSize(new java.awt.Dimension(1336, 768));
 
-        jButton1.setBackground(new java.awt.Color(235, 91, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Abandonar");
-        jButton1.setFocusPainted(false);
+        botonAbandonar.setBackground(new java.awt.Color(235, 91, 0));
+        botonAbandonar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        botonAbandonar.setForeground(new java.awt.Color(255, 255, 255));
+        botonAbandonar.setText("Abandonar");
+        botonAbandonar.setFocusPainted(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 178, 0));
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 29, 0));
-        jPanel1.add(panelJugadorSecundario2);
-        jPanel1.add(panelJugadorSecundario3);
-        jPanel1.add(panelJugadorSecundario4);
+        botonCuatroEsquinas.setRequestFocusEnabled(false);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        panelContenedorSecundarios.setBackground(new java.awt.Color(255, 178, 0));
+        panelContenedorSecundarios.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 29, 0));
+        panelContenedorSecundarios.add(panelJugadorSecundario2);
+        panelContenedorSecundarios.add(panelJugadorSecundario3);
+        panelContenedorSecundarios.add(panelJugadorSecundario4);
 
-        panelCartita1.setToolTipText("Carta Cantada");
+        panelContenedorCantador.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        panelCartaCantador.setToolTipText("Carta Cantada");
+
+        javax.swing.GroupLayout panelContenedorCantadorLayout = new javax.swing.GroupLayout(panelContenedorCantador);
+        panelContenedorCantador.setLayout(panelContenedorCantadorLayout);
+        panelContenedorCantadorLayout.setHorizontalGroup(
+            panelContenedorCantadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenedorCantadorLayout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(panelCartita1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelCartaCantador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        panelContenedorCantadorLayout.setVerticalGroup(
+            panelContenedorCantadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenedorCantadorLayout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(panelCartita1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelCartaCantador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Carta");
+        lblCarta.setBackground(new java.awt.Color(0, 0, 0));
+        lblCarta.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCarta.setText("Carta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -100,22 +102,22 @@ public class PanelJuego extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(217, 217, 217)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelContenedorSecundarios, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(160, 160, 160)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelJugadorPrincipal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelJugadorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonAbandonar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(114, 114, 114)
-                .addComponent(panelTarjeta3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(180, 180, 180)
-                        .addComponent(jLabel1))
+                        .addComponent(lblCarta))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelContenedorCantador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addComponent(botonCuatroEsquinas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -131,20 +133,20 @@ public class PanelJuego extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelContenedorSecundarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(panelJugadorPrincipal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelJugadorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(62, 62, 62)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelTarjeta3, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonAbandonar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jLabel1)
+                        .addComponent(lblCarta)
                         .addGap(13, 13, 13)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelContenedorCantador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(75, 75, 75)
                         .addComponent(botonCuatroEsquinas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)
@@ -169,21 +171,21 @@ public class PanelJuego extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAbandonar;
     private vista.BotonJugada botonCentro;
     private vista.BotonJugada botonChorro;
     private vista.BotonJugada botonCuatroEsquinas;
     private vista.BotonJugada botonJugada4;
     private vista.BotonJugada botonLlena;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private vista.PanelCartita panelCartita1;
-    private vista.PanelJugadorPrincipal panelJugadorPrincipal2;
+    private javax.swing.JLabel lblCarta;
+    private vista.PanelCartita panelCartaCantador;
+    private javax.swing.JPanel panelContenedorCantador;
+    private javax.swing.JPanel panelContenedorSecundarios;
+    private vista.PanelJugadorPrincipal panelJugadorPrincipal;
     private vista.PanelJugadorSecundario panelJugadorSecundario2;
     private vista.PanelJugadorSecundario panelJugadorSecundario3;
     private vista.PanelJugadorSecundario panelJugadorSecundario4;
+    private vista.PanelTarjeta panelTarjeta;
     private vista.PanelTarjeta panelTarjeta1;
-    private vista.PanelTarjeta panelTarjeta3;
     // End of variables declaration//GEN-END:variables
 }

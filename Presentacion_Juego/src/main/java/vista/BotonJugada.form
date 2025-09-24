@@ -46,6 +46,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>
