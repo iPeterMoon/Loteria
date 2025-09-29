@@ -4,11 +4,13 @@
  */
 package modelo;
 
+import java.awt.Point;
+
 /**
  *
  * @author rocha
  */
 public interface IModeloControl {
 
-    public void colocarFicha();
+    public void colocarFicha(Point posicion);
 }

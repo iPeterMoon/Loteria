@@ -1,8 +1,10 @@
 package vista;
 
+import control.ControlSeleccionarJugada;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -27,6 +29,7 @@ public class PanelCartita extends javax.swing.JPanel {
     private static final float FACTOR_BRILLO = 1.2f;
 
     private int numeroCarta;
+    private Point posicion;
     private ImageIcon iconoOriginal;
     private ImageIcon iconoHover;
     private ImageIcon iconoActual;
@@ -34,26 +37,32 @@ public class PanelCartita extends javax.swing.JPanel {
     private JLabel ficha;
 
     /**
-     * Creates new form PanelCartita
-     *
-     * @param numeroCarta
+     * Constructor para que se vea en el design de netbeans
      */
-    public PanelCartita(int numeroCarta) {
-        initComponents();
-        this.numeroCarta = numeroCarta;
-        this.flagCantador = false;
-        iniciar();
-    }
-    public PanelCartita(){
+    public PanelCartita() {
         initComponents();
         this.flagCantador = true;
         this.numeroCarta = 1;
         iniciar();
     }
 
+    /**
+     * Creates new form PanelCartita
+     *
+     * @param numeroCarta
+     * @param posicion
+     */
+    public PanelCartita(int numeroCarta, Point posicion) {
+        initComponents();
+        this.numeroCarta = numeroCarta;
+        this.posicion = posicion;
+        this.flagCantador = false;
+        iniciar();
+    }
+
     private void iniciar() {
         iconoOriginal = cargarCarta(numeroCarta);
-        if(!flagCantador){
+        if (!flagCantador) {
             iconoHover = crearBrillo(iconoOriginal, FACTOR_BRILLO);
             ficha = cargarFicha();
             agregarEventosMouse();
@@ -77,16 +86,24 @@ public class PanelCartita extends javax.swing.JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (ficha != null && ficha.getParent() == null) {
-                    int x = (getWidth() - FICHA_ANCHO) / 2;
-                    int y = (getHeight() - FICHA_ALTO) / 2;
-                    ficha.setBounds(x, y, FICHA_ANCHO, FICHA_ALTO);
-                    add(ficha);
-                    revalidate();
-                    repaint();
-                }
+                onclick();
             }
         });
+    }
+
+    private void onclick() {
+        ControlSeleccionarJugada.colocarFicha(posicion);
+    }
+
+    public void agregarFicha() {
+        if (ficha != null && ficha.getParent() == null) {
+            int x = (getWidth() - FICHA_ANCHO) / 2;
+            int y = (getHeight() - FICHA_ALTO) / 2;
+            ficha.setBounds(x, y, FICHA_ANCHO, FICHA_ALTO);
+            add(ficha);
+            revalidate();
+            repaint();
+        }
     }
 
     private ImageIcon cargarCarta(int numero) {
@@ -97,12 +114,12 @@ public class PanelCartita extends javax.swing.JPanel {
         }
         ImageIcon original = new ImageIcon(recurso);
         Image imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA, Image.SCALE_SMOOTH);
-        if(flagCantador){
+        if (flagCantador) {
             imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_CANTADOR, CARTA_ALTO_CANTADOR, Image.SCALE_SMOOTH);
-            setMinimumSize(new Dimension(160,240));
-            setMaximumSize(new Dimension(160,240));
-            setPreferredSize(new Dimension(160,240));
-        } 
+            setMinimumSize(new Dimension(160, 240));
+            setMaximumSize(new Dimension(160, 240));
+            setPreferredSize(new Dimension(160, 240));
+        }
         return new ImageIcon(imagenEscalada);
     }
 
@@ -148,7 +165,7 @@ public class PanelCartita extends javax.swing.JPanel {
     public void setFlagCantador(boolean flagCantador) {
         this.flagCantador = flagCantador;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

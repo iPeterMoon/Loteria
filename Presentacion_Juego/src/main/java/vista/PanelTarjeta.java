@@ -2,7 +2,7 @@ package vista;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.Point;
 
 /**
  *
@@ -11,15 +11,36 @@ import javax.swing.ImageIcon;
 public class PanelTarjeta extends javax.swing.JPanel {
 
     private Image imagenFondo;
-    
+    private PanelCartita[][] tarjeta = new PanelCartita[4][4];
+
     /**
-     * Creates new form PanelTarjeta
+     * Constructor para que se vea en el design de netBeans
      */
     public PanelTarjeta() {
         initComponents();
         dibujarFondo();
+
         for (int i = 0; i < 16; i++) {
-            panelCartitas.add(new PanelCartita(i + 1));
+            int fila = i / 4;
+            int col = i % 4;
+            Point posicion = new Point(fila, col);
+
+            panelCartitas.add(new PanelCartita(i + 1, posicion));
+        }
+    }
+
+    /**
+     * Constructor que se va a usar
+     * @param tarjeta arreglo de numeros que representa la tarjeta
+     */
+    public PanelTarjeta(int tarjeta[][]) {
+        initComponents();
+        dibujarFondo();
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                this.tarjeta[i][j] = new PanelCartita(tarjeta[i][j], new Point(i, j));
+                panelCartitas.add(this.tarjeta[i][j]);
+            }
         }
     }
 
@@ -52,7 +73,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         panelCartitas.setLayout(new java.awt.GridLayout(4, 4, 10, 10));
         add(panelCartitas, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_tarjeta_loteria.png"))
                 .getImage();

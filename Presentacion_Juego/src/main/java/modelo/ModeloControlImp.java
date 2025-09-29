@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import java.awt.Point;
+
 /**
  *
  * @author rocha
@@ -12,9 +14,9 @@ public class ModeloControlImp implements IModeloControl {
 
     public ModeloControlImp() {
     }
-    
+
     @Override
-    public void colocarFicha() {
+    public void colocarFicha(Point posicion) {
         
     }
 }
