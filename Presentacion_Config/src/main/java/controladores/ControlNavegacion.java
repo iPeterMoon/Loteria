@@ -2,7 +2,7 @@ package controladores;
 
 import ventanas.VentanaPrincipal;
 import paneles.PanelMenu;
-import paneles.PanelSala;
+import paneles.PanelCrearSala;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -26,7 +26,7 @@ public class ControlNavegacion {
 
         //CREAR PANELES DEL CARDLAYOUT
         PanelMenu panelMenu = new PanelMenu(this);
-        PanelSala panelSala = new PanelSala(this);
+        PanelCrearSala panelSala = new PanelCrearSala(this);
 
         //AGREGAR PANELES AL CARDLAYOUT
         panelContenedor.add(panelMenu, MENU);
@@ -41,7 +41,7 @@ public class ControlNavegacion {
         cardLayout.show(panelContenedor, MENU);
     }
 
-    public void mostrarPanelBuscarSala() {
+    public void mostrarPanelCrearSala() {
         cardLayout.show(panelContenedor, BUSCAR_SALA);
     }
 }
