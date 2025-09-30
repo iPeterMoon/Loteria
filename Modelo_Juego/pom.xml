@@ -7,13 +7,8 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Presentacion_Juego</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.mycompany</groupId>
-            <artifactId>Mediador_Loteria</artifactId>
+            <artifactId>Comun_Juego</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
