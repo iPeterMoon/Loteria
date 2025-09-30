@@ -45,48 +45,29 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         lblFoto = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblPuntaje = new javax.swing.JLabel();
+        panelTarjetaSecundaria1 = new vista.PanelTarjetaSecundaria();
 
         setMaximumSize(new java.awt.Dimension(275, 130));
         setMinimumSize(new java.awt.Dimension(275, 130));
         setPreferredSize(new java.awt.Dimension(275, 130));
         setVerifyInputWhenFocusTarget(false);
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes_alt/icon_imagen.png"))); // NOI18N
         lblFoto.setPreferredSize(new java.awt.Dimension(80, 80));
+        add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 18, -1, -1));
 
         lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombre.setText("Adel");
+        add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 104, 85, -1));
 
         lblPuntaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPuntaje.setForeground(new java.awt.Color(255, 255, 255));
         lblPuntaje.setText("Puntaje: 0");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(lblPuntaje)
-                .addGap(46, 46, 46))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPuntaje)
-                    .addComponent(lblNombre))
-                .addContainerGap())
-        );
+        add(lblPuntaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 104, -1, -1));
+        add(panelTarjetaSecundaria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_jugador_secundario.png"))
@@ -122,5 +103,6 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPuntaje;
+    private vista.PanelTarjetaSecundaria panelTarjetaSecundaria1;
     // End of variables declaration//GEN-END:variables
 }

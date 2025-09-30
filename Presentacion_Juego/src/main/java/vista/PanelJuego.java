@@ -46,8 +46,6 @@ public class PanelJuego extends javax.swing.JPanel {
         botonLlena = new vista.BotonJugada();
         panelContenedorSecundarios = new javax.swing.JPanel();
         panelJugadorSecundario2 = new vista.PanelJugadorSecundario();
-        panelJugadorSecundario3 = new vista.PanelJugadorSecundario();
-        panelJugadorSecundario4 = new vista.PanelJugadorSecundario();
         panelTarjeta = new vista.PanelTarjeta();
         panelContenedorCantador = new javax.swing.JPanel();
         panelCartaCantador = new vista.PanelCartita();
@@ -68,8 +66,6 @@ public class PanelJuego extends javax.swing.JPanel {
         panelContenedorSecundarios.setBackground(new java.awt.Color(255, 178, 0));
         panelContenedorSecundarios.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 29, 0));
         panelContenedorSecundarios.add(panelJugadorSecundario2);
-        panelContenedorSecundarios.add(panelJugadorSecundario3);
-        panelContenedorSecundarios.add(panelJugadorSecundario4);
 
         panelContenedorCantador.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -183,8 +179,6 @@ public class PanelJuego extends javax.swing.JPanel {
     private javax.swing.JPanel panelContenedorSecundarios;
     private vista.PanelJugadorPrincipal panelJugadorPrincipal;
     private vista.PanelJugadorSecundario panelJugadorSecundario2;
-    private vista.PanelJugadorSecundario panelJugadorSecundario3;
-    private vista.PanelJugadorSecundario panelJugadorSecundario4;
     private vista.PanelTarjeta panelTarjeta;
     private vista.PanelTarjeta panelTarjeta1;
     // End of variables declaration//GEN-END:variables
