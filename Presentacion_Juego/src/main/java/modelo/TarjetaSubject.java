@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import java.awt.Point;
+
 /**
  *
  * @author rocha
@@ -17,17 +19,7 @@ public class TarjetaSubject extends Subject {
         this.fichas = new boolean[4][4];
     }
     
-    public void agregarFicha(int numeroCarta) {
-        // Buscar la posición de la carta y cambiarlo a true
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (cartas[i][j] == numeroCarta) {
-                    fichas[i][j] = true;
-                }
-            }
-        }
-        
-        // Notificar cambios
-        this.notifyAllObservers();
+    public void agregarFicha(Point posicion) {
+        this.fichas[posicion.x][posicion.y] = true;
     }
 }

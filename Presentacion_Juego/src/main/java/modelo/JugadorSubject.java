@@ -5,6 +5,7 @@
 package modelo;
 
 import java.awt.Image;
+import java.awt.Point;
 
 /**
  *
@@ -26,6 +27,11 @@ public class JugadorSubject extends Subject {
         this.foto = foto;
         this.tarjeta = tarjeta;
         this.jugadorPrincipal = jugadorPrincipal;
+    }
+
+    public void colocarFicha(Point posicion) {
+        this.tarjeta.agregarFicha(posicion);
+        this.notifyAllObservers();
     }
 
     public String getNickname() {
