@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
 import java.awt.Point;
+import mediador.VistaAModelo;
 
 /**
  *
@@ -17,7 +14,7 @@ public class ModeloControlImp implements IModeloControl {
 
     @Override
     public void colocarFicha(Point posicion) {
-        IModeloJuego modeloJuego = new ModeloJuegoImp();
-        modeloJuego.validaMovimiento(posicion);
+        VistaAModelo mediador = new VistaAModelo();
+        mediador.colocarFicha(posicion);
     }
 }

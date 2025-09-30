@@ -31,6 +31,7 @@ public class Main {
                 cartas.put(new Point(x, y), ((x*4)+y+1));
             }
         }
+        
         Tarjeta tarjeta = new Tarjeta(cartas);
         JugadorSubject jugadorPrincipal = new JugadorSubject("Jerson", 0, imagen, tarjeta, true);
         JugadorSubject jugadorSecundario = new JugadorSubject("Peter", 0, imagen, tarjeta, false);

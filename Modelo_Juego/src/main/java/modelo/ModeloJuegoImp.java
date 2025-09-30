@@ -7,6 +7,7 @@ package modelo;
 import java.awt.Point;
 
 import dtos.FichaDTO;
+import mediador.ModeloAVista;
 
 /**
  *
@@ -31,9 +32,9 @@ public class ModeloJuegoImp implements IModeloJuego {
      * @param posicion
      */
     public void validarMovimientoMock(Point posicion){
-        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
         FichaDTO ficha = new FichaDTO("Jerson", posicion);
-        modeloVista.colocarFicha(ficha);
+        ModeloAVista mediador = new ModeloAVista();
+        mediador.colocarFicha(ficha);
     }
 
 
