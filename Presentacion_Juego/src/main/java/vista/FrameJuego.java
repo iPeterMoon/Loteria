@@ -1,5 +1,8 @@
 package vista;
 
+import modelo.JugadorSubject;
+import modelo.Subject;
+
 /**
  *
  * @author pedro
@@ -8,11 +11,20 @@ public class FrameJuego extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrameJuego.class.getName());
 
+    private static FrameJuego frameJuego;
+
     /**
      * Creates new form FrameJuego
      */
-    public FrameJuego() {
+    private FrameJuego() {
         initComponents();
+    }
+
+    public static FrameJuego getInstance(){
+        if(frameJuego==null){
+            frameJuego = new FrameJuego();
+        }
+        return frameJuego;
     }
 
     /**
@@ -34,6 +46,18 @@ public class FrameJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private PanelJuego panelJuego;
+
+    public void setJugadorPrincipal(JugadorSubject jugador) {
+        panelJuego.setJugadorPrincipal(jugador);
+    }
+
+    public void agregarJugadorSecundario(JugadorSubject jugador) {
+        panelJuego.agregarJugadorSecundario(jugador);
+    }
+
+    public void actualizarVista(Subject subject){
+        panelJuego.actualizarVista(subject);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

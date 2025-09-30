@@ -15,13 +15,13 @@ public class JugadorSubject extends Subject {
     private String nickname;
     private int puntaje;
     private Image foto;
-    private TarjetaSubject tarjeta;
+    private Tarjeta tarjeta;
     private boolean jugadorPrincipal;
 
     public JugadorSubject() {
     }
 
-    public JugadorSubject(String nickname, int puntaje, Image foto, TarjetaSubject tarjeta, boolean jugadorPrincipal) {
+    public JugadorSubject(String nickname, int puntaje, Image foto, Tarjeta tarjeta, boolean jugadorPrincipal) {
         this.nickname = nickname;
         this.puntaje = puntaje;
         this.foto = foto;
@@ -58,11 +58,11 @@ public class JugadorSubject extends Subject {
         this.foto = foto;
     }
 
-    public TarjetaSubject getTarjeta() {
+    public Tarjeta getTarjeta() {
         return tarjeta;
     }
 
-    public void setTarjeta(TarjetaSubject tarjeta) {
+    public void setTarjeta(Tarjeta tarjeta) {
         this.tarjeta = tarjeta;
     }
 

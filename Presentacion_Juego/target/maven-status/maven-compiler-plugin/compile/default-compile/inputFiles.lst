@@ -8,10 +8,11 @@ C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\ja
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\ModeloControlImp.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\ModeloVistaFacade.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\Subject.java
-C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\TarjetaSubject.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\Tarjeta.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\BotonJugada.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\FrameJuego.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\IObserver.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\ModelObserver.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelCartita.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelJuego.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\vista\PanelJugadorPrincipal.java

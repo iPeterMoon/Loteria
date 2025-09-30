@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
+import modelo.JugadorSubject;
+
 /**
  *
  * @author norma
@@ -98,6 +100,18 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         return new ImageIcon(imagenEscalada);
     }
 
+    public void setJugador(JugadorSubject jugador){
+        lblNombre.setText(jugador.getNickname());
+        lblPuntaje.setText("Puntaje: "+jugador.getPuntaje());
+        fotoJugador = new ImageIcon(jugador.getFoto());
+        cargarFoto();
+        repaint();
+        revalidate();
+    }
+
+    public boolean esMismoJugador(JugadorSubject jugador){
+        return lblNombre.getText().equals(jugador.getNickname());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblFoto;

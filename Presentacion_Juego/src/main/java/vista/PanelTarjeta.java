@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
+import modelo.Tarjeta;
+
 /**
  *
  * @author Jp
@@ -84,6 +86,21 @@ public class PanelTarjeta extends javax.swing.JPanel {
         super.paintComponent(g);
         if (imagenFondo != null) {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+    
+    public void actualizarFichas(Tarjeta tarjeta){
+        // Recorre los componentes del panel contenedor
+        for (int idx = 0; idx < panelCartitas.getComponentCount(); idx++) {
+            java.awt.Component comp = panelCartitas.getComponent(idx);
+            if (comp instanceof PanelCartita) {
+                PanelCartita cartita = (PanelCartita) comp;
+                Point posicion = cartita.getPosicion();
+                Boolean tieneFicha = tarjeta.getFichas().get(posicion);
+                if (tieneFicha != null && tieneFicha) {
+                    cartita.agregarFicha();
+                }
+            }
         }
     }
 

@@ -1,8 +1,11 @@
 package vista;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.*;
 
 /**
  *
@@ -11,15 +14,16 @@ import java.awt.Image;
 public class PanelJuego extends javax.swing.JPanel {
 
     private Image imagenFondo;
+    private List<PanelJugadorSecundario> panelesJugadoresSecundarios;
 
     /**
      * Creates new form PanelJuego
      */
     public PanelJuego() {
         initComponents();
-
         dibujarFondo();
 
+        panelesJugadoresSecundarios = new ArrayList<>();
         botonCuatroEsquinas.setNombreJugada("Cuatro esquinas");
         botonChorro.setNombreJugada("Chorro");
         botonCentro.setNombreJugada("Centro");
@@ -36,8 +40,6 @@ public class PanelJuego extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        botonJugada4 = new vista.BotonJugada();
-        panelTarjeta1 = new vista.PanelTarjeta();
         botonAbandonar = new javax.swing.JButton();
         panelJugadorPrincipal = new vista.PanelJugadorPrincipal();
         botonCuatroEsquinas = new vista.BotonJugada();
@@ -166,12 +168,52 @@ public class PanelJuego extends javax.swing.JPanel {
         }
     }
 
+    public void actualizarVista(Subject subject){
+        actualizarJugador(subject);
+    }
+
+    
+    private void actualizarJugador(Subject subject){
+        if(subject instanceof JugadorSubject){
+            JugadorSubject jugador = (JugadorSubject) subject;
+            for(PanelJugadorSecundario panel: panelesJugadoresSecundarios){
+                if(panel.esMismoJugador(jugador)){
+                    //TODO: Implementar como pintar la carta abstracta
+                }
+            }
+            if(panelJugadorPrincipal.esMismoJugador(jugador)){
+                panelTarjeta.actualizarFichas(jugador.getTarjeta());
+            }
+        }
+    }
+    
+    public void setJugadorPrincipal(JugadorSubject jugador) {
+        panelJugadorPrincipal.setJugador(jugador);
+        repaint();
+        revalidate();
+    }
+
+    public void agregarJugadorSecundario(JugadorSubject jugador) {
+        PanelJugadorSecundario panel = new PanelJugadorSecundario();
+        panel.setJugador(jugador);
+        this.panelesJugadoresSecundarios.add(panel);
+        actualizarPanelesSecundarios();
+        repaint();
+        revalidate();
+    }
+
+    private void actualizarPanelesSecundarios(){
+        panelContenedorSecundarios.removeAll();
+        for(PanelJugadorSecundario panel : panelesJugadoresSecundarios){
+            panelContenedorSecundarios.add(panel);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAbandonar;
     private vista.BotonJugada botonCentro;
     private vista.BotonJugada botonChorro;
     private vista.BotonJugada botonCuatroEsquinas;
-    private vista.BotonJugada botonJugada4;
     private vista.BotonJugada botonLlena;
     private javax.swing.JLabel lblCarta;
     private vista.PanelCartita panelCartaCantador;
@@ -180,6 +222,5 @@ public class PanelJuego extends javax.swing.JPanel {
     private vista.PanelJugadorPrincipal panelJugadorPrincipal;
     private vista.PanelJugadorSecundario panelJugadorSecundario2;
     private vista.PanelTarjeta panelTarjeta;
-    private vista.PanelTarjeta panelTarjeta1;
     // End of variables declaration//GEN-END:variables
 }

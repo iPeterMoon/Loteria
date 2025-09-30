@@ -6,13 +6,14 @@ package modelo;
 
 import java.awt.Point;
 
+import dtos.FichaDTO;
+
 /**
  *
  * @author Alici
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
-    IModeloVista modeloVista = new ModeloVistaFacade();
 
     @Override
     public void validaMovimiento(Point posicion) {
@@ -22,6 +23,18 @@ public class ModeloJuegoImp implements IModeloJuego {
        //si son iguales es decir la carta en la posicion actual y la carta cantada actual
             // modeloVista.colocarFicha(posicion);
        // en caso contrario no pasaria nada
+       validarMovimientoMock(posicion);
     }
+
+    /**
+     * METODO POR MIENTRAS PARA PROBAR EL FLUJO EN LA VISTA
+     * @param posicion
+     */
+    public void validarMovimientoMock(Point posicion){
+        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+        FichaDTO ficha = new FichaDTO("Jerson", posicion);
+        modeloVista.colocarFicha(ficha);
+    }
+
 
 }
