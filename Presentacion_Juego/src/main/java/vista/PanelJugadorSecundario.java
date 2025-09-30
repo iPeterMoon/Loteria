@@ -16,7 +16,7 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     private Image imagenFondo;
     private static final int ANCHO_ALTO = 80;
     private ImageIcon fotoJugador;
-    
+
     /**
      * Creates new form PanelJugadorSecundario
      */
@@ -83,12 +83,12 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
-    private void cargarFotoJugador(){
+
+    private void cargarFotoJugador() {
         fotoJugador = cargarFoto();
         lblFoto.setIcon(fotoJugador);
     }
-    
+
     private ImageIcon cargarFoto() {
         String url = "/imagenes_alt/icon_imagen.png";
         URL recurso = getClass().getResource(url);
@@ -100,17 +100,21 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         return new ImageIcon(imagenEscalada);
     }
 
-    public void setJugador(JugadorSubject jugador){
+    public void setJugador(JugadorSubject jugador) {
         lblNombre.setText(jugador.getNickname());
-        lblPuntaje.setText("Puntaje: "+jugador.getPuntaje());
+        lblPuntaje.setText("Puntaje: " + jugador.getPuntaje());
         fotoJugador = new ImageIcon(jugador.getFoto());
         cargarFoto();
         repaint();
         revalidate();
     }
 
-    public boolean esMismoJugador(JugadorSubject jugador){
+    public boolean esMismoJugador(JugadorSubject jugador) {
         return lblNombre.getText().equals(jugador.getNickname());
+    }
+
+    public void actualizarTarjetaAbstracta(JugadorSubject jugador) {
+        panelTarjetaSecundaria1.actualizarFichas(jugador.getTarjeta());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

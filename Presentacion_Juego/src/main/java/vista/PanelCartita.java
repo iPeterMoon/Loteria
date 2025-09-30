@@ -171,7 +171,6 @@ public class PanelCartita extends javax.swing.JPanel {
         if (esAbstracta) {
             setBackground(Color.DARK_GRAY);
             repaint();
-            System.out.println("Carta marcada: " + numeroCarta);
         }
     }
 
