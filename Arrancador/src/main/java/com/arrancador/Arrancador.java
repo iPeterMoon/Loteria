@@ -1,12 +1,10 @@
-package main;
-
-import javax.swing.ImageIcon;
+package com.arrancador;
 
 import java.awt.Image;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.swing.ImageIcon;
 import modelo.JugadorSubject;
 import modelo.ModeloVistaFacade;
 import modelo.Tarjeta;
@@ -14,13 +12,20 @@ import vista.FrameJuego;
 import vista.IObserver;
 import vista.ModelObserver;
 
-public class Main {
+/**
+ * Clase que se encarga de configurar el modelo del juego y todo lo necesario
+ * para arrancar el programa.
+ *
+ * @author Alici
+ */
+public class Arrancador {
+
     public static void main(String[] args) {
         FrameJuego frame = FrameJuego.getInstance();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-        
+
         ImageIcon imagenIcono = new ImageIcon(frame.getClass().getResource("/imagenes_alt/icon_imagen.png"));
 
         Image imagen = imagenIcono.getImage();
@@ -28,16 +33,16 @@ public class Main {
         Map<Point, Integer> cartas = new HashMap<>();
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                cartas.put(new Point(x, y), ((x*4)+y+1));
+                cartas.put(new Point(x, y), ((x * 4) + y + 1));
             }
         }
-        
+
         Tarjeta tarjeta = new Tarjeta(cartas);
         JugadorSubject jugadorPrincipal = new JugadorSubject("Jerson", 0, imagen, tarjeta, true);
         JugadorSubject jugadorSecundario = new JugadorSubject("Peter", 0, imagen, tarjeta, false);
         JugadorSubject jugadorSecundario1 = new JugadorSubject("Juampi", 0, imagen, tarjeta, false);
         JugadorSubject jugadorSecundario2 = new JugadorSubject("Isabel", 0, imagen, tarjeta, false);
-        
+
         frame.setJugadorPrincipal(jugadorPrincipal);
         frame.agregarJugadorSecundario(jugadorSecundario);
         frame.agregarJugadorSecundario(jugadorSecundario1);
