@@ -7,6 +7,7 @@ package modeloJuego;
 import java.awt.Point;
 
 import dtos.FichaDTO;
+import java.util.List;
 import modelo.IModeloVista;
 import modelo.ModeloVistaFacade;
 
@@ -16,9 +17,18 @@ import modelo.ModeloVistaFacade;
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
+    private List<Jugador> jugadoresSecundario;
+    private Jugador jugadorPrincipal;
+    private Jugador host;
     private IModeloVista vista = ModeloVistaFacade.getInstance();
 
     public ModeloJuegoImp() {
+    }
+
+    public ModeloJuegoImp(List<Jugador> jugadoresSecundario, Jugador jugadorPrincipal, Jugador host) {
+        this.jugadoresSecundario = jugadoresSecundario;
+        this.jugadorPrincipal = jugadorPrincipal;
+        this.host = host;
     }
 
     @Override
@@ -41,5 +51,5 @@ public class ModeloJuegoImp implements IModeloJuego {
         FichaDTO ficha = new FichaDTO("Jerson", posicion);
         vista.colocarFicha(ficha);
     }
-
+ 
 }
