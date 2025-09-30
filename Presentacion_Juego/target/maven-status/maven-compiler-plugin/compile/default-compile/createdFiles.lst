@@ -14,6 +14,7 @@ modelo\ModeloControlImp.class
 vista\PanelJuego.class
 vista\PanelCartita.class
 vista\BotonJugada.class
+vista\PanelTarjetaSecundaria.class
 vista\PanelCartita$1.class
 modelo\Subject.class
 vista\PanelJugadorPrincipal.class

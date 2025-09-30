@@ -1,6 +1,7 @@
 package vista;
 
 import control.ControlSeleccionarJugada;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -35,6 +36,7 @@ public class PanelCartita extends javax.swing.JPanel {
     private ImageIcon iconoActual;
     private boolean flagCantador;
     private JLabel ficha;
+    private boolean esAbstracta = false;
 
     /**
      * Constructor para que se vea en el design de netbeans
@@ -58,6 +60,22 @@ public class PanelCartita extends javax.swing.JPanel {
         this.posicion = posicion;
         this.flagCantador = false;
         iniciar();
+    }
+    
+    public PanelCartita(boolean abstracta, int numeroCarta) {
+        initComponents();
+        this.numeroCarta = numeroCarta;
+        this.esAbstracta = abstracta;
+
+        if (abstracta) {
+            this.flagCantador = false;
+            this.iconoOriginal = null;
+            this.iconoActual = null;
+            this.setBackground(Color.LIGHT_GRAY);
+            this.setOpaque(true);
+        } else {
+            iniciar();
+        }
     }
 
     private void iniciar() {
@@ -147,6 +165,14 @@ public class PanelCartita extends javax.swing.JPanel {
         op.filter(buff, buff);
 
         return new ImageIcon(buff);
+    }
+    
+    public void marcarComoJugadorSecundario() {
+        if (esAbstracta) {
+            setBackground(Color.DARK_GRAY);
+            repaint();
+            System.out.println("Carta marcada: " + numeroCarta);
+        }
     }
 
     @Override
