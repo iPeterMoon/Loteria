@@ -1,5 +1,7 @@
 package com.arrancador;
 
+import conexion.ConexionPublisher;
+import conexion.ConexionReceiver;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.HashMap;
@@ -21,6 +23,15 @@ import vista.ModelObserver;
 public class Arrancador {
 
     public static void main(String[] args) {
+        
+        ConexionReceiver receiver = new ConexionReceiver();
+        Thread receiverThread = new Thread(receiver);
+        receiverThread.setName("ReceiverThread");
+        receiverThread.start();
+        
+        ConexionPublisher publisher = new ConexionPublisher();
+        publisher.anunciarConexion();
+        
         FrameJuego frame = FrameJuego.getInstance();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
@@ -60,6 +71,5 @@ public class Arrancador {
         modeloVista.agregarJugador(jugadorSecundario);
         modeloVista.agregarJugador(jugadorSecundario1);
         modeloVista.agregarJugador(jugadorSecundario2);
-
     }
 }
