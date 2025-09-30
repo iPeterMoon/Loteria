@@ -1,0 +1,6 @@
+modelo\ModeloJuegoImp.class
+modelo\IModeloJuego.class
+modelo\Tarjeta.class
+dtos\FichaDTO.class
+modelo\Cantador.class
+modelo\Jugador.class
