@@ -7,6 +7,7 @@ package control;
 import java.awt.Point;
 import modelo.IModeloControl;
 import modelo.ModeloControlImp;
+import modeloJuego.ModeloJuegoImp;
 
 /**
  *
@@ -14,12 +15,8 @@ import modelo.ModeloControlImp;
  */
 public class ControlSeleccionarJugada {
 
-    private static IModeloControl controlModelo;
-
     // Método para inicializar el control
-    public static void setControlModelo(IModeloControl control) {
-        controlModelo = control;
-    }
+    private static IModeloControl controlModelo = new ModeloControlImp();
 
     public static void colocarFicha(Point posicion) {
         if (controlModelo != null) {

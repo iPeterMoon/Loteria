@@ -1,6 +1,6 @@
 control\ControlSeleccionarJugada.class
 vista\PanelJugadorSecundario.class
-main\Main.class
+modeloJuego\Jugador.class
 vista\FrameJuego.class
 modelo\JugadaSubject.class
 modelo\IModeloVista.class
@@ -12,11 +12,16 @@ modelo\CantadorSubject.class
 modelo\ModeloVistaFacade.class
 modelo\ModeloControlImp.class
 vista\PanelJuego.class
+modeloJuego\Cantador.class
+modeloJuego\ModeloJuegoImp.class
 vista\PanelCartita.class
 vista\BotonJugada.class
 modelo\Tarjeta.class
 vista\PanelTarjetaSecundaria.class
 vista\PanelCartita$1.class
+modeloJuego\IModeloJuego.class
+modeloJuego\Tarjeta.class
 modelo\Subject.class
 vista\PanelJugadorPrincipal.class
 vista\IObserver.class
+dtos\FichaDTO.class

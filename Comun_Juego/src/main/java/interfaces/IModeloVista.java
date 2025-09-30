@@ -4,7 +4,6 @@
  */
 package interfaces;
 
-import dtos.FichaDTO;
 import java.awt.Color;
 
 /**
@@ -12,5 +11,5 @@ import java.awt.Color;
  * @author rocha
  */
 public interface IModeloVista {
-    void colocarFicha(FichaDTO fichaDTO);
+    //void colocarFicha(FichaDTO fichaDTO);
 }
