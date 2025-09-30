@@ -1,20 +1,21 @@
 package modelo;
 
+import interfaces.IModeloJuego;
 import java.awt.Point;
-import mediador.VistaAModelo;
-
 /**
  *
  * @author rocha
  */
 public class ModeloControlImp implements IModeloControl {
 
-    public ModeloControlImp() {
+    private IModeloJuego modeloJuego;
+
+    public ModeloControlImp(IModeloJuego modeloJuego) {
+        this.modeloJuego = modeloJuego;
     }
 
     @Override
     public void colocarFicha(Point posicion) {
-        VistaAModelo mediador = new VistaAModelo();
-        mediador.colocarFicha(posicion);
+        modeloJuego.validaMovimiento(posicion);
     }
 }

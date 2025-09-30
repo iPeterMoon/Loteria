@@ -13,7 +13,7 @@
         </dependency>
         <dependency>
             <groupId>com.mycompany</groupId>
-            <artifactId>Mediador_Loteria</artifactId>
+            <artifactId>Comun_Juego</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

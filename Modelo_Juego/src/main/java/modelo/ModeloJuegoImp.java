@@ -7,7 +7,7 @@ package modelo;
 import java.awt.Point;
 
 import dtos.FichaDTO;
-import mediador.ModeloAVista;
+import interfaces.IModeloVista;
 
 /**
  *
@@ -15,7 +15,12 @@ import mediador.ModeloAVista;
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
+    private IModeloVista vista;
 
+    public ModeloJuegoImp(IModeloVista vista) {
+        this.vista = vista;
+    }
+    
     @Override
     public void validaMovimiento(Point posicion) {
        // Se debe de obtener la tarjeta del jugador
@@ -33,8 +38,7 @@ public class ModeloJuegoImp implements IModeloJuego {
      */
     public void validarMovimientoMock(Point posicion){
         FichaDTO ficha = new FichaDTO("Jerson", posicion);
-        ModeloAVista mediador = new ModeloAVista();
-        mediador.colocarFicha(ficha);
+        vista.colocarFicha(ficha);
     }
 
 
