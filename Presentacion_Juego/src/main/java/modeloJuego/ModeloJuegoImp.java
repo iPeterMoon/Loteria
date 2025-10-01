@@ -7,9 +7,12 @@ package modeloJuego;
 import java.awt.Point;
 
 import dtos.FichaDTO;
+import mappers.JugadorMapper;
+
 import java.util.List;
 
 import conexion.PeerService;
+import java.util.LinkedList;
 import modelo.IModeloVista;
 import modelo.ModeloVistaFacade;
 
@@ -37,6 +40,7 @@ public class ModeloJuegoImp implements IModeloJuego {
      * Jugador principal que tiene la vista principal
      */
     private Jugador jugadorPrincipal;
+    
     /**
      * Jugador host de la ronda
      */
@@ -47,15 +51,27 @@ public class ModeloJuegoImp implements IModeloJuego {
      * Constructor vacio
      */
     private ModeloJuegoImp() {
+        jugadoresSecundario = new LinkedList<>();
     }
 
     public Jugador getJugadorPrincipal() {
         return jugadorPrincipal;
     }
 
-    public void setJugadorPrincipal(Jugador jugadorPrincipal) {
+    @Override
+    public void agregarJugadorPrincipal(Jugador jugadorPrincipal) {
         this.jugadorPrincipal = jugadorPrincipal;
+        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+        modeloVista.agregarJugadorPrincipal(JugadorMapper.toDTO(jugadorPrincipal));
     }
+
+    @Override
+    public void agregarJugadorSecundario(Jugador jugadorSecundario) {
+        this.jugadoresSecundario.add(jugadorSecundario);
+        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+        modeloVista.agregarJugadorSecundario(JugadorMapper.toDTO(jugadorSecundario));
+    }
+
 
     /**
      * Constructor con los atributos de jugadores secundarios, jugador principal

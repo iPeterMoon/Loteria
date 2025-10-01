@@ -2,6 +2,7 @@ package main;
 
 import conexion.ConexionPublisher;
 import conexion.ConexionReceiver;
+import conexion.PeerService;
 import conexion.ServerTCP;
 import java.awt.Point;
 import java.io.IOException;
@@ -74,20 +75,15 @@ public class Arrancador {
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
         ModeloJuegoImp modeloJuego = ModeloJuegoImp.getInstance();
-        modeloJuego.setJugadorPrincipal(jugadorPrincipal);
+        modeloJuego.agregarJugadorPrincipal(jugadorPrincipal);
         
+        PeerService conexion = PeerService.getInstancia();
+        conexion.broadcastMandarJugador(JugadorMapper.toDTO(jugadorPrincipal));
+                
         Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
 
-        //Jugadores secundarios
-        Jugador jugadorSecundario1 = new Jugador("Adel", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
-        Jugador jugadorSecundario2 = new Jugador("Peter", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
-
         modeloVista.iniciarFrameJuego();
-
-        modeloVista.agregarJugadorPrincipal(JugadorMapper.toDTO(jugadorPrincipal));
-        modeloVista.agregarJugadorSecundario(JugadorMapper.toDTO(jugadorSecundario1));
-        modeloVista.agregarJugadorSecundario(JugadorMapper.toDTO(jugadorSecundario2));
 
     }
 }

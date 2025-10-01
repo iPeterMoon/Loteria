@@ -15,4 +15,16 @@ public interface IModeloJuego {
      * @param posicion Posición del tablero donde se quiere colocar la ficha
      */
     public void validaMovimiento(Point posicion);
+
+    /**
+     * Método para agregar un jugador principal
+     * @param jugador Jugador Principal
+     */
+    public void agregarJugadorPrincipal(Jugador jugador);
+
+    /**
+     * Método para agregar un jugador secundario
+     * @param jugador Jugador Secundario
+     */
+    public void agregarJugadorSecundario(Jugador jugador);
 }

@@ -1,6 +1,7 @@
 package dtos;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 /**
  * Objeto para transferir datos que representa la información de un jugador.
@@ -9,7 +10,9 @@ import java.awt.Image;
  *
  * @author Alici
  */
-public class JugadorDTO {
+public class JugadorDTO implements Serializable{
+    private static final long serialVersionUID = 1L; // Importante para la serialización
+
 
     /**
      * El nombre de usuario o apodo único del jugador.
@@ -124,4 +127,10 @@ public class JugadorDTO {
         this.tarjeta = tarjeta;
     }
 
+    @Override
+    public String toString() {
+        return "JugadorDTO{" + "nickname=" + nickname + ", fotoPerfil=" + fotoPerfil + ", puntos=" + puntos + ", tarjeta=" + tarjeta + '}';
+    }
+
+    
 }

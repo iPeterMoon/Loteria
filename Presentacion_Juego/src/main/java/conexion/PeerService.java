@@ -3,6 +3,7 @@ package conexion;
 import java.util.concurrent.ConcurrentHashMap;
 
 import dtos.FichaDTO;
+import dtos.JugadorDTO;
 
 /**
  * PeerService.java
@@ -62,6 +63,16 @@ public class PeerService {
         handlersEntrantes.values().forEach(handler -> handler.sendObject(ficha));
         
         System.out.println("[SERVICE] Broadcast enviado: " + ficha.toString());
+    }
+    
+    public void broadcastMandarJugador(JugadorDTO jugador) {
+        // Enviar a conexiones que iniciamos (Salientes)
+        handlersSalientes.values().forEach(handler -> handler.sendObject(jugador));
+        
+        // Enviar a conexiones que aceptamos (Entrantes)
+        handlersEntrantes.values().forEach(handler -> handler.sendObject(jugador));
+        
+        System.out.println("[SERVICE] Broadcast enviado: " + jugador.toString());
     }
 
 }

@@ -31,7 +31,7 @@ public class ModeloVistaFacade implements IModeloVista {
     /**
      * Frame del juego
      */
-    private FrameJuego frameJuego;
+    private FrameJuego frameJuego = FrameJuego.getInstance();
 
     /**
      * Observador

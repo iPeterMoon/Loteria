@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import dtos.FichaDTO;
+import dtos.JugadorDTO;
+import modelo.IModeloVista;
 import modelo.ModeloVistaFacade;
 
 /**
@@ -83,6 +85,10 @@ public class PeerHandler implements Runnable {
                     FichaDTO fichaDTO = (FichaDTO) objetoRecibido;
                     actualizarTarjeta(fichaDTO);
                 }
+                if(objetoRecibido instanceof JugadorDTO) {
+                    JugadorDTO jugador = (JugadorDTO) objetoRecibido;
+                    mandarJugador(jugador);
+                }
             }
         } catch (IOException e) {
             System.err.println("[HANDLER - "+ peerID + "] Conexión cerrada inesperadamente: " + e.getMessage());
@@ -98,9 +104,14 @@ public class PeerHandler implements Runnable {
      * @param ficha
      */
     private void actualizarTarjeta(FichaDTO ficha){
-        ModeloVistaFacade modeloVista = ModeloVistaFacade.getInstance();
+        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
         modeloVista.colocarFicha(ficha);
-    }    
+    }
+    
+    private void mandarJugador(JugadorDTO jugador) {
+        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+        modeloVista.agregarJugadorSecundario(jugador);    
+    }
 
     /**
      * Envía un objeto serializable al peer remoto.
