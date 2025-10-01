@@ -31,6 +31,21 @@ public class Jugador {
     }
 
     /**
+     * Constructor del objeto con todos los atributos del jugador
+     *
+     * @param nickname Nombre del jugador
+     * @param fotoPerfil Foto de perfil del jugador
+     * @param puntos Puntos del jugador
+     * @param tarjeta Tarjeta del jugador
+     */
+    public Jugador(String nickname, String fotoPerfil, int puntos, Tarjeta tarjeta) {
+        this.nickname = nickname;
+        this.fotoPerfil = fotoPerfil;
+        this.puntos = puntos;
+        this.tarjeta = tarjeta;
+    }
+
+    /**
      * Método para obtener el nombre del jugador
      *
      * @return Cadena de texto con el nombre del jugador
