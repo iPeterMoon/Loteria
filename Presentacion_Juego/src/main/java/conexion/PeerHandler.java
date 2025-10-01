@@ -9,15 +9,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import dtos.FichaDTO;
+import javax.swing.SwingUtilities;
 import modelo.ModeloVistaFacade;
 
 /**
- * PeerHandler.java
- * Clase que maneja la comunicación continua (E/S) con un peer remoto a través
- * de un Socket TCP.
- * Cada PeerHandler se ejecuta en un hilo separado para no bloquear la
- * aplicación.
- * 
+ * PeerHandler.java Clase que maneja la comunicación continua (E/S) con un peer
+ * remoto a través de un Socket TCP. Cada PeerHandler se ejecuta en un hilo
+ * separado para no bloquear la aplicación.
+ *
  * @author pedro
  */
 public class PeerHandler implements Runnable {
@@ -30,38 +29,38 @@ public class PeerHandler implements Runnable {
 
     /**
      * Constructor. Inicializa el manejador con el socket TCP establecido.
-     * 
+     *
      * @param peerSocket El socket de la conexión con el peer
      */
     public PeerHandler(Socket peerSocket) {
         this.peerSocket = peerSocket;
         this.peerID = peerSocket.getInetAddress().getHostAddress() + ":" + peerSocket.getPort();
         System.out.println("[HANDLER] Manejador para Peer iniciado: " + this.peerID);
-        try{
+        try {
             //Inicializar flujos de entrada y salida
             this.salida = new ObjectOutputStream(peerSocket.getOutputStream());
             this.entrada = new ObjectInputStream(peerSocket.getInputStream());
         } catch (IOException e) {
-            System.err.println("[HANDLER] Error al configurar flujos E/S para " + peerID + ": "+ e.getMessage());
-            closeConnection();            
+            System.err.println("[HANDLER] Error al configurar flujos E/S para " + peerID + ": " + e.getMessage());
+            closeConnection();
         }
     }
 
     /**
      * Cierra el socket y detiene el manejador
      */
-    public void closeConnection(){
+    public void closeConnection() {
         this.isRunning = false;
-        try{
-            if(peerSocket != null && !peerSocket.isClosed()){
+        try {
+            if (peerSocket != null && !peerSocket.isClosed()) {
                 //Notificar al PeerService que el handler se cerró
                 PeerService.getInstancia().removerHandler(peerID);
 
                 peerSocket.close();
                 System.out.println("[HANLDER] Conexxión cerrada con " + peerID);
             }
-        } catch (IOException e){
-            System.err.println("[HANDLER] Error al cerrar el socket: "+ e.getMessage());
+        } catch (IOException e) {
+            System.err.println("[HANDLER] Error al cerrar el socket: " + e.getMessage());
         }
     }
 
@@ -70,54 +69,61 @@ public class PeerHandler implements Runnable {
      */
     @Override
     public void run() {
-        if (entrada == null){
+        if (entrada == null) {
             return;
-        } 
-        
-        try{
-            while(isRunning) {
+        }
+
+        try {
+            while (isRunning) {
                 //Leer un objeto del socket.
                 Object objetoRecibido = entrada.readObject();
 
-                if(objetoRecibido instanceof FichaDTO) {
+                if (objetoRecibido instanceof FichaDTO) {
                     FichaDTO fichaDTO = (FichaDTO) objetoRecibido;
                     actualizarTarjeta(fichaDTO);
                 }
             }
         } catch (IOException e) {
-            System.err.println("[HANDLER - "+ peerID + "] Conexión cerrada inesperadamente: " + e.getMessage());
+            System.err.println("[HANDLER - " + peerID + "] Conexión cerrada inesperadamente: " + e.getMessage());
         } catch (ClassNotFoundException e) {
-            System.err.println("[HANDLER - "+ peerID + "] Objeto recibido no reconocido: " + e.getMessage());
+            System.err.println("[HANDLER - " + peerID + "] Objeto recibido no reconocido: " + e.getMessage());
         } finally {
             closeConnection();
         }
     }
 
     /**
-     * Metodo que llama al modelo vista fachada y actualiza el subject de la tarjeta
+     * Metodo que llama al modelo vista fachada y actualiza el subject de la
+     * tarjeta
+     *
      * @param ficha
      */
-    private void actualizarTarjeta(FichaDTO ficha){
-        ModeloVistaFacade modeloVista = ModeloVistaFacade.getInstance();
-        modeloVista.colocarFicha(ficha);
-    }    
+    private void actualizarTarjeta(FichaDTO ficha) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ModeloVistaFacade modeloVista = ModeloVistaFacade.getInstance();
+                modeloVista.colocarFicha(ficha);
+            }
+        });
+    }
 
     /**
      * Envía un objeto serializable al peer remoto.
+     *
      * @param objeto Objeto a enviar
      */
-    public void sendObject(Object objeto){
+    public void sendObject(Object objeto) {
         try {
-            if(salida != null && !peerSocket.isClosed()){
+            if (salida != null && !peerSocket.isClosed()) {
                 salida.writeObject(objeto);
                 salida.flush(); // Asegura que los datos se envíen de inmediato
             }
         } catch (IOException e) {
-            System.err.println("[HANDLER] Error al enviar objeto a " + peerID + ": "+ e.getMessage());
+            System.err.println("[HANDLER] Error al enviar objeto a " + peerID + ": " + e.getMessage());
             // Si falla el envío, asumimos que el peer se desconectó
             closeConnection();
         }
     }
-
 
 }

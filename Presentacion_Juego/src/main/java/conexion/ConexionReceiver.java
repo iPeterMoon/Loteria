@@ -2,6 +2,7 @@ package conexion;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -32,7 +33,24 @@ public class ConexionReceiver implements Runnable {
      */
     public ConexionReceiver(int miPuertoTCP) throws UnknownHostException {
         this.miPuertoTCP = miPuertoTCP;
-        this.miIpLocal = InetAddress.getLocalHost().getHostAddress();
+        String ipDetectada = null;
+        try {
+            NetworkInterface netIf = SeleccionadorInterfaz.seleccionarInterfazRed();
+            if (netIf != null) {
+                Enumeration<InetAddress> addresses = netIf.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    if (addr instanceof Inet4Address) {
+                        ipDetectada = addr.getHostAddress();
+                        break;
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            System.err.println("[RECEIVER] Error al seleccionar interfaz para obtener IP local: " + e.getMessage());
+        }
+        this.miIpLocal = (ipDetectada != null) ? ipDetectada : InetAddress.getLocalHost().getHostAddress();
+        System.out.println("[RECEIVER] Mi IP local para comparaciones es: " + this.miIpLocal);
     }
 
     @Override
@@ -99,7 +117,7 @@ public class ConexionReceiver implements Runnable {
                     establecerConexionTCP(ipRemota, puertoRemoto, peerID);
                 } else {
                     //Si el Peer ya está en la lista, no hacemos nada
-                    System.out.println("[RECEIVER] Anuncio recibido de "+peerID+", ya conectado. Ignorando re-anuncio");
+                    System.out.println("[RECEIVER] Anuncio recibido de " + peerID + ", ya conectado. Ignorando re-anuncio");
                 }
 
             } catch (SocketException e) {
@@ -144,7 +162,7 @@ public class ConexionReceiver implements Runnable {
                     peerSocket.close();
                 }
             } catch (IOException closeEx) {
-                
+
             }
         }
     }

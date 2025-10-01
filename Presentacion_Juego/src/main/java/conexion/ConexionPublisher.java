@@ -47,7 +47,7 @@ public class ConexionPublisher {
             }
 
             socket = new DatagramSocket(0, localAddress);
-            String ipLocalString = InetAddress.getLocalHost().getHostAddress();
+            String ipLocalString = localAddress.getHostAddress();
             
             //El mensaje incluye la IP y el puerto TCP de escucha
             String mensaje = ipLocalString + ":" + puertoTCP;
@@ -55,7 +55,7 @@ public class ConexionPublisher {
             
             enviarAnuncioConexion(socket, mensaje);
             
-        } catch (SocketException | UnknownHostException e) {
+        } catch (SocketException e) {
             System.err.println("[PUBLISHER] Error al inicializar/obtener IP: " + e.getMessage());
         } finally {
             if (socket != null && !socket.isClosed()) {

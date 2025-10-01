@@ -75,7 +75,7 @@ public class Arrancador {
         Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
         ModeloJuegoImp modeloJuego = ModeloJuegoImp.getInstance();
         modeloJuego.setJugadorPrincipal(jugadorPrincipal);
-        
+
         Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
 
