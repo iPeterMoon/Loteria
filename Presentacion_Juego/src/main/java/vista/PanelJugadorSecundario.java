@@ -62,7 +62,7 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNombre.setText("Adel");
+        lblNombre.setText("Jugador 2");
         add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 104, 85, -1));
 
         lblPuntaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
