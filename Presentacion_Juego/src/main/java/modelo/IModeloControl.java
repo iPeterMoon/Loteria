@@ -7,10 +7,18 @@ package modelo;
 import java.awt.Point;
 
 /**
+ * Interfaz que define el contrato para la comunicación entre el modelo de la
+ * vista y el control.
  *
  * @author rocha
  */
 public interface IModeloControl {
 
+    /**
+     * Coloca una ficha en la posición indicada.
+     *
+     * @param posicion Objeto Point que representa la coordenada (x, y) donde se
+     * colocó la ficha.
+     */
     public void colocarFicha(Point posicion);
 }
