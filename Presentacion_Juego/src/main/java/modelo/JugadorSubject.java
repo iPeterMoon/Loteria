@@ -36,7 +36,7 @@ public class JugadorSubject extends Subject {
     /**
      * Tarjeta que posee el jugador.
      */
-    private Tarjeta tarjeta;
+    private ModeloTarjeta tarjeta;
 
     /**
      * Indica si este jugador es el jugador principal.
@@ -58,7 +58,7 @@ public class JugadorSubject extends Subject {
      * @param tarjeta Tarjeta que pertenece al jugador.
      * @param jugadorPrincipal Indica si este jugador es el principal.
      */
-    public JugadorSubject(String nickname, int puntaje, Image foto, Tarjeta tarjeta, boolean jugadorPrincipal) {
+    public JugadorSubject(String nickname, int puntaje, Image foto, ModeloTarjeta tarjeta, boolean jugadorPrincipal) {
         this.nickname = nickname;
         this.puntaje = puntaje;
         this.foto = foto;
@@ -140,7 +140,7 @@ public class JugadorSubject extends Subject {
      *
      * @return Objeto Tarjeta que representa la tarjeta del jugador.
      */
-    public Tarjeta getTarjeta() {
+    public ModeloTarjeta getTarjeta() {
         return tarjeta;
     }
 
@@ -149,7 +149,7 @@ public class JugadorSubject extends Subject {
      *
      * @param tarjeta Objeto Tarjeta que se asignará al jugador.
      */
-    public void setTarjeta(Tarjeta tarjeta) {
+    public void setTarjeta(ModeloTarjeta tarjeta) {
         this.tarjeta = tarjeta;
     }
 

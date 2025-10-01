@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
-import modelo.Tarjeta;
+import modelo.ModeloTarjeta;
 
 /**
  *
@@ -89,7 +89,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
         }
     }
     
-    public void actualizarFichas(Tarjeta tarjeta){
+    public void actualizarFichas(ModeloTarjeta tarjeta){
         // Recorre los componentes del panel contenedor
         for (int idx = 0; idx < panelCartitas.getComponentCount(); idx++) {
             java.awt.Component comp = panelCartitas.getComponent(idx);

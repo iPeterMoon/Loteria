@@ -19,9 +19,25 @@ public class Cantador {
     private Stack<Integer> mazo;
 
     /**
+     * Instancia unica de la clase Cantador
+     */
+    private static Cantador instance;
+
+    /**
      * Constructor vacio
      */
     public Cantador() {
+    }
+
+    /**
+     * Metodo para obtener la instancia unica del cantador
+     * @return la instancia de {@link Cantador}
+     */
+    public static Cantador getInstance() {
+        if (instance == null) {
+            instance = new Cantador();
+        }
+        return instance;
     }
 
     /**

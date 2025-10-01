@@ -9,7 +9,11 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import modelo.JugadorSubject;
 import modelo.ModeloVistaFacade;
-import modelo.Tarjeta;
+import modeloJuego.Tarjeta;
+import modeloJuego.Cantador;
+import modeloJuego.Jugador;
+import modelo.ModeloTarjeta;
+import modeloJuego.ModeloJuegoImp;
 import vista.FrameJuego;
 import vista.IObserver;
 import vista.ModelObserver;
@@ -23,15 +27,15 @@ import vista.ModelObserver;
 public class Arrancador {
 
     public static void main(String[] args) {
-        
+
         ConexionReceiver receiver = new ConexionReceiver();
         Thread receiverThread = new Thread(receiver);
         receiverThread.setName("ReceiverThread");
         receiverThread.start();
-        
+
         ConexionPublisher publisher = new ConexionPublisher();
         publisher.anunciarConexion();
-        
+
         FrameJuego frame = FrameJuego.getInstance();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
@@ -47,8 +51,7 @@ public class Arrancador {
                 cartas.put(new Point(x, y), ((x * 4) + y + 1));
             }
         }
-
-        Tarjeta tarjeta = new Tarjeta(cartas);
+        ModeloTarjeta tarjeta = new ModeloTarjeta(cartas);
         JugadorSubject jugadorPrincipal = new JugadorSubject("Jerson", 0, imagen, tarjeta, true);
         JugadorSubject jugadorSecundario = new JugadorSubject("Peter", 0, imagen, tarjeta, false);
         JugadorSubject jugadorSecundario1 = new JugadorSubject("Juampi", 0, imagen, tarjeta, false);
@@ -71,5 +74,25 @@ public class Arrancador {
         modeloVista.agregarJugador(jugadorSecundario);
         modeloVista.agregarJugador(jugadorSecundario1);
         modeloVista.agregarJugador(jugadorSecundario2);
+
+        //prueba temporal para verificar validamovimiento
+        // Crear un jugador compatible con ModeloJuegoImp
+        Jugador jugadorPrueba = new Jugador();
+        jugadorPrueba.setNickname("jerson");
+        jugadorPrueba.setPuntos(0);
+        Tarjeta tarjetaa = new Tarjeta(cartas);
+        jugadorPrueba.setTarjeta(tarjetaa);
+
+        // Configurar Cantador con la carta que se "cantó"
+        Cantador cantador = Cantador.getInstance();
+        cantador.setCartaActual(5);
+
+        // Crear el modelo de juego y asignar el jugador principal
+        ModeloJuegoImp modelo = new ModeloJuegoImp();
+        modelo.setJugadorPrincipal(jugadorPrueba);
+
+        // Llamar a validaMovimiento
+        modelo.validaMovimiento(new Point(0, 0)); // Debe colocar la ficha
+
     }
 }
