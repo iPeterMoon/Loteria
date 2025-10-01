@@ -1,6 +1,7 @@
 package modeloJuego;
 
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,6 +28,17 @@ public class Tarjeta {
      * Constructor vacio
      */
     public Tarjeta() {
+        fichas = new HashMap<>();
+        reiniciarFichas();
+    }
+
+    private void reiniciarFichas() {
+        for (int i = 0; i < 16; i++) {
+            int fila = i / 4;
+            int col = i % 4;
+            Point posicion = new Point(fila, col);
+            fichas.put(posicion, false);
+        }
     }
 
     /**
@@ -35,7 +47,9 @@ public class Tarjeta {
      * @param cartas Mapa que indica las posiciones de las cartas en la tarjeta
      */
     public Tarjeta(Map<Point, Integer> cartas) {
+        fichas = new HashMap<>();
         this.cartas = cartas;
+        reiniciarFichas();
     }
 
     /**
@@ -89,7 +103,7 @@ public class Tarjeta {
      * verdadero, indicando que hay una ficha en dicha posición.
      */
     public void addFicha(Point punto) {
-        fichas.replace(punto, true);
+        fichas.put(punto, true);
     }
 
 }

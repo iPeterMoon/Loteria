@@ -6,7 +6,6 @@ vista\FrameJuego.class
 modelo\JugadaSubject.class
 modelo\IModeloVista.class
 modelo\IModeloControl.class
-modeloJuego\Tarjetaa.class
 modelo\JugadorSubject.class
 vista\ModelObserver.class
 vista\PanelTarjeta.class
@@ -23,6 +22,7 @@ vista\BotonJugada.class
 vista\PanelTarjetaSecundaria.class
 vista\PanelCartita$1.class
 modeloJuego\IModeloJuego.class
+modeloJuego\Tarjeta.class
 conexion\ConexionReceiver.class
 modelo\Subject.class
 vista\PanelJugadorPrincipal.class

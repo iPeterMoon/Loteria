@@ -18,6 +18,15 @@ import modelo.ModeloVistaFacade;
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
+    private static ModeloJuegoImp modeloJuegoImp;
+    
+    public static ModeloJuegoImp getInstance(){
+        if(modeloJuegoImp == null) {
+            modeloJuegoImp = new ModeloJuegoImp();
+        } 
+        return modeloJuegoImp;
+    }
+    
     /**
      * Lista de jugadores secundarios al jugador de la vista principal
      */
@@ -35,7 +44,7 @@ public class ModeloJuegoImp implements IModeloJuego {
     /**
      * Constructor vacio
      */
-    public ModeloJuegoImp() {
+    private ModeloJuegoImp() {
     }
 
     public Jugador getJugadorPrincipal() {

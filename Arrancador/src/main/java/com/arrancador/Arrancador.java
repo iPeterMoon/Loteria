@@ -78,21 +78,17 @@ public class Arrancador {
         //prueba temporal para verificar validamovimiento
         // Crear un jugador compatible con ModeloJuegoImp
         Jugador jugadorPrueba = new Jugador();
-        jugadorPrueba.setNickname("jerson");
+        jugadorPrueba.setNickname("Jerson");
         jugadorPrueba.setPuntos(0);
         Tarjeta tarjetaa = new Tarjeta(cartas);
         jugadorPrueba.setTarjeta(tarjetaa);
 
         // Configurar Cantador con la carta que se "cantó"
         Cantador cantador = Cantador.getInstance();
-        cantador.setCartaActual(5);
+        cantador.setCartaActual(1);
 
         // Crear el modelo de juego y asignar el jugador principal
-        ModeloJuegoImp modelo = new ModeloJuegoImp();
+        ModeloJuegoImp modelo = ModeloJuegoImp.getInstance();
         modelo.setJugadorPrincipal(jugadorPrueba);
-
-        // Llamar a validaMovimiento
-        modelo.validaMovimiento(new Point(0, 0)); // Debe colocar la ficha
-
     }
 }
