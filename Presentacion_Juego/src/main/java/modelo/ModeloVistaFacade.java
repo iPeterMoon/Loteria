@@ -4,6 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import dtos.FichaDTO;
+import dtos.JugadorDTO;
+import mappers.JugadorMapper;
+import vista.FrameJuego;
+import vista.IObserver;
+import vista.ModelObserver;
 
 /**
  * Clase que implementa la fachada entre el modelo de la vista y el modelo del
@@ -23,6 +28,15 @@ public class ModeloVistaFacade implements IModeloVista {
      * Lista de jugadores que participan en el juego.
      */
     private List<JugadorSubject> jugadores;
+    /**
+     * Frame del juego
+     */
+    private FrameJuego frameJuego;
+
+    /**
+     * Observador
+     */
+    private IObserver observer = new ModelObserver();
 
     /**
      * Instancia única de la fachada.
@@ -75,7 +89,45 @@ public class ModeloVistaFacade implements IModeloVista {
      *
      * @param jugador Objeto JugadorSubject a agregar.
      */
-    public void agregarJugador(JugadorSubject jugador) {
+    private void agregarJugador(JugadorSubject jugador) {
         jugadores.add(jugador);
+    }
+
+    /**
+     * Método para agregar el jugador principal
+     *
+     * @param jugadorPrincipal DTO con los datos del jugador principal
+     */
+    @Override
+    public void agregarJugadorPrincipal(JugadorDTO jugadorPrincipal) {
+        JugadorSubject jugador = JugadorMapper.toJugadorSubject(jugadorPrincipal);
+        frameJuego.setJugadorPrincipal(jugador);
+        jugador.addObserver(observer);
+        agregarJugador(jugador);
+    }
+
+    /**
+     * Método para agregar un jugador secundario
+     *
+     * @param jugadorSecundario DTO con los datos del jugador secundario
+     */
+    @Override
+    public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
+        JugadorSubject jugador = JugadorMapper.toJugadorSubject(jugadorSecundario);
+        frameJuego.agregarJugadorSecundario(jugador);
+        jugador.addObserver(observer);
+        agregarJugador(jugador);
+    }
+
+    /**
+     * Método para inicializar el frame del juego y configurarlo
+     */
+    @Override
+    public void iniciarFrameJuego() {
+        FrameJuego frame = FrameJuego.getInstance();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frameJuego = frame;
     }
 }

@@ -1,6 +1,7 @@
 package modelo;
 
 import dtos.FichaDTO;
+import dtos.JugadorDTO;
 
 /**
  * Interfaz que define el contrato para la comunicación entre el modelo de la
@@ -17,4 +18,23 @@ public interface IModeloVista {
      * @param fichaDTO Objeto FichaDTO que contiene los datos de la ficha
      */
     public void colocarFicha(FichaDTO fichaDTO);
+
+    /**
+     * Método para agregar el jugador principal
+     *
+     * @param jugadorPrincipal DTO con los datos del jugador principal
+     */
+    public void agregarJugadorPrincipal(JugadorDTO jugadorPrincipal);
+
+    /**
+     * Método para agregar un jugador secundario
+     *
+     * @param jugadorSecundario DTO con los datos del jugador secundario
+     */
+    public void agregarJugadorSecundario(JugadorDTO jugadorSecundario);
+
+    /**
+     * Método para inicializar el frame del juego y configurarlo
+     */
+    public void iniciarFrameJuego();
 }
