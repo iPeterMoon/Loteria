@@ -11,6 +11,9 @@ import javax.swing.JOptionPane;
 import mappers.JugadorMapper;
 import modelo.IModeloVista;
 import modelo.ModeloVistaFacade;
+import modeloJuego.Cantador;
+import modeloJuego.IModeloJuego;
+import modeloJuego.ModeloJuegoImp;
 import modeloJuego.Tarjeta;
 import modeloJuego.Jugador;
 
@@ -70,6 +73,11 @@ public class Arrancador {
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
+        ModeloJuegoImp modeloJuego = ModeloJuegoImp.getInstance();
+        modeloJuego.setJugadorPrincipal(jugadorPrincipal);
+        
+        Cantador cantador = Cantador.getInstance();
+        cantador.setCartaActual(1);
 
         //Jugadores secundarios
         Jugador jugadorSecundario1 = new Jugador("Adel", "/imagenes_alt/icon_imagen.png", 0, tarjeta);

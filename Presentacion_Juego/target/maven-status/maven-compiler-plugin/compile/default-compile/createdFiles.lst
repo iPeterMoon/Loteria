@@ -31,5 +31,6 @@ conexion\ConexionReceiver.class
 modelo\Subject.class
 vista\PanelJugadorPrincipal.class
 vista\IObserver.class
+conexion\PeerService.class
 dtos\FichaDTO.class
 dtos\TarjetaDTO.class

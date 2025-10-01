@@ -50,12 +50,14 @@ public class ServerTCP implements Runnable {
             try{
                 //Bloquea hasta que llega una nueva conexión
                 Socket clienteSocket = serverSocket.accept();
-                String idCliente = clienteSocket.getInetAddress().getHostAddress() + ":" + clienteSocket.getPort();
+                String idCliente = clienteSocket.getInetAddress().getHostAddress() + ":" + this.puertoEscucha;
 
                 System.out.println("[SERVER] Conexión TCP ACEPTADA de: " + idCliente);
                 
                 PeerHandler handler = new PeerHandler(clienteSocket);
                 conexionesEntrantes.put(idCliente, handler);
+
+                PeerService.getInstancia().agregarHandlerEntrante(idCliente, handler);
                 new Thread(handler).start();
             } catch(IOException e){
                 if (!isRunning) {

@@ -126,6 +126,9 @@ public class ConexionReceiver implements Runnable {
             PeerHandler handler = new PeerHandler(peerSocket);
             // Registrar el Peer
             peersConectados.put(peerID, handler);
+
+            //Integración con PeerService: registrar conexión saliente
+            PeerService.getInstancia().agregarHandlerSaliente(peerID, handler);
             new Thread(handler).start();
 
             // Re-anuncio: Solo se hace si la conexión fue exitosa
@@ -141,7 +144,7 @@ public class ConexionReceiver implements Runnable {
                     peerSocket.close();
                 }
             } catch (IOException closeEx) {
-
+                
             }
         }
     }

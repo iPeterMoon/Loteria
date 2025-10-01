@@ -8,6 +8,8 @@ import java.awt.Point;
 
 import dtos.FichaDTO;
 import java.util.List;
+
+import conexion.PeerService;
 import modelo.IModeloVista;
 import modelo.ModeloVistaFacade;
 
@@ -107,7 +109,8 @@ public class ModeloJuegoImp implements IModeloJuego {
             // Crear DTO y notificar a la vista
             FichaDTO ficha = new FichaDTO(jugadorPrincipal.getNickname(), posicion);
             vista.colocarFicha(ficha);
-
+            PeerService conexion = PeerService.getInstancia();
+            conexion.broadcastActualizarTarjeta(ficha);
             // Print temporal 
             System.out.println("Ficha colocada correctamente en " + posicion + " por " + jugadorPrincipal.getNickname() + " (Carta: " + cartaActual + ")");
         } else {

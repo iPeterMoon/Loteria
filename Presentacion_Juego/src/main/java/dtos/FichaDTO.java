@@ -1,13 +1,15 @@
 package dtos;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * DTO para pasar los datos necesarios para colocar una ficha.
  *
  * @author Alici
  */
-public class FichaDTO {
+public class FichaDTO implements Serializable {
+    private static final long serialVersionUID = 1L; // Importante para la serialización
 
     /**
      * Nombre del jugador que colocó la ficha
@@ -45,5 +47,10 @@ public class FichaDTO {
      */
     public Point getPosicion() {
         return posicion;
+    }
+
+    @Override
+    public String toString() {
+        return "nicknameJugador: "+ nicknameJugador + ", Posicion: "+posicion.toString(); 
     }
 }
