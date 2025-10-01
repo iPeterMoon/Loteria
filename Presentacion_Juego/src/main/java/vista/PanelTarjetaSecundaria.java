@@ -29,8 +29,12 @@ public class PanelTarjetaSecundaria extends javax.swing.JPanel {
         panelCartitasAbstractas.setPreferredSize(new Dimension(70, 70));
 
         for (int i = 0; i < 16; i++) {
+            int fila = i / 4;
+            int col = i % 4;
+            Point posicion = new Point(fila, col);
             PanelCartita pc = new PanelCartita(true, i + 1);
             pc.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            pc.setPosicion(posicion);
             panelCartitasAbstractas.add(pc);
         }
 
@@ -90,6 +94,8 @@ public class PanelTarjetaSecundaria extends javax.swing.JPanel {
                 }
             }
         }
+        repaint();
+        revalidate();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

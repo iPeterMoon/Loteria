@@ -169,7 +169,7 @@ public class PanelCartita extends javax.swing.JPanel {
     
     public void marcarComoJugadorSecundario() {
         if (esAbstracta) {
-            setBackground(Color.DARK_GRAY);
+            setBackground(new Color(237,67,67));
             repaint();
         }
     }
@@ -193,6 +193,10 @@ public class PanelCartita extends javax.swing.JPanel {
 
     public Point getPosicion(){
         return posicion;
+    }
+
+    public void setPosicion(Point posicion){
+        this.posicion = posicion;
     }
 
     /**

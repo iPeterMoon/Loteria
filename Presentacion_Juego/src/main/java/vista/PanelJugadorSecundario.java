@@ -115,6 +115,8 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
 
     public void actualizarTarjetaAbstracta(JugadorSubject jugador) {
         panelTarjetaSecundaria1.actualizarFichas(jugador.getTarjeta());
+        repaint();
+        revalidate();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
