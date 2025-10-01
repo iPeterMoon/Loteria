@@ -1,6 +1,8 @@
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\conexion\ConexionPublisher.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\conexion\ConexionReceiver.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\conexion\PeerHandler.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\conexion\SeleccionadorInterfaz.java
+C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\conexion\ServerTCP.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\control\ControlSeleccionarJugada.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\dtos\FichaDTO.java
 C:\Users\pedro\OneDrive\Documentos\GitHub\Loteria\Presentacion_Juego\src\main\java\modelo\CantadorSubject.java
