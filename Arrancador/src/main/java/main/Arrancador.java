@@ -1,9 +1,8 @@
-package com.arrancador;
+package main;
 
 import conexion.ConexionPublisher;
 import conexion.ConexionReceiver;
 import conexion.ServerTCP;
-import java.awt.Image;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,13 +13,6 @@ import modelo.IModeloVista;
 import modelo.ModeloVistaFacade;
 import modeloJuego.Tarjeta;
 import modeloJuego.Jugador;
-import modeloJuego.Cantador;
-import modeloJuego.Jugador;
-import modelo.ModeloTarjeta;
-import modeloJuego.ModeloJuegoImp;
-import vista.FrameJuego;
-import vista.IObserver;
-import vista.ModelObserver;
 
 /**
  * Clase que se encarga de configurar el modelo del juego y todo lo necesario
@@ -31,9 +23,6 @@ import vista.ModelObserver;
 public class Arrancador {
 
     public static void main(String[] args) {
-
-        ConexionPublisher publisher = new ConexionPublisher();
-        publisher.anunciarConexion();
 
         try {
             // Iniciar servidor TCP (Obtener Puerto Unico)
@@ -65,6 +54,8 @@ public class Arrancador {
             e.printStackTrace();
         }
 
+        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+
         // RESPONSABILIDAD QUE DESPUES DEBE PASAR AL MODELO DEL JUEGO
         //Se genera un mapa de las cartas de la tarjeta
         Map<Point, Integer> cartas = new HashMap<>();
@@ -73,8 +64,9 @@ public class Arrancador {
                 cartas.put(new Point(x, y), ((x * 4) + y + 1));
             }
         }
+
         //Se crea la tarjeta para asignarsela a los jugadores
-        MopdeloTarjeta tarjeta = new ModeloTarjeta(cartas);
+        Tarjeta tarjeta = new Tarjeta(cartas);
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);

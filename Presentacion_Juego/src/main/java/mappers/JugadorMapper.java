@@ -5,7 +5,7 @@ import dtos.TarjetaDTO;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import modelo.JugadorSubject;
-import modelo.Tarjeta;
+import modelo.ModeloTarjeta;
 import modeloJuego.Jugador;
 
 /**
@@ -27,7 +27,7 @@ public class JugadorMapper {
      * @return Una nueva instancia de JugadorSubject.
      */
     public static JugadorSubject toJugadorSubject(JugadorDTO jugadorDTO) {
-        Tarjeta tarjetaJugador = new Tarjeta(jugadorDTO.getTarjeta().getCartas());
+        ModeloTarjeta tarjetaJugador = new ModeloTarjeta(jugadorDTO.getTarjeta().getCartas());
         return new JugadorSubject(jugadorDTO.getNickname(), jugadorDTO.getPuntos(), jugadorDTO.getFotoPerfil(), tarjetaJugador, false);
     }
 
