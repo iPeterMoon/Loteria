@@ -18,6 +18,15 @@ import modelo.ModeloVistaFacade;
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
+    private static ModeloJuegoImp modeloJuegoImp;
+    
+    public static ModeloJuegoImp getInstance(){
+        if(modeloJuegoImp == null) {
+            modeloJuegoImp = new ModeloJuegoImp();
+        } 
+        return modeloJuegoImp;
+    }
+    
     /**
      * Lista de jugadores secundarios al jugador de la vista principal
      */
@@ -35,7 +44,15 @@ public class ModeloJuegoImp implements IModeloJuego {
     /**
      * Constructor vacio
      */
-    public ModeloJuegoImp() {
+    private ModeloJuegoImp() {
+    }
+
+    public Jugador getJugadorPrincipal() {
+        return jugadorPrincipal;
+    }
+
+    public void setJugadorPrincipal(Jugador jugadorPrincipal) {
+        this.jugadorPrincipal = jugadorPrincipal;
     }
 
     /**
@@ -53,20 +70,51 @@ public class ModeloJuegoImp implements IModeloJuego {
     }
 
     /**
-     * Método para validar un movimiento de colocación de ficha en el tablero
+     * Valida un movimiento de colocación de ficha en la tarjeta del jugador
+     * principal.
      *
-     * @param posicion Posición del tablero donde se quiere colocar la ficha
+     * 1. Obtiene la carta en la posición seleccionada. 2. Compara con la carta
+     * actual cantada por el {@link Cantador}. 3. Si coinciden: - Coloca una
+     * ficha en la tarjeta del jugador. - Crea un {@link FichaDTO} con la
+     * posición y el nickname del jugador. - Notifica a la vista para que
+     * actualice la interfaz.
+     *
+     * @param posicion Posición en la tarjeta donde el jugador intenta colocar
+     * la ficha.
      */
     @Override
     public void validaMovimiento(Point posicion) {
-        // Se debe de obtener la tarjeta del jugador Principal 
-        // obtener la carta en la posicion dada.
-        // verificar la carta actual
-        //si son iguales es decir la carta en la posicion actual y la carta cantada actual
-        // modeloVista.colocarFicha(posicion);
-        //debe de mandar un mensaje a los demás jugadores para que también se actualicé su vista
-        // en caso contrario no pasaria nada
-        validarMovimientoMock(posicion);
+        if (jugadorPrincipal == null || jugadorPrincipal.getTarjeta() == null) {
+            return; // No hay jugador principal o tarjeta asignada
+        }
+
+        Tarjeta tarjeta = jugadorPrincipal.getTarjeta();
+        Integer numeroCarta = tarjeta.getCartas().get(posicion);
+
+        if (numeroCarta == null) {
+            return; // La posición no corresponde a ninguna carta en la tarjeta
+        }
+
+        // Carta actual del cantador (singleton)
+        Cantador cantador = Cantador.getInstance();
+        int cartaActual = cantador.getCartaActual();
+
+        // Validación
+        if (numeroCarta == cartaActual) {
+            // Colocar ficha en la tarjeta
+            tarjeta.addFicha(posicion);
+
+            // Crear DTO y notificar a la vista
+            FichaDTO ficha = new FichaDTO(jugadorPrincipal.getNickname(), posicion);
+            vista.colocarFicha(ficha);
+
+            // Print temporal 
+            System.out.println("Ficha colocada correctamente en " + posicion + " por " + jugadorPrincipal.getNickname() + " (Carta: " + cartaActual + ")");
+        } else {
+            // Print temporal para movimientos inválidos
+            System.out.println("Movimiento inválido en " + posicion + " (Carta en tarjeta: " + numeroCarta + ", Carta cantada: " + cartaActual + ")");
+        }
+
     }
 
     /**

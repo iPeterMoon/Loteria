@@ -17,7 +17,7 @@ public class SeleccionadorInterfaz {
     /**
      * Metodo principal para seleccionar una interfaz de red, se encarga de iterar en todas las interfaces de red
      * disponibles y regresar la primera interfaz disponible que cumpla con ciertos requisitos.
-     * @return
+     * @return Interfaz de red válida
      * @throws SocketException 
      */
     public static NetworkInterface seleccionarInterfazRed() throws SocketException {
@@ -25,6 +25,7 @@ public class SeleccionadorInterfaz {
         while (interfaces.hasMoreElements()) {
             NetworkInterface iface = interfaces.nextElement();
             String displayName = iface.getDisplayName();
+            // Filtros: activa, no loopback, no virtual (por propiedad o nombre)
             if (iface.isUp() && !iface.isLoopback() && !iface.isVirtual() &&
                     !displayName.contains("VirtualBox") && !displayName.contains("VMware") &&
                     !displayName.contains("Loopback") && !iface.isPointToPoint()) {

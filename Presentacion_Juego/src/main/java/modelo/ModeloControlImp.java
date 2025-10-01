@@ -31,7 +31,7 @@ public class ModeloControlImp implements IModeloControl {
      */
     @Override
     public void colocarFicha(Point posicion) {
-        IModeloJuego modeloJuego = new ModeloJuegoImp();
+        IModeloJuego modeloJuego = ModeloJuegoImp.getInstance();
         modeloJuego.validaMovimiento(posicion);
     }
 }

@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author rocha
  */
-public class Tarjeta {
+public class ModeloTarjeta {
 
     /**
      * Mapa que contiene las cartas asignadas a cada posición de la tarjeta. La
@@ -36,7 +36,7 @@ public class Tarjeta {
      * @param cartas Mapa con las cartas asociadas a cada posición de la
      * tarjeta.
      */
-    public Tarjeta(Map<Point, Integer> cartas) {
+    public ModeloTarjeta(Map<Point, Integer> cartas) {
         this.cartas = cartas;
         fichas = new HashMap<>();
         iniciarMapaFichas();

@@ -11,7 +11,7 @@ import java.awt.Point;
 import javax.swing.BorderFactory;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
-import modelo.Tarjeta;
+import modelo.ModeloTarjeta;
 
 /**
  *
@@ -82,7 +82,7 @@ public class PanelTarjetaSecundaria extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void actualizarFichas(Tarjeta tarjeta) {
+    public void actualizarFichas(ModeloTarjeta tarjeta) {
         for (int idx = 0; idx < panelCartitasAbstractas.getComponentCount(); idx++) {
             java.awt.Component comp = panelCartitasAbstractas.getComponent(idx);
             if (comp instanceof  PanelCartita) {
