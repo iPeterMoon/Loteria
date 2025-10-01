@@ -170,6 +170,8 @@ public class PanelJuego extends javax.swing.JPanel {
 
     public void actualizarVista(Subject subject){
         actualizarJugador(subject);
+        repaint();
+        revalidate();
     }
 
     
@@ -179,6 +181,7 @@ public class PanelJuego extends javax.swing.JPanel {
             for(PanelJugadorSecundario panel: panelesJugadoresSecundarios){
                 if(panel.esMismoJugador(jugador)){
                      panel.actualizarTarjetaAbstracta(jugador);
+                     actualizarPanelesSecundarios();
                 }
             }
             if(panelJugadorPrincipal.esMismoJugador(jugador)){
@@ -198,8 +201,6 @@ public class PanelJuego extends javax.swing.JPanel {
         panel.setJugador(jugador);
         this.panelesJugadoresSecundarios.add(panel);
         actualizarPanelesSecundarios();
-        repaint();
-        revalidate();
     }
 
     private void actualizarPanelesSecundarios(){
@@ -207,6 +208,8 @@ public class PanelJuego extends javax.swing.JPanel {
         for(PanelJugadorSecundario panel : panelesJugadoresSecundarios){
             panelContenedorSecundarios.add(panel);
         }
+        repaint();
+        revalidate();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
