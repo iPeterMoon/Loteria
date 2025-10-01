@@ -6,7 +6,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>Mediador_Loteria</module>
         <module>../Arrancador</module>
         <module>../Presentacion_Juego</module>
         <module>../Modelo_Juego</module>

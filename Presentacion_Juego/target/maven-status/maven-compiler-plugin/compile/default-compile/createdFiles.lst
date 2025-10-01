@@ -1,3 +1,4 @@
+conexion\SeleccionadorInterfaz.class
 control\ControlSeleccionarJugada.class
 vista\PanelJugadorSecundario.class
 modeloJuego\Jugador.class
@@ -10,6 +11,7 @@ vista\ModelObserver.class
 vista\PanelTarjeta.class
 modelo\CantadorSubject.class
 modelo\ModeloVistaFacade.class
+conexion\ConexionPublisher.class
 modelo\ModeloControlImp.class
 vista\PanelJuego.class
 modeloJuego\Cantador.class
@@ -21,6 +23,7 @@ vista\PanelTarjetaSecundaria.class
 vista\PanelCartita$1.class
 modeloJuego\IModeloJuego.class
 modeloJuego\Tarjeta.class
+conexion\ConexionReceiver.class
 modelo\Subject.class
 vista\PanelJugadorPrincipal.class
 vista\IObserver.class

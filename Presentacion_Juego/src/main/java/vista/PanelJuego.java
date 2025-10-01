@@ -178,7 +178,7 @@ public class PanelJuego extends javax.swing.JPanel {
             JugadorSubject jugador = (JugadorSubject) subject;
             for(PanelJugadorSecundario panel: panelesJugadoresSecundarios){
                 if(panel.esMismoJugador(jugador)){
-                    //TODO: Implementar como pintar la carta abstracta
+                     panel.actualizarTarjetaAbstracta(jugador);
                 }
             }
             if(panelJugadorPrincipal.esMismoJugador(jugador)){

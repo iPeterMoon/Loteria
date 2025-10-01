@@ -7,8 +7,11 @@ package vista;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 import javax.swing.BorderFactory;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
+
+import modelo.Tarjeta;
 
 /**
  *
@@ -75,6 +78,19 @@ public class PanelTarjetaSecundaria extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void actualizarFichas(Tarjeta tarjeta) {
+        for (int idx = 0; idx < panelCartitasAbstractas.getComponentCount(); idx++) {
+            java.awt.Component comp = panelCartitasAbstractas.getComponent(idx);
+            if (comp instanceof  PanelCartita) {
+                PanelCartita cartita = (PanelCartita) comp;
+                Point posicion = cartita.getPosicion(); 
+                Boolean marcada = tarjeta.getFichas().get(posicion);
+                if (marcada != null && marcada) {
+                    cartita.marcarComoJugadorSecundario();
+                }
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel panelCartitasAbstractas;
