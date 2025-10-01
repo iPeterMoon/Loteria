@@ -2,6 +2,7 @@ package conexion;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Enumeration;
 
 /**
  * ConexionPublisher.java Clase que se encarga de anunciar una conexión, anuncia
@@ -25,7 +26,27 @@ public class ConexionPublisher {
     public static void anunciarConexion(int puertoTCP) {
         DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket();
+            //Seleccionar interfaz de red válida (no virtual)
+            NetworkInterface netIf = SeleccionadorInterfaz.seleccionarInterfazRed();
+
+            if (netIf == null) {
+                System.err.println("[PUBLISHER] Error: No se encontró una interfaz de red válida para enviar el anuncio.");
+                return;
+            }
+
+            //Obtener la dirección IP local de la interfaz seleccionada para enlazar el socket
+            InetAddress localAddress = null;
+            Enumeration<InetAddress> addresses = netIf.getInetAddresses();
+            while(addresses.hasMoreElements()){
+                InetAddress addr = addresses.nextElement();
+                //Aseguramos que sea IPv4, ya filtrado por SeleccionadorInterfaz
+                if(addr instanceof Inet4Address){
+                    localAddress = addr;
+                    break;
+                }
+            }
+
+            socket = new DatagramSocket(0, localAddress);
             String ipLocalString = InetAddress.getLocalHost().getHostAddress();
             
             //El mensaje incluye la IP y el puerto TCP de escucha
