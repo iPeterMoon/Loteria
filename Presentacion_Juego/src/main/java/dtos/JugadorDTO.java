@@ -27,6 +27,11 @@ public class JugadorDTO {
     private int puntos;
 
     /**
+     * Objeto de Transferencia de Datos de la Tarjeta asociada al jugador.
+     */
+    private TarjetaDTO tarjeta;
+
+    /**
      * Constructor por defecto para JugadorDTO.
      */
     public JugadorDTO() {
@@ -38,11 +43,13 @@ public class JugadorDTO {
      * @param nickname El nombre de usuario o apodo único del jugador.
      * @param fotoPerfil La imagen de perfil asociada al jugador.
      * @param puntos La puntuación o puntos actuales del jugador.
+     * @param tarjeta El objeto TarjetaDTO asociado al jugador.
      */
-    public JugadorDTO(String nickname, Image fotoPerfil, int puntos) {
+    public JugadorDTO(String nickname, Image fotoPerfil, int puntos, TarjetaDTO tarjeta) {
         this.nickname = nickname;
         this.fotoPerfil = fotoPerfil;
         this.puntos = puntos;
+        this.tarjeta = tarjeta;
     }
 
     /**
@@ -97,6 +104,24 @@ public class JugadorDTO {
      */
     public void setPuntos(int puntos) {
         this.puntos = puntos;
+    }
+
+    /**
+     * Obtiene el objeto TarjetaDTO asociado al jugador.
+     *
+     * @return El objeto TarjetaDTO.
+     */
+    public TarjetaDTO getTarjeta() {
+        return tarjeta;
+    }
+
+    /**
+     * Establece el objeto TarjetaDTO asociado al jugador.
+     *
+     * @param tarjeta El nuevo objeto TarjetaDTO a establecer.
+     */
+    public void setTarjeta(TarjetaDTO tarjeta) {
+        this.tarjeta = tarjeta;
     }
 
 }
