@@ -24,7 +24,7 @@ public class ConexionPublisher {
      * @param puertoTCP El puerto dinámico o fijo de escucha del ServidorTCP.
      */
     public static void anunciarConexion(int puertoTCP) {
-        DatagramSocket socket = null;
+        MulticastSocket socket = null;
         try {
             //Seleccionar interfaz de red válida (no virtual)
             NetworkInterface netIf = SeleccionadorInterfaz.seleccionarInterfazRed();
@@ -46,18 +46,20 @@ public class ConexionPublisher {
                 }
             }
 
-            socket = new DatagramSocket(0, localAddress);
-            String ipLocalString = InetAddress.getLocalHost().getHostAddress();
+            socket = new MulticastSocket(new InetSocketAddress(localAddress, 0));
             
             //El mensaje incluye la IP y el puerto TCP de escucha
-            String mensaje = ipLocalString + ":" + puertoTCP;
+            String mensaje = localAddress.getHostAddress() + ":" + puertoTCP;
             System.out.println("[PUBLISHER] Anunciando conexión en: " + mensaje);
             
             enviarAnuncioConexion(socket, mensaje);
             
-        } catch (SocketException | UnknownHostException e) {
+        } catch (SocketException e) {
             System.err.println("[PUBLISHER] Error al inicializar/obtener IP: " + e.getMessage());
-        } finally {
+        } catch(IOException e) {
+            System.err.println("[PUBLISHER] Error al inicializar/obtener IP: " + e.getMessage());
+        }
+        finally {
             if (socket != null && !socket.isClosed()) {
                 socket.close();
             }
