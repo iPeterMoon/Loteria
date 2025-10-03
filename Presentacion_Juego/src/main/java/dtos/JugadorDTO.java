@@ -31,6 +31,8 @@ public class JugadorDTO {
      */
     private TarjetaDTO tarjeta;
 
+    private boolean jugadorPrincipal;
+
     /**
      * Constructor por defecto para JugadorDTO.
      */
@@ -44,12 +46,34 @@ public class JugadorDTO {
      * @param fotoPerfil La imagen de perfil asociada al jugador.
      * @param puntos La puntuación o puntos actuales del jugador.
      * @param tarjeta El objeto TarjetaDTO asociado al jugador.
+     * @param jugadorPrincipal Boolean que indica si el jugador es un jugador
+     * principal o no
      */
-    public JugadorDTO(String nickname, Image fotoPerfil, int puntos, TarjetaDTO tarjeta) {
+    public JugadorDTO(String nickname, Image fotoPerfil, int puntos, TarjetaDTO tarjeta, boolean jugadorPrincipal) {
         this.nickname = nickname;
         this.fotoPerfil = fotoPerfil;
         this.puntos = puntos;
         this.tarjeta = tarjeta;
+        this.jugadorPrincipal = jugadorPrincipal;
+    }
+
+    /**
+     * Obtiene si el jugador es un jugador principal o no
+     *
+     * @return boolean indicando si el jugador es principal o no
+     */
+    public boolean isJugadorPrincipal() {
+        return jugadorPrincipal;
+    }
+
+    /**
+     * Asigna si el jugador es un jugador principal o no.
+     *
+     * @param esJugadorPrincipal Boolean indicando si el jugador es principal o
+     * no
+     */
+    public void setJugadorPrincipal(boolean esJugadorPrincipal) {
+        this.jugadorPrincipal = esJugadorPrincipal;
     }
 
     /**

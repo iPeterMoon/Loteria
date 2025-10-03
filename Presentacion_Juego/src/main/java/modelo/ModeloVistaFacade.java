@@ -101,9 +101,9 @@ public class ModeloVistaFacade implements IModeloVista {
     @Override
     public void agregarJugadorPrincipal(JugadorDTO jugadorPrincipal) {
         JugadorSubject jugador = JugadorMapper.toJugadorSubject(jugadorPrincipal);
-        frameJuego.setJugadorPrincipal(jugador);
         jugador.addObserver(observer);
         agregarJugador(jugador);
+        jugador.notifyAllObservers();
     }
 
     /**
@@ -114,9 +114,9 @@ public class ModeloVistaFacade implements IModeloVista {
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         JugadorSubject jugador = JugadorMapper.toJugadorSubject(jugadorSecundario);
-        frameJuego.agregarJugadorSecundario(jugador);
         jugador.addObserver(observer);
         agregarJugador(jugador);
+        jugador.notifyAllObservers();
     }
 
     /**

@@ -15,4 +15,12 @@ public interface IModeloJuego {
      * @param posicion Posición del tablero donde se quiere colocar la ficha
      */
     public void validaMovimiento(Point posicion);
+
+    /**
+     * Método para obtener el jugador principal, es decir el que es dueño de la
+     * vista
+     *
+     * @return Jugador dueño de la vista
+     */
+    public Jugador getJugadorPrincipal();
 }

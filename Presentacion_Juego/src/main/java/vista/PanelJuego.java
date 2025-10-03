@@ -168,28 +168,45 @@ public class PanelJuego extends javax.swing.JPanel {
         }
     }
 
-    public void actualizarVista(Subject subject){
+    public void actualizarVista(Subject subject) {
         actualizarJugador(subject);
         repaint();
         revalidate();
     }
 
-    
-    private void actualizarJugador(Subject subject){
-        if(subject instanceof JugadorSubject){
-            JugadorSubject jugador = (JugadorSubject) subject;
-            for(PanelJugadorSecundario panel: panelesJugadoresSecundarios){
-                if(panel.esMismoJugador(jugador)){
-                     panel.actualizarTarjetaAbstracta(jugador);
-                     actualizarPanelesSecundarios();
+    private void actualizarJugador(Subject subject) {
+        if (subject instanceof JugadorSubject jugador) {
+
+            if (panelJugadorPrincipal != null && panelJugadorPrincipal.esMismoJugador(jugador)) {
+                panelTarjeta.actualizarFichas(jugador.getTarjeta());
+                return;
+            }
+
+            boolean jugadorEncontradoEnSecundarios = false;
+            List<PanelJugadorSecundario> copiaPaneles = new ArrayList<>(panelesJugadoresSecundarios);
+
+            for (PanelJugadorSecundario panel : copiaPaneles) {
+                if (panel.esMismoJugador(jugador)) {
+                    panel.actualizarTarjetaAbstracta(jugador);
+                    jugadorEncontradoEnSecundarios = true;
+                    break;
                 }
             }
-            if(panelJugadorPrincipal.esMismoJugador(jugador)){
-                panelTarjeta.actualizarFichas(jugador.getTarjeta());
+
+            if (jugadorEncontradoEnSecundarios) {
+                actualizarPanelesSecundarios();
+                return;
+            }
+
+            if (jugador.isJugadorPrincipal()) {
+                this.setJugadorPrincipal(jugador);
+            } else {
+                agregarJugadorSecundario(jugador);
+                actualizarPanelesSecundarios();
             }
         }
     }
-    
+
     public void setJugadorPrincipal(JugadorSubject jugador) {
         panelJugadorPrincipal.setJugador(jugador);
         repaint();
@@ -203,9 +220,9 @@ public class PanelJuego extends javax.swing.JPanel {
         actualizarPanelesSecundarios();
     }
 
-    private void actualizarPanelesSecundarios(){
+    private void actualizarPanelesSecundarios() {
         panelContenedorSecundarios.removeAll();
-        for(PanelJugadorSecundario panel : panelesJugadoresSecundarios){
+        for (PanelJugadorSecundario panel : panelesJugadoresSecundarios) {
             panelContenedorSecundarios.add(panel);
         }
         repaint();

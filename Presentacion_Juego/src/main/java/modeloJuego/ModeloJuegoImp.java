@@ -21,14 +21,14 @@ import modelo.ModeloVistaFacade;
 public class ModeloJuegoImp implements IModeloJuego {
 
     private static ModeloJuegoImp modeloJuegoImp;
-    
-    public static ModeloJuegoImp getInstance(){
-        if(modeloJuegoImp == null) {
+
+    public static ModeloJuegoImp getInstance() {
+        if (modeloJuegoImp == null) {
             modeloJuegoImp = new ModeloJuegoImp();
-        } 
+        }
         return modeloJuegoImp;
     }
-    
+
     /**
      * Lista de jugadores secundarios al jugador de la vista principal
      */
@@ -49,10 +49,22 @@ public class ModeloJuegoImp implements IModeloJuego {
     private ModeloJuegoImp() {
     }
 
+    /**
+     * Método para obtener el jugador principal, es decir el que es dueño de la
+     * vista
+     *
+     * @return Jugador dueño de la vista
+     */
     public Jugador getJugadorPrincipal() {
         return jugadorPrincipal;
     }
 
+    /**
+     * Método para asignar el jugador principal, es decir el que es dueño de la
+     * vista
+     *
+     * @param jugadorPrincipal Jugador que es dueño de la vista
+     */
     public void setJugadorPrincipal(Jugador jugadorPrincipal) {
         this.jugadorPrincipal = jugadorPrincipal;
     }

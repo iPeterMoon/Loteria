@@ -47,14 +47,6 @@ public class FrameJuego extends javax.swing.JFrame {
 
     private PanelJuego panelJuego;
 
-    public void setJugadorPrincipal(JugadorSubject jugador) {
-        panelJuego.setJugadorPrincipal(jugador);
-    }
-
-    public void agregarJugadorSecundario(JugadorSubject jugador) {
-        panelJuego.agregarJugadorSecundario(jugador);
-    }
-
     public void actualizarVista(Subject subject){
         panelJuego.actualizarVista(subject);
     }

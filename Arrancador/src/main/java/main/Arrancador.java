@@ -81,7 +81,7 @@ public class Arrancador {
 
         //Jugadores secundarios
         Jugador jugadorSecundario1 = new Jugador("Adel", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
-        Jugador jugadorSecundario2 = new Jugador("Peter", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
+        Jugador jugadorSecundario2 = new Jugador("Denise", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
 
         modeloVista.iniciarFrameJuego();
 
