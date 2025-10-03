@@ -32,10 +32,22 @@ public class Tarjeta {
         reiniciarFichas();
     }
 
+    /**
+     * Reinicia el estado del tablero de fichas
+     * 
+     * Este metodo recorre las 16 posiciones posibles de un tablero 4x4 y asigna
+     * a cada posicion (representada como un {@link point}) el valor {@code false}
+     * indicando quela ficha en esa posicion aun no ha sido seleccionada activada
+     */
     private void reiniciarFichas() {
+        //recorre las 16 posiciones (de 0 a 15) que representan un tablero de 4x4
         for (int i = 0; i < 16; i++) {
+            //calcula la fula dividiendo entre 4
             int fila = i / 4;
+            //calcula la columna usando el residuo de 4
             int col = i % 4;
+            
+            //crea un objeto point que representa la posicion (fila, columna)
             Point posicion = new Point(fila, col);
             fichas.put(posicion, false);
         }

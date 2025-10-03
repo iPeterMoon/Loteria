@@ -18,15 +18,24 @@ import modelo.ModeloVistaFacade;
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
+    /**
+     * instancia unica de {@link ModekoJuegoImp}
+     */
     private static ModeloJuegoImp modeloJuegoImp;
-    
-    public static ModeloJuegoImp getInstance(){
-        if(modeloJuegoImp == null) {
+
+    /**
+     * obtiene la instacnia unica de {@link ModeloJuegoImp}
+     * si la instancia aun no ha sido creada, se inicializa en el momento
+     * si ya existe, simplemente se devuelve la misma referencia
+     * @return la unica instancia de {@code ModeloJuegoImp}
+     */
+    public static ModeloJuegoImp getInstance() {
+        if (modeloJuegoImp == null) {
             modeloJuegoImp = new ModeloJuegoImp();
-        } 
+        }
         return modeloJuegoImp;
     }
-    
+
     /**
      * Lista de jugadores secundarios al jugador de la vista principal
      */

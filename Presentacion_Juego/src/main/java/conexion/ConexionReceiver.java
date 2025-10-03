@@ -5,32 +5,48 @@ import java.net.*;
 
 /**
  * ConexionReceiver.java
- * 
- * Clase que se encarga de recibir conexiones de otras instancias de este programa.
- * Se une a un grupo multicast que recibe mensajes con direcciones ips para registrarlas
- * Este mensaje es enviado cada que se inicia el programa.
+ *
+ * Clase que se encarga de recibir conexiones de otras instancias de este
+ * programa. Se une a un grupo multicast que recibe mensajes con direcciones ips
+ * para registrarlas Este mensaje es enviado cada que se inicia el programa.
+ *
  * @author pedro
  */
 public class ConexionReceiver implements Runnable {
 
-    private final int MULTICAST_PORT = 4446;
-    private final String MULTICAST_ADDRESS = "230.0.0.1";
-    private volatile boolean isRunning = true;
-    private int conexionesRecibidas;
-    
     /**
-     * Método principal de la clase, prepara un socket MultiCast para recibir mensajes de conexión
+     * puerto en el que se reciben los mensajes del multicast
+     */
+    private final int MULTICAST_PORT = 4446;
+    /**
+     * direccion IP del grupo multicast al que se unen los receptores
+     */
+    private final String MULTICAST_ADDRESS = "230.0.0.1";
+    /**
+     * bandera de control que indica si el receptor de multicast sigue en
+     * ejecuccion
+     */
+    private volatile boolean isRunning = true;
+    /**
+     * contador de las conexiones recibidas a traves de los mensajes del multicast
+     */
+    private int conexionesRecibidas;
+
+    /**
+     * Método principal de la clase, prepara un socket MultiCast para recibir
+     * mensajes de conexión
      */
     @Override
     public void run() {
         prepararSocket();
     }
-    
+
     /**
-     * Prepara el socket Multicast, acoplado a una dirección Multicast y un puerto específico
-     * Además selecciona una interfaz de red y se une a un grupo multicast para recibir los mensajes
+     * Prepara el socket Multicast, acoplado a una dirección Multicast y un
+     * puerto específico Además selecciona una interfaz de red y se une a un
+     * grupo multicast para recibir los mensajes
      */
-    private void prepararSocket(){
+    private void prepararSocket() {
         conexionesRecibidas = 0;
         MulticastSocket socket = null;
         try {
@@ -62,9 +78,10 @@ public class ConexionReceiver implements Runnable {
     }
 
     /**
-     * Se encarga de recibir los mensajes con el protocolo UDP.
-     * recibe una string con ip y puerto de donde se envío el mensaje
-     * @param socket 
+     * Se encarga de recibir los mensajes con el protocolo UDP. recibe una
+     * string con ip y puerto de donde se envío el mensaje
+     *
+     * @param socket
      */
     private void recibirMensajes(MulticastSocket socket) {
         while (isRunning) {
@@ -75,7 +92,7 @@ public class ConexionReceiver implements Runnable {
 
                 String received = new String(packet.getData(), 0, packet.getLength());
                 String remoteIp = packet.getAddress().getHostAddress();
-                if(conexionesRecibidas != 0){
+                if (conexionesRecibidas != 0) {
                     System.out.println("Anuncio recibido de " + remoteIp + ": " + received);
                 }
                 conexionesRecibidas++;
