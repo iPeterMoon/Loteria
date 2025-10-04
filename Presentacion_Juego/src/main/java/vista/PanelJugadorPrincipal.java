@@ -9,18 +9,17 @@ import javax.swing.ImageIcon;
 import modelo.JugadorSubject;
 
 /**
- *
+ * Clase que extiende de JPanel que representa
+ * al Jugador principal y secundarios
  * @author pedro
  */
 public class PanelJugadorPrincipal extends javax.swing.JPanel {
-
     private final int ANCHO_ALTO = 127;
-
     private Image imagenFondo;
     private ImageIcon fotoJugador;
 
     /**
-     * Creates new form PanelJugadorPrincipal
+     * Constructor que inicializa el panel del jugador principal.
      */
     public PanelJugadorPrincipal() {
         setOpaque(true); // Asegura que el panel pinte el fondo
@@ -28,7 +27,9 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
         dibujarFondo();
         cargarFotoJugador();
     }
-
+    /**
+     * Metodo que crea todos los componentes del JPanel.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -90,12 +91,18 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
                 .addContainerGap(44, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Metodo que carga la foto o avatar del jugador.
+     */
     private void cargarFotoJugador(){
         fotoJugador = cargarFoto();
         lblFoto.setIcon(fotoJugador);
     }
-
+    /**
+     * Metodo que obtiene la direccion e iagen el usuario
+     * @return icono para el jugador.
+     */
     private ImageIcon cargarFoto() {
         String url = "/imagenes_alt/icon_imagen.png";
         URL recurso = getClass().getResource(url);
@@ -106,13 +113,20 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
         Image imagenEscalada = original.getImage().getScaledInstance(ANCHO_ALTO, ANCHO_ALTO, Image.SCALE_SMOOTH);
         return new ImageIcon(imagenEscalada);
     }
-
-
+    
+    /**
+     * Metodo que se encarga de pintar el fondo donde se encuentra el
+     * jugador principal y secundarios.
+     */
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_jugador_principal.png"))
                 .getImage();
     }
-
+    
+    /**
+     * Metodo protegio de JPanel para pintar el Jpanel.
+     * @param g graficas de java.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -120,7 +134,10 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
-
+    /**
+     * Metodo para asgnar un lugar al jugador con sus datos.
+     * @param jugador jugador.
+     */
     public void setJugador(JugadorSubject jugador) {
         lblNombre.setText(jugador.getNickname());
         lblPuntaje.setText("Puntaje: " + jugador.getPuntaje());
@@ -129,7 +146,12 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
         repaint();
         revalidate();
     }
-
+    
+    /**
+     * Metido para verificar si existe el mismo jugador.
+     * @param jugador jugador.
+     * @return true si existe, contrario false.
+     */
     public boolean esMismoJugador(JugadorSubject jugador) {
         return lblNombre.getText().equals(jugador.getNickname());
     }
