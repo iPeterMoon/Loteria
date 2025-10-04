@@ -113,6 +113,12 @@ public class ModeloJuegoImp implements IModeloJuego {
         Cantador cantador = Cantador.getInstance();
         int cartaActual = cantador.getCartaActual();
 
+        //Verificar si la posición ya tiene una ficha
+        if (tarjeta.getFichas() != null && Boolean.TRUE.equals(tarjeta.getFichas().get(posicion))) {
+            System.out.println("Ya hay una ficha en " + posicion + ", se ignora.");
+            return; // Evita volver a validar o colocar ficha en esa posición
+        }
+
         // Validación
         if (numeroCarta == cartaActual) {
             // Colocar ficha en la tarjeta
