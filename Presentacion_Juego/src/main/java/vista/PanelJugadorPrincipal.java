@@ -99,6 +99,7 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
         fotoJugador = cargarFoto();
         lblFoto.setIcon(fotoJugador);
     }
+    
     /**
      * Metodo que obtiene la direccion e iagen el usuario
      * @return icono para el jugador.
@@ -116,7 +117,7 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
     
     /**
      * Metodo que se encarga de pintar el fondo donde se encuentra el
-     * jugador principal y secundarios.
+     * jugador principal.
      */
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_jugador_principal.png"))
@@ -148,7 +149,7 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
     }
     
     /**
-     * Metido para verificar si existe el mismo jugador.
+     * Metodo para verificar si existe el mismo jugador.
      * @param jugador jugador.
      * @return true si existe, contrario false.
      */
