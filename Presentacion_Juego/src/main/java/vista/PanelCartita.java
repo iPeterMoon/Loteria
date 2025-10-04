@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
+ * clase que representa las 54 cartas del juego.
  * @author Jp
  */
 public class PanelCartita extends javax.swing.JPanel {
@@ -39,7 +39,7 @@ public class PanelCartita extends javax.swing.JPanel {
     private boolean esAbstracta = false;
 
     /**
-     * Constructor para que se vea en el design de netbeans
+     * Constructor que inicializa el JPanel de las cartas.
      */
     public PanelCartita() {
         initComponents();
@@ -49,10 +49,9 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * Creates new form PanelCartita
-     *
-     * @param numeroCarta
-     * @param posicion
+     * Constructro que inicaliza el JPanel con la posicion de la carta.
+     * @param numeroCarta indice de la carta.
+     * @param posicion posicion de la carta.
      */
     public PanelCartita(int numeroCarta, Point posicion) {
         initComponents();
@@ -62,6 +61,11 @@ public class PanelCartita extends javax.swing.JPanel {
         iniciar();
     }
     
+    /**
+     * Contructor que inicializa el JPanel que valida la carta.
+     * @param abstracta abstraccion.
+     * @param numeroCarta indice de la carta.
+     */
     public PanelCartita(boolean abstracta, int numeroCarta) {
         initComponents();
         this.numeroCarta = numeroCarta;
@@ -77,7 +81,10 @@ public class PanelCartita extends javax.swing.JPanel {
             iniciar();
         }
     }
-
+    /**
+     * Metodo para inicializar la carta cargando su icono, la ficha y los eventos del mouse.
+     * Si la carta no pertenece al cantador, también se genera el efecto hover.
+     */
     private void iniciar() {
         iconoOriginal = cargarCarta(numeroCarta);
         if (!flagCantador) {
@@ -87,7 +94,13 @@ public class PanelCartita extends javax.swing.JPanel {
         }
         iconoActual = iconoOriginal;
     }
-
+    
+    /**
+     * Metodo para agrega eventos de interacción con el mouse para la carta
+     * con mauseEntered que aplica el icono con brillo, mouseExited
+     * que restaura el icono original y mouse Pressed qie ejecuta 
+     * el metood onclick.
+     */
     private void agregarEventosMouse() {
         addMouseListener(new MouseAdapter() {
             @Override
@@ -108,11 +121,18 @@ public class PanelCartita extends javax.swing.JPanel {
             }
         });
     }
-
+    
+    /**
+     * Metodo de accion ejecutada cuando se presiona la carta.
+     * Llama al controlador para colocar una ficha en la posición correspondiente.
+     */
     private void onclick() {
         ControlSeleccionarJugada.colocarFicha(posicion);
     }
-
+    /**
+     * Metodo para agregar visualmente una ficha al centro de la carta,
+     * siempre y cuando la ficha no se haya agregado previamente.
+     */
     public void agregarFicha() {
         if (ficha != null && ficha.getParent() == null) {
             int x = (getWidth() - FICHA_ANCHO) / 2;
@@ -123,7 +143,12 @@ public class PanelCartita extends javax.swing.JPanel {
             repaint();
         }
     }
-
+    /**
+     * Metodo para carga la imagen de la carta según su número.
+     * Escala la imagen dependiendo de si la carta pertenece al cantador o no.
+     * @param numero número identificador de la carta.
+     * @return el icono de la carta escalado.
+     */
     private ImageIcon cargarCarta(int numero) {
         String url = "/cartas/" + numero + ".jpeg";
         URL recurso = getClass().getResource(url);
@@ -140,7 +165,11 @@ public class PanelCartita extends javax.swing.JPanel {
         }
         return new ImageIcon(imagenEscalada);
     }
-
+    
+    /**
+     * Metodo que carga la ficha que puede colocarse sobre la carta.
+     * @return un label con la imagen escalada de la ficha.
+     */
     private JLabel cargarFicha() {
         String url = "/otros/ficha.png";
         URL recurso = getClass().getResource(url);
@@ -151,7 +180,13 @@ public class PanelCartita extends javax.swing.JPanel {
         Image imagenEscalada = original.getImage().getScaledInstance(FICHA_ANCHO, FICHA_ALTO, Image.SCALE_SMOOTH);
         return new JLabel(new ImageIcon(imagenEscalada));
     }
-
+    
+    /**
+     * Metodo para crea un efecto de brillo sobre un icono dado aplicando un factor de rescale.
+     * @param icono  imagen original a modificar.
+     * @param factor intensidad del brillo.
+     * @return un nueva imagen con el brillo aplicado.
+     */
     private ImageIcon crearBrillo(ImageIcon icono, float factor) {
         Image img = icono.getImage();
         BufferedImage buff = new BufferedImage(
@@ -167,13 +202,21 @@ public class PanelCartita extends javax.swing.JPanel {
         return new ImageIcon(buff);
     }
     
+    /**
+     * Metodo para Marca visualmente la carta como perteneciente a un jugador secundario,
+     * cambiando el color de fondo si la carta es abstracta.
+     */
     public void marcarComoJugadorSecundario() {
         if (esAbstracta) {
             setBackground(new Color(237,67,67));
             repaint();
         }
     }
-
+    
+    /**
+     * Metodo protegio de JPanel para pintar el Jpanel.
+     * @param g graficas de java.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -182,27 +225,41 @@ public class PanelCartita extends javax.swing.JPanel {
         }
 
     }
-
+    /**
+     * 
+     * Metodo para verifica si la carta pertenece al cantador.
+     * @return true si la carta es del cantador, de lo contrario false.
+     */
     public boolean isFlagCantador() {
         return flagCantador;
     }
-
+    
+    /**
+     * Metodo que define si la carta pertenece al cantador.
+     * @param flagCantador valor booleano que indica si la carta es del cantador.
+     */
     public void setFlagCantador(boolean flagCantador) {
         this.flagCantador = flagCantador;
     }
-
+    
+    /**
+     * Metodo que obtiene la posición de la carta dentro del juego.
+     * @return un objeto point con las coordenadas de la carta.
+     */
     public Point getPosicion(){
         return posicion;
     }
-
+    
+    /**
+     * Metodo para asignar posicion a las cartas.
+     * @param posicion valor con las nuevas coordenadas.
+     */
     public void setPosicion(Point posicion){
         this.posicion = posicion;
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * Metodo que crea todos los componentes del JPanel
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

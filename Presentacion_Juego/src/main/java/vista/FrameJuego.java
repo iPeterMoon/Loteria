@@ -4,7 +4,7 @@ import modelo.JugadorSubject;
 import modelo.Subject;
 
 /**
- *
+ * Clase Frame que genara el Frame  principal del juego.
  * @author pedro
  */
 public class FrameJuego extends javax.swing.JFrame {
@@ -13,15 +13,15 @@ public class FrameJuego extends javax.swing.JFrame {
     private static FrameJuego frameJuego;
 
     /**
-     * Constructor que crea el frame principal del juego
+     * Constructor que crea el frame principal del juego.
      */
     private FrameJuego() {
         initComponents();
     }
     
     /**
-     * Metodo statico que retorna la instancia de FrameJuego
-     * @return instancia de FrameJuego
+     * Metodo statico que retorna la instancia de FrameJuego.
+     * @return instancia de FrameJuego.
      */
     public static FrameJuego getInstance(){
         if(frameJuego==null){
@@ -31,7 +31,7 @@ public class FrameJuego extends javax.swing.JFrame {
     }
 
     /**
-     * Metodo que crea todo el componente Frame 
+     * Metodo que crea todo el componente Frame. 
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -48,8 +48,8 @@ public class FrameJuego extends javax.swing.JFrame {
 
     
     /**
-     * Metodo para actualizar la vista del jugador  
-     * @param subject representacion del sujeto
+     * Metodo para actualizar la vista del jugador.  
+     * @param subject representacion del sujeto.
      */
     public void actualizarVista(Subject subject){
         panelJuego.actualizarVista(subject);

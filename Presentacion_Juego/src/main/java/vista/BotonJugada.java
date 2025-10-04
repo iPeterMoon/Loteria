@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vista;
 
 /**
@@ -30,7 +26,7 @@ public class BotonJugada extends javax.swing.JPanel {
     }
     
     /**
-     * Metodo para cambiar el estado del botón durante el juego
+     * Metodo para cambiar el estado del botón durante el juego.
      * @param estado estadi del botón.
      */
     public void setEstado(boolean estado) {
