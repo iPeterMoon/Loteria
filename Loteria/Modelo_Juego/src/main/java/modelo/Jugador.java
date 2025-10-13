@@ -1,4 +1,4 @@
-package modeloJuego;
+package modelo;
 
 /**
  * Clase que representa un jugador del juego

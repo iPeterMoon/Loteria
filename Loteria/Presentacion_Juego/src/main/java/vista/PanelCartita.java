@@ -1,6 +1,8 @@
 package vista;
 
-import control.ControlSeleccionarJugada;
+import control.ControlSeleccionarCarta;
+import control.RegistroControles;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,6 +18,7 @@ import javax.swing.JLabel;
 
 /**
  * clase que representa las 54 cartas del juego.
+ * 
  * @author Jp
  */
 public class PanelCartita extends javax.swing.JPanel {
@@ -39,7 +42,7 @@ public class PanelCartita extends javax.swing.JPanel {
     private boolean esAbstracta = false;
 
     /**
-     * Constructor que inicializa el JPanel de las cartas.
+     * Constructor que inicializa el JPanel de la carta del cantador.
      */
     public PanelCartita() {
         initComponents();
@@ -50,8 +53,9 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Constructro que inicaliza el JPanel con la posicion de la carta.
+     * 
      * @param numeroCarta indice de la carta.
-     * @param posicion posicion de la carta.
+     * @param posicion    posicion de la carta.
      */
     public PanelCartita(int numeroCarta, Point posicion) {
         initComponents();
@@ -60,10 +64,11 @@ public class PanelCartita extends javax.swing.JPanel {
         this.flagCantador = false;
         iniciar();
     }
-    
+
     /**
      * Contructor que inicializa el JPanel que valida la carta.
-     * @param abstracta abstraccion.
+     * 
+     * @param abstracta   abstraccion.
      * @param numeroCarta indice de la carta.
      */
     public PanelCartita(boolean abstracta, int numeroCarta) {
@@ -81,8 +86,10 @@ public class PanelCartita extends javax.swing.JPanel {
             iniciar();
         }
     }
+
     /**
-     * Metodo para inicializar la carta cargando su icono, la ficha y los eventos del mouse.
+     * Metodo para inicializar la carta cargando su icono, la ficha y los eventos
+     * del mouse.
      * Si la carta no pertenece al cantador, también se genera el efecto hover.
      */
     private void iniciar() {
@@ -94,11 +101,11 @@ public class PanelCartita extends javax.swing.JPanel {
         }
         iconoActual = iconoOriginal;
     }
-    
+
     /**
      * Metodo para agrega eventos de interacción con el mouse para la carta
      * con mauseEntered que aplica el icono con brillo, mouseExited
-     * que restaura el icono original y mouse Pressed qie ejecuta 
+     * que restaura el icono original y mouse Pressed qie ejecuta
      * el metood onclick.
      */
     private void agregarEventosMouse() {
@@ -121,14 +128,16 @@ public class PanelCartita extends javax.swing.JPanel {
             }
         });
     }
-    
+
     /**
      * Metodo de accion ejecutada cuando se presiona la carta.
      * Llama al controlador para colocar una ficha en la posición correspondiente.
      */
     private void onclick() {
-        ControlSeleccionarJugada.colocarFicha(posicion);
+        RegistroControles controles = RegistroControles.getInstance();
+        controles.getControlSeleccionarJugada().colocarFicha(posicion);
     }
+
     /**
      * Metodo para agregar visualmente una ficha al centro de la carta,
      * siempre y cuando la ficha no se haya agregado previamente.
@@ -143,9 +152,11 @@ public class PanelCartita extends javax.swing.JPanel {
             repaint();
         }
     }
+
     /**
      * Metodo para carga la imagen de la carta según su número.
      * Escala la imagen dependiendo de si la carta pertenece al cantador o no.
+     * 
      * @param numero número identificador de la carta.
      * @return el icono de la carta escalado.
      */
@@ -156,18 +167,21 @@ public class PanelCartita extends javax.swing.JPanel {
             System.err.println("No se encontró la imagen: " + url);
         }
         ImageIcon original = new ImageIcon(recurso);
-        Image imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA, Image.SCALE_SMOOTH);
+        Image imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA,
+                Image.SCALE_SMOOTH);
         if (flagCantador) {
-            imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_CANTADOR, CARTA_ALTO_CANTADOR, Image.SCALE_SMOOTH);
+            imagenEscalada = original.getImage().getScaledInstance(CARTA_ANCHO_CANTADOR, CARTA_ALTO_CANTADOR,
+                    Image.SCALE_SMOOTH);
             setMinimumSize(new Dimension(160, 240));
             setMaximumSize(new Dimension(160, 240));
             setPreferredSize(new Dimension(160, 240));
         }
         return new ImageIcon(imagenEscalada);
     }
-    
+
     /**
      * Metodo que carga la ficha que puede colocarse sobre la carta.
+     * 
      * @return un label con la imagen escalada de la ficha.
      */
     private JLabel cargarFicha() {
@@ -180,9 +194,11 @@ public class PanelCartita extends javax.swing.JPanel {
         Image imagenEscalada = original.getImage().getScaledInstance(FICHA_ANCHO, FICHA_ALTO, Image.SCALE_SMOOTH);
         return new JLabel(new ImageIcon(imagenEscalada));
     }
-    
+
     /**
-     * Metodo para crea un efecto de brillo sobre un icono dado aplicando un factor de rescale.
+     * Metodo para crea un efecto de brillo sobre un icono dado aplicando un factor
+     * de rescale.
+     * 
      * @param icono  imagen original a modificar.
      * @param factor intensidad del brillo.
      * @return un nueva imagen con el brillo aplicado.
@@ -192,8 +208,7 @@ public class PanelCartita extends javax.swing.JPanel {
         BufferedImage buff = new BufferedImage(
                 img.getWidth(null),
                 img.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB
-        );
+                BufferedImage.TYPE_INT_ARGB);
         buff.getGraphics().drawImage(img, 0, 0, null);
 
         RescaleOp op = new RescaleOp(factor, 0, null);
@@ -201,20 +216,22 @@ public class PanelCartita extends javax.swing.JPanel {
 
         return new ImageIcon(buff);
     }
-    
+
     /**
-     * Metodo para Marca visualmente la carta como perteneciente a un jugador secundario,
+     * Metodo para Marca visualmente la carta como perteneciente a un jugador
+     * secundario,
      * cambiando el color de fondo si la carta es abstracta.
      */
     public void marcarComoJugadorSecundario() {
         if (esAbstracta) {
-            setBackground(new Color(237,67,67));
+            setBackground(new Color(237, 67, 67));
             repaint();
         }
     }
-    
+
     /**
      * Metodo protegio de JPanel para pintar el Jpanel.
+     * 
      * @param g graficas de java.
      */
     @Override
@@ -225,36 +242,41 @@ public class PanelCartita extends javax.swing.JPanel {
         }
 
     }
+
     /**
      * 
      * Metodo para verifica si la carta pertenece al cantador.
+     * 
      * @return true si la carta es del cantador, de lo contrario false.
      */
     public boolean isFlagCantador() {
         return flagCantador;
     }
-    
+
     /**
      * Metodo que define si la carta pertenece al cantador.
+     * 
      * @param flagCantador valor booleano que indica si la carta es del cantador.
      */
     public void setFlagCantador(boolean flagCantador) {
         this.flagCantador = flagCantador;
     }
-    
+
     /**
      * Metodo que obtiene la posición de la carta dentro del juego.
+     * 
      * @return un objeto point con las coordenadas de la carta.
      */
-    public Point getPosicion(){
+    public Point getPosicion() {
         return posicion;
     }
-    
+
     /**
      * Metodo para asignar posicion a las cartas.
+     * 
      * @param posicion valor con las nuevas coordenadas.
      */
-    public void setPosicion(Point posicion){
+    public void setPosicion(Point posicion) {
         this.posicion = posicion;
     }
 
@@ -262,7 +284,8 @@ public class PanelCartita extends javax.swing.JPanel {
      * Metodo que crea todos los componentes del JPanel
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -271,7 +294,6 @@ public class PanelCartita extends javax.swing.JPanel {
         setPreferredSize(new Dimension(CARTA_ANCHO_TARJETA, CARTA_ALTO_TARJETA));
         setLayout(null);
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -1,15 +1,13 @@
 package conexion;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 import dtos.FichaDTO;
-import modelo.ModeloVistaFacade;
+import interfaces.IModeloJuego;
+import modelo.ModeloJuegoImp;
 
 /**
  * PeerHandler.java
@@ -98,8 +96,8 @@ public class PeerHandler implements Runnable {
      * @param ficha
      */
     private void actualizarTarjeta(FichaDTO ficha){
-        ModeloVistaFacade modeloVista = ModeloVistaFacade.getInstance();
-        modeloVista.colocarFicha(ficha);
+        ModeloJuegoImp modeloJuego = ModeloJuegoImp.getInstance();
+        modeloJuego.colocarFicha(ficha);
     }    
 
     /**

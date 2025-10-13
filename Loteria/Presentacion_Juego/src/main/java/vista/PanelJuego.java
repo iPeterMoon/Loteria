@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+import control.RegistroControles;
 import modelo.*;
 
 /**
@@ -19,6 +20,7 @@ public class PanelJuego extends javax.swing.JPanel {
 
     private Image imagenFondo;
     private List<PanelJugadorSecundario> panelesJugadoresSecundarios;
+
 
     /**
      * Constructor que crea un nuevo panel de juego, inicializando sus componentes y cargando

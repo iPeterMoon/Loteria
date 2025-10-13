@@ -1,5 +1,7 @@
-package modeloJuego;
+package interfaces;
 
+import dtos.FichaDTO;
+import dtos.JugadorDTO;
 import java.awt.Point;
 
 /**
@@ -22,5 +24,16 @@ public interface IModeloJuego {
      *
      * @return Jugador dueño de la vista
      */
-    public Jugador getJugadorPrincipal();
+    public JugadorDTO getJugadorPrincipal();
+
+    /**
+     * Metodo que establece el jugador principal, el que está ejecutando esta instancia del juego
+     */
+    public void setJugadorPrincipal(JugadorDTO jugadorPrincipal);
+    
+    /**
+     * Metodo para colocar una ficha en alguna de las tarjetas de los jugadores
+     * @param ficha DTO con la posicion de la ficha y el jugador
+     */
+    public void colocarFicha(FichaDTO ficha);
 }

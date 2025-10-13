@@ -3,19 +3,23 @@ package main;
 import conexion.ConexionPublisher;
 import conexion.ConexionReceiver;
 import conexion.ServerTCP;
+import control.RegistroControles;
+import interfaces.IModeloJuego;
+
 import java.awt.Point;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import mappers.JugadorMapper;
-import modelo.IModeloVista;
+import mappers.JugadorMapperModelo;
+import modelo.IModeloControl;
+import interfaces.IModeloVista;
+import modelo.Cantador;
+import modelo.ModeloControlImp;
 import modelo.ModeloVistaFacade;
-import modeloJuego.Cantador;
-import modeloJuego.IModeloJuego;
-import modeloJuego.ModeloJuegoImp;
-import modeloJuego.Tarjeta;
-import modeloJuego.Jugador;
+import modelo.Tarjeta;
+import modelo.Jugador;
+import modelo.ModeloJuegoImp;
 
 /**
  * Clase que se encarga de configurar el modelo del juego y todo lo necesario
@@ -57,7 +61,20 @@ public class Arrancador {
             e.printStackTrace();
         }
 
+        //Obtener la fachada de la vista.
         IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+
+        // 1. Configuración de dependencias del Modelo
+        // 1.1 Crear ModeloJuego (necesita IModeloVista)
+        ModeloJuegoImp.getInstance().inicializar(modeloVista);
+        IModeloJuego modeloJuego = ModeloJuegoImp.getInstance();
+
+        // 1.2 Crear ModeloControl(necesita IModeloJuego)
+        IModeloControl modeloControl = new ModeloControlImp(modeloJuego);
+
+        //Inicializar el registro de controles
+        RegistroControles.getInstance().inicializar(modeloControl);
+
 
         // RESPONSABILIDAD QUE DESPUES DEBE PASAR AL MODELO DEL JUEGO
         //Se genera un mapa de las cartas de la tarjeta
@@ -73,8 +90,7 @@ public class Arrancador {
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
-        ModeloJuegoImp modeloJuego = ModeloJuegoImp.getInstance();
-        modeloJuego.setJugadorPrincipal(jugadorPrincipal);
+        modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
         
         Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
@@ -85,9 +101,9 @@ public class Arrancador {
 
         modeloVista.iniciarFrameJuego();
 
-        modeloVista.agregarJugadorPrincipal(JugadorMapper.toDTO(jugadorPrincipal));
-        modeloVista.agregarJugadorSecundario(JugadorMapper.toDTO(jugadorSecundario1));
-        modeloVista.agregarJugadorSecundario(JugadorMapper.toDTO(jugadorSecundario2));
+        modeloVista.agregarJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
+        modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario1, false));
+        modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario2, false));
 
     }
 }

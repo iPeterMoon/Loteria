@@ -1,11 +1,12 @@
 package modelo;
 
+import interfaces.IModeloVista;
 import java.util.LinkedList;
 import java.util.List;
 
 import dtos.FichaDTO;
 import dtos.JugadorDTO;
-import mappers.JugadorMapper;
+import mappers.JugadorMapperVista;
 import vista.FrameJuego;
 import vista.IObserver;
 import vista.ModelObserver;
@@ -24,6 +25,15 @@ import vista.ModelObserver;
  */
 public class ModeloVistaFacade implements IModeloVista {
 
+    private static ModeloVistaFacade instancia;
+
+    public static ModeloVistaFacade getInstance() {
+        if(instancia == null) {
+            instancia = new ModeloVistaFacade();
+        }
+        return instancia;
+    }
+
     /**
      * Lista de jugadores que participan en el juego.
      */
@@ -37,12 +47,6 @@ public class ModeloVistaFacade implements IModeloVista {
      * Observador
      */
     private IObserver observer = new ModelObserver();
-
-    /**
-     * Instancia única de la fachada.
-     */
-    private static ModeloVistaFacade modeloVista;
-
     /**
      * Constructor privado que inicializa la lista de jugadores.
      *
@@ -51,19 +55,6 @@ public class ModeloVistaFacade implements IModeloVista {
      */
     private ModeloVistaFacade() {
         this.jugadores = new LinkedList<>();
-    }
-
-    /**
-     * Devuelve la instancia de la fachada. Si no existe, la crea al momento de
-     * invocarse.
-     *
-     * @return Instancia única de la clase.
-     */
-    public static ModeloVistaFacade getInstance() {
-        if (modeloVista == null) {
-            modeloVista = new ModeloVistaFacade();
-        }
-        return modeloVista;
     }
 
     /**
@@ -100,7 +91,7 @@ public class ModeloVistaFacade implements IModeloVista {
      */
     @Override
     public void agregarJugadorPrincipal(JugadorDTO jugadorPrincipal) {
-        JugadorSubject jugador = JugadorMapper.toJugadorSubject(jugadorPrincipal);
+        JugadorSubject jugador = JugadorMapperVista.toJugadorSubject(jugadorPrincipal);
         jugador.addObserver(observer);
         agregarJugador(jugador);
         jugador.notifyAllObservers();
@@ -113,7 +104,7 @@ public class ModeloVistaFacade implements IModeloVista {
      */
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
-        JugadorSubject jugador = JugadorMapper.toJugadorSubject(jugadorSecundario);
+        JugadorSubject jugador = JugadorMapperVista.toJugadorSubject(jugadorSecundario);
         jugador.addObserver(observer);
         agregarJugador(jugador);
         jugador.notifyAllObservers();

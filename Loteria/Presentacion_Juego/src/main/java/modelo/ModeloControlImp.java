@@ -1,8 +1,8 @@
 package modelo;
 
 import java.awt.Point;
-import modeloJuego.IModeloJuego;
-import modeloJuego.ModeloJuegoImp;
+
+import interfaces.IModeloJuego;
 
 /**
  * Implementación de la interfaz IModeloControl.
@@ -14,10 +14,13 @@ import modeloJuego.ModeloJuegoImp;
  */
 public class ModeloControlImp implements IModeloControl {
 
+    private IModeloJuego modeloJuego;
+
     /**
      * Constructor vacío
      */
-    public ModeloControlImp() {
+    public ModeloControlImp(IModeloJuego modeloJuego) {
+        this.modeloJuego = modeloJuego;
     }
 
     /**
@@ -31,7 +34,14 @@ public class ModeloControlImp implements IModeloControl {
      */
     @Override
     public void colocarFicha(Point posicion) {
-        IModeloJuego modeloJuego = ModeloJuegoImp.getInstance();
         modeloJuego.validaMovimiento(posicion);
+    }
+
+    /**
+     * Devuelve la interfaz del modelo del juego que utiliza para comunicarse.
+     * @return La interfaz del modelo de juego.
+     */
+    public IModeloJuego getModeloJuego(){
+        return modeloJuego;
     }
 }

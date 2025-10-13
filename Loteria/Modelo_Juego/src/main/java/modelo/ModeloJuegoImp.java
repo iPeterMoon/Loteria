@@ -1,17 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package modeloJuego;
+package modelo;
 
+import interfaces.IModeloJuego;
+import interfaces.IModeloVista;
 import java.awt.Point;
 
 import dtos.FichaDTO;
 import java.util.List;
 
 import conexion.PeerService;
-import modelo.IModeloVista;
-import modelo.ModeloVistaFacade;
+import dtos.JugadorDTO;
+import mappers.JugadorMapperModelo;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -20,13 +18,26 @@ import modelo.ModeloVistaFacade;
  */
 public class ModeloJuegoImp implements IModeloJuego {
 
-    private static ModeloJuegoImp modeloJuegoImp;
+    private static ModeloJuegoImp instancia;
+
+    private ModeloJuegoImp() {
+    }
 
     public static ModeloJuegoImp getInstance() {
-        if (modeloJuegoImp == null) {
-            modeloJuegoImp = new ModeloJuegoImp();
+        if (instancia == null) {
+            instancia = new ModeloJuegoImp();
         }
-        return modeloJuegoImp;
+        return instancia;
+    }
+
+    private IModeloVista vista;
+
+    public void inicializar(IModeloVista modeloVista) {
+        if (vista != null) {
+            //Asegura que no se inicialice dos veces
+            return;
+        }
+        this.vista = modeloVista;
     }
 
     /**
@@ -41,13 +52,6 @@ public class ModeloJuegoImp implements IModeloJuego {
      * Jugador host de la ronda
      */
     private Jugador host;
-    private IModeloVista vista = ModeloVistaFacade.getInstance();
-
-    /**
-     * Constructor vacio
-     */
-    private ModeloJuegoImp() {
-    }
 
     /**
      * Método para obtener el jugador principal, es decir el que es dueño de la
@@ -55,8 +59,8 @@ public class ModeloJuegoImp implements IModeloJuego {
      *
      * @return Jugador dueño de la vista
      */
-    public Jugador getJugadorPrincipal() {
-        return jugadorPrincipal;
+    public JugadorDTO getJugadorPrincipal() {
+        return JugadorMapperModelo.toDTO(jugadorPrincipal, true);
     }
 
     /**
@@ -65,8 +69,9 @@ public class ModeloJuegoImp implements IModeloJuego {
      *
      * @param jugadorPrincipal Jugador que es dueño de la vista
      */
-    public void setJugadorPrincipal(Jugador jugadorPrincipal) {
-        this.jugadorPrincipal = jugadorPrincipal;
+    @Override
+    public void setJugadorPrincipal(JugadorDTO jugadorPrincipal) {
+        this.jugadorPrincipal = JugadorMapperModelo.toJugador(jugadorPrincipal);
     }
 
     /**
@@ -126,7 +131,7 @@ public class ModeloJuegoImp implements IModeloJuego {
 
             // Crear DTO y notificar a la vista
             FichaDTO ficha = new FichaDTO(jugadorPrincipal.getNickname(), posicion);
-            vista.colocarFicha(ficha);
+            colocarFicha(ficha);
             PeerService conexion = PeerService.getInstancia();
             conexion.broadcastActualizarTarjeta(ficha);
             // Print temporal 
@@ -139,12 +144,14 @@ public class ModeloJuegoImp implements IModeloJuego {
     }
 
     /**
-     * METODO POR MIENTRAS PARA PROBAR EL FLUJO EN LA VISTA
+     * Metodo que llama a la vista para colocar la ficha en la tarjeta de un
+     * jugador
      *
-     * @param posicion
+     * @param ficha DTO con la posicion de la ficha y el jugador a quien va a
+     * colocarse la ficha.
      */
-    public void validarMovimientoMock(Point posicion) {
-        FichaDTO ficha = new FichaDTO("Jerson", posicion);
+    @Override
+    public void colocarFicha(FichaDTO ficha) {
         vista.colocarFicha(ficha);
     }
 

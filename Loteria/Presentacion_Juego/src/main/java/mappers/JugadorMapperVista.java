@@ -4,11 +4,9 @@ import dtos.JugadorDTO;
 import dtos.TarjetaDTO;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+
 import modelo.JugadorSubject;
 import modelo.ModeloTarjeta;
-import modeloJuego.IModeloJuego;
-import modeloJuego.Jugador;
-import modeloJuego.ModeloJuegoImp;
 
 /**
  * Clase utilitaria (Mapper) encargada de la conversión de objetos entre el
@@ -19,7 +17,7 @@ import modeloJuego.ModeloJuegoImp;
  *
  * @author Alici
  */
-public class JugadorMapper {
+public class JugadorMapperVista {
 
     /**
      * Convierte un Objeto de Transferencia de Datos (JugadorDTO) a un objeto
@@ -40,17 +38,11 @@ public class JugadorMapper {
      * @param jugador El objeto Jugador del modelo a mapear.
      * @return Una nueva instancia de JugadorDTO con los datos mapeados.
      */
-    public static JugadorDTO toDTO(Jugador jugador) {
+    public static JugadorDTO toDTO(JugadorSubject jugador, boolean esJugadorPrincipal) {
         TarjetaDTO tarjetaDTO = new TarjetaDTO(jugador.getTarjeta().getCartas(), jugador.getTarjeta().getFichas());
-        ImageIcon imagenIcono = new ImageIcon(jugador.getFotoPerfil());
+        ImageIcon imagenIcono = new ImageIcon(jugador.getFoto());
         Image imagenPerfil = imagenIcono.getImage();
 
-        IModeloJuego modeloJuego = ModeloJuegoImp.getInstance();
-        Jugador jugadorPrincipal = modeloJuego.getJugadorPrincipal();
-        boolean esJugadorPrincipal = false;
-        if (jugador.equals(jugadorPrincipal)) {
-            esJugadorPrincipal = true;
-        }
-        return new JugadorDTO(jugador.getNickname(), imagenPerfil, jugador.getPuntos(), tarjetaDTO, esJugadorPrincipal);
+        return new JugadorDTO(jugador.getNickname(), imagenPerfil, jugador.getPuntaje(), tarjetaDTO, esJugadorPrincipal);
     }
 }

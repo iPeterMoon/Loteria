@@ -80,4 +80,14 @@ public class ModeloTarjeta {
     public Map<Point, Boolean> getFichas() {
         return fichas;
     }
+
+    /**
+     * Obtiene el mapa con los numeros de carta de las cartas de la tarjeta
+     * @return Mapa de cartas.
+     */
+    public Map<Point, Integer> getCartas() {
+        return cartas;
+    }
+
+    
 }

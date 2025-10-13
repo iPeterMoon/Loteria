@@ -1,4 +1,4 @@
-package modeloJuego;
+package modelo;
 
 import java.util.Stack;
 
