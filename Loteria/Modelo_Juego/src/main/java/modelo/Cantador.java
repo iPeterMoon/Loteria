@@ -3,7 +3,7 @@ package modelo;
 import java.util.Stack;
 
 /**
- * Clase que representa el cantador de cartas del juego.
+ * Clase singleton que representa el cantador de cartas del juego.
  *
  * @author Alici
  */
@@ -26,11 +26,12 @@ public class Cantador {
     /**
      * Constructor vacio
      */
-    public Cantador() {
+    private Cantador() {
     }
 
     /**
      * Metodo para obtener la instancia unica del cantador
+     *
      * @return la instancia de {@link Cantador}
      */
     public static Cantador getInstance() {

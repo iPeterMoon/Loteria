@@ -9,7 +9,7 @@
     <artifactId>Mediador</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>com.mycompany.interfaces.Interfaces</exec.mainClass>
     </properties>
     <name>Mediador</name>

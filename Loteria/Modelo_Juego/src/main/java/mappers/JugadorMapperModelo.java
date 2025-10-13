@@ -26,6 +26,7 @@ public class JugadorMapperModelo {
      * Transferencia de Datos (JugadorDTO).
      *
      * @param jugador El objeto Jugador del modelo a mapear.
+     * @param esJugadorPrincipal booleano que indica si el jugador dado es el principal
      * @return Una nueva instancia de JugadorDTO con los datos mapeados.
      */
     public static JugadorDTO toDTO(Jugador jugador, boolean esJugadorPrincipal) {
