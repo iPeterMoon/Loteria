@@ -27,9 +27,10 @@ async def broadcast_player_list():
         await client_socket.send(message)
 
 # Función para manejar cada jugador
-async def handle_player(websocket, path):
+async def handle_player(websocket):
     global player_limit, is_lobby_open
     
+
     player_ip = websocket.remote_address[0]
     intent_type = None
 

@@ -15,6 +15,11 @@ async def check_server_status():
             
             message_to_send = {
                 "type": "check_lobby"
+
+                #"type": "join_lobby"
+
+                #"type": "set_limit",
+                #"limit": 4
             }
             
             await websocket.send(json.dumps(message_to_send))
