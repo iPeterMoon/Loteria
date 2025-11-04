@@ -3,14 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mycompany</groupId>
-        <artifactId>Loteria</artifactId>
+        <artifactId>Discovery</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>Mediador</artifactId>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>com.mycompany.interfaces.Interfaces</exec.mainClass>
+        <exec.mainClass>com.mycompany.mediador.Mediador</exec.mainClass>
     </properties>
-    <name>Mediador</name>
 </project>
