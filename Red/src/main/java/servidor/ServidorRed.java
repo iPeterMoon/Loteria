@@ -33,6 +33,21 @@ public class ServidorRed implements Runnable {
     }
 
     /**
+     * Constructor.
+     *
+     * @param incomingQueue La cola donde los manejadores pondrán los eventos
+     * recibidos.
+     * @param threadPool El pool de hilos para ejecutar los manejadores.
+     * @param port Puerto especifico en el que escuchará el servidor.
+     * @throws IOException Si no se puede enlazar el puerto.
+     */
+    public ServidorRed(BlockingQueue<String> incomingQueue, ExecutorService threadPool, int port) throws IOException {
+        this.serverSocket = new ServerSocket(port);
+        this.incomingQueue = incomingQueue;
+        this.threadPool = threadPool;
+    }
+
+    /**
      * @return El puerto en el que el servidor está escuchando
      */
     public int getPort() {

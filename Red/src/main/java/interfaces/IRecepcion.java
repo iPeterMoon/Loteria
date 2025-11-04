@@ -22,6 +22,13 @@ public interface IRecepcion {
     void setEventListener(IRedListener listener);
 
     /**
+     * Registra el puerto del server por si se quiere configurar
+     * con un puerto específico
+     * @param port puerto donde escuchará el server.
+     */
+    void setServerPort(int port);
+
+    /**
      * Detiene los hilos y el socket del servidor.
      */
     void stop();

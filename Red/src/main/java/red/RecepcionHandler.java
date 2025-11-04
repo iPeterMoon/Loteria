@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import servidor.ServidorRed;
 
 /**
- *
+ * 
  * @author Peter
  */
 public class RecepcionHandler implements IRecepcion{
@@ -22,7 +22,7 @@ public class RecepcionHandler implements IRecepcion{
     private RecepcionHandler(){
         this.threadPool = PoolHilos.getInstance().getThreadPool();
     }
-    
+
     public static RecepcionHandler getInstance(){
         if(instance == null){
             instance = new RecepcionHandler();
@@ -39,15 +39,19 @@ public class RecepcionHandler implements IRecepcion{
     
     //Componentes internos
     private ServidorRed servidor;
-    private int serverPort;
+    private Integer serverPort;
     
     @Override
     public int empezarEscucha() throws IOException {
         //Iniciar servidor
-        servidor = new ServidorRed(incomingQueue, threadPool);
+        if(serverPort == null){
+            servidor = new ServidorRed(incomingQueue, threadPool);
+            this.serverPort = servidor.getPort();
+        } else {
+            servidor = new ServidorRed(incomingQueue, threadPool, serverPort);
+        }
+
         threadPool.submit(servidor);
-        this.serverPort = servidor.getPort();
-        
         threadPool.submit(this::procesarColaEntrada);
         return this.serverPort;
     }
@@ -87,6 +91,11 @@ public class RecepcionHandler implements IRecepcion{
         threadPool.shutdownNow(); 
         
         System.out.println("Componente de Recepción detenido.");
+    }
+
+    @Override
+    public void setServerPort(int port) {
+        this.serverPort = port;
     }
     
 }
