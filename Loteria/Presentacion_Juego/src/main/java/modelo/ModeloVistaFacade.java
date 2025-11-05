@@ -8,7 +8,7 @@ import dtos.FichaDTO;
 import dtos.JugadorDTO;
 import mappers.JugadorMapperVista;
 import vista.FrameJuego;
-import vista.IObserver;
+import interfaces.IObserver;
 import vista.ModelObserver;
 
 /**
