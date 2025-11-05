@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import mappers.JugadorMapperModelo;
 import modelo.IModeloControl;
 import interfaces.IModeloVista;
+import interfaces.IObserver;
 import interfaces.IRecepcion;
 import modelo.Cantador;
 import modelo.ModeloControlImp;
@@ -34,9 +35,8 @@ public class Arrancador {
         IModeloVista modeloVista = ModeloVistaFacade.getInstance();
 
         //Iniciar el componente de peer
-        IEnvio envio = RedFactory.crearEnvioHandler();
-        IRecepcion recepcion = RedFactory.crearRecepcionHandler();
-        Peer nuevoPeer = new Peer(envio, recepcion);
+        IObserver modeloJuegoObserver = ModeloJuegoImp.getInstance();
+        Peer nuevoPeer = new Peer(modeloJuegoObserver);
 
         // 1. Configuración de dependencias del Modelo
         // 1.1 Crear ModeloJuego (necesita IModeloVista)

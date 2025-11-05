@@ -12,12 +12,12 @@ import enums.TipoEvento;
 import eventos.Evento;
 import eventos.EventoFicha;
 import eventos.EventoNuevoPeer;
+import factory.RedFactory;
 import interfaces.IObserver;
 import java.net.InetAddress;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import modelo.ModeloJuegoImp;
 
 /**
  *
@@ -26,20 +26,19 @@ import modelo.ModeloJuegoImp;
 public class Peer implements IPeer, IRedListener {
 
     private PeerInfo myInfo;
-    private final IEnvio envio;
-    private final IRecepcion recepcion;
+    private final IEnvio envio = RedFactory.crearEnvioHandler();
+    private final IRecepcion recepcion = RedFactory.crearRecepcionHandler();
     private final Gson gson;
-    private final IObserver observer = ModeloJuegoImp.getInstance();
+    private final IObserver observer;
     private static final String DISCOVERY_IP = "automundo.ddns.net";
     private static final int DISCOVERY_PUERTO = 5000;
     private final List<PeerInfo> peersPartida = new LinkedList<>();
     private volatile boolean isRunning = true;
     private volatile boolean isHost = false;
 
-    public Peer(IEnvio envio, IRecepcion recepcion) {
-        this.envio = envio;
-        this.recepcion = recepcion;
+    public Peer(IObserver observer) {
         gson = new Gson();
+        this.observer = null;
     }
 
     @Override
@@ -141,6 +140,10 @@ public class Peer implements IPeer, IRedListener {
 
     private void procesarEventoFicha(JsonObject json) {
         EventoFicha evento = gson.fromJson(json, EventoFicha.class);
+        notify(evento);
+    }
+
+    private void notify(Evento evento) {
         observer.update(evento);
     }
 }
