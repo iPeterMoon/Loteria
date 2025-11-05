@@ -10,4 +10,5 @@ C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoNuevoP
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoSolicitarMatchmaker.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IModeloJuego.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IModeloVista.java
+C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IObserver.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IPeer.java

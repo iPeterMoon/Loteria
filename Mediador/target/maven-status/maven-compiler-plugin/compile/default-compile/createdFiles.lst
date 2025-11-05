@@ -8,6 +8,7 @@ eventos\Evento.class
 eventos\EventoFicha.class
 interfaces\IModeloJuego.class
 interfaces\IPeer.class
+interfaces\IObserver.class
 dtos\FichaDTO.class
 dtos\TarjetaDTO.class
 eventos\EventoSolicitarMatchmaker.class

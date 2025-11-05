@@ -8,3 +8,6 @@
 /Loteria/Arrancador/target/
 /Loteria/Mediador/target/
 /Discovery/ArrancadorDiscovery/target/
+/Peer/target/
+/MatchMaker/ArrancadorMatchMaker/target/
+/MatchMaker/MatchMakerImpl/target/
