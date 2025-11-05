@@ -1,12 +1,13 @@
 package cliente;
 
-import dtos.Mensaje;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+
+import dtos.Mensaje;
 
 /**
  *
@@ -40,7 +41,6 @@ public class ClienteRed implements Runnable {
                 Thread.currentThread().interrupt();
                 break;
             }
-            System.out.println("[ClienteRed] Procesador de cola de salida detenido.");
         }
     }
 

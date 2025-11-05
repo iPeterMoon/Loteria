@@ -33,6 +33,10 @@ public class PeerInfo implements Serializable {
         return port;
     }
 
+    public void setUser(String user){
+        this.user = user;
+    }
+
     public void setIp(String ip) {
         this.ip = ip;
     }

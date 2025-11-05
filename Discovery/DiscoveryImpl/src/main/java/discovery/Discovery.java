@@ -2,6 +2,7 @@ package discovery;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,6 +16,7 @@ import com.google.gson.JsonSyntaxException;
 
 import dtos.PeerInfo;
 import enums.TipoEvento;
+import eventos.EventoHeartbeat;
 import eventos.EventoMatchmakerInfo;
 import eventos.EventoNuevoPeer;
 import eventos.EventoSolicitarMatchmaker;
@@ -22,6 +24,7 @@ import factory.RedFactory;
 import interfaces.IEnvio;
 import interfaces.IRecepcion;
 import interfaces.IRedListener;
+import util.ConfigLoader;
 
 /**
  *
@@ -29,13 +32,14 @@ import interfaces.IRedListener;
  */
 public class Discovery implements IRedListener {
 
-    private static final int PUERTO = 5000;
-    private static final long HEARTBEAT_INTERVALO_MS = 500;
+    private static final String IP = ConfigLoader.getInstance().getIpServidor(); 
+    private static final int PUERTO = ConfigLoader.getInstance().getPuertoDiscovery();
+    private static final long HEARTBEAT_INTERVALO_MS = 2000;
     private static final long HEARTBEAT_TIMEOUT_MS = 3 * HEARTBEAT_INTERVALO_MS; // 3x sin heartbeat → muerto
-    private static final int LIMPIEZA_INTERVALO_MS = 500;
+    private static final int LIMPIEZA_INTERVALO_MS = 2000;
 
-    private static final String MATCHMAKER_IP = "automundo.ddns.net";
-    private static final int MATCHMAKER_PUERTO = 6000;
+    private static final String MATCHMAKER_IP = ConfigLoader.getInstance().getIpServidor();
+    private static final int MATCHMAKER_PUERTO = ConfigLoader.getInstance().getPuertoMatchmaker();
     private static final PeerInfo matchmakerPeer = new PeerInfo("matchmaker", MATCHMAKER_IP, MATCHMAKER_PUERTO);
 
     private final IEnvio envio = RedFactory.crearEnvioHandler();
@@ -65,6 +69,12 @@ public class Discovery implements IRedListener {
                     LIMPIEZA_INTERVALO_MS,
                     TimeUnit.MILLISECONDS
             );
+
+            scheduler.scheduleAtFixedRate(
+                this::enviarHeartbeat,
+                0,
+                HEARTBEAT_INTERVALO_MS,
+                TimeUnit.MILLISECONDS);
 
             System.out.println("[DiscoveryServer] Iniciado en puerto: " + PUERTO);
             System.out.println("[DiscoveryServer] Matchmaker: " + MATCHMAKER_IP + ":" + MATCHMAKER_PUERTO);
@@ -101,19 +111,25 @@ public class Discovery implements IRedListener {
 
     private void procesarRegistro(JsonObject json) {
         EventoNuevoPeer evento = gson.fromJson(json, EventoNuevoPeer.class);
-        PeerInfo peer = evento.getPeer();
-        registrarPeer(peer.getUser(), peer);
+        PeerInfo peer = evento.getPeer(); 
+        registrarPeer(obtenerKey(peer), peer);
 
         EventoMatchmakerInfo respuesta = new EventoMatchmakerInfo(matchmakerPeer, this.getClass().getSimpleName());
         JsonObject respuestaJson = gson.toJsonTree(respuesta).getAsJsonObject();
 
         enviarRespuesta(peer.getIp(), peer.getPort(), respuestaJson);
     }
+    
+    private String obtenerKey(PeerInfo info) {
+        return info.getIp() + ":" +  info.getPort();
+    }
 
     private void procesarHeartbeat(JsonObject json) {
-        String user = json.get("user").getAsString();
-        if (peersVivos.containsKey(user)) {
-            ultimaVezVisto.put(user, System.currentTimeMillis());
+        EventoHeartbeat heartbeat = gson.fromJson(json, EventoHeartbeat.class);
+        PeerInfo infoPeer = heartbeat.getInfo();
+        String key = obtenerKey(infoPeer);
+        if (peersVivos.containsKey(key)) {
+            ultimaVezVisto.put(key, System.currentTimeMillis());
         }
     }
 
@@ -133,10 +149,10 @@ public class Discovery implements IRedListener {
         envio.sendEvent(ip, puerto, gson.toJson(mensaje));
     }
 
-    private void registrarPeer(String user, PeerInfo peer) {
-        peersVivos.put(user, peer);
-        ultimaVezVisto.put(user, System.currentTimeMillis());
-        System.out.println("[DiscoveryServer] Peer registrado: " + user + " @ " + peer.getIp() + ":" + peer.getPort());
+    private void registrarPeer(String key, PeerInfo peer) {
+        peersVivos.put(key, peer);
+        ultimaVezVisto.put(key, System.currentTimeMillis());
+        System.out.println("[DiscoveryServer] Peer registrado: " + key + " @ " + peer.getIp() + ":" + peer.getPort());
     }
 
     private void limpiarPeersMuertos() {
@@ -147,15 +163,30 @@ public class Discovery implements IRedListener {
         long ahora = System.currentTimeMillis();
         ultimaVezVisto.entrySet().removeIf(e -> {
             if (ahora - e.getValue() > HEARTBEAT_TIMEOUT_MS) {
-                String user = e.getKey();
-                PeerInfo muerto = peersVivos.remove(user);
+                String peerKey = e.getKey();
+                PeerInfo muerto = peersVivos.remove(peerKey);
                 if (muerto != null) {
-                    System.out.println("[DiscoveryServer] Peer eliminado (timeout " + HEARTBEAT_TIMEOUT_MS + " ms): " + user);
+                    System.out.println("[DiscoveryServer] Peer eliminado (timeout " + HEARTBEAT_TIMEOUT_MS + " ms): " + peerKey);
                 }
                 return true;
             }
             return false;
         });
+    }
+
+    private void enviarHeartbeat() {
+        if (!running){
+            return;
+        }
+        if(!peersVivos.isEmpty()){
+            PeerInfo myInfo = new PeerInfo("discovery", IP, PUERTO);
+            EventoHeartbeat heartbeat = new EventoHeartbeat(myInfo, myInfo.getUser());
+            String mensaje = gson.toJson(heartbeat);
+            for(Entry<String, PeerInfo> peer : peersVivos.entrySet()){
+                PeerInfo info = peer.getValue();
+                envio.sendEvent(info.getIp(), info.getPort(), mensaje);
+            }    
+        }
     }
 
 }

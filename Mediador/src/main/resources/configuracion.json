@@ -1,0 +1,5 @@
+{
+  "ip_servidor": "localhost",
+  "puerto_discovery": 12345,
+  "puerto_matchmaker": 12346
+}

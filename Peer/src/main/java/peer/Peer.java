@@ -1,23 +1,25 @@
 package peer;
 
-import dtos.PeerInfo;
-import interfaces.IEnvio;
-import interfaces.IPeer;
-import interfaces.IRecepcion;
-import interfaces.IRedListener;
+import java.net.InetAddress;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+
+import dtos.PeerInfo;
 import enums.TipoEvento;
 import eventos.Evento;
 import eventos.EventoFicha;
 import eventos.EventoNuevoPeer;
 import factory.RedFactory;
+import interfaces.IEnvio;
 import interfaces.IObserver;
-import java.net.InetAddress;
-import java.util.LinkedList;
-import java.util.List;
-import javax.swing.JOptionPane;
+import interfaces.IPeer;
+import interfaces.IRecepcion;
+import interfaces.IRedListener;
+import util.ConfigLoader;
 
 /**
  *
@@ -30,10 +32,9 @@ public class Peer implements IPeer, IRedListener {
     private final IRecepcion recepcion = RedFactory.crearRecepcionHandler();
     private final Gson gson;
     private final IObserver observer;
-    private static final String DISCOVERY_IP = "automundo.ddns.net";
-    private static final int DISCOVERY_PUERTO = 5000;
+    private static final String DISCOVERY_IP = ConfigLoader.getInstance().getIpServidor();
+    private static final int DISCOVERY_PUERTO = ConfigLoader.getInstance().getPuertoDiscovery();
     private final List<PeerInfo> peersPartida = new LinkedList<>();
-    private volatile boolean isRunning = true;
     private volatile boolean isHost = false;
 
     public Peer(IObserver observer) {
@@ -52,8 +53,7 @@ public class Peer implements IPeer, IRedListener {
             int myPort = recepcion.empezarEscucha();
 
             String myIp = InetAddress.getLocalHost().getHostAddress();
-            String myUser = JOptionPane.showInputDialog("Ingresa tu usuario:");
-            this.myInfo = new PeerInfo(myUser, myIp, myPort);
+            this.myInfo = new PeerInfo(null, myIp, myPort);
 
             System.out.println("Mi info : " + myInfo);
             envio.startClient();
@@ -62,7 +62,6 @@ public class Peer implements IPeer, IRedListener {
             registrarEnDiscovery(DISCOVERY_IP, DISCOVERY_PUERTO);
         } catch (Exception e) {
             System.err.println("Error al iniciar el peer: " + e.getMessage());
-            e.printStackTrace();
             stop();
         }
 
@@ -76,7 +75,6 @@ public class Peer implements IPeer, IRedListener {
 
     @Override
     public void stop() {
-        isRunning = false;
         if (recepcion != null) {
             recepcion.stop();
         }
@@ -124,6 +122,8 @@ public class Peer implements IPeer, IRedListener {
                     procesarNuevoPeer(json);
                 case TipoEvento.FICHA ->
                     procesarEventoFicha(json);
+                case TipoEvento.HEARTBEAT ->
+                    responderHeartbeat();
                 default ->
                     System.out.println("[Peer] Tipo de evento desconocido: " + tipo);
             }
@@ -143,7 +143,17 @@ public class Peer implements IPeer, IRedListener {
         notify(evento);
     }
 
+    private void responderHeartbeat() {
+        PeerInfo discoveryInfo = new PeerInfo("discovery", DISCOVERY_IP, DISCOVERY_PUERTO);
+        ProcesadorHeartbeat.procesarHeartbeat(discoveryInfo, myInfo);
+    }
+
     private void notify(Evento evento) {
         observer.update(evento);
+    }
+
+    @Override
+    public void setUser(String user) {
+        this.myInfo.setUser(user);
     }
 }

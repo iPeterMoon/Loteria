@@ -1,7 +1,9 @@
 interfaces\IModeloVista.class
+eventos\EventoHeartbeat.class
 enums\TipoEvento.class
 dtos\PeerInfo.class
 eventos\EventoNuevoPeer.class
+util\ConfigLoader.class
 dtos\JugadorDTO.class
 eventos\EventoMatchmakerInfo.class
 eventos\Evento.class
@@ -9,6 +11,7 @@ eventos\EventoFicha.class
 interfaces\IModeloJuego.class
 interfaces\IPeer.class
 interfaces\IObserver.class
+util\ConfigLoader$ConfiguracionDefault.class
 dtos\FichaDTO.class
 dtos\TarjetaDTO.class
 eventos\EventoSolicitarMatchmaker.class

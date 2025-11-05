@@ -25,6 +25,11 @@ public interface IPeer {
     void broadcastEvento(Evento evento);
     
     /**
+     * Establece el nombre de usuario del peer.
+     */
+    void setUser(String user);
+
+    /**
      * Obtiene la información de este peer (ID, IP, Puerto).
      * @return La información del peer local.
      */

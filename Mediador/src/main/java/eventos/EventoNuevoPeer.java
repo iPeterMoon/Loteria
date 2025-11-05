@@ -9,7 +9,7 @@ import enums.TipoEvento;
  */
 public class EventoNuevoPeer extends Evento {
 
-    private PeerInfo peer;
+    private final PeerInfo peer;
 
     public EventoNuevoPeer(PeerInfo peer, String userSender) {
         super(TipoEvento.NUEVO_PEER, userSender);

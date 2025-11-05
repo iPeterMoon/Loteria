@@ -5,6 +5,7 @@ C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\dtos\TarjetaDTO.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\enums\TipoEvento.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\Evento.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoFicha.java
+C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoHeartbeat.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoMatchmakerInfo.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoNuevoPeer.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\eventos\EventoSolicitarMatchmaker.java
@@ -12,3 +13,4 @@ C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IModeloJu
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IModeloVista.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IObserver.java
 C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\interfaces\IPeer.java
+C:\Users\Jp\Documents\GitHub\Loteria\Mediador\src\main\java\util\ConfigLoader.java
