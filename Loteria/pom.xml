@@ -11,6 +11,7 @@
         <module>Presentacion_Juego</module>
         <module>Modelo_Juego</module>
         <module>../Red</module>
+        <module>Peer</module>
         <module>../Mediador</module>
     </modules>
     <properties>
