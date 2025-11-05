@@ -9,6 +9,11 @@ import java.util.List;
 
 import conexion.PeerService;
 import dtos.JugadorDTO;
+import enums.TipoEvento;
+import eventos.Evento;
+import eventos.EventoFicha;
+import interfaces.IObserver;
+import interfaces.IPeer;
 import mappers.JugadorMapperModelo;
 
 /**
@@ -16,9 +21,11 @@ import mappers.JugadorMapperModelo;
  *
  * @author Alici
  */
-public class ModeloJuegoImp implements IModeloJuego {
+public class ModeloJuegoImp implements IModeloJuego, IObserver {
 
     private static ModeloJuegoImp instancia;
+    private IModeloVista vista;
+    private IPeer componentePeer;
 
     private ModeloJuegoImp() {
     }
@@ -30,14 +37,17 @@ public class ModeloJuegoImp implements IModeloJuego {
         return instancia;
     }
 
-    private IModeloVista vista;
-
-    public void inicializar(IModeloVista modeloVista) {
-        if (vista != null) {
+    public void inicializar(IModeloVista modeloVista, IPeer peer) {
+        if (this.vista != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
         this.vista = modeloVista;
+
+        if (this.componentePeer != null) {
+            return;
+        }
+        this.componentePeer = peer;
     }
 
     /**
@@ -132,8 +142,9 @@ public class ModeloJuegoImp implements IModeloJuego {
             // Crear DTO y notificar a la vista
             FichaDTO ficha = new FichaDTO(jugadorPrincipal.getNickname(), posicion);
             colocarFicha(ficha);
-            PeerService conexion = PeerService.getInstancia();
-            conexion.broadcastActualizarTarjeta(ficha);
+
+            EventoFicha eventoFicha = new EventoFicha(jugadorPrincipal.getNickname(), posicion);
+            componentePeer.broadcastEvento(eventoFicha);
             // Print temporal 
             System.out.println("Ficha colocada correctamente en " + posicion + " por " + jugadorPrincipal.getNickname() + " (Carta: " + cartaActual + ")");
         } else {
@@ -153,6 +164,37 @@ public class ModeloJuegoImp implements IModeloJuego {
     @Override
     public void colocarFicha(FichaDTO ficha) {
         vista.colocarFicha(ficha);
+    }
+
+    /**
+     * Método de la interfaz IObserver que el componente de peer (Subject)
+     * utiliza para notificar a sus Observadores.
+     *
+     * @param object
+     */
+    @Override
+    public void update(Object object) {
+        if (object instanceof Evento evento) {
+            procesarEventos(evento);
+        }
+
+    }
+
+    /**
+     * Procesa los eventos del juego que llegan del componente de peer
+     *
+     * @param evento
+     */
+    private void procesarEventos(Evento evento) {
+        TipoEvento tipo = evento.getTipoEvento();
+
+        if (tipo.equals(TipoEvento.FICHA)) {
+            EventoFicha eventoFicha = (EventoFicha) evento;
+            FichaDTO fichaDTO = new FichaDTO(eventoFicha.getUserSender(), eventoFicha.getPosicion());
+
+            colocarFicha(fichaDTO);
+        }
+
     }
 
 }

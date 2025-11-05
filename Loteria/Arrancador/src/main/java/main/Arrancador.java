@@ -1,25 +1,24 @@
 package main;
 
-import conexion.ConexionPublisher;
-import conexion.ConexionReceiver;
-import conexion.ServerTCP;
 import control.RegistroControles;
+import factory.RedFactory;
+import interfaces.IEnvio;
 import interfaces.IModeloJuego;
-
 import java.awt.Point;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import mappers.JugadorMapperModelo;
 import modelo.IModeloControl;
 import interfaces.IModeloVista;
+import interfaces.IRecepcion;
 import modelo.Cantador;
 import modelo.ModeloControlImp;
 import modelo.ModeloVistaFacade;
 import modelo.Tarjeta;
 import modelo.Jugador;
 import modelo.ModeloJuegoImp;
+import peer.Peer;
 
 /**
  * Clase que se encarga de configurar el modelo del juego y todo lo necesario
@@ -31,42 +30,17 @@ public class Arrancador {
 
     public static void main(String[] args) {
 
-        try {
-            // Iniciar servidor TCP (Obtener Puerto Unico)
-            ServerTCP server = new ServerTCP();
-            int puertoTCP = server.getPuertoEscucha();
-
-            // Iniciar el Servidor TCP en un hilo para que no bloque el Main
-            Thread serverThread = new Thread(server);
-            serverThread.setName("Hilo-ServidorTCP");
-            serverThread.start();
-
-            // Iniciar Receptor de Conexión (Listener MultiCast)
-            // Necesita el puerto local para no intentar conectarse a si mismo
-            ConexionReceiver receiver = new ConexionReceiver(puertoTCP);
-            Thread receiverThread = new Thread(receiver);
-            receiverThread.setName("Hilo-ConexionReceiver");
-            receiverThread.start();
-
-            // Anunciar la conexión inicial
-            // Una llamada estática (la propagación la hará el receiver)
-            ConexionPublisher.anunciarConexion(puertoTCP);
-
-            System.out.println("\n--- JUEGO INICIADO ---");
-            System.out.println("Tu puerto de escucha (único): " + puertoTCP);
-            System.out.println("Esperando anuncios de otros Peers...");
-
-        } catch (IOException e) {
-            System.err.println("Error fatal al inicializar la aplicación de juego: " + e.getMessage());
-            e.printStackTrace();
-        }
-
         //Obtener la fachada de la vista.
         IModeloVista modeloVista = ModeloVistaFacade.getInstance();
 
+        //Iniciar el componente de peer
+        IEnvio envio = RedFactory.crearEnvioHandler();
+        IRecepcion recepcion = RedFactory.crearRecepcionHandler();
+        Peer nuevoPeer = new Peer(envio, recepcion);
+
         // 1. Configuración de dependencias del Modelo
         // 1.1 Crear ModeloJuego (necesita IModeloVista)
-        ModeloJuegoImp.getInstance().inicializar(modeloVista);
+        ModeloJuegoImp.getInstance().inicializar(modeloVista, nuevoPeer);
         IModeloJuego modeloJuego = ModeloJuegoImp.getInstance();
 
         // 1.2 Crear ModeloControl(necesita IModeloJuego)
@@ -75,8 +49,10 @@ public class Arrancador {
         //Inicializar el registro de controles
         RegistroControles.getInstance().inicializar(modeloControl);
 
+        //Iniciar peer
+        nuevoPeer.start();
 
-        // RESPONSABILIDAD QUE DESPUES DEBE PASAR AL MODELO DEL JUEGO
+        // RESPONSABILIDAD QUE DESPUES DEBE PASAR AL MODELO DEL JUEGO AL INICIAR LA PARTIDA
         //Se genera un mapa de las cartas de la tarjeta
         Map<Point, Integer> cartas = new HashMap<>();
         for (int x = 0; x < 4; x++) {
@@ -91,7 +67,7 @@ public class Arrancador {
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
         modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
-        
+
         Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
 
