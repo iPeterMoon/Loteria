@@ -30,6 +30,12 @@ public interface IPeer {
     void setUser(String user);
 
     /**
+     * Establece un observer que escuchará los eventos que le lleguen al Peer
+     * @param observer Observer que escuchará los eventos que le lleguen al Peer
+     */
+    void setObserver(IObserver observer);
+    
+    /**
      * Obtiene la información de este peer (ID, IP, Puerto).
      * @return La información del peer local.
      */

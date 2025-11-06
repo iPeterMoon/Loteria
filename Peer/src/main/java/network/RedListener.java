@@ -1,26 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package network;
 
 import factory.RedFactory;
 import interfaces.IRecepcion;
 import interfaces.IRedListener;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import utilPeer.PoolHilos;
 
 /**
  *
  * @author Jp
  */
-public class RecepcionHandler implements Runnable, IRedListener {
+public class RedListener implements Runnable, IRedListener {
 
     private final IRecepcion recepcion;
     private final BlockingQueue<String> incomingQueue;
+    private final ExecutorService threadPool;
     private volatile boolean running = false;
 
-    public RecepcionHandler(BlockingQueue<String> incomingQueue) {
+    public RedListener(BlockingQueue<String> incomingQueue) {
         this.recepcion = RedFactory.crearRecepcionHandler();
+        this.threadPool = PoolHilos.getInstance().getThreadPool();
         this.incomingQueue = incomingQueue;
     }
 
@@ -45,10 +45,7 @@ public class RecepcionHandler implements Runnable, IRedListener {
     @Override
     public void onMensajeRecibido(String mensaje) {
         if (mensaje != null && !mensaje.isBlank()) {
-            boolean encolado = incomingQueue.offer(mensaje);
-            if (!encolado) {
-                System.err.println("[RecepcionHandler] Cola llena. Mensaje descartado.");
-            }
+            threadPool.submit(new MessageDispatcher(mensaje, incomingQueue));
         }
     }
 

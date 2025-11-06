@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package network;
 
 import com.google.gson.Gson;
@@ -16,24 +12,15 @@ import util.ConfigLoader;
  */
 public class DiscoveryRegistrar {
 
-    private final PeerInfo myInfo;
-    private final String discoveryIp;
-    private final int discoveryPort;
+    private final static String DISCOVERY_IP = ConfigLoader.getInstance().getIpServidor();
+    private final static int DISCOVERY_PORT = ConfigLoader.getInstance().getPuertoDiscovery(); 
 
-    public DiscoveryRegistrar(PeerInfo myInfo) {
-        this.myInfo = myInfo;
-        this.discoveryIp = ConfigLoader.getInstance().getIpServidor();
-        this.discoveryPort = ConfigLoader.getInstance().getPuertoDiscovery();
-    }
-
-    public void registrar() {
+    /**
+     * Registra un usuario en el servidor de discovery
+     * @param myInfo Info del usuario.
+     */
+    public static void registrar(PeerInfo myInfo) {
         EventoNuevoPeer evento = new EventoNuevoPeer(myInfo, myInfo.getUser());
-        RedFactory.crearEnvioHandler()
-                .sendEvent(discoveryIp, discoveryPort, new Gson().toJson(evento));
-    }
-
-    public void actualizarUsuario(String user) {
-        myInfo.setUser(user);
-        registrar();
+        RedFactory.crearEnvioHandler().sendEvent(DISCOVERY_IP, DISCOVERY_PORT, new Gson().toJson(evento));
     }
 }

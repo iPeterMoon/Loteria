@@ -36,7 +36,8 @@ public class Arrancador {
 
         //Iniciar el componente de peer
         IObserver modeloJuegoObserver = ModeloJuegoImp.getInstance();
-        Peer nuevoPeer = new Peer(modeloJuegoObserver);
+        Peer nuevoPeer = Peer.getInstance();
+        nuevoPeer.setObserver(modeloJuegoObserver);
 
         // 1. Configuración de dependencias del Modelo
         // 1.1 Crear ModeloJuego (necesita IModeloVista)

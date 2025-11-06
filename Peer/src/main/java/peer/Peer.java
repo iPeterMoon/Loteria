@@ -1,19 +1,17 @@
 package peer;
 
-import java.net.InetAddress;
-import java.util.List;
+import com.google.gson.Gson;
 import dtos.PeerInfo;
 import eventos.Evento;
 import interfaces.IObserver;
 import interfaces.IPeer;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import network.DiscoveryRegistrar;
-import network.EnvioHandler;
-import network.RecepcionHandler;
-import procesadorEventos.ProcesadorMensajes;
+import network.EnvioPeer;
+import network.MessageDispatcher;
+import network.RecepcionPeer;
+import utilPeer.PoolHilos;
 
 /**
  *
@@ -21,27 +19,33 @@ import procesadorEventos.ProcesadorMensajes;
  */
 public class Peer implements IPeer {
 
-    private final PeerInfo myInfo;
-    private final BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
-    private final BlockingQueue<Evento> outgoingQueue = new LinkedBlockingQueue<>();
-    private final IObserver observer;
-    private final List<PeerInfo> peersPartida = new CopyOnWriteArrayList<>();
-
-    private final EnvioHandler envioHandler;
-    private final RecepcionHandler recepcionHandler;
-    private final ProcesadorMensajes messageProcessor;
-    private final DiscoveryRegistrar discoveryRegistrar;
+    private static Peer instance;
+    
+    private PeerInfo myInfo;
+    private EnvioPeer envioHandler;
+    private RecepcionPeer recepcionHandler;
+    private IObserver observer;
+    private final BlockingQueue<String> outgoingQueue = new LinkedBlockingQueue<>();
+    
+    private Peer(){
+        this.myInfo = new PeerInfo(null, "", 0);
+        
+        this.envioHandler = new EnvioPeer(outgoingQueue);
+        this.recepcionHandler = RecepcionPeer.getInstance();
+    }
+    
+    public static Peer getInstance(){
+        if(instance == null) {
+            instance = new Peer();
+        }
+        return instance;
+    }
+    
 
     private volatile boolean running = false;
 
     public Peer(IObserver observer) {
         this.observer = observer;
-        this.myInfo = new PeerInfo(null, "", 0);
-
-        this.envioHandler = new EnvioHandler(outgoingQueue, peersPartida);
-        this.recepcionHandler = new RecepcionHandler(incomingQueue);
-        this.messageProcessor = new ProcesadorMensajes(incomingQueue, this::handleEvento, peersPartida, myInfo);
-        this.discoveryRegistrar = new DiscoveryRegistrar(myInfo);
     }
 
     @Override
@@ -56,61 +60,52 @@ public class Peer implements IPeer {
         }
 
         try {
-            int puerto = recepcionHandler.start();
-            if (puerto == -1) {
-                throw new RuntimeException("No se pudo iniciar recepción");
+            String key = recepcionHandler.empezarEscucha();
+            if(key == null) {
+                throw new Exception("Error al empezar la escucha");
             }
+            String[] netInfo = key.split(":");
+            myInfo.setIp(netInfo[0]);
+            myInfo.setPort(Integer.parseInt(netInfo[1]));
 
-            String ip = InetAddress.getLocalHost().getHostAddress();
-            myInfo.setIp(ip);
-            myInfo.setPort(puerto);
-
-            startBackgroundThreads();
-
-            discoveryRegistrar.registrar();
+            DiscoveryRegistrar.registrar(myInfo);
 
             running = true;
+            System.out.println("Peer corriendo");
         } catch (Exception e) {
             System.err.println("Error al iniciar peer: " + e.getMessage());
             stop();
         }
     }
 
-    private void startBackgroundThreads() {
-        Executors.newSingleThreadExecutor().execute(envioHandler);
-        Executors.newSingleThreadExecutor().execute(recepcionHandler);
-        Executors.newSingleThreadExecutor().execute(messageProcessor);
-    }
-
-    @Override
-    public void stop() {
-        running = false;
-        recepcionHandler.stop();
-        envioHandler.stop();
-        messageProcessor.stop();
-        System.out.println("[Peer] Detenido.");
-    }
-
     @Override
     public void broadcastEvento(Evento evento) {
-        if (peersPartida.isEmpty()) {
-            System.err.println("[Peer] No hay peers para broadcast.");
-            return;
-        }
-        outgoingQueue.offer(evento);
+        Gson gson = new Gson();
+        String json = gson.toJson(evento);
+        PoolHilos.getInstance().getThreadPool().submit(new MessageDispatcher(json, outgoingQueue));
     }
 
     @Override
     public void setUser(String user) {
         myInfo.setUser(user);
-        discoveryRegistrar.actualizarUsuario(user);
+        DiscoveryRegistrar.registrar(myInfo);
     }
 
     private void handleEvento(Evento evento) {
         observer.update(evento);
     }
 
-    public List<PeerInfo> getPeersPartida() {
-        return List.copyOf(peersPartida);
+    @Override
+    public void stop() {
+        running = false;
+        envioHandler.stop();
+        recepcionHandler.stop();
+        System.out.println("[Peer] Detenido.");
     }
+
+    @Override
+    public void setObserver(IObserver observer) {
+        this.observer = observer;
+    }
+    
 }
