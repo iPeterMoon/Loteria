@@ -14,7 +14,6 @@ import peer.PeersConectados;
  */
 public class EnvioPeer implements Runnable {
 
-    private final Gson gson = new Gson();
     private final BlockingQueue<String> outgoingQueue;
     private final IEnvio envio;
     private volatile boolean isRunning = false;

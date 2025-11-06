@@ -6,6 +6,7 @@ import eventos.Evento;
 import interfaces.IObserver;
 import interfaces.IPeer;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
@@ -67,9 +68,10 @@ public class Peer implements IPeer {
             String[] netInfo = key.split(":");
             myInfo.setIp(netInfo[0]);
             myInfo.setPort(Integer.parseInt(netInfo[1]));
-
             DiscoveryRegistrar.registrar(myInfo);
 
+            empezarEnvio();
+            
             running = true;
             System.out.println("Peer corriendo");
         } catch (Exception e) {
@@ -78,6 +80,11 @@ public class Peer implements IPeer {
         }
     }
 
+    private void empezarEnvio(){
+        ExecutorService threadPool = PoolHilos.getInstance().getThreadPool();
+        threadPool.submit(envioHandler);
+    }
+    
     @Override
     public void broadcastEvento(Evento evento) {
         Gson gson = new Gson();
