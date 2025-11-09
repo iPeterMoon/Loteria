@@ -98,7 +98,7 @@ public class Peer implements IPeer {
         DiscoveryRegistrar.registrar(myInfo);
     }
 
-    private void handleEvento(Evento evento) {
+    public void handleEvento(Evento evento) {
         observer.update(evento);
     }
 

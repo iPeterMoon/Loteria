@@ -25,4 +25,10 @@ public abstract class Evento implements Serializable {
     public String getUserSender() {
         return userSender;
     }
+
+    @Override
+    public String toString() {
+        return "Evento{" + "tipoEvento=" + tipoEvento + ", userSender=" + userSender + '}';
+    }
+    
 }

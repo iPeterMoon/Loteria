@@ -1,5 +1,6 @@
 package modelo;
 
+import com.google.gson.Gson;
 import interfaces.IModeloJuego;
 import interfaces.IModeloVista;
 import java.awt.Point;
@@ -7,7 +8,6 @@ import java.awt.Point;
 import dtos.FichaDTO;
 import java.util.List;
 
-import conexion.PeerService;
 import dtos.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
@@ -26,6 +26,8 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
     private static ModeloJuegoImp instancia;
     private IModeloVista vista;
     private IPeer componentePeer;
+    
+    private final Gson gson = new Gson();
 
     private ModeloJuegoImp() {
     }
@@ -177,7 +179,6 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
         if (object instanceof Evento evento) {
             procesarEventos(evento);
         }
-
     }
 
     /**
@@ -186,15 +187,20 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
      * @param evento
      */
     private void procesarEventos(Evento evento) {
-        TipoEvento tipo = evento.getTipoEvento();
+        // CAMBIAR A CADENA DE RESPONSABILIDAD
+        if (evento.getTipoEvento() == TipoEvento.FICHA) {
 
-        if (tipo.equals(TipoEvento.FICHA)) {
+            // Castear a evento concreto
             EventoFicha eventoFicha = (EventoFicha) evento;
-            FichaDTO fichaDTO = new FichaDTO(eventoFicha.getUserSender(), eventoFicha.getPosicion());
+            System.out.println("[ModeloJuego] Procesando evento: " + evento.toString());
+            
+            FichaDTO fichaDTO = new FichaDTO(
+                    eventoFicha.getUserSender(),
+                    eventoFicha.getPosicion()
+            );
 
             colocarFicha(fichaDTO);
         }
-
     }
 
 }

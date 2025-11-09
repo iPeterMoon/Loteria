@@ -19,4 +19,12 @@ public class EventoFicha extends Evento {
     public Point getPosicion() {
         return posicion;
     }
+
+    @Override
+    public String toString() {
+        return super.toString().replace("}", "")
+                + ", posicion=" + posicion
+                + '}';
+    }
+
 }

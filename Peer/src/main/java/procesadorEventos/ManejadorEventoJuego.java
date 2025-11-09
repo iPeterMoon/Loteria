@@ -6,9 +6,10 @@ package procesadorEventos;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import static enums.TipoEvento.FICHA;
+import enums.TipoEvento;
 import eventos.Evento;
 import eventos.EventoFicha;
+import java.util.Map;
 import peer.Peer;
 
 /**
@@ -21,18 +22,23 @@ public class ManejadorEventoJuego extends ManejadorMensajes {
 
     private final Gson gson = new Gson();
 
+    // Mapa con los tipos de eventos del juego
+    private static final Map<TipoEvento, Class<? extends Evento>> EVENTO_MAP = Map.of(
+            TipoEvento.FICHA, EventoFicha.class
+    );
+
     /**
-     * Procesa el evento recibido. Si corresponde a algún evento del juego, se notifica al modelo
-     * del juego. En caso contrario, se pasa al siguiente manejador.
+     * Procesa el evento recibido. Si corresponde a algún evento del juego, se
+     * notifica al modelo del juego. En caso contrario, se pasa al siguiente manejador.
      *
      * @param json evento en formato JSON
      */
     @Override
     public void procesar(JsonObject json) {
-        String tipo = json.get("tipoEvento").getAsString();
+        TipoEvento tipo = TipoEvento.valueOf(json.get("tipoEvento").getAsString());
 
-        if (FICHA.name().equals(tipo)) { // Agregar otros tipos de eventos del juego
-            procesarEvento(json);
+        if (EVENTO_MAP.containsKey(tipo)) {
+            procesarEvento(json, tipo);
         } else if (next != null) {
             next.procesar(json);
         }
@@ -40,10 +46,18 @@ public class ManejadorEventoJuego extends ManejadorMensajes {
 
     /**
      * Convierte el evento en un objeto y lo envía al modelo del juego.
-     * 
+     *
      * @param json evento en formato JSON
      */
-    private void procesarEvento(JsonObject json) {
-        // Notificar al modelo de juego
+    private void procesarEvento(JsonObject json, TipoEvento tipo) {
+        Class<? extends Evento> claseEvento = EVENTO_MAP.get(tipo);
+
+        if (claseEvento != null) {
+            Evento evento = gson.fromJson(json, claseEvento);
+            
+            System.out.println("[ManejadorEventoJuego] Notificando evento: " + evento);
+            // Notificar al modelo de juego
+            Peer.getInstance().handleEvento(evento);
+        }
     }
 }

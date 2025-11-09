@@ -118,6 +118,8 @@ public class Discovery implements IRedListener {
         JsonObject respuestaJson = gson.toJsonTree(respuesta).getAsJsonObject();
 
         enviarRespuesta(peer.getIp(), peer.getPort(), respuestaJson);
+        
+        enviarRespuesta(peer.getIp(), peer.getPort(), gson.toJsonTree(evento).getAsJsonObject()); // Para probar eventos NUEVO_PEER
     }
     
     private String obtenerKey(PeerInfo info) {
