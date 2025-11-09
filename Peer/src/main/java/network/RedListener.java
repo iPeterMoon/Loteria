@@ -4,8 +4,8 @@ import factory.RedFactory;
 import interfaces.IRecepcion;
 import interfaces.IRedListener;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import utilPeer.PoolHilos;
+//import java.util.concurrent.ExecutorService;
+//import utilPeer.PoolHilos;
 
 /**
  *
@@ -15,12 +15,12 @@ public class RedListener implements Runnable, IRedListener {
 
     private final IRecepcion recepcion;
     private final BlockingQueue<String> incomingQueue;
-    private final ExecutorService threadPool;
+    //private final ExecutorService threadPool;
     private volatile boolean running = false;
 
     public RedListener(BlockingQueue<String> incomingQueue) {
         this.recepcion = RedFactory.crearRecepcionHandler();
-        this.threadPool = PoolHilos.getInstance().getThreadPool();
+        //this.threadPool = PoolHilos.getInstance().getThreadPool();
         this.incomingQueue = incomingQueue;
     }
 
@@ -45,7 +45,7 @@ public class RedListener implements Runnable, IRedListener {
     @Override
     public void onMensajeRecibido(String mensaje) {
         if (mensaje != null && !mensaje.isBlank()) {
-            threadPool.submit(new MessageDispatcher(mensaje, incomingQueue));
+            IncomingMessageDispatcher.dispatch(mensaje, incomingQueue);
         }
     }
 

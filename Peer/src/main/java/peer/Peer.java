@@ -10,9 +10,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
-import network.MessageDispatcher;
+//import network.MessageDispatcher;
 import network.RecepcionPeer;
 import utilPeer.PoolHilos;
+import network.OutgoingMessageDispatcher;
 
 /**
  *
@@ -89,7 +90,7 @@ public class Peer implements IPeer {
     public void broadcastEvento(Evento evento) {
         Gson gson = new Gson();
         String json = gson.toJson(evento);
-        PoolHilos.getInstance().getThreadPool().submit(new MessageDispatcher(json, outgoingQueue));
+        OutgoingMessageDispatcher.dispatch(json, outgoingQueue);
     }
 
     @Override
