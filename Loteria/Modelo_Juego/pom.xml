@@ -14,11 +14,6 @@
             <artifactId>Mediador</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Peer</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
