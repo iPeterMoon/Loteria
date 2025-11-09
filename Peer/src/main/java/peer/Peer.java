@@ -5,9 +5,7 @@ import dtos.PeerInfo;
 import eventos.Evento;
 import interfaces.IObserver;
 import interfaces.IPeer;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
 //import network.MessageDispatcher;
@@ -27,12 +25,11 @@ public class Peer implements IPeer {
     private EnvioPeer envioHandler;
     private RecepcionPeer recepcionHandler;
     private IObserver observer;
-    private final BlockingQueue<String> outgoingQueue = new LinkedBlockingQueue<>();
     
     private Peer(){
         this.myInfo = new PeerInfo(null, "", 0);
         
-        this.envioHandler = new EnvioPeer(outgoingQueue);
+        this.envioHandler = EnvioPeer.getInstance();
         this.recepcionHandler = RecepcionPeer.getInstance();
     }
     
@@ -72,6 +69,8 @@ public class Peer implements IPeer {
             DiscoveryRegistrar.registrar(myInfo);
 
             empezarEnvio();
+
+            empezarHeartbeat();
             
             running = true;
             System.out.println("Peer corriendo");
@@ -86,11 +85,17 @@ public class Peer implements IPeer {
         threadPool.submit(envioHandler);
     }
     
+    private void empezarHeartbeat() {
+        ExecutorService threadPool = PoolHilos.getInstance().getThreadPool();
+        Heartbeat heartbeat = new Heartbeat(myInfo);
+        threadPool.submit(heartbeat);
+    }
+
     @Override
     public void broadcastEvento(Evento evento) {
         Gson gson = new Gson();
         String json = gson.toJson(evento);
-        OutgoingMessageDispatcher.dispatch(json, outgoingQueue);
+        OutgoingMessageDispatcher.dispatch(json);
     }
 
     @Override

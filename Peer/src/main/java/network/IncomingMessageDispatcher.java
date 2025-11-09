@@ -5,6 +5,7 @@
 package network;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -12,10 +13,12 @@ import java.util.concurrent.BlockingQueue;
  */
 public class IncomingMessageDispatcher {
 
+    private static BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
+
     private IncomingMessageDispatcher() {
     } 
 
-    public static void dispatch(String mensaje, BlockingQueue<String> incomingQueue) {
+    public static void dispatch(String mensaje) {
         if (mensaje == null || incomingQueue == null) {
             System.err.println("Error: Mensaje o cola de entrada nulos en el despachador.");
             return;
@@ -26,5 +29,9 @@ public class IncomingMessageDispatcher {
             Thread.currentThread().interrupt();
             System.err.println("Error al despachar mensaje de entrada: " + e.getMessage());
         }
+    }
+
+    public static String take() throws InterruptedException{
+        return incomingQueue.take();
     }
 }

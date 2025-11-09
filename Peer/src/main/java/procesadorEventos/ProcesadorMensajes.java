@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import enums.TipoEvento;
-import java.util.concurrent.BlockingQueue;
+import network.IncomingMessageDispatcher;
+
 
 /**
  *
@@ -12,7 +13,6 @@ import java.util.concurrent.BlockingQueue;
  */
 public class ProcesadorMensajes implements Runnable{
 
-    private final BlockingQueue<String> incomingQueue;
     private final Gson gson = new Gson();
     private volatile boolean isRunning = true;
 
@@ -21,8 +21,7 @@ public class ProcesadorMensajes implements Runnable{
      */
     private final ManejadorMensajes manejadorPrincipal;
 
-    public ProcesadorMensajes(BlockingQueue<String> incomingQueue) {
-        this.incomingQueue = incomingQueue;
+    public ProcesadorMensajes() {
 
         // Inicializar manejadores
         ManejadorMensajes nuevoPeer = new ManejadorNuevoPeer();
@@ -35,9 +34,9 @@ public class ProcesadorMensajes implements Runnable{
 
     @Override
     public void run() {
-        while (isRunning || !incomingQueue.isEmpty()) {
+        while (isRunning) {
             try {
-                String mensaje = incomingQueue.take();
+                String mensaje = IncomingMessageDispatcher.take();
                 procesar(mensaje);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -51,14 +50,6 @@ public class ProcesadorMensajes implements Runnable{
             JsonObject json = gson.fromJson(mensaje, JsonObject.class);
             manejadorPrincipal.procesar(json);
             
-            
-            String tipo = json.get("tipoEvento").getAsString();
-            switch (TipoEvento.valueOf(tipo)) {
-                case HEARTBEAT ->
-                    ProcesadorHeartbeat.responderHeartbeat();
-                default ->
-                    System.out.println("[Processor] Evento desconocido: " + tipo);
-            }
         } catch (JsonSyntaxException e) {
             System.err.println("[Processor] JSON inválido: " + e.getMessage());
         }

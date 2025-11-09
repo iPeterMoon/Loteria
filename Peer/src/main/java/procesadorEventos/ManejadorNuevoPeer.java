@@ -6,8 +6,12 @@ package procesadorEventos;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import dtos.PeerInfo;
+
 import static enums.TipoEvento.NUEVO_PEER;
 import eventos.EventoNuevoPeer;
+import peer.PeersConectados;
 
 /**
  * Manejador que procesa el evento de conexión de nuevo peer.
@@ -44,6 +48,8 @@ public class ManejadorNuevoPeer extends ManejadorMensajes {
      */
     private void procesarNuevoPeer(JsonObject json) {
         EventoNuevoPeer evento = gson.fromJson(json, EventoNuevoPeer.class);
-        ProcesadorConexiones.registrarPeer(evento);
+        PeerInfo info = evento.getPeer();
+        PeersConectados peers = PeersConectados.getInstance();
+        peers.registrarPeer(info);
     }
 }

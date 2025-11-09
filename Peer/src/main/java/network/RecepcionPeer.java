@@ -2,9 +2,7 @@ package network;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
 import procesadorEventos.ProcesadorMensajes;
 import utilPeer.PoolHilos;
 
@@ -29,8 +27,6 @@ public class RecepcionPeer {
         return instance;
     }
     
-    private final BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
-    
     private ProcesadorMensajes procesador;
     private RedListener redListener;
     
@@ -40,8 +36,8 @@ public class RecepcionPeer {
      */
     public String empezarEscucha(){
         try{
-            redListener = new RedListener(incomingQueue);
-            procesador = new ProcesadorMensajes(incomingQueue);
+            redListener = new RedListener();
+            procesador = new ProcesadorMensajes();
             int port = redListener.start();
             
             ejecutarHilos();

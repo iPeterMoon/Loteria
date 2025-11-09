@@ -2,7 +2,6 @@ package discovery;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -70,15 +69,8 @@ public class Discovery implements IRedListener {
                     TimeUnit.MILLISECONDS
             );
 
-            scheduler.scheduleAtFixedRate(
-                this::enviarHeartbeat,
-                0,
-                HEARTBEAT_INTERVALO_MS,
-                TimeUnit.MILLISECONDS);
-
             System.out.println("[DiscoveryServer] Iniciado en puerto: " + PUERTO);
             System.out.println("[DiscoveryServer] Matchmaker: " + MATCHMAKER_IP + ":" + MATCHMAKER_PUERTO);
-            System.out.println("[DiscoveryServer] Heartbeat: " + HEARTBEAT_INTERVALO_MS + " ms");
         } catch (IOException ex) {
             Logger.getLogger(Discovery.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -174,21 +166,6 @@ public class Discovery implements IRedListener {
             }
             return false;
         });
-    }
-
-    private void enviarHeartbeat() {
-        if (!running){
-            return;
-        }
-        if(!peersVivos.isEmpty()){
-            PeerInfo myInfo = new PeerInfo("discovery", IP, PUERTO);
-            EventoHeartbeat heartbeat = new EventoHeartbeat(myInfo, myInfo.getUser());
-            String mensaje = gson.toJson(heartbeat);
-            for(Entry<String, PeerInfo> peer : peersVivos.entrySet()){
-                PeerInfo info = peer.getValue();
-                envio.sendEvent(info.getIp(), info.getPort(), mensaje);
-            }    
-        }
     }
 
 }

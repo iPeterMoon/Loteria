@@ -1,12 +1,15 @@
 package network;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
 import dtos.PeerInfo;
-import eventos.Evento;
 import factory.RedFactory;
 import interfaces.IEnvio;
-import java.util.concurrent.BlockingQueue;
-import peer.PeersConectados;
+import procesadorEventos.ManejadorBroadcast;
+import procesadorEventos.ManejadorEnvioHeartbeat;
+import procesadorEventos.ManejadorMensajes;
 
 /**
  *
@@ -14,22 +17,39 @@ import peer.PeersConectados;
  */
 public class EnvioPeer implements Runnable {
 
-    private final BlockingQueue<String> outgoingQueue;
+    private static EnvioPeer instance;
+
+    private final ManejadorMensajes manejadorPrincipal;
+    private final Gson gson = new Gson();
+
+    private EnvioPeer() {
+        this.envio = RedFactory.crearEnvioHandler();
+
+        ManejadorMensajes envioHeartbeat = new ManejadorEnvioHeartbeat();
+        ManejadorMensajes broadcast = new ManejadorBroadcast();
+
+        envioHeartbeat.setNext(broadcast);
+
+        this.manejadorPrincipal=envioHeartbeat;
+    }
+
+    public static EnvioPeer getInstance() {
+        if (instance == null) {
+            instance = new EnvioPeer();
+        }
+        return instance;
+    }
+
     private final IEnvio envio;
     private volatile boolean isRunning = false;
-
-    public EnvioPeer(BlockingQueue<String> queue) {
-        this.outgoingQueue = queue;
-        this.envio = RedFactory.crearEnvioHandler();
-    }
 
     @Override
     public void run() {
         start();
-        while (isRunning || !outgoingQueue.isEmpty()) {
+        while (isRunning) {
             try {
-                String evento = outgoingQueue.take();
-                broadcast(evento);
+                String evento = OutgoingMessageDispatcher.take();
+                procesar(evento);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
@@ -46,12 +66,16 @@ public class EnvioPeer implements Runnable {
         new Thread(this, "EnvioHandler-Thread").start();
     }
 
-    private void broadcast(String evento) {
-        PeersConectados peers = PeersConectados.getInstance();
-        peers.ejecutarEnTodos(evento, this::directMessage);
+    private void procesar(String evento){
+        try{
+            JsonObject json = gson.fromJson(evento, JsonObject.class);
+            manejadorPrincipal.procesar(json);
+        } catch(JsonSyntaxException e){
+            System.err.println("[Processor] JSON inválido: " + e.getMessage());
+        }
     }
     
-    private void directMessage( PeerInfo peer, String mensaje){
+    public void directMessage( PeerInfo peer, String mensaje){
         envio.sendEvent(peer.getIp(), peer.getPort(), mensaje);
     }
 
