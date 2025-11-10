@@ -58,16 +58,12 @@ public class Peer implements IPeer {
         }
 
         try {
-            String key = recepcionHandler.empezarEscucha();
-            if(key == null) {
-                throw new Exception("Error al empezar la escucha");
-            }
-            String[] netInfo = key.split(":");
-            myInfo.setIp(netInfo[0]);
-            myInfo.setPort(Integer.parseInt(netInfo[1]));
-            DiscoveryRegistrar.registrar(myInfo);
-
+            
+            empezarEscucha();
+            
             empezarEnvio();
+
+            DiscoveryRegistrar.registrar(myInfo);
 
             empezarHeartbeat();
             
@@ -77,6 +73,16 @@ public class Peer implements IPeer {
             System.err.println("Error al iniciar peer: " + e.getMessage());
             stop();
         }
+    }
+
+    private synchronized void empezarEscucha() throws Exception{
+        String key = recepcionHandler.empezarEscucha();
+            if(key == null) {
+                throw new Exception("Error al empezar la escucha");
+            }
+            String[] netInfo = key.split(":");
+            myInfo.setIp(netInfo[0]);
+            myInfo.setPort(Integer.parseInt(netInfo[1]));
     }
 
     private void empezarEnvio(){
@@ -100,6 +106,7 @@ public class Peer implements IPeer {
     @Override
     public void setUser(String user) {
         myInfo.setUser(user);
+        PeersConectados.getInstance().setMyInfo(myInfo);
         DiscoveryRegistrar.registrar(myInfo);
     }
 

@@ -2,8 +2,8 @@ package peer;
 
 import dtos.PeerInfo;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 /**
@@ -18,12 +18,16 @@ public class PeersConectados {
     private PeerInfo myInfo;
     
     private PeersConectados(){
-        this.listaPeers = new HashMap<>();
+        this.listaPeers = new ConcurrentHashMap<>();
     }
     
     public static PeersConectados getInstance(){
         if(instance == null){
-            instance = new PeersConectados();
+            synchronized (PeersConectados.class) {
+                if (instance == null) {
+                    instance = new PeersConectados();
+                }
+            }
         }
         return instance;
     }
@@ -32,21 +36,54 @@ public class PeersConectados {
         this.myInfo = myInfo;
     }
     
-    public void registrarPeer(PeerInfo info){
-        if(!info.equals(myInfo)){
-            listaPeers.put(generarClave(info), info);
-            System.out.println("Se Unió un nuevo Peer! ["+info.getIp()+":"+info.getPort()+"]");
+    /**
+     * Metodo para registrar un Peer en la lista de peers conectados.
+     * @param info
+     */
+    public synchronized void registrarPeer(PeerInfo info){
+        if(info != null) {
+            if(!esMismoPeer(info, this.myInfo)){
+                listaPeers.put(generarClave(info), info);
+                System.out.println("Se Unió un nuevo Peer! ["+info.getUser()+"@"+info.getIp()+":"+info.getPort()+"]");
+            }
+        } else {
+            System.err.println("Se intentó procesar un Peer nulo");
         }
     }
     
-    public void eliminarPeer(PeerInfo info){
-        if(listaPeers.containsKey(generarClave(info))){
-            listaPeers.remove(generarClave(info));
+    /**
+     * Metodo para eliminar un peer de la lista de peers.
+     * @param info Peer a eliminar
+     */
+    public synchronized void eliminarPeer(PeerInfo info){
+        String clave = generarClave(info);
+        if(listaPeers.containsKey(clave)){
+            listaPeers.remove(clave);
         }
     }
     
-    private String generarClave(PeerInfo info){
+    /**
+     * Metodo para generar la clave de un peer 
+     * @param info DTO con la info del peer
+     * @return String con la clave de identificacion.
+     */
+    private synchronized String generarClave(PeerInfo info){
         return info.getIp() + ":" + info.getPort();
+    }
+
+    /**
+     * Metodo para checar si dos peers son iguales
+     * @param peer1 Primer peer a comparar
+     * @param peer2 Segundo peer a comparar
+     * @return true si son el mismo, false si no.
+     */
+    private boolean esMismoPeer(PeerInfo peer1, PeerInfo peer2){
+        
+        if (peer1 == null || peer2 ==null){
+            return false;
+        }
+
+        return generarClave(peer1).equals(generarClave(peer2));
     }
 
     /**

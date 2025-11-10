@@ -66,8 +66,12 @@ public class Arrancador {
         Tarjeta tarjeta = new Tarjeta(cartas);
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
-        Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
-        modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
+        if(nickname != null) {
+            nuevoPeer.setUser(nickname);
+            Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
+            modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
+            modeloVista.agregarJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
+        }
 
         Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
@@ -78,7 +82,6 @@ public class Arrancador {
 
         modeloVista.iniciarFrameJuego();
 
-        modeloVista.agregarJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
         modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario1, false));
         modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario2, false));
 
