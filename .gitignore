@@ -11,3 +11,5 @@
 /Peer/target/
 /MatchMaker/ArrancadorMatchMaker/target/
 /MatchMaker/MatchMakerImpl/target/
+.class
+
