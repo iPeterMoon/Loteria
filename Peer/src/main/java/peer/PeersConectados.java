@@ -35,6 +35,7 @@ public class PeersConectados {
     public void registrarPeer(PeerInfo info){
         if(!info.equals(myInfo)){
             listaPeers.put(generarClave(info), info);
+            System.out.println("Se Unió un nuevo Peer! ["+info.getIp()+":"+info.getPort()+"]");
         }
     }
     

@@ -7,10 +7,10 @@ import discovery.Discovery;
  * @author pedro
  */
 public class Arrancador {
-    
+
     public static void main(String[] args){
         
-        Discovery discovery = new Discovery();
+        Discovery discovery = Discovery.getInstance();
         discovery.start();
     }
 }

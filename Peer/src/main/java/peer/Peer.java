@@ -8,7 +8,6 @@ import interfaces.IPeer;
 import java.util.concurrent.ExecutorService;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
-//import network.MessageDispatcher;
 import network.RecepcionPeer;
 import utilPeer.PoolHilos;
 import network.OutgoingMessageDispatcher;
