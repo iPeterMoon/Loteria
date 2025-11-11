@@ -3,9 +3,9 @@ package red;
 import interfaces.IRecepcion;
 import interfaces.IRedListener;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
+
+import servidor.IncomingMessageDispatcher;
 import servidor.ServidorRed;
 
 /**
@@ -30,9 +30,6 @@ public class RecepcionHandler implements IRecepcion{
         return instance;
     }
     
-    //Colas
-    private final BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
-    
     private IRedListener listener;
     
     private volatile boolean isRunning = true;
@@ -45,10 +42,10 @@ public class RecepcionHandler implements IRecepcion{
     public int empezarEscucha() throws IOException {
         //Iniciar servidor
         if(serverPort == null){
-            servidor = new ServidorRed(incomingQueue, threadPool);
+            servidor = new ServidorRed();
             this.serverPort = servidor.getPort();
         } else {
-            servidor = new ServidorRed(incomingQueue, threadPool, serverPort);
+            servidor = new ServidorRed(serverPort);
         }
 
         threadPool.submit(servidor);
@@ -56,19 +53,30 @@ public class RecepcionHandler implements IRecepcion{
         return this.serverPort;
     }
     
+
+    /**
+     * Procesa constantemente los mensajes entrantes de la cola de entrada.
+     */
     private void procesarColaEntrada(){
         while(isRunning) {
             try {
-
-                String mensaje = incomingQueue.take();
-                if (listener != null){
-                    listener.onMensajeRecibido(mensaje);
-                }
+                String mensaje = IncomingMessageDispatcher.take();
+                avisarListener(mensaje);
             } catch(InterruptedException e) {
                 if (isRunning) System.err.println("[RedImpl] Hilo de cola de entrada interrumpido.");
                 Thread.currentThread().interrupt();
                 break;
             }
+        }
+    }
+
+    /**
+     * Avisa al listener del componente de red que llegó un mensaje
+     * @param mensaje
+     */
+    private void avisarListener(String mensaje){
+        if (listener != null){
+            listener.onMensajeRecibido(mensaje);
         }
     }
     

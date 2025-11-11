@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 import dtos.Mensaje;
@@ -15,13 +14,11 @@ import dtos.Mensaje;
  */
 public class ClienteRed implements Runnable {
 
-    private final BlockingQueue<Mensaje> outgoingQueue;
-
     private final Map<String, PrintWriter> connections = new ConcurrentHashMap<>();
+    private final Map<String, Socket> sockets = new ConcurrentHashMap<>();
     private volatile boolean isRunning = true;
 
-    public ClienteRed(BlockingQueue<Mensaje> outgoingQueue) {
-        this.outgoingQueue = outgoingQueue;
+    public ClienteRed() {
     }
 
     @Override
@@ -30,7 +27,7 @@ public class ClienteRed implements Runnable {
         while (isRunning) {
             try {
                 //Bloquea el hilo hasta que haya un mensaje que sacar de la cola
-                Mensaje msg = outgoingQueue.take();
+                Mensaje msg = OutgoingMessageDispatcher.take();
 
                 //Procesa el envío
                 enviarMensaje(msg);
@@ -82,6 +79,9 @@ public class ClienteRed implements Runnable {
             System.out.println("[ClienteRed] Creando nueva conexión para: " + cacheKey);
             Socket socket = new Socket(targetIp, targetPort);
             output = new PrintWriter(socket.getOutputStream(), true);
+            
+            // Guardar tanto el socket como el output
+            sockets.put(cacheKey, socket);
             connections.put(cacheKey, output);
         }
         return output;
@@ -94,10 +94,21 @@ public class ClienteRed implements Runnable {
         isRunning = false;
 
         // Cierra todos los sockets cacheados
+        for (Socket socket : sockets.values()) {
+            try {
+                if (socket != null && !socket.isClosed()) {
+                    socket.close();
+                }
+            } catch (IOException e) {
+                System.err.println("[ClienteRed] Error al cerrar socket: " + e.getMessage());
+            }
+        }
+        
         for (PrintWriter out : connections.values()) {
             out.close();
         }
         
+        sockets.clear();
         connections.clear();
     }
 }

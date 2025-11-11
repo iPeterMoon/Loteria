@@ -1,11 +1,12 @@
 package servidor;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
+import java.nio.charset.StandardCharsets;
 
 /**
  *
@@ -14,37 +15,25 @@ import java.util.concurrent.ExecutorService;
 public class ServidorRed implements Runnable {
 
     private final ServerSocket serverSocket;
-    private final BlockingQueue<String> incomingQueue;
-    private final ExecutorService threadPool;
     private volatile boolean isRunning = true;
 
     /**
      * Constructor.
      *
-     * @param incomingQueue La cola donde los manejadores pondrán los eventos
-     * recibidos.
-     * @param threadPool El pool de hilos para ejecutar los manejadores.
      * @throws IOException Si no se puede enlazar el puerto.
      */
-    public ServidorRed(BlockingQueue<String> incomingQueue, ExecutorService threadPool) throws IOException {
+    public ServidorRed() throws IOException {
         this.serverSocket = new ServerSocket(0); // Puerto aleatorio asignado por el SO
-        this.incomingQueue = incomingQueue;
-        this.threadPool = threadPool;
     }
 
     /**
      * Constructor.
      *
-     * @param incomingQueue La cola donde los manejadores pondrán los eventos
-     * recibidos.
-     * @param threadPool El pool de hilos para ejecutar los manejadores.
      * @param port Puerto especifico en el que escuchará el servidor.
      * @throws IOException Si no se puede enlazar el puerto.
      */
-    public ServidorRed(BlockingQueue<String> incomingQueue, ExecutorService threadPool, int port) throws IOException {
+    public ServidorRed(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.incomingQueue = incomingQueue;
-        this.threadPool = threadPool;
     }
 
     /**
@@ -62,9 +51,9 @@ public class ServidorRed implements Runnable {
                 // Bloquea hasta que llega una nueva conexión
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("[ServidorRed] Conexión entrante de: " + clientSocket.getInetAddress().getHostAddress());
-
-                // Crea un nuevo manejador para este cliente y lo pone en el pool de hilos
-                threadPool.submit(new ManejadorConexionEntrante(clientSocket, incomingQueue));
+                
+                // Crea un nuevo hilo para poner el mensaje en una cola y lo pone en el pool de hilos
+                new Thread(() -> dispatch(clientSocket)).start();
 
             } catch (IOException e) {
                 if (isRunning) {
@@ -73,6 +62,42 @@ public class ServidorRed implements Runnable {
                     System.out.println("[ServidorRed] Servidor detenido.");
                 }
             }
+        }
+    }
+
+    /**
+     * Metodo para extraer el mensaje de un socket y ponerlo en la cola entrante
+     * @param socket Socket entrante
+     */
+    private void dispatch(Socket socket){
+        try (BufferedReader input = new BufferedReader(
+                new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))) {
+            String linea;
+
+            while ((linea = input.readLine()) != null) {
+                // Pone el mensaje en la cola central ubicada en RedImpl
+                IncomingMessageDispatcher.dispatch(linea);
+            }
+        } catch (Exception e) {
+            // Causa más común: Fin de stream (EOFException) o SocketException
+            // indica que el cliente se desconectó.
+            System.out.println("[Manejador] Conexión cerrada con " + socket.getInetAddress().getHostAddress()
+                    + ". Razón: " + e.getMessage());
+        } finally {
+            cerrarSocket(socket);
+        }
+    }
+
+    /**
+     * Método auxiliar para cerrar un socket al final de que es usado 
+     */ 
+    private void cerrarSocket(Socket socket){
+        try {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+            }
+        } catch (IOException e) {
+
         }
     }
 
