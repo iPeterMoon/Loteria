@@ -57,7 +57,7 @@ public class ManejadorEventoJuego extends ManejadorMensajes {
             
             System.out.println("[ManejadorEventoJuego] Notificando evento: " + evento);
             // Notificar al modelo de juego
-            Peer.getInstance().handleEvento(evento);
+            Peer.getInstance().notify(evento);
         }
     }
 }

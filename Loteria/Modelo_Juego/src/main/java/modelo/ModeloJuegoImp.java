@@ -27,7 +27,6 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
     private IModeloVista vista;
     private IPeer componentePeer;
     
-    private final Gson gson = new Gson();
 
     private ModeloJuegoImp() {
     }

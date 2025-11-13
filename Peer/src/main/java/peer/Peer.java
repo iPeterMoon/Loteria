@@ -46,7 +46,6 @@ public class Peer implements IPeer {
         this.observer = observer;
     }
 
-    @Override
     public PeerInfo getMyInfo() {
         return myInfo;
     }
@@ -110,7 +109,7 @@ public class Peer implements IPeer {
         DiscoveryRegistrar.registrar(myInfo);
     }
 
-    public void handleEvento(Evento evento) {
+    public void notify(Evento evento) {
         observer.update(evento);
     }
 

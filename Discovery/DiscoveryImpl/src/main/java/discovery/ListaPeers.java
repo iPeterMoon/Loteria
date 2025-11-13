@@ -29,16 +29,6 @@ public class ListaPeers {
     }
 
     /**
-     * Metodo para obtener la ultima vez que fue visto un peer
-     * @param peer Peer a consultar
-     * @return Tiempo en milisegundos cuando fue visto el peer
-     */
-    public static Long getUltimaVezVisto(PeerInfo peer){
-        String key = obtenerKey(peer);
-        return ultimaVezVistos.get(key);
-    }
-
-    /**
      * Metodo para actualizar la ultima vez que se vio a un Peer
      * @param peer Peer visto
      */

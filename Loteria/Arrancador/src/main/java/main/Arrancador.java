@@ -1,8 +1,6 @@
 package main;
 
 import control.RegistroControles;
-import factory.RedFactory;
-import interfaces.IEnvio;
 import interfaces.IModeloJuego;
 import java.awt.Point;
 import java.util.HashMap;
@@ -12,7 +10,6 @@ import mappers.JugadorMapperModelo;
 import modelo.IModeloControl;
 import interfaces.IModeloVista;
 import interfaces.IObserver;
-import interfaces.IRecepcion;
 import modelo.Cantador;
 import modelo.ModeloControlImp;
 import modelo.ModeloVistaFacade;

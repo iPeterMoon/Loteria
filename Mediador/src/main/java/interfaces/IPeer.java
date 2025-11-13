@@ -35,9 +35,4 @@ public interface IPeer {
      */
     void setObserver(IObserver observer);
     
-    /**
-     * Obtiene la información de este peer (ID, IP, Puerto).
-     * @return La información del peer local.
-     */
-    PeerInfo getMyInfo();
 }
