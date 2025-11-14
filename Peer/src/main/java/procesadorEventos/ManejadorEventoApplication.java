@@ -13,12 +13,12 @@ import java.util.Map;
 import peer.Peer;
 
 /**
- * Manejador que procesa los eventos de juego.
- * Si el evento no corresponde, lo pasa al siguiente manejador.
- * 
+ * Manejador que procesa los eventos de juego. Si el evento no corresponde, lo
+ * pasa al siguiente manejador.
+ *
  * @author rocha
  */
-public class ManejadorEventoJuego extends ManejadorMensajes {
+public class ManejadorEventoApplication extends ManejadorMensajesLlegada {
 
     private final Gson gson = new Gson();
 
@@ -29,7 +29,8 @@ public class ManejadorEventoJuego extends ManejadorMensajes {
 
     /**
      * Procesa el evento recibido. Si corresponde a algún evento del juego, se
-     * notifica al modelo del juego. En caso contrario, se pasa al siguiente manejador.
+     * notifica al modelo del juego. En caso contrario, se pasa al siguiente
+     * manejador.
      *
      * @param json evento en formato JSON
      */
@@ -54,7 +55,7 @@ public class ManejadorEventoJuego extends ManejadorMensajes {
 
         if (claseEvento != null) {
             Evento evento = gson.fromJson(json, claseEvento);
-            
+
             System.out.println("[ManejadorEventoJuego] Notificando evento: " + evento);
             // Notificar al modelo de juego
             Peer.getInstance().notify(evento);

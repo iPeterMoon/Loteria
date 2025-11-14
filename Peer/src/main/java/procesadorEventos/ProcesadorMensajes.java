@@ -18,13 +18,13 @@ public class ProcesadorMensajes implements Runnable{
     /**
      * Primer manejador de la cadena de responsabilidad
      */
-    private final ManejadorMensajes manejadorPrincipal;
+    private final ManejadorMensajesLlegada manejadorPrincipal;
 
     public ProcesadorMensajes() {
 
         // Inicializar manejadores
-        ManejadorMensajes nuevoPeer = new ManejadorNuevoPeer();
-        ManejadorMensajes eventoJuego = new ManejadorEventoJuego();
+        ManejadorMensajesLlegada nuevoPeer = new ManejadorNuevoPeer();
+        ManejadorMensajesLlegada eventoJuego = new ManejadorEventoApplication();
 
         nuevoPeer.setNext(eventoJuego);
 

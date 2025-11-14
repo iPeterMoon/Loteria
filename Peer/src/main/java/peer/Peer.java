@@ -6,6 +6,8 @@ import eventos.Evento;
 import interfaces.IObserver;
 import interfaces.IPeer;
 import java.util.concurrent.ExecutorService;
+import mensajes.MensajeBroadcast;
+import mensajes.MensajeDirecto;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
 import network.RecepcionPeer;
@@ -97,8 +99,24 @@ public class Peer implements IPeer {
 
     @Override
     public void broadcastEvento(Evento evento) {
+        MensajeBroadcast mensajeBroadcast = new MensajeBroadcast(evento);
         Gson gson = new Gson();
-        String json = gson.toJson(evento);
+        String json = gson.toJson(mensajeBroadcast);
+        OutgoingMessageDispatcher.dispatch(json);
+    }
+    
+    /**
+     * Crea un MensajeDirecto a partir de un Evento y un usuario (destinatario) y
+     * lo envía al despachador de mensajes salientes.
+     * @param evento Evento que contiene el mensaje.
+     * @param user Nombre del usuario del Peer destinatario.
+     */
+    public void directMessage(Evento evento, String user) {
+        MensajeDirecto mensajeDirecto = new MensajeDirecto(evento, user);
+        
+        Gson gson = new Gson();
+        String json = gson.toJson(mensajeDirecto);
+        
         OutgoingMessageDispatcher.dispatch(json);
     }
 

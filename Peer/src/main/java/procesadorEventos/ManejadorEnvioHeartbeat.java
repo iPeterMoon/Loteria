@@ -10,11 +10,11 @@ import util.ConfigLoader;
 
 /**
  * ManejadorEnvioHeartbeat.java
- * 
- * Clase para manejar el envio de un heartbeat, se encarga 
- * de mandarlo directamente al servidor de descubrimiento.
+ *
+ * Clase para manejar el envio de un heartbeat, se encarga de mandarlo
+ * directamente al servidor de descubrimiento.
  */
-public class ManejadorEnvioHeartbeat extends ManejadorMensajes{
+public class ManejadorEnvioHeartbeat extends ManejadorMensajesSalida {
 
     private final Gson gson = new Gson();
 
@@ -30,18 +30,21 @@ public class ManejadorEnvioHeartbeat extends ManejadorMensajes{
     }
 
     /**
-     * Procesa el Evento de heartbeat obteniendo la información del servidor
-     * y enviandosela
+     * Procesa el Evento de heartbeat obteniendo la información del servidor y
+     * enviandosela
+     *
      * @param json Objeto que será un evento de heartbeat
      */
-    private void procesarHeartbeat(JsonObject json){
+    private void procesarHeartbeat(JsonObject json) {
         String mensaje = gson.toJson(json);
         PeerInfo discovery = obtenerPeerDiscovery();
         EnvioPeer.getInstance().directMessage(discovery, mensaje);
     }
 
     /**
-     * Metodo para obtener la información del servidor a través de un archivo de configuracion
+     * Metodo para obtener la información del servidor a través de un archivo de
+     * configuracion
+     *
      * @return DTO con la informacion del servidor
      */
     private PeerInfo obtenerPeerDiscovery() {
@@ -49,5 +52,5 @@ public class ManejadorEnvioHeartbeat extends ManejadorMensajes{
         int discoveryPort = ConfigLoader.getInstance().getPuertoDiscovery();
         return new PeerInfo("discovery", discoveryIp, discoveryPort);
     }
-    
+
 }

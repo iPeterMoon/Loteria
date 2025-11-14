@@ -9,7 +9,8 @@ import factory.RedFactory;
 import interfaces.IEnvio;
 import procesadorEventos.ManejadorBroadcast;
 import procesadorEventos.ManejadorEnvioHeartbeat;
-import procesadorEventos.ManejadorMensajes;
+import procesadorEventos.ManejadorMensajeDirecto;
+import procesadorEventos.ManejadorMensajesSalida;
 
 /**
  *
@@ -19,16 +20,18 @@ public class EnvioPeer implements Runnable {
 
     private static EnvioPeer instance;
 
-    private final ManejadorMensajes manejadorPrincipal;
+    private final ManejadorMensajesSalida manejadorPrincipal;
     private final Gson gson = new Gson();
 
     private EnvioPeer() {
         this.envio = RedFactory.crearEnvioHandler();
 
-        ManejadorMensajes envioHeartbeat = new ManejadorEnvioHeartbeat();
-        ManejadorMensajes broadcast = new ManejadorBroadcast();
+        ManejadorMensajesSalida envioHeartbeat = new ManejadorEnvioHeartbeat();
+        ManejadorMensajesSalida mensajeDirecto = new ManejadorMensajeDirecto();
+        ManejadorMensajesSalida broadcast = new ManejadorBroadcast();
 
-        envioHeartbeat.setNext(broadcast);
+        envioHeartbeat.setNext(mensajeDirecto);
+        mensajeDirecto.setNext(broadcast);
 
         this.manejadorPrincipal=envioHeartbeat;
     }
