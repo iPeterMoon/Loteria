@@ -2,6 +2,8 @@ package discovery;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
 import dtos.PeerInfo;
@@ -29,31 +31,22 @@ public class ListaPeers {
      * @return Una lista de PeerInfo que fueron eliminados.
      */
     public static List<PeerInfo> limpiarPeersMuertos(long HEARTBEAT_TIMEOUT_MS) {
-        long ahora = System.currentTimeMillis();
-        
-        // Lista para guardar los peers que vamos a eliminar
+       long ahora = System.currentTimeMillis();
         List<PeerInfo> peersEliminados = new ArrayList<>();
         
         ultimaVezVistos.entrySet().removeIf(e -> {
             if (ahora - e.getValue() > HEARTBEAT_TIMEOUT_MS) {
                 String peerKey = e.getKey();
-                
-                // Primero removemos de peersVivos
                 PeerInfo muerto = peersVivos.remove(peerKey); 
-                
                 if (muerto != null) {
                     System.out.println("[DiscoveryServer] Peer eliminado (timeout): " + peerKey);
-                    // Lo añadimos a la lista de retorno
                     peersEliminados.add(muerto);
                 }
-                // Retornar true elimina de ultimaVezVistos
                 return true; 
             }
             return false;
         });
-
-        // Devolvemos la lista de los peers que acabamos de eliminar
-        return peersEliminados;
+        return peersEliminados; // <-- La clave del cambio
     }
 }
 
