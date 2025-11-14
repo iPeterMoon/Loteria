@@ -80,13 +80,19 @@ public class Discovery implements IRedListener {
             recepcion.empezarEscucha();
             recepcion.setEventListener(this);
 
-            scheduler.scheduleAtFixedRate(
-                    this::limpiarPeersMuertos,
-                    0,
-                    LIMPIEZA_INTERVALO_MS,
-                    TimeUnit.MILLISECONDS
+           //  Crear una instancia de la nueva tarea (Runnable)
+            //    No necesita IEnvio porque no puede enviar nada
+            PeerCleaner tareaLimpieza = new PeerCleaner(
+                HEARTBEAT_TIMEOUT_MS 
             );
 
+            // 3. Programar la TAREA (el objeto) en lugar del método
+            scheduler.scheduleAtFixedRate(
+                tareaLimpieza, 
+                0,
+                LIMPIEZA_INTERVALO_MS,
+                TimeUnit.MILLISECONDS
+            );
             System.out.println("[DiscoveryServer] Iniciado en puerto: " + PUERTO);
         } catch (IOException ex) {
             Logger.getLogger(Discovery.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,13 +128,15 @@ public class Discovery implements IRedListener {
     }
 
     /**
+    /**
      * Limpia los peers muertos llamando a un metodo de la Lista de Peers
-     */
+     *
     private void limpiarPeersMuertos() {
         if (!running) {
             return;
         }
         ListaPeers.limpiarPeersMuertos(HEARTBEAT_TIMEOUT_MS);
     }
+    */
 
 }
