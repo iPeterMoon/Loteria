@@ -11,6 +11,52 @@ public class ListaPeers {
     private static final Map<String, PeerInfo> peersVivos = new ConcurrentHashMap<>();
     private static final Map<String, Long> ultimaVezVistos = new ConcurrentHashMap<>();
 
+
+   /**
+     * Obtiene una lista de todos los peers vivos.
+     * @return Una lista de PeerInfo.
+     */
+    public static List<PeerInfo> getAllPeers() {
+        // Devuelve una nueva lista para evitar problemas de concurrencia al iterar
+        return new ArrayList<>(peersVivos.values());
+    }
+
+    /**
+     * Limpia peers muertos Y DEVUELVE la lista de los que eliminó.
+     * Reemplaza al antiguo limpiarPeersMuertos
+     *
+     * @param HEARTBEAT_TIMEOUT_MS El tiempo en ms para considerar a un peer muerto.
+     * @return Una lista de PeerInfo que fueron eliminados.
+     */
+    public static List<PeerInfo> limpiarYObtenerPeersMuertos(long HEARTBEAT_TIMEOUT_MS) {
+        long ahora = System.currentTimeMillis();
+        
+        // Lista para guardar los peers que vamos a eliminar
+        List<PeerInfo> peersEliminados = new ArrayList<>();
+        
+        ultimaVezVistos.entrySet().removeIf(e -> {
+            if (ahora - e.getValue() > HEARTBEAT_TIMEOUT_MS) {
+                String peerKey = e.getKey();
+                
+                // Primero removemos de peersVivos
+                PeerInfo muerto = peersVivos.remove(peerKey); 
+                
+                if (muerto != null) {
+                    System.out.println("[DiscoveryServer] Peer eliminado (timeout): " + peerKey);
+                    // Lo añadimos a la lista de retorno
+                    peersEliminados.add(muerto);
+                }
+                // Retornar true elimina de ultimaVezVistos
+                return true; 
+            }
+            return false;
+        });
+
+        // Devolvemos la lista de los peers que acabamos de eliminar
+        return peersEliminados;
+    }
+}
+
     /**
      * Metodo publico para registrar un peer en el servidor
      * @param peer Peer a registrar
@@ -60,10 +106,11 @@ public class ListaPeers {
     }
 
     /**
+    lo documente de momento por si las dudas jajaja
      * Limpia los peers que han superado el tiempo de timeout.
      * Esta lógica elimina peers de AMBOS mapas (ultimaVezVistos y peersVivos).
      * @param HEARTBEAT_TIMEOUT_MS El tiempo en ms para considerar a un peer muerto.
-     */
+     *
     public static void limpiarPeersMuertos(long HEARTBEAT_TIMEOUT_MS) {
         long ahora = System.currentTimeMillis();
         
@@ -79,5 +126,5 @@ public class ListaPeers {
             return false;
         });
     }
-
+*/
 }
