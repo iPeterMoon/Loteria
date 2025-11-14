@@ -28,7 +28,7 @@ public class ListaPeers {
      * @param HEARTBEAT_TIMEOUT_MS El tiempo en ms para considerar a un peer muerto.
      * @return Una lista de PeerInfo que fueron eliminados.
      */
-    public static List<PeerInfo> limpiarYObtenerPeersMuertos(long HEARTBEAT_TIMEOUT_MS) {
+    public static List<PeerInfo> limpiarPeersMuertos(long HEARTBEAT_TIMEOUT_MS) {
         long ahora = System.currentTimeMillis();
         
         // Lista para guardar los peers que vamos a eliminar
