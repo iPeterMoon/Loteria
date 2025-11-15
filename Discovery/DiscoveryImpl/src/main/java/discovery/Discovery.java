@@ -19,6 +19,7 @@ import interfaces.IRedListener;
 import procesadores.ManejadorHeartbeat;
 import procesadores.ManejadorMensajes;
 import procesadores.ManejadorNuevoPeer;
+import procesadores.PeerCleaner;
 import util.ConfigLoader;
 
 /**
@@ -31,7 +32,6 @@ public class Discovery implements IRedListener {
     private static final long HEARTBEAT_INTERVALO_MS = 500;
     private static final long HEARTBEAT_TIMEOUT_MS = 3 * HEARTBEAT_INTERVALO_MS; // 3x sin heartbeat → muerto
     private static final int LIMPIEZA_INTERVALO_MS = 2000;
-
     private final IEnvio envio = RedFactory.crearEnvioHandler();
     private final IRecepcion recepcion = RedFactory.crearRecepcionHandler();
     private final Gson gson = new Gson();
@@ -45,7 +45,8 @@ public class Discovery implements IRedListener {
     private static Discovery instance;
 
     /**
-     * Constructor del discovery, inicializa el orden de los manejadores de mensajes.
+     * Constructor del discovery, inicializa el orden de los manejadores de
+     * mensajes.
      */
     private Discovery() {
 
@@ -60,10 +61,11 @@ public class Discovery implements IRedListener {
 
     /**
      * Obtiene la unica instancia de esta clase
+     * 
      * @return Instancia de esta clase
      */
-    public static Discovery getInstance(){
-        if(instance == null){
+    public static Discovery getInstance() {
+        if (instance == null) {
             instance = new Discovery();
         }
         return instance;
@@ -80,12 +82,17 @@ public class Discovery implements IRedListener {
             recepcion.empezarEscucha();
             recepcion.setEventListener(this);
 
+            // Crear la instancia de PeerCleaner
+            PeerCleaner tareaLimpieza = new PeerCleaner(
+                    this.envio, // Le pasamos el 'envio' que ya tiene Discovery
+                    HEARTBEAT_TIMEOUT_MS);
+
+            // Programar la TAREA (el objeto)
             scheduler.scheduleAtFixedRate(
-                    this::limpiarPeersMuertos,
+                    tareaLimpieza, // Se pasa el objeto PeerCleaner
                     0,
                     LIMPIEZA_INTERVALO_MS,
-                    TimeUnit.MILLISECONDS
-            );
+                    TimeUnit.MILLISECONDS);
 
             System.out.println("[DiscoveryServer] Iniciado en puerto: " + PUERTO);
         } catch (IOException ex) {
@@ -100,6 +107,7 @@ public class Discovery implements IRedListener {
 
     /**
      * Procesa un mensaje entrante llamando a los manejadores de mensajes
+     * 
      * @param mensaje Mensaje a procesar
      */
     private void procesarMensajeEntrante(String mensaje) {
@@ -113,6 +121,7 @@ public class Discovery implements IRedListener {
 
     /**
      * Envia un mensaje a un peer en especifico
+     * 
      * @param ip
      * @param puerto
      * @param mensaje
@@ -123,12 +132,13 @@ public class Discovery implements IRedListener {
 
     /**
      * Limpia los peers muertos llamando a un metodo de la Lista de Peers
+     *
+     * private void limpiarPeersMuertos() {
+     * if (!running) {
+     * return;
+     * }
+     * ListaPeers.limpiarPeersMuertos(HEARTBEAT_TIMEOUT_MS);
+     * }
      */
-    private void limpiarPeersMuertos() {
-        if (!running) {
-            return;
-        }
-        ListaPeers.limpiarPeersMuertos(HEARTBEAT_TIMEOUT_MS);
-    }
 
 }
