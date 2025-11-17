@@ -3,7 +3,7 @@ package peer;
 import com.google.gson.Gson;
 
 import dtos.PeerInfo;
-import eventos.EventoHeartbeat;
+import eventos.eventos_peers.EventoHeartbeat;
 import network.OutgoingMessageDispatcher;
 
 public class Heartbeat implements Runnable {

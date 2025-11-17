@@ -11,7 +11,7 @@ import java.util.List;
 import dtos.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
-import eventos.EventoFicha;
+import eventos.eventos_aplicacion.EventoFicha;
 import interfaces.IObserver;
 import interfaces.IPeer;
 import mappers.JugadorMapperModelo;

@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import dtos.PeerInfo;
 
 import static enums.TipoEvento.NUEVO_PEER;
-import eventos.EventoNuevoPeer;
+import eventos.eventos_peers.EventoNuevoPeer;
 import peer.PeersConectados;
 
 /**

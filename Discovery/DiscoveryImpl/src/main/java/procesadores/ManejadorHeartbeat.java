@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import discovery.ListaPeers;
 import dtos.PeerInfo;
 import enums.TipoEvento;
-import eventos.EventoHeartbeat;
+import eventos.eventos_peers.EventoHeartbeat;
 
 public class ManejadorHeartbeat extends ManejadorMensajes{
 

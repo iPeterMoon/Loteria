@@ -7,7 +7,7 @@ import discovery.Discovery;
 import discovery.ListaPeers;
 import dtos.PeerInfo;
 import enums.TipoEvento;
-import eventos.EventoNuevoPeer;
+import eventos.eventos_peers.EventoNuevoPeer;
 
 public class ManejadorNuevoPeer extends ManejadorMensajes{
 

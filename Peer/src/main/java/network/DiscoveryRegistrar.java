@@ -2,7 +2,7 @@ package network;
 
 import com.google.gson.Gson;
 import dtos.PeerInfo;
-import eventos.EventoNuevoPeer;
+import eventos.eventos_peers.EventoNuevoPeer;
 import factory.RedFactory;
 import util.ConfigLoader;
 

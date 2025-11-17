@@ -1,6 +1,5 @@
 package interfaces;
 
-import dtos.PeerInfo;
 import eventos.Evento;
 
 /**

@@ -1,4 +1,4 @@
-package eventos;
+package eventos.eventos_aplicacion;
 
 import enums.TipoEvento;
 import java.awt.Point;

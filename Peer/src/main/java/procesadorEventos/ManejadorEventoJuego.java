@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import enums.TipoEvento;
 import eventos.Evento;
-import eventos.EventoFicha;
+import eventos.eventos_aplicacion.EventoFicha;
 import java.util.Map;
 import peer.Peer;
 
