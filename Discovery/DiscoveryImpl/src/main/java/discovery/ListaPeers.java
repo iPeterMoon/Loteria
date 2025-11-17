@@ -33,36 +33,22 @@ public class ListaPeers {
      * @return Una lista de PeerInfo que fueron eliminados.
      */
     public static List<PeerInfo> limpiarPeersMuertos(long HEARTBEAT_TIMEOUT_MS) {
-<<<<<<< HEAD
         long ahora = System.currentTimeMillis();
-
-        // Lista para guardar los peers que vamos a eliminar
-=======
-       long ahora = System.currentTimeMillis();
->>>>>>> 6792efee7d13433276d199e31a2b874eaa7ab0db
         List<PeerInfo> peersEliminados = new ArrayList<>();
 
         ultimaVezVistos.entrySet().removeIf(e -> {
             if (ahora - e.getValue() > HEARTBEAT_TIMEOUT_MS) {
                 String peerKey = e.getKey();
-<<<<<<< HEAD
 
                 // Primero removemos de peersVivos
                 PeerInfo muerto = peersVivos.remove(peerKey);
 
-=======
-                PeerInfo muerto = peersVivos.remove(peerKey); 
->>>>>>> 6792efee7d13433276d199e31a2b874eaa7ab0db
                 if (muerto != null) {
                     System.out.println("[DiscoveryServer] Peer eliminado (timeout): " + peerKey);
                     peersEliminados.add(muerto);
                 }
-<<<<<<< HEAD
                 // Retornar true elimina de ultimaVezVistos
                 return true;
-=======
-                return true; 
->>>>>>> 6792efee7d13433276d199e31a2b874eaa7ab0db
             }
             return false;
         });
