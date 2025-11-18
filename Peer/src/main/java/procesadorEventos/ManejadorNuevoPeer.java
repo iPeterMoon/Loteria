@@ -11,6 +11,7 @@ import dtos.PeerInfo;
 
 import static enums.TipoEvento.NUEVO_PEER;
 import eventos.eventos_peers.EventoNuevoPeer;
+import peer.Peer;
 import peer.PeersConectados;
 
 /**
@@ -19,9 +20,10 @@ import peer.PeersConectados;
  * 
  * @author rocha
  */
-public class ManejadorNuevoPeer extends ManejadorMensajes {
+public class ManejadorNuevoPeer extends ManejadorMensajesLlegada {
 
     private final Gson gson = new Gson();
+    private PeerInfo nuevoPeer;
     
     /**
      * Procesa el evento recibido. Si es de tipo NUEVO_PEER,
@@ -48,8 +50,48 @@ public class ManejadorNuevoPeer extends ManejadorMensajes {
      */
     private void procesarNuevoPeer(JsonObject json) {
         EventoNuevoPeer evento = gson.fromJson(json, EventoNuevoPeer.class);
-        PeerInfo info = evento.getPeer();
+        nuevoPeer = evento.getPeer();
+        enviarPeersANuevo();
+        enviarNuevoAPeers();
         PeersConectados peers = PeersConectados.getInstance();
-        peers.registrarPeer(info);
+        peers.registrarPeer(nuevoPeer);
+    }
+    
+    /**
+     * Metodo para enviar los peers ya registrados al nuevo peer
+     */
+    private void enviarPeersANuevo(){
+        if (nuevoPeer == null || nuevoPeer.getUser() == null) {
+            return;
+        }
+        
+        PeersConectados peers = PeersConectados.getInstance();
+        Peer peer = Peer.getInstance();
+        String userSender = peer.getMyInfo().getUser();
+        
+        for (PeerInfo peerExistente : peers.obtenerTodosLosPeers()) {
+            EventoNuevoPeer evento = new EventoNuevoPeer(peerExistente, userSender);
+            peer.directMessage(evento, nuevoPeer.getUser());
+        }
+    }
+    
+    /**
+     * Metodo para enviar el nuevo Peer a los peers existentes
+     */
+    private void enviarNuevoAPeers(){
+        if (nuevoPeer == null || nuevoPeer.getUser() == null) {
+            return;
+        }
+        
+        PeersConectados peers = PeersConectados.getInstance();
+        Peer peer = Peer.getInstance();
+        String userSender = peer.getMyInfo().getUser();
+        
+        EventoNuevoPeer evento = new EventoNuevoPeer(nuevoPeer, userSender);
+        for (PeerInfo peerExistente : peers.obtenerTodosLosPeers()) {
+            if (peerExistente.getUser() != null) {
+                peer.directMessage(evento, peerExistente.getUser());
+            }
+        }
     }
 }

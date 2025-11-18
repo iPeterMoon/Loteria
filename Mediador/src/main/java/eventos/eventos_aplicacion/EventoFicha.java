@@ -1,6 +1,7 @@
 package eventos.eventos_aplicacion;
 
 import enums.TipoEvento;
+import eventos.Evento;
 import java.awt.Point;
 
 /**
