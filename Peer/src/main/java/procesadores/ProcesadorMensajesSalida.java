@@ -3,14 +3,14 @@ package procesadorEventos;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import network.IncomingMessageDispatcher;
+import network.OutgoingMessageDispatcher;
 
 
 /**
  *
  * @author Jp
  */
-public class ProcesadorMensajes implements Runnable{
+public class ProcesadorMensajesSalida implements Runnable{
 
     private final Gson gson = new Gson();
     private volatile boolean isRunning = true;
@@ -18,24 +18,26 @@ public class ProcesadorMensajes implements Runnable{
     /**
      * Primer manejador de la cadena de responsabilidad
      */
-    private final ManejadorMensajesLlegada manejadorPrincipal;
+    private final IHandler manejadorPrincipal;
 
-    public ProcesadorMensajes() {
+    public ProcesadorMensajesSalida() {
 
         // Inicializar manejadores
-        ManejadorMensajesLlegada nuevoPeer = new ManejadorNuevoPeer();
-        ManejadorMensajesLlegada eventoJuego = new ManejadorEventoApplication();
+        ManejadorMensajesSalida envioHeartbeat = new ManejadorEnvioHeartbeat();
+        ManejadorMensajesSalida mensajeDirecto = new ManejadorMensajeDirecto();
+        ManejadorMensajesSalida broadcast = new ManejadorBroadcast();
+        
+        envioHeartbeat.setNext(mensajeDirecto);
+        mensajeDirecto.setNext(broadcast);
 
-        nuevoPeer.setNext(eventoJuego);
-
-        this.manejadorPrincipal = nuevoPeer;
+        this.manejadorPrincipal = envioHeartbeat;
     }
 
     @Override
     public void run() {
         while (isRunning) {
             try {
-                String mensaje = IncomingMessageDispatcher.take();
+                String mensaje = OutgoingMessageDispatcher.take();
                 procesar(mensaje);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

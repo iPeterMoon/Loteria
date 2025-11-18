@@ -62,7 +62,7 @@ public class Peer implements IPeer {
             
             empezarEscucha();
             
-            empezarEnvio();
+            envioHandler.empezarEnvio();
 
             DiscoveryRegistrar.registrar(myInfo);
 
@@ -84,11 +84,6 @@ public class Peer implements IPeer {
             String[] netInfo = key.split(":");
             myInfo.setIp(netInfo[0]);
             myInfo.setPort(Integer.parseInt(netInfo[1]));
-    }
-
-    private void empezarEnvio(){
-        ExecutorService threadPool = PoolHilos.getInstance().getThreadPool();
-        threadPool.submit(envioHandler);
     }
     
     private void empezarHeartbeat() {

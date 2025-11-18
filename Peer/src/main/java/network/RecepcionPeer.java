@@ -3,7 +3,7 @@ package network;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
-import procesadorEventos.ProcesadorMensajes;
+import procesadorEventos.ProcesadorMensajesLlegada;
 import utilPeer.PoolHilos;
 
 /**
@@ -27,7 +27,7 @@ public class RecepcionPeer {
         return instance;
     }
     
-    private ProcesadorMensajes procesador;
+    private ProcesadorMensajesLlegada procesador;
     private RedListener redListener;
     
     /**
@@ -37,7 +37,7 @@ public class RecepcionPeer {
     public String empezarEscucha(){
         try{
             redListener = new RedListener();
-            procesador = new ProcesadorMensajes();
+            procesador = new ProcesadorMensajesLlegada();
             int port = redListener.start();
             
             ejecutarHilos();
