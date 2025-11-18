@@ -21,7 +21,7 @@ public class EnvioPeer{
     private final IEnvio envio;
     private static EnvioPeer instance;
     private final ExecutorService threadPool;
-    private final ProcesadorMensajesSalida procesador;
+    private final ProcesadorMensajes procesador;
     private final Gson gson = new Gson();
 
     private EnvioPeer() {

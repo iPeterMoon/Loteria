@@ -27,7 +27,7 @@ public class RecepcionPeer {
         return instance;
     }
     
-    private ProcesadorMensajesLlegada procesador;
+    private ProcesadorMensajes procesador;
     private RedListener redListener;
     
     /**
