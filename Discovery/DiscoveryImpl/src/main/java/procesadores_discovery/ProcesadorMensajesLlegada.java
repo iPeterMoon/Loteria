@@ -1,4 +1,4 @@
-package procesadores;
+package procesadores_discovery;
 
 import network.IncomingMessageDispatcher;
 
@@ -8,6 +8,10 @@ import network.IncomingMessageDispatcher;
  */
 public class ProcesadorMensajesLlegada extends ProcesadorMensajes {
     
+    /**
+     * Inicializa la cadena de responsabilidad, primero maneja los heartbeats
+     * porque son los que mas llegan, y luego maneja los nuevosPeers.
+     */
     public ProcesadorMensajesLlegada() {
 
         // Inicializar manejadores

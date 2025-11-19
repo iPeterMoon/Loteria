@@ -1,4 +1,4 @@
-package procesadores;
+package procesadores_peer;
 
 import network.IncomingMessageDispatcher;
 

@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package procesadores;
+package procesadores_peer;
 
 import com.google.gson.JsonObject;
 
 /**
+ * Clase abstracta base para los manejadores de mensajes de entrada (llegada).
+ * Implementa la lógica común de la interfaz IHandler.
  *
- * @author Alici
+ * @author norma
  */
 public abstract class ManejadorMensajesLlegada implements IHandler {
 
@@ -19,8 +17,6 @@ public abstract class ManejadorMensajesLlegada implements IHandler {
 
     /**
      * Asigna el siguiente manejador en la cadena de responsabilidad.
-     *
-     * @param next siguiente manejador
      */
     @Override
     public void setNext(IHandler next) {
@@ -28,11 +24,9 @@ public abstract class ManejadorMensajesLlegada implements IHandler {
     }
 
     /**
-     * Procesa el mensaje recibido o lo delega al siguiente manejador.
-     *
-     * @param json mensaje en formato JSON
+     * Método abstracto que obliga a las subclases a definir su lógica de
+     * procesamiento.
      */
     @Override
     public abstract void procesar(JsonObject json);
-
 }

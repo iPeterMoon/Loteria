@@ -17,6 +17,10 @@ public class IncomingMessageDispatcher {
     private IncomingMessageDispatcher() {
     }
 
+    /**
+     * Metodo para meter un mensaje en la cola de llegada
+     * @param mensaje Mensaje a meter
+     */
     public static void dispatch(String mensaje) {
         if (mensaje == null || incomingQueue == null) {
             System.err.println("Error: Mensaje o cola de entrada nulos en el despachador.");
@@ -30,6 +34,11 @@ public class IncomingMessageDispatcher {
         }
     }
 
+    /**
+     * Metodo apra sacar un mensaje de la cola de llegada
+     * @return Mensaje sacado de la cola.
+     * @throws InterruptedException
+     */
     public static String take() throws InterruptedException {
         return incomingQueue.take();
     }

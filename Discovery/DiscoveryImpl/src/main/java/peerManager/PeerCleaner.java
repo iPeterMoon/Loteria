@@ -1,58 +1,76 @@
 package peerManager;
 
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import peerManager.ListaPeers;
+
 import dtos.PeerInfo;
-import interfaces.IEnvio;
+import eventos.eventos_peers.EventoDesconexion;
+import network.OutgoingMessageDispatcher;
 
 public class PeerCleaner implements Runnable {
-    private final IEnvio envio; // El envio de Discovery
-    private final long timeoutMs;
-    private final Gson gson = new Gson();
-    private static final long HEARTBEAT_INTERVALO_MS = 500;
-    private static final long HEARTBEAT_TIMEOUT_MS = 3 * HEARTBEAT_INTERVALO_MS; // 3x sin heartbeat → muerto
-    private static final int LIMPIEZA_INTERVALO_MS = 2000;
 
+    private final long HEARTBEAT = 500;
+    private final long HEARTBEAT_TIMEOUT_MS = HEARTBEAT * 3 ;
+    private final long LIMPIEZA_INTERVALO_MS = 2000;
+    private final ScheduledExecutorService scheduler;
+    
+    // Mapa estático para que los manejadores de entrada puedan actualizar tiempos
     private static final Map<String, Long> ultimaVezVistos = new ConcurrentHashMap<>();
+    private static PeerCleaner instance;
 
-    public PeerCleaner(IEnvio envio, long timeoutMs) {
-        this.envio = envio;
-        this.timeoutMs = timeoutMs;
+    private PeerCleaner() {
+        this.scheduler = Executors.newScheduledThreadPool(1);
     }
 
-    public static void actualizarUltimaVezVisto(String peerKey) {
+    /**
+     * Metodo getInstance para implementar patron singleton
+     * @return Instancia unica de la clase.
+     */
+    public static PeerCleaner getInstance(){
+        if(instance == null){
+            instance = new PeerCleaner();
+        }
+        return instance;
+    }
+
+    /**
+     *  Método estático para actualizar la ultima vez que se vio un peer.
+     */ 
+    public static void actualizarUltimaVezVisto(PeerInfo peer) {
+        String peerKey = ListaPeers.obtenerKey(peer);
         ultimaVezVistos.put(peerKey, System.currentTimeMillis());
     }
 
     @Override
     public void run() {
-        try {
-            long ahora = System.currentTimeMillis();
+        System.out.println("[PeerCleaner] Iniciando ciclo de limpieza...");
+        // Inicia su propio scheduler
+        scheduler.scheduleAtFixedRate(this::ejecutarLimpieza, 0, LIMPIEZA_INTERVALO_MS, TimeUnit.MILLISECONDS);
+    }
 
-            // Iteramos sobre nuestro mapa
+    /**
+     * Metodo que ejecuta la limpieza de los peers checando 
+     * cuanto tiempo ha pasado desde la ultima vez que se recibió
+     * un heartbeat, si ya pasó el suficiente tiempo, se eliminan los registros de el
+     * y se crea un evento de desconexión para enviar a los otros peers conectados.
+     */
+    private void ejecutarLimpieza() {
+        try {
+            long ahoraEnMilis = System.currentTimeMillis();
+
             for (Map.Entry<String, Long> entrada : ultimaVezVistos.entrySet()) {
                 String key = entrada.getKey();
-                long ultimaVez = entrada.getValue();
+                long ultimaVezVisto = entrada.getValue();
 
-                
-                if (ahora - ultimaVez > timeoutMs) {
-                    
-                    // eliminar de mi propio mapa (PeerCleaner)
-                    ultimaVezVistos.remove(key);
-
-                    // eliminarR de la lista oficial
-                    // Llamamos al método auxiliar porque el mapa peersVivos es privado en ListaPeers
-                    PeerInfo peerCaido = ListaPeers.eliminarPeer(key);
-
-                    if (peerCaido != null) {
-                        System.out.println("[PeerCleaner] Eliminando peer expirado: " + key);
-                        
-                        // Generar evento y Broadcast
-                        String eventoJson = crearMensajeDesconexion(peerCaido);
-                        broadcastDesconexion(eventoJson);
-                    }
+                // SI YA PASÓ EL TIEMPO...
+                if (ahoraEnMilis - ultimaVezVisto > HEARTBEAT_TIMEOUT_MS) {                    
+                    PeerInfo peerCaido = eliminarPeer(key);
+                    crearEventoDesconexion(peerCaido);
                 }
             }
         } catch (Exception e) {
@@ -60,17 +78,27 @@ public class PeerCleaner implements Runnable {
         }
     }
 
-    private void broadcastDesconexion(String mensaje) {
-        // Usamos el método auxiliar de iteración de ListaPeers
-        ListaPeers.ejecutarEnPeersVivos((key, peerInfo) -> {
-            envio.sendEvent(peerInfo.getIp(), peerInfo.getPort(), mensaje);
-        });
+    /**
+     * Metodo para eliminar el peer de los registros del discovery, tanto
+     * del peerCleaner como de la listaPeers
+     * @param key
+     * @return
+     */
+    private PeerInfo eliminarPeer(String key){
+        ultimaVezVistos.remove(key);
+        PeerInfo peerCaido = ListaPeers.eliminarPeer(key);
+        return peerCaido;
     }
 
-    private String crearMensajeDesconexion(PeerInfo peerCaido) {
-        JsonObject json = new JsonObject();
-        json.addProperty("tipoEvento", "PEER_DESCONECTADO");
-        json.addProperty("id", ListaPeers.obtenerKey(peerCaido));
-        return json.toString();
+    private void crearEventoDesconexion(PeerInfo peerCaido){
+        if (peerCaido != null) {
+            System.out.println("[PeerCleaner] Peer muerto detectado: " + peerCaido.getUser()+"@"+ListaPeers.obtenerKey(peerCaido));            
+            // El constructor ya lo definimos arriba: new EventoDesconexion(peerCaido)
+            EventoDesconexion evento = new EventoDesconexion(peerCaido);
+                        
+            Gson gson = new Gson();
+            String eventoJson = gson.toJson(evento);
+            OutgoingMessageDispatcher.dispatch(eventoJson);
+        }
     }
 }

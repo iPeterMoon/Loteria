@@ -1,4 +1,4 @@
-package procesadores;
+package procesadores_peer;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

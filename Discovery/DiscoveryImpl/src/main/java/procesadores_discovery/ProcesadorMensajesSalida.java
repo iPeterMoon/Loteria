@@ -1,5 +1,5 @@
 
-package procesadores;
+package procesadores_discovery;
 
 import network.OutgoingMessageDispatcher;
 
@@ -9,6 +9,10 @@ import network.OutgoingMessageDispatcher;
  */
 public class ProcesadorMensajesSalida extends ProcesadorMensajes{
 
+    /**
+     * Constructor, establece la cadena de responsbilidad, por ahora los unicos mensajes que salen son mensajes
+     * de desconexión.
+     */
     public ProcesadorMensajesSalida() {
 
         // Inicializar manejadores

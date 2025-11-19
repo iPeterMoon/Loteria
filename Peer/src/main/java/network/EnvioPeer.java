@@ -5,8 +5,8 @@ import dtos.PeerInfo;
 import factory.RedFactory;
 import interfaces.IEnvio;
 import java.util.concurrent.ExecutorService;
-import procesadores.ProcesadorMensajes;
-import procesadores.ProcesadorMensajesSalida;
+import procesadores_peer.ProcesadorMensajes;
+import procesadores_peer.ProcesadorMensajesSalida;
 import utilPeer.PoolHilos;
 
 /**

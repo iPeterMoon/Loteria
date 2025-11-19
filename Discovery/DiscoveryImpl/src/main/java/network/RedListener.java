@@ -20,6 +20,9 @@ public class RedListener implements Runnable, IRedListener {
         this.recepcion = RedFactory.crearRecepcionHandler();
     }
 
+    /**
+     * Empieza la recepción de mensajes inicializando el componente de red.
+     */
     public synchronized void start() {
         if (running) {
             return;
@@ -58,6 +61,9 @@ public class RedListener implements Runnable, IRedListener {
         }
     }
 
+    /**
+     * Para los hilos del componente de red.
+     */
     public synchronized void stop() {
         if (!running) {
             return;
