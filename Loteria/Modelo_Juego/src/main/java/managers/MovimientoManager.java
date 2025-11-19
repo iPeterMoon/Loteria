@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package managers;
 
 import eventos.eventos_aplicacion.EventoFicha;
@@ -65,20 +61,24 @@ public class MovimientoManager {
 
         // Validación
         if (numeroCarta == cartaActual) {
-            // Colocar ficha en la tarjeta
-            tarjeta.addFicha(posicion);
-
-            EventoFicha eventoFicha = new EventoFicha(sala.getJugadorPrincipal().getNickname(), posicion);
-
-            ModeloJuegoFacade.getInstance().colocarFicha(eventoFicha);
-
-            componentePeer.broadcastEvento(eventoFicha);
-            // Print temporal 
-            System.out.println("Ficha colocada correctamente en " + posicion + " por " + sala.getJugadorPrincipal().getNickname() + " (Carta: " + cartaActual + ")");
+            colocarFicha(posicion, tarjeta, cartaActual);
         } else {
             // Print temporal para movimientos inválidos
             System.out.println("Movimiento inválido en " + posicion + " (Carta en tarjeta: " + numeroCarta + ", Carta cantada: " + cartaActual + ")");
         }
 
+    }
+
+    private void colocarFicha(Point posicion, Tarjeta tarjeta, Integer cartaActual) {
+        // Colocar ficha en la tarjeta
+        tarjeta.addFicha(posicion);
+
+        EventoFicha eventoFicha = new EventoFicha(Sala.getInstance().getJugadorPrincipal().getNickname(), posicion);
+
+        ModeloJuegoFacade.getInstance().colocarFicha(eventoFicha);
+
+        componentePeer.broadcastEvento(eventoFicha);
+        // Print temporal 
+        System.out.println("Ficha colocada correctamente en " + posicion + " por " + Sala.getInstance().getJugadorPrincipal().getNickname() + " (Carta: " + cartaActual + ")");
     }
 }

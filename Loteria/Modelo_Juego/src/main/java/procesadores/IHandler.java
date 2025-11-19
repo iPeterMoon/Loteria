@@ -12,8 +12,8 @@ import eventos.Evento;
  */
 public interface IHandler {
 
-    void setNext(IHandler next);
+    public void setNext(IHandler next);
 
-    void procesar(Evento evento);
+    public void procesar(Evento evento);
 
 }

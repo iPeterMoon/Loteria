@@ -4,7 +4,6 @@ import interfaces.IModeloJuego;
 import interfaces.IModeloVista;
 import java.awt.Point;
 import dtos.FichaDTO;
-import java.util.List;
 import dtos.JugadorDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import interfaces.IPeer;
@@ -17,28 +16,28 @@ import mappers.JugadorMapperModelo;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-    
+
     private static ModeloJuegoFacade instancia;
     private IModeloVista vista;
     private final MovimientoManager movimientoManager = new MovimientoManager();
-    
+
     private ModeloJuegoFacade() {
     }
-    
+
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-    
+
     public void inicializar(IModeloVista modeloVista, IPeer peer) {
         if (this.vista != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
         this.vista = modeloVista;
-        
+
         movimientoManager.inicializar(peer);
     }
 
@@ -62,21 +61,6 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal) {
         Sala.getInstance().setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
-    }
-
-    /**
-     * Constructor con los atributos de jugadores secundarios, jugador principal
-     * y host de la ronda.
-     *
-     * @param jugadoresSecundario
-     * @param jugadorPrincipal
-     * @param host
-     */
-    public ModeloJuegoFacade(List<Jugador> jugadoresSecundario, Jugador jugadorPrincipal, Jugador host) {
-        Sala sala = Sala.getInstance();
-        sala.setJugadoresSecundario(jugadoresSecundario);
-        sala.setJugadorPrincipal(jugadorPrincipal);
-        sala.setHost(host);
     }
 
     /**
@@ -109,5 +93,5 @@ public class ModeloJuegoFacade implements IModeloJuego {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vista.colocarFicha(fichaDTO);
     }
-    
+
 }

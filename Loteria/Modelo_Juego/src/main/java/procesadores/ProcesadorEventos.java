@@ -13,7 +13,7 @@ import interfaces.IObserver;
  */
 public class ProcesadorEventos implements IObserver {
 
-    protected IHandler manejadorPrincipal;
+    private IHandler manejadorPrincipal;
 
     public ProcesadorEventos() {
         ManejadorEventos eventoFicha = new ManejadorEventoColocarFicha();
@@ -21,7 +21,7 @@ public class ProcesadorEventos implements IObserver {
         this.manejadorPrincipal = eventoFicha;
     }
 
-    protected void procesar(Evento evento) {
+    private void procesar(Evento evento) {
         try {
             manejadorPrincipal.procesar(evento);
         } catch (Exception e) {
