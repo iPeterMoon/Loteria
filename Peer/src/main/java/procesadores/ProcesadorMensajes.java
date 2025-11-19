@@ -1,4 +1,4 @@
-package procesadorEventos;
+package procesadores;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -12,18 +12,18 @@ import network.IncomingMessageDispatcher;
  */ 
 public abstract class ProcesadorMensajes implements Runnable{
 
-    private final Gson gson = new Gson();
-    private volatile boolean isRunning = true;
+    protected final Gson gson = new Gson();
+    protected volatile boolean isRunning = true;
 
     /**
      * Primer manejador de la cadena de responsabilidad
      */
-    private final IHandler manejadorPrincipal;
+    protected IHandler manejadorPrincipal;
 
     @Override
     public abstract void run();
 
-    private void procesar(String mensaje) {
+    protected void procesar(String mensaje) {
         try {
             JsonObject json = gson.fromJson(mensaje, JsonObject.class);
             manejadorPrincipal.procesar(json);

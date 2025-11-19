@@ -3,7 +3,8 @@ package network;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
-import procesadorEventos.ProcesadorMensajesLlegada;
+import procesadores.ProcesadorMensajes;
+import procesadores.ProcesadorMensajesLlegada;
 import utilPeer.PoolHilos;
 
 /**
@@ -13,7 +14,8 @@ import utilPeer.PoolHilos;
 public class RecepcionPeer {
 
     private static RecepcionPeer instance;
-
+    private ProcesadorMensajes procesador;
+    private RedListener redListener;
     private final ExecutorService threadPool;
 
     private RecepcionPeer() {
@@ -26,37 +28,35 @@ public class RecepcionPeer {
         }
         return instance;
     }
-    
-    private ProcesadorMensajes procesador;
-    private RedListener redListener;
-    
+
     /**
      * Empieza la recepción de mensajes
+     *
      * @return El key con la ip y puerto del Peer
      */
-    public String empezarEscucha(){
-        try{
+    public String empezarEscucha() {
+        try {
             redListener = new RedListener();
             procesador = new ProcesadorMensajesLlegada();
             int port = redListener.start();
-            
+
             ejecutarHilos();
-            
+
             String ip = InetAddress.getLocalHost().getHostAddress();
             return ip + ":" + port;
-            
-        } catch (UnknownHostException e){
+
+        } catch (UnknownHostException e) {
             System.out.println("Problema al obtener la dirección ip");
             return null;
         }
     }
-    
-    private void ejecutarHilos(){
+
+    private void ejecutarHilos() {
         threadPool.execute(redListener);
         threadPool.execute(procesador);
     }
-    
-    public void stop(){
+
+    public void stop() {
         redListener.stop();
         procesador.stop();
     }

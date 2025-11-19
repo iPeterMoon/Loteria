@@ -1,8 +1,5 @@
-package procesadorEventos;
+package procesadores;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import network.IncomingMessageDispatcher;
 
 

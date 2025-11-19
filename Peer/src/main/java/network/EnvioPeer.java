@@ -1,15 +1,12 @@
 package network;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
 import dtos.PeerInfo;
 import factory.RedFactory;
 import interfaces.IEnvio;
 import java.util.concurrent.ExecutorService;
-import procesadorEventos.ManejadorBroadcast;
-import procesadorEventos.ProcesadorMensajesSalida;
+import procesadores.ProcesadorMensajes;
+import procesadores.ProcesadorMensajesSalida;
 import utilPeer.PoolHilos;
 
 /**

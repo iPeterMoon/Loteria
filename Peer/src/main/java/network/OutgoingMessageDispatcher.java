@@ -6,6 +6,7 @@ package network;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import mensajes.Mensaje;
 
 /**
  *
@@ -14,9 +15,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class OutgoingMessageDispatcher {
 
     private static BlockingQueue<String> outgoingQueue = new LinkedBlockingQueue<>();
-
-    private OutgoingMessageDispatcher() {
-    }
 
     public static void dispatch(String mensaje) {
         if (mensaje == null || outgoingQueue == null) {

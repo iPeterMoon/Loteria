@@ -1,4 +1,4 @@
-package procesadorEventos;
+package procesadores;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -20,13 +20,15 @@ public class ManejadorEnvioHeartbeat extends ManejadorMensajesSalida {
 
     @Override
     public void procesar(JsonObject json) {
-        String tipo = json.get("tipoEvento").getAsString();
+            String tipo = json.get("tipoEvento").getAsString();
 
-        if (TipoEvento.HEARTBEAT.name().equals(tipo)) {
-            procesarHeartbeat(json);
-        } else if (next != null) {
-            next.procesar(json);
-        }
+            if (TipoEvento.HEARTBEAT.name().equals(tipo)) {
+                procesarHeartbeat(json);
+            } else if (next != null) {
+                next.procesar(json);
+            }
+       
+
     }
 
     /**

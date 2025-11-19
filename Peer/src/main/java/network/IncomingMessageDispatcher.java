@@ -15,9 +15,6 @@ public class IncomingMessageDispatcher {
 
     private static BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
 
-    private IncomingMessageDispatcher() {
-    } 
-
     public static void dispatch(String mensaje) {
         if (mensaje == null || incomingQueue == null) {
             System.err.println("Error: Mensaje o cola de entrada nulos en el despachador.");

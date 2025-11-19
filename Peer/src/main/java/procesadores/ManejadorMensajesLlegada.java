@@ -1,4 +1,4 @@
-package procesadorEventos;
+package procesadores;
 
 import com.google.gson.JsonObject;
 
