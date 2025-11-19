@@ -3,12 +3,12 @@ package procesadores;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import discovery.ListaPeers;
+import peerManager.ListaPeers;
 import dtos.PeerInfo;
 import enums.TipoEvento;
 import eventos.eventos_peers.EventoHeartbeat;
 
-public class ManejadorHeartbeat extends ManejadorMensajes{
+public class ManejadorHeartbeat extends ManejadorMensajesLlegada{
 
     private final Gson gson = new Gson();
 

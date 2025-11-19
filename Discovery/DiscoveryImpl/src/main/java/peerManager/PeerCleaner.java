@@ -1,9 +1,9 @@
-package procesadores;
+package peerManager;
 
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import discovery.ListaPeers;
+import peerManager.ListaPeers;
 import dtos.PeerInfo;
 import interfaces.IEnvio;
 
@@ -11,6 +11,9 @@ public class PeerCleaner implements Runnable {
     private final IEnvio envio; // El 'envio' de Discovery
     private final long timeoutMs;
     private final Gson gson = new Gson();
+    private static final long HEARTBEAT_INTERVALO_MS = 500;
+    private static final long HEARTBEAT_TIMEOUT_MS = 3 * HEARTBEAT_INTERVALO_MS; // 3x sin heartbeat → muerto
+    private static final int LIMPIEZA_INTERVALO_MS = 2000;
 
     public PeerCleaner(IEnvio envio, long timeoutMs) {
         this.envio = envio;

@@ -1,4 +1,4 @@
-package discovery;
+package peerManager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
