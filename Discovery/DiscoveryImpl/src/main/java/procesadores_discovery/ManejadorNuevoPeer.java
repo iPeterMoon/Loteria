@@ -1,9 +1,10 @@
-package procesadores;
+package procesadores_discovery;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import peerManager.ListaPeers;
+import peerManager.PeerCleaner;
 import dtos.PeerInfo;
 import enums.TipoEvento;
 import eventos.eventos_peers.EventoNuevoPeer;
@@ -24,8 +25,7 @@ public class ManejadorNuevoPeer extends ManejadorMensajesLlegada {
             enviarNuevoAPeers();
             ListaPeers.registrarPeer(nuevoPeer);
             // avisar al peercleaner para que inicie el tiempo de este peer
-            String key = ListaPeers.obtenerKey(nuevoPeer);
-            PeerCleaner.actualizarUltimaVezVisto(key);
+            PeerCleaner.actualizarUltimaVezVisto(nuevoPeer);
         } else if (next != null) {
             next.procesar(json);
         }

@@ -1,10 +1,8 @@
 package network;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
-import procesadores.ProcesadorMensajes;
-import procesadores.ProcesadorMensajesLlegada;
+import procesadores_discovery.ProcesadorMensajes;
+import procesadores_discovery.ProcesadorMensajesLlegada;
 import util_discovery.PoolHilos;
 
 /**
@@ -41,11 +39,18 @@ public class Recepcion {
         ejecutarHilos();
     }
 
+    /**
+     * Ejecuta los hilos del redListener y del 
+     * procesador de mensajes por separado
+     */
     private void ejecutarHilos() {
         threadPool.execute(redListener);
         threadPool.execute(procesador);
     }
 
+    /**
+     * Para la ejecución de la recepción de mensajes  
+     */ 
     public void stop() {
         redListener.stop();
         procesador.stop();

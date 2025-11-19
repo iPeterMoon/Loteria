@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package procesadores;
+package procesadores_peer;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

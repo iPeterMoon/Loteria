@@ -17,7 +17,7 @@ import modelo.Tarjeta;
 import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
 import peer.PeerFacade;
-import procesadores.ProcesadorEventos;
+import procesadores_modelo.ProcesadorEventos;
 
 /**
  * Clase que se encarga de configurar el modelo del juego y todo lo necesario

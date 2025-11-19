@@ -1,4 +1,4 @@
-package procesadores;
+package procesadores_discovery;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -22,6 +22,11 @@ public abstract class ProcesadorMensajes implements Runnable{
     @Override
     public abstract void run();
 
+    /**
+     * Metodo para procesar un mensaje llamando a la cadena de responsabilidad
+     * con el manejador principal
+     * @param mensaje Mensaje a procesar.
+     */
     protected void procesar(String mensaje) {
         try {
             JsonObject json = gson.fromJson(mensaje, JsonObject.class);
@@ -32,6 +37,9 @@ public abstract class ProcesadorMensajes implements Runnable{
         }
     }
 
+    /**
+     * Metodo para parar el hilo del procesador.
+     */
     public void stop() {
         isRunning = false;
     }

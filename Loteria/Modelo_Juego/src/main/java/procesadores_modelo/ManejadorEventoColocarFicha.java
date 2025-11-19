@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package procesadores;
+package procesadores_modelo;
 
 import enums.TipoEvento;
 import eventos.Evento;
 import eventos.eventos_aplicacion.EventoFicha;
 import modelo.ModeloJuegoFacade;
-import procesadores_modelo.ManejadorEventos;
 
 /**
  *
@@ -24,6 +23,5 @@ public class ManejadorEventoColocarFicha extends ManejadorEventos {
             next.procesar(evento);
         }
     }
-
 
 }

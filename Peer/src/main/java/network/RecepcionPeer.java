@@ -3,8 +3,8 @@ package network;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
-import procesadores.ProcesadorMensajes;
-import procesadores.ProcesadorMensajesLlegada;
+import procesadores_peer.ProcesadorMensajes;
+import procesadores_peer.ProcesadorMensajesLlegada;
 import utilPeer.PoolHilos;
 
 /**
