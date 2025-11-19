@@ -17,6 +17,7 @@ import modelo.Tarjeta;
 import modelo.Jugador;
 import modelo.ModeloJuegoImp;
 import peer.Peer;
+import peer.PeerFacade;
 
 /**
  * Clase que se encarga de configurar el modelo del juego y todo lo necesario
@@ -33,7 +34,7 @@ public class Arrancador {
 
         //Iniciar el componente de peer
         IObserver modeloJuegoObserver = ModeloJuegoImp.getInstance();
-        Peer nuevoPeer = Peer.getInstance();
+        PeerFacade nuevoPeer = new PeerFacade();
         nuevoPeer.setObserver(modeloJuegoObserver);
 
         // 1. Configuración de dependencias del Modelo
@@ -63,7 +64,7 @@ public class Arrancador {
         Tarjeta tarjeta = new Tarjeta(cartas);
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
-        if(nickname != null) {
+        if (nickname != null) {
             nuevoPeer.setUser(nickname);
             Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
             modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
