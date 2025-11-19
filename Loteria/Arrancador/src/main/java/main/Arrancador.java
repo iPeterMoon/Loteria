@@ -15,9 +15,9 @@ import modelo.ModeloControlImp;
 import modelo.ModeloVistaFacade;
 import modelo.Tarjeta;
 import modelo.Jugador;
-import modelo.ModeloJuegoImp;
-import peer.Peer;
+import modelo.ModeloJuegoFacade;
 import peer.PeerFacade;
+import procesadores.ProcesadorEventos;
 
 /**
  * Clase que se encarga de configurar el modelo del juego y todo lo necesario
@@ -33,14 +33,14 @@ public class Arrancador {
         IModeloVista modeloVista = ModeloVistaFacade.getInstance();
 
         //Iniciar el componente de peer
-        IObserver modeloJuegoObserver = ModeloJuegoImp.getInstance();
+        IObserver modeloJuegoObserver = new ProcesadorEventos();
         PeerFacade nuevoPeer = new PeerFacade();
         nuevoPeer.setObserver(modeloJuegoObserver);
 
         // 1. Configuración de dependencias del Modelo
         // 1.1 Crear ModeloJuego (necesita IModeloVista)
-        ModeloJuegoImp.getInstance().inicializar(modeloVista, nuevoPeer);
-        IModeloJuego modeloJuego = ModeloJuegoImp.getInstance();
+        ModeloJuegoFacade.getInstance().inicializar(modeloVista, nuevoPeer);
+        IModeloJuego modeloJuego = ModeloJuegoFacade.getInstance();
 
         // 1.2 Crear ModeloControl(necesita IModeloJuego)
         IModeloControl modeloControl = new ModeloControlImp(modeloJuego);
