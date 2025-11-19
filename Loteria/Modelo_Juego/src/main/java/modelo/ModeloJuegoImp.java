@@ -26,7 +26,18 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
     private static ModeloJuegoImp instancia;
     private IModeloVista vista;
     private IPeer componentePeer;
-    
+    /**
+     * Lista de jugadores secundarios al jugador de la vista principal
+     */
+    private List<Jugador> jugadoresSecundario;
+    /**
+     * Jugador principal que tiene la vista principal
+     */
+    private Jugador jugadorPrincipal;
+    /**
+     * Jugador host de la ronda
+     */
+    private Jugador host;
 
     private ModeloJuegoImp() {
     }
@@ -50,19 +61,6 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
         }
         this.componentePeer = peer;
     }
-
-    /**
-     * Lista de jugadores secundarios al jugador de la vista principal
-     */
-    private List<Jugador> jugadoresSecundario;
-    /**
-     * Jugador principal que tiene la vista principal
-     */
-    private Jugador jugadorPrincipal;
-    /**
-     * Jugador host de la ronda
-     */
-    private Jugador host;
 
     /**
      * Método para obtener el jugador principal, es decir el que es dueño de la
@@ -192,7 +190,7 @@ public class ModeloJuegoImp implements IModeloJuego, IObserver {
             // Castear a evento concreto
             EventoFicha eventoFicha = (EventoFicha) evento;
             System.out.println("[ModeloJuego] Procesando evento: " + evento.toString());
-            
+
             FichaDTO fichaDTO = new FichaDTO(
                     eventoFicha.getUserSender(),
                     eventoFicha.getPosicion()
