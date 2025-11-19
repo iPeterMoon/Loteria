@@ -19,7 +19,6 @@ public class EnvioPeer{
     private static EnvioPeer instance;
     private final ExecutorService threadPool;
     private final ProcesadorMensajes procesador;
-    private final Gson gson = new Gson();
 
     private EnvioPeer() {
         this.envio = RedFactory.crearEnvioHandler();
@@ -40,6 +39,10 @@ public class EnvioPeer{
     }
 
     public void directMessage(PeerInfo peer, String mensaje) {
+        if (peer == null) {
+            System.err.println("[EnvioPeer] Intento de enviar mensaje directo a Peer null. Mensaje descartado.");
+            return;
+        }
         envio.sendEvent(peer.getIp(), peer.getPort(), mensaje);
     }
 

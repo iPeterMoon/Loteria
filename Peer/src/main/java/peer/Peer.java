@@ -4,9 +4,10 @@ import com.google.gson.Gson;
 import dtos.PeerInfo;
 import eventos.Evento;
 import interfaces.IObserver;
-import java.util.concurrent.ExecutorService;
 import mensajes.MensajeBroadcast;
 import mensajes.MensajeDirecto;
+
+import java.util.concurrent.ExecutorService;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
 import network.RecepcionPeer;
@@ -101,10 +102,10 @@ public class Peer {
      * y lo envía al despachador de mensajes salientes.
      *
      * @param evento Evento que contiene el mensaje.
-     * @param user Nombre del usuario del Peer destinatario.
+     * @param userReceiver Nombre del usuario del Peer destinatario.
      */
-    public void directMessage(Evento evento, String user) {
-        MensajeDirecto mensajeDirecto = new MensajeDirecto(evento, user);
+    public void directMessage(Evento evento, String userReceiver) {
+        MensajeDirecto mensajeDirecto = new MensajeDirecto(evento, userReceiver);
 
         Gson gson = new Gson();
         String json = gson.toJson(mensajeDirecto);

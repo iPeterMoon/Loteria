@@ -17,22 +17,18 @@ public class ManejadorBroadcast extends ManejadorMensajesSalida {
 
     @Override
     public void procesar(JsonObject json) {
-        if (json.has("tipoMensaje")) {
+        if(json.has("tipoMensaje")){
             String tipoMensaje = json.get("tipoMensaje").getAsString();
 
             if (TipoMensaje.BROADCAST.name().equals(tipoMensaje)) {
-                String evento = gson.toJson(json);
+                String evento = extraerEvento(json);
                 broadcast(evento);
             } else if (next != null) {
                 next.procesar(json);
             }
-        } else {
-            if (next == null) {
-                String evento = gson.toJson(json);
-                broadcast(evento);
-            } else {
-                next.procesar(json);
-            }
+
+        } else if (next != null) {
+            next.procesar(json);
         }
     }
 
@@ -44,6 +40,18 @@ public class ManejadorBroadcast extends ManejadorMensajesSalida {
         PeersConectados peers = PeersConectados.getInstance();
         EnvioPeer envio = EnvioPeer.getInstance();
         peers.ejecutarEnTodos(evento, envio::directMessage);
+    }
+    
+    /**
+     * Procesa un mensaje directo, obteniendo el usuario de destino y enviando
+     * el mensaje al peer correspondiente.
+     *
+     * @param json Objeto JSON que contiene el mensaje directo.
+     */
+    private String extraerEvento(JsonObject json){
+        JsonObject eventoJson = json.getAsJsonObject("evento");
+        String evento = gson.toJson(eventoJson);
+        return evento;
     }
 
 }

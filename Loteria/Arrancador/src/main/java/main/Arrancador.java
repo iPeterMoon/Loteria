@@ -82,6 +82,5 @@ public class Arrancador {
 
         modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario1, false));
         modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario2, false));
-
     }
 }
