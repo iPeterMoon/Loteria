@@ -11,6 +11,7 @@ public class Heartbeat implements Runnable {
     private final static long INTERVALO = 500; // Intervalo en milisegundos
     private final EventoHeartbeat eventoHeartbeat;
     private final Gson gson = new Gson();
+    private volatile boolean isRunning = true;
 
 
     public Heartbeat(PeerInfo peer) {
@@ -19,15 +20,18 @@ public class Heartbeat implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (isRunning) {
             enviarHeartbeat();
         }
+        System.out.println("[Heartbeat] Detenido.");
     }
     
     private void enviarHeartbeat() {
         try {
             Thread.sleep(INTERVALO);
-            enviarMensaje();
+            if (isRunning) {
+                enviarMensaje();
+            }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -36,6 +40,10 @@ public class Heartbeat implements Runnable {
     private void enviarMensaje() {
         String mensaje = gson.toJson(eventoHeartbeat);
         OutgoingMessageDispatcher.dispatch(mensaje);
+    }
+
+    public void stop() {
+        isRunning = false;
     }
 
 }

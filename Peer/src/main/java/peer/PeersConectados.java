@@ -45,7 +45,7 @@ public class PeersConectados {
         if(info != null) {
             if(!esMismoPeer(info, this.myInfo)){
                 listaPeers.put(generarClave(info), info);
-                System.out.println("Se Unió un nuevo Peer! ["+info.getUser()+"@"+info.getIp()+":"+info.getPort()+"]");
+                imprimirListaPeers();
             }
         } else {
             System.err.println("Se intentó procesar un Peer nulo");
@@ -121,5 +121,10 @@ public class PeersConectados {
     public Collection<PeerInfo> obtenerTodosLosPeers() {
         return listaPeers.values();
     }
-       
+    
+    private void imprimirListaPeers(){
+        for (PeerInfo peer : listaPeers.values()) {
+            System.out.println(peer.getUser()+"@"+peer.getIp()+":"+peer.getPort());
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package modelo;
 
-import com.google.gson.Gson;
 import interfaces.IModeloJuego;
 import interfaces.IModeloVista;
 import java.awt.Point;

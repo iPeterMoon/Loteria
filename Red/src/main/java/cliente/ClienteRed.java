@@ -52,15 +52,25 @@ public class ClienteRed implements Runnable {
         try {
             PrintWriter output = obtenerOutput(targetIp, targetPort, cacheKey);
 
-            // Enviar el evento
+            // Enviar el evento con flush forzado
             output.println(msg.getMensaje());
+            output.flush();
 
         } catch (IOException e) {
             System.err.println("Error al enviar a " + cacheKey + ": " + e.getMessage());
-            // Si falla, eliminamos la conexión del caché
+            // Si falla, eliminamos tanto el PrintWriter como el Socket del caché
             PrintWriter failedWriter = connections.remove(cacheKey);
+            Socket failedSocket = sockets.remove(cacheKey);
+            
             if (failedWriter != null) {
                 failedWriter.close();
+            }
+            if (failedSocket != null) {
+                try {
+                    failedSocket.close();
+                } catch (IOException ex) {
+                    System.err.println("Error al cerrar socket en error: " + ex.getMessage());
+                }
             }
         }
     }
@@ -73,7 +83,7 @@ public class ClienteRed implements Runnable {
      * @return PrintWriter Objeto donde se echan los mensajes a enviar
      * @throws IOException por algun fallo con el PrintWriter
      */
-    private PrintWriter obtenerOutput(String targetIp, int targetPort, String cacheKey) throws IOException {
+    private synchronized PrintWriter obtenerOutput(String targetIp, int targetPort, String cacheKey) throws IOException {
         PrintWriter output = connections.get(cacheKey);
         if (output == null) {
             System.out.println("[ClienteRed] Creando nueva conexión para: " + cacheKey);
