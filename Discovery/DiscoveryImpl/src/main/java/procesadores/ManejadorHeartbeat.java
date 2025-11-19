@@ -11,15 +11,20 @@ import eventos.eventos_peers.EventoHeartbeat;
 public class ManejadorHeartbeat extends ManejadorMensajesLlegada{
 
     private final Gson gson = new Gson();
+    
 
     @Override
     public void procesar(JsonObject json) {
-        TipoEvento tipo = TipoEvento.valueOf(json.get("tipoEvento").getAsString());
+       TipoEvento tipo = TipoEvento.valueOf(json.get("tipoEvento").getAsString());
+        
         if(tipo.equals(TipoEvento.HEARTBEAT)){
             EventoHeartbeat heartbeat = gson.fromJson(json, EventoHeartbeat.class);
             PeerInfo peer = heartbeat.getInfo();
+            
+            // Llamamos al método interno
             actualizarUltimaVezVisto(peer);
-        } else if (next!= null) {
+            
+        } else if (next != null) {
             next.procesar(json);
         }
     }
@@ -29,7 +34,10 @@ public class ManejadorHeartbeat extends ManejadorMensajesLlegada{
      * @param peer Peer a actualizar
      */
     private void actualizarUltimaVezVisto(PeerInfo peer){
-        ListaPeers.setUltimaVezVisto(peer);
+        //  Obtenemos la llave (ID) del peer usando el auxiliar de la lista
+        String key = ListaPeers.obtenerKey(peer);
+        
+        // Le avisamos al PeerCleaner que reinicie el cronómetro
+        PeerCleaner.actualizarUltimaVezVisto(key);
     }
-
 }

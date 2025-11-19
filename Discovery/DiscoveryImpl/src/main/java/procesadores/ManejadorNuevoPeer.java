@@ -23,6 +23,9 @@ public class ManejadorNuevoPeer extends ManejadorMensajesLlegada {
             enviarPeersANuevo();
             enviarNuevoAPeers();
             ListaPeers.registrarPeer(nuevoPeer);
+            // avisar al peercleaner para que inicie el tiempo de este peer
+            String key = ListaPeers.obtenerKey(nuevoPeer);
+            PeerCleaner.actualizarUltimaVezVisto(key);
         } else if (next != null) {
             next.procesar(json);
         }
