@@ -20,40 +20,57 @@ public class PeerCleaner implements Runnable {
         this.timeoutMs = timeoutMs;
     }
 
-    @Override
+ @Override
     public void run() {
         try {
-            //  Llama al método modificado (que devuelve la lista)
-            List<PeerInfo> peersEliminados = ListaPeers.limpiarPeersMuertos(timeoutMs);
-
-            if (peersEliminados.isEmpty()) {
-                return;
-            }
-
-            //  Obtiene los peers vivos (para notificarles)
-            List<PeerInfo> peersVivos = ListaPeers.getAllPeers();
-
-            //  Itera sobre los caídos
-            for (PeerInfo peerCaido : peersEliminados) {
-
-                System.out.println("[PeerCleaner] Anunciando desconexión de: " + peerCaido.getIp());
-
-                //  Crea el evento
-                String eventoJson = crearMensajeDesconexion(peerCaido);
-
-                // Usa IEnvio para el broadcast
-                for (PeerInfo peerVivo : peersVivos) {
-                    envio.sendEvent(peerVivo.getIp(), peerVivo.getPort(), eventoJson);
+            long ahora = System.currentTimeMillis();
+            
+            // 1. OBTENER DATOS: Pedimos los tiempos a ListaPeers
+            Map<String, Long> tiempos = ListaPeers.getMapaUltimaVezVistos();
+            
+            // 2. LÓGICA DE LIMPIEZA (EL "IF" ESTÁ AQUÍ)
+            for (Map.Entry<String, Long> entrada : tiempos.entrySet()) {
+                String key = entrada.getKey();
+                long ultimaVez = entrada.getValue();
+                
+                // Verificamos si ya pasó el tiempo límite
+                if (ahora - ultimaVez > timeoutMs) {
+                    
+                    // 3. ELIMINAR: Ordenamos a ListaPeers que borre a este key
+                    PeerInfo peerCaido = ListaPeers.eliminarPeer(key);
+                    
+                    if (peerCaido != null) {
+                        System.out.println("[PeerCleaner] Detectado peer muerto por timeout: " + key);
+                        
+                        // 4. NOTIFICAR: Creamos el evento y lo mandamos
+                        String eventoJson = crearMensajeDesconexion(peerCaido);
+                        broadcastDesconexion(eventoJson);
+                    }
                 }
             }
         } catch (Exception e) {
-            System.err.println("[PeerCleaner] Error durante la limpieza: " + e.getMessage());
+            System.err.println("[PeerCleaner] Error: " + e.getMessage());
         }
     }
 
+    /**
+     * Envía el mensaje a todos los peers vivos restantes
+     */
+    private void broadcastDesconexion(String mensaje) {
+        List<PeerInfo> vivos = ListaPeers.getPeersVivos();
+        for (PeerInfo vivo : vivos) {
+            // Enviamos el mensaje usando la interfaz IEnvio del Discovery
+            envio.sendEvent(vivo.getIp(), vivo.getPort(), mensaje);
+        }
+    }
+
+    /**
+     * Genera el JSON del evento PEER_DESCONECTADO
+     */
     private String crearMensajeDesconexion(PeerInfo peerCaido) {
         JsonObject json = new JsonObject();
         json.addProperty("tipoEvento", "PEER_DESCONECTADO");
+        // Usamos el método helper de ListaPeers para consistencia en la ID
         json.addProperty("id", ListaPeers.obtenerKey(peerCaido));
         return json.toString();
     }
