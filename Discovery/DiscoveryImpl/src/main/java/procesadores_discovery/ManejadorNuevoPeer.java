@@ -10,6 +10,10 @@ import enums.TipoEvento;
 import eventos.eventos_peers.EventoNuevoPeer;
 import network.Envio;
 
+/**
+ * 
+ * @author deibi
+ */
 public class ManejadorNuevoPeer extends ManejadorMensajesLlegada {
 
     private final Gson gson = new Gson();
