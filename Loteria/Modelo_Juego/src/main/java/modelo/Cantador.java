@@ -1,6 +1,10 @@
 package modelo;
 
 import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Clase singleton que representa el cantador de cartas del juego.
@@ -9,10 +13,13 @@ import java.util.Stack;
  */
 public class Cantador {
 
+    public final static int TOTAL_CARTAS_LOTERIA = 54;
+
     /**
      * Carta que esta siendo actualmente cantada
      */
     private int cartaActual;
+    
     /**
      * Mazo (representado como una pila) de cartas que tiene el cantador
      */
@@ -39,6 +46,30 @@ public class Cantador {
             instance = new Cantador();
         }
         return instance;
+    }
+
+    /**
+     * Prepara el mazo para una nueva partida 
+     * @param semilla Semilla con la que se barajeará el mazo
+     */
+    public void prepararMazo(Long semilla){
+        reiniciarMazo();
+        List<Integer> listaMazo = new ArrayList<>(mazo);
+        Collections.shuffle(listaMazo, new Random(semilla));
+        mazo.clear();
+        mazo.addAll(listaMazo);
+    }
+
+    /**
+     * Metodo para reiniciar el mazo de cartas, vuelve a crear un stack y se lo pasa 
+     * al cantador
+     */
+    private void reiniciarMazo() {
+        Stack<Integer> mazo = new Stack<>();
+        for(int i = 1; i <= Cantador.TOTAL_CARTAS_LOTERIA; i++){
+            mazo.push(i);
+        }
+        this.setMazo(mazo);
     }
 
     /**
@@ -76,5 +107,6 @@ public class Cantador {
     public void setMazo(Stack<Integer> mazo) {
         this.mazo = mazo;
     }
+
 
 }

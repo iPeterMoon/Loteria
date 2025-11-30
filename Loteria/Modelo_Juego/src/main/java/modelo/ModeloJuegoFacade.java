@@ -42,7 +42,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         this.vistaJuego = modeloVista;
 
         movimientoManager.inicializar(peer);
-        inicioPartidaManager.inicializar(peer);
+        inicioPartidaManager.inicializar(peer, modeloVista);
     }
 
     /**
