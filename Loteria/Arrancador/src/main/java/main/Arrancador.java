@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import mappers.JugadorMapperModelo;
 import modelo.IModeloControl;
-import interfaces.IModeloVista;
+import interfaces.IModeloVistaJuego;
 import interfaces.IObserver;
 import modelo.Cantador;
 import modelo.ModeloControlImp;
@@ -30,7 +30,7 @@ public class Arrancador {
     public static void main(String[] args) {
 
         //Obtener la fachada de la vista.
-        IModeloVista modeloVista = ModeloVistaFacade.getInstance();
+        IModeloVistaJuego modeloVista = ModeloVistaFacade.getInstance();
 
         //Iniciar el componente de peer
         IObserver modeloJuegoObserver = new ProcesadorEventos();

@@ -9,7 +9,7 @@ import dtos.JugadorDTO;
  *
  * @author rocha
  */
-public interface IModeloVista {
+public interface IModeloVistaJuego {
 
     /**
      * Indica al modelo del juego que se debe colocar una ficha de acuerdo con

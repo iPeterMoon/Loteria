@@ -1,6 +1,6 @@
 package modelo;
 
-import interfaces.IModeloVista;
+import interfaces.IModeloVistaJuego;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ import vista.ModelObserver;
  *
  * @author rocha
  */
-public class ModeloVistaFacade implements IModeloVista {
+public class ModeloVistaFacade implements IModeloVistaJuego {
 
     private static ModeloVistaFacade instancia;
 
@@ -38,10 +38,6 @@ public class ModeloVistaFacade implements IModeloVista {
      * Lista de jugadores que participan en el juego.
      */
     private List<JugadorSubject> jugadores;
-    /**
-     * Frame del juego
-     */
-    private FrameJuego frameJuego;
 
     /**
      * Observador
@@ -119,6 +115,5 @@ public class ModeloVistaFacade implements IModeloVista {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-        frameJuego = frame;
     }
 }

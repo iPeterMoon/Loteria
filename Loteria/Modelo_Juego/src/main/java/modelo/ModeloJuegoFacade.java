@@ -1,12 +1,13 @@
 package modelo;
 
 import interfaces.IModeloJuego;
-import interfaces.IModeloVista;
+import interfaces.IModeloVistaJuego;
 import java.awt.Point;
 import dtos.FichaDTO;
 import dtos.JugadorDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import interfaces.IPeer;
+import managers.InicioPartidaManager;
 import managers.MovimientoManager;
 import mappers.JugadorMapperModelo;
 
@@ -18,8 +19,10 @@ import mappers.JugadorMapperModelo;
 public class ModeloJuegoFacade implements IModeloJuego {
 
     private static ModeloJuegoFacade instancia;
-    private IModeloVista vista;
+    //Dejo espacio para el modeloVistaConfiguración
+    private IModeloVistaJuego vistaJuego;
     private final MovimientoManager movimientoManager = new MovimientoManager();
+    private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
 
     private ModeloJuegoFacade() {
     }
@@ -31,14 +34,15 @@ public class ModeloJuegoFacade implements IModeloJuego {
         return instancia;
     }
 
-    public void inicializar(IModeloVista modeloVista, IPeer peer) {
-        if (this.vista != null) {
+    public void inicializar(IModeloVistaJuego modeloVista, IPeer peer) {
+        if (this.vistaJuego != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
-        this.vista = modeloVista;
+        this.vistaJuego = modeloVista;
 
         movimientoManager.inicializar(peer);
+        inicioPartidaManager.inicializar(peer);
     }
 
     /**
@@ -91,7 +95,12 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void colocarFicha(EventoFicha ficha) {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
-        vista.colocarFicha(fichaDTO);
+        vistaJuego.colocarFicha(fichaDTO);
+    }
+
+    @Override
+    public void iniciarPartida() {
+
     }
 
 }

@@ -19,6 +19,12 @@ public interface IModeloJuego {
     public void validaMovimiento(Point posicion);
 
     /**
+     * Inicia una partida de lotería con los elementos de configuración ya hechos 
+     * y los jugadores ya contemplados.
+     */
+    public void iniciarPartida();
+
+    /**
      * Método para obtener el jugador principal, es decir el que es dueño de la
      * vista
      *
