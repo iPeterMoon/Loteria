@@ -1,6 +1,7 @@
 package managers;
 
 import interfaces.IPeer;
+import mappers.JugadorMapperModelo;
 import mappers.TarjetaMapper;
 import modelo.Cantador;
 import modelo.Jugador;
@@ -52,14 +53,14 @@ public class InicioPartidaManager {
     public void iniciarPartida() {
         barajearMazo();
         repartirTarjetas();
-        
+        establecerJugadoresEnVista();
     }
 
     /**
      * Metodo que barajea el mazo generando una semilla y llamando al metodo de preparar
      * mazo del Cantador
      */
-    private void barajearMazo() {
+    private synchronized void barajearMazo() {
         Random random = new Random();
         Long semilla = random.nextLong();
         Cantador.getInstance().prepararMazo(semilla);
@@ -80,7 +81,7 @@ public class InicioPartidaManager {
     /**
      * Metodo auxiliar para repartir las tarjetas a todos los jugadores.
      */
-    private void repartirTarjetas(){
+    private synchronized void repartirTarjetas(){
         Stack<Tarjeta> tarjetas = barajearTarjetas();
         Sala sala = Sala.getInstance();
         Map<String, TarjetaDTO> jugadoresTarjetas = new HashMap<>();
@@ -88,7 +89,7 @@ public class InicioPartidaManager {
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(sala.getJugadorPrincipal());
         jugadores.addAll(sala.getJugadoresSecundario());
-        for(Jugador jugador : sala.getJugadoresSecundario()){
+        for(Jugador jugador : jugadores){
             tarjeta = tarjetas.pop();
             jugador.setTarjeta(tarjeta);
             jugadoresTarjetas.put(jugador.getNickname(), TarjetaMapper.toDTO(tarjeta));
@@ -117,5 +118,24 @@ public class InicioPartidaManager {
         String userSender = Sala.getInstance().getJugadorPrincipal().getNickname();
         EventoTarjetasBarajeadas evento = new EventoTarjetasBarajeadas(userSender, jugadoresTarjetas);
         componentePeer.broadcastEvento(evento);
+    }
+
+    /**
+     * Metodo para iniciar el frame de la partida. 
+     */
+    public void mostrarFramePartida(){
+        modeloVista.iniciarFrameJuego();
+    }
+
+    /**
+     * Establece los jugadores en el modelo de la vista.
+     */
+    public void establecerJugadoresEnVista(){
+        Sala sala = Sala.getInstance();
+        Jugador jugadorPrincipal = sala.getJugadorPrincipal();
+        modeloVista.agregarJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
+        for(Jugador jugador : sala.getJugadoresSecundario()){
+            modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugador, false));
+        }
     }
 }

@@ -233,6 +233,8 @@ public class PanelJuego extends javax.swing.JPanel {
      */
     public void setJugadorPrincipal(JugadorSubject jugador) {
         panelJugadorPrincipal.setJugador(jugador);
+        // Actualizar la tarjeta mostrada con la tarjeta real del jugador
+        panelTarjeta.actualizarTarjeta(jugador.getTarjeta());
         repaint();
         revalidate();
     }

@@ -30,7 +30,10 @@ public class JugadorMapperModelo {
      * @return Una nueva instancia de JugadorDTO con los datos mapeados.
      */
     public static JugadorDTO toDTO(Jugador jugador, boolean esJugadorPrincipal) {
-        TarjetaDTO tarjetaDTO = new TarjetaDTO(jugador.getTarjeta().getCartas(), jugador.getTarjeta().getFichas());
+        TarjetaDTO tarjetaDTO = null;
+        if(jugador.getTarjeta() != null){
+            tarjetaDTO = new TarjetaDTO(jugador.getTarjeta().getCartas(), jugador.getTarjeta().getFichas());
+        }
         ImageIcon imagenIcono = new ImageIcon(jugador.getFotoPerfil());
         Image imagenPerfil = imagenIcono.getImage();
 
@@ -49,7 +52,10 @@ public class JugadorMapperModelo {
      */
     public static Jugador toJugador(JugadorDTO jugadorDTO){
         // Mapea TarjetaDTO a Tarjeta
-        Tarjeta tarjeta = toTarjeta(jugadorDTO.getTarjeta());
+        Tarjeta tarjeta = null;
+        if(jugadorDTO.getTarjeta() != null){
+            tarjeta = toTarjeta(jugadorDTO.getTarjeta());
+        }
         
         // La ruta de la fotoPerfil debe ser un String. Como el DTO tiene Image, 
         // asumimos que el DTO viene de un jugador remoto y no necesitamos la ruta de archivo local.
@@ -72,11 +78,12 @@ public class JugadorMapperModelo {
      * @return Una nueva instancia de Tarjeta.
      */
     public static Tarjeta toTarjeta(TarjetaDTO tarjetaDTO) {
-        // Asegúrate de que Tarjeta tenga un constructor que acepte Map<Point, Integer> y Map<Point, Boolean>
         Map<Point, Integer> cartas = tarjetaDTO.getCartas();
         Map<Point, Boolean> fichas = tarjetaDTO.getFichas();
         
-        // Asumiendo que Tarjeta tiene un constructor para inicializar la tarjeta y las fichas.
-        return new Tarjeta(cartas); 
+        Tarjeta tarjeta = new Tarjeta(cartas);
+        tarjeta.setFichas(fichas);
+        
+        return tarjeta; 
     }
 }

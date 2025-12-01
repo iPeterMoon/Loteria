@@ -21,8 +21,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
     private static ModeloJuegoFacade instancia;
     //Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
+
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
+
 
     private ModeloJuegoFacade() {
     }
@@ -64,8 +66,11 @@ public class ModeloJuegoFacade implements IModeloJuego {
      */
     @Override
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal) {
-        Sala.getInstance().setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
+        Sala sala = Sala.getInstance();
+        sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
     }
+
+    
 
     /**
      * Valida un movimiento de colocación de ficha en la tarjeta del jugador
@@ -100,7 +105,14 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     @Override
     public void iniciarPartida() {
+        inicioPartidaManager.iniciarPartida();
+        inicioPartidaManager.mostrarFramePartida();
+    }
 
+    @Override
+    public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
+        Sala sala = Sala.getInstance();
+        sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
 
 }

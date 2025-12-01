@@ -39,6 +39,12 @@ public interface IModeloJuego {
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal);
 
     /**
+     * Metodo para agregar un jugador secundario al juego
+     * @param jugadorSecundario Jugador a agregar al juego
+     */
+    public void agregarJugadorSecundario(JugadorDTO jugadorSecundario);
+
+    /**
      * Metodo para colocar una ficha en alguna de las tarjetas de los jugadores
      */
     public void colocarFicha(EventoFicha ficha);

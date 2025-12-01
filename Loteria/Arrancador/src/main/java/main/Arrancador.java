@@ -2,9 +2,6 @@ package main;
 
 import control.RegistroControles;
 import interfaces.IModeloJuego;
-import java.awt.Point;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import mappers.JugadorMapperModelo;
 import modelo.IModeloControl;
@@ -13,7 +10,6 @@ import interfaces.IObserver;
 import modelo.Cantador;
 import modelo.ModeloControlImp;
 import modelo.ModeloVistaFacade;
-import modelo.Tarjeta;
 import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
 import peer.PeerFacade;
@@ -51,36 +47,26 @@ public class Arrancador {
         //Iniciar peer
         nuevoPeer.start();
 
-        // RESPONSABILIDAD QUE DESPUES DEBE PASAR AL MODELO DEL JUEGO AL INICIAR LA PARTIDA
-        //Se genera un mapa de las cartas de la tarjeta
-        Map<Point, Integer> cartas = new HashMap<>();
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                cartas.put(new Point(x, y), ((x * 4) + y + 1));
-            }
-        }
+        
 
-        //Se crea la tarjeta para asignarsela a los jugadores
-        Tarjeta tarjeta = new Tarjeta(cartas);
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         if (nickname != null) {
             nuevoPeer.setUser(nickname);
-            Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, tarjeta);
+            Jugador jugadorPrincipal = new Jugador(nickname, "/imagenes_alt/icon_imagen.png", 0, null);
             modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
-            modeloVista.agregarJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
         }
 
         Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
 
         //Jugadores secundarios
-        Jugador jugadorSecundario1 = new Jugador("Adel", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
-        Jugador jugadorSecundario2 = new Jugador("Denise", "/imagenes_alt/icon_imagen.png", 0, tarjeta);
+        Jugador jugadorSecundario1 = new Jugador("Adel", "/imagenes_alt/icon_imagen.png", 0, null);
+        Jugador jugadorSecundario2 = new Jugador("Denise", "/imagenes_alt/icon_imagen.png", 0, null);
+        
+        modeloJuego.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario1, false));
+        modeloJuego.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario2, false));
 
-        modeloVista.iniciarFrameJuego();
-
-        modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario1, false));
-        modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario2, false));
+        modeloJuego.iniciarPartida();
     }
 }

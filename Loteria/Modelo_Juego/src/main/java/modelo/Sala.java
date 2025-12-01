@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class Sala {
     private static Sala instance;
 
     private Sala() {
+        jugadoresSecundario = new LinkedList<>();
     }
 
     public static Sala getInstance() {
@@ -73,4 +75,8 @@ public class Sala {
         this.host = host;
     }
 
+    public void agregarJugadorSecundario(Jugador jugador){
+        jugadoresSecundario.add(jugador);
+    }
+    
 }

@@ -40,7 +40,7 @@ public class RepoTarjetas {
     private static RepoTarjetas instance;
 
     public static RepoTarjetas getInstance(){
-        if(instance != null){
+        if(instance == null){
             instance = new RepoTarjetas();
         }
         return instance;
@@ -55,7 +55,7 @@ public class RepoTarjetas {
         Map<Point, Integer> cartas = new HashMap<>();
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                cartas.put(new Point(x, y), arregloCartas[(x * 4) + y + 1]);
+                cartas.put(new Point(x, y), arregloCartas[(x * 4) + y]);
             }
         }
         return new Tarjeta(cartas);
