@@ -37,4 +37,6 @@ public interface IModeloVistaJuego {
      * Método para inicializar el frame del juego y configurarlo
      */
     public void iniciarFrameJuego();
+    
+    public void actualizarCarta(int carta);
 }

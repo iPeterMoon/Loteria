@@ -43,6 +43,9 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
      * Observador
      */
     private IObserver observer = new ModelObserver();
+    
+    private CantadorSubject cantador;
+    
     /**
      * Constructor privado que inicializa la lista de jugadores.
      *
@@ -51,6 +54,8 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
      */
     private ModeloVistaFacade() {
         this.jugadores = new LinkedList<>();
+        this.cantador = new CantadorSubject();
+        configurarCantador();
     }
 
     /**
@@ -115,5 +120,14 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
+    }
+    
+    private void configurarCantador() {
+        cantador.addObserver(observer);
+    }
+    
+    @Override
+    public void actualizarCarta(int carta) {
+        cantador.actualizarCarta(carta);
     }
 }

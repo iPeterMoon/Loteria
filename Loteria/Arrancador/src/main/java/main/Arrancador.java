@@ -7,11 +7,13 @@ import mappers.JugadorMapperModelo;
 import modelo.IModeloControl;
 import interfaces.IModeloVistaJuego;
 import interfaces.IObserver;
+import managers.CantadorManager;
 import modelo.Cantador;
 import modelo.ModeloControlImp;
 import modelo.ModeloVistaFacade;
 import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
+import modelo.Sala;
 import peer.PeerFacade;
 import procesadores_modelo.ProcesadorEventos;
 
@@ -32,6 +34,8 @@ public class Arrancador {
         IObserver modeloJuegoObserver = new ProcesadorEventos();
         PeerFacade nuevoPeer = new PeerFacade();
         nuevoPeer.setObserver(modeloJuegoObserver);
+        
+        Cantador cantador = Cantador.getInstance();
 
         // 1. Configuración de dependencias del Modelo
         // 1.1 Crear ModeloJuego (necesita IModeloVista)
@@ -47,8 +51,6 @@ public class Arrancador {
         //Iniciar peer
         nuevoPeer.start();
 
-        
-
         // Jugador Principal
         String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");
         if (nickname != null) {
@@ -57,7 +59,6 @@ public class Arrancador {
             modeloJuego.setJugadorPrincipal(JugadorMapperModelo.toDTO(jugadorPrincipal, true));
         }
 
-        Cantador cantador = Cantador.getInstance();
         cantador.setCartaActual(1);
 
         //Jugadores secundarios
@@ -67,6 +68,9 @@ public class Arrancador {
         modeloJuego.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario1, false));
         modeloJuego.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugadorSecundario2, false));
 
+        // Mock de sala para prueba
+        Sala.getInstance().setHost(jugadorSecundario1);
+        
         modeloJuego.iniciarPartida();
     }
 }

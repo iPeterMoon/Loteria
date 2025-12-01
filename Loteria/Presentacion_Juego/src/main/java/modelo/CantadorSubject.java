@@ -43,6 +43,7 @@ public class CantadorSubject extends Subject {
      */
     public void actualizarCarta(int carta) {
         this.cartaActual = carta;
+        this.notifyAllObservers();
     }
 
     /**

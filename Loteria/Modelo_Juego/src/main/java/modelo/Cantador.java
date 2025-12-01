@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import util.Subject;
 
 /**
  * Clase singleton que representa el cantador de cartas del juego.
  *
  * @author Alici
  */
-public class Cantador {
+public class Cantador extends Subject {
 
     public final static int TOTAL_CARTAS_LOTERIA = 54;
 
@@ -24,6 +25,8 @@ public class Cantador {
      * Mazo (representado como una pila) de cartas que tiene el cantador
      */
     private Stack<Integer> mazo;
+    
+    private boolean enEjecucion;
 
     /**
      * Instancia unica de la clase Cantador
@@ -34,6 +37,7 @@ public class Cantador {
      * Constructor vacio
      */
     private Cantador() {
+        this.enEjecucion = false;
     }
 
     /**
@@ -70,6 +74,35 @@ public class Cantador {
             mazo.push(i);
         }
         this.setMazo(mazo);
+    }
+    
+    public void iniciarCanto(long intervalo) {
+        if (enEjecucion) {
+            return;
+        }
+        
+        enEjecucion = true;
+        
+        new Thread(() -> {
+            try {
+                while (!mazo.isEmpty()) {
+                    // Quita carta del mazo y actualiza carta actual
+                    cartaActual = mazo.pop();
+                    
+                    // Notifica
+                    notifyAllObservers();
+                    Thread.sleep(intervalo);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                enEjecucion = false;
+            }
+        }).start();
+    }
+    
+    public void quitarCarta(int carta) {
+        this.mazo.remove(carta);
     }
 
     /**

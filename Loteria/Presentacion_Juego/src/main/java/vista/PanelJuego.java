@@ -181,11 +181,12 @@ public class PanelJuego extends javax.swing.JPanel {
     }
     
     /**
-     * Metodo que actualiza la vista del panel en función de los cambios del Subject}.
+     * Metodo que actualiza la vista del panel en función de los cambios del Subject.
      * @param subject el objeto observado que notifica los cambios.
      */
     public void actualizarVista(Subject subject) {
         actualizarJugador(subject);
+        actualizarCantador(subject);
         repaint();
         revalidate();
     }
@@ -223,6 +224,15 @@ public class PanelJuego extends javax.swing.JPanel {
             } else {
                 agregarJugadorSecundario(jugador);
                 actualizarPanelesSecundarios();
+            }
+        }
+    }
+    
+    private void actualizarCantador(Subject subject) {
+        if (subject instanceof CantadorSubject cantador) {
+            System.out.println("Actualizando carta en la vista");
+            if (panelCartaCantador != null) {
+                panelCartaCantador.actualizarCartaCantador(cantador.getCartaActual());
             }
         }
     }

@@ -7,6 +7,7 @@ import dtos.FichaDTO;
 import dtos.JugadorDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import interfaces.IPeer;
+import managers.CantadorManager;
 import managers.InicioPartidaManager;
 import managers.MovimientoManager;
 import mappers.JugadorMapperModelo;
@@ -24,7 +25,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
-
+    private final CantadorManager cantadorManager = new CantadorManager();
 
     private ModeloJuegoFacade() {
     }
@@ -45,6 +46,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
         movimientoManager.inicializar(peer);
         inicioPartidaManager.inicializar(peer, modeloVista);
+        cantadorManager.inicializar(peer);
     }
 
     /**
@@ -69,9 +71,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         Sala sala = Sala.getInstance();
         sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
     }
-
     
-
     /**
      * Valida un movimiento de colocación de ficha en la tarjeta del jugador
      * principal.
@@ -108,6 +108,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
+        cantadorManager.iniciarCanto();
     }
 
     @Override
@@ -121,4 +122,8 @@ public class ModeloJuegoFacade implements IModeloJuego {
         inicioPartidaManager.mostrarFramePartida();
     }
 
+    @Override
+    public void actualizarCarta(int cartaActual) {
+        vistaJuego.actualizarCarta(cartaActual);
+    }
 }
