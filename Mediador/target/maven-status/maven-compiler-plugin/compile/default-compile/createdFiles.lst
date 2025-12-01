@@ -14,5 +14,6 @@ eventos/Evento.class
 interfaces/IModeloVistaJuego.class
 dtos/FichaDTO.class
 util/ConfigLoader$ConfiguracionDefault.class
+eventos/eventos_aplicacion/EventoIniciarPartida.class
 eventos/eventos_aplicacion/EventoSemilla.class
 eventos/eventos_aplicacion/EventoFicha.class

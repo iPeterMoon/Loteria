@@ -88,6 +88,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void validaMovimiento(Point posicion) {
         movimientoManager.validaMovimiento(posicion);
+        mostrarFramePartida();
     }
 
     /**
@@ -113,6 +114,11 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
+    }
+
+    @Override
+    public void mostrarFramePartida() {
+        inicioPartidaManager.mostrarFramePartida();
     }
 
 }

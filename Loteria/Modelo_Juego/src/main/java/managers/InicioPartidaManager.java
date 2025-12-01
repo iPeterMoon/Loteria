@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import dtos.TarjetaDTO;
+import eventos.eventos_aplicacion.EventoIniciarPartida;
 import eventos.eventos_aplicacion.EventoSemilla;
 import eventos.eventos_aplicacion.EventoTarjetasBarajeadas;
 import interfaces.IModeloVistaJuego;
@@ -53,7 +54,7 @@ public class InicioPartidaManager {
     public void iniciarPartida() {
         barajearMazo();
         repartirTarjetas();
-        establecerJugadoresEnVista();
+        generarEventoInicioPartida();
     }
 
     /**
@@ -124,6 +125,7 @@ public class InicioPartidaManager {
      * Metodo para iniciar el frame de la partida. 
      */
     public void mostrarFramePartida(){
+        establecerJugadoresEnVista();
         modeloVista.iniciarFrameJuego();
     }
 
@@ -137,5 +139,11 @@ public class InicioPartidaManager {
         for(Jugador jugador : sala.getJugadoresSecundario()){
             modeloVista.agregarJugadorSecundario(JugadorMapperModelo.toDTO(jugador, false));
         }
+    }
+
+    private void generarEventoInicioPartida(){
+        String userSender = Sala.getInstance().getJugadorPrincipal().getNickname();
+        EventoIniciarPartida evento = new EventoIniciarPartida(userSender);
+        componentePeer.broadcastEvento(evento);
     }
 }

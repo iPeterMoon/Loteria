@@ -25,6 +25,12 @@ public interface IModeloJuego {
     public void iniciarPartida();
 
     /**
+     * Muestra el frame de la partida, tambien se encarga de ocultar el frame de
+     * configuración
+     */
+    public void mostrarFramePartida();
+
+    /**
      * Método para obtener el jugador principal, es decir el que es dueño de la
      * vista
      *
