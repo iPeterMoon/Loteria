@@ -122,6 +122,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
         inicioPartidaManager.mostrarFramePartida();
     }
 
+    /**
+     * Actualiza la carta actual mediante la vista.
+     * @param cartaActual Número de carta cantada actual.
+     */
     @Override
     public void actualizarCarta(int cartaActual) {
         vistaJuego.actualizarCarta(cartaActual);

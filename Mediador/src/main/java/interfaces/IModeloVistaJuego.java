@@ -38,5 +38,9 @@ public interface IModeloVistaJuego {
      */
     public void iniciarFrameJuego();
     
+    /**
+     * Método para actualizar la carta cantada.
+     * @param carta Número de carta cantada actual.
+     */
     public void actualizarCarta(int carta);
 }

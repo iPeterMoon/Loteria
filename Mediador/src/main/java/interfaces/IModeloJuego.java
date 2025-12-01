@@ -55,5 +55,9 @@ public interface IModeloJuego {
      */
     public void colocarFicha(EventoFicha ficha);
     
+    /**
+     * Actualiza la carta actual mediante la vista.
+     * @param cartaActual Número de carta cantada actual.
+     */
     public void actualizarCarta(int cartaActual);
 }

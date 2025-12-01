@@ -230,7 +230,6 @@ public class PanelJuego extends javax.swing.JPanel {
     
     private void actualizarCantador(Subject subject) {
         if (subject instanceof CantadorSubject cantador) {
-            System.out.println("Actualizando carta en la vista");
             if (panelCartaCantador != null) {
                 panelCartaCantador.actualizarCartaCantador(cantador.getCartaActual());
             }

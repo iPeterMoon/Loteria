@@ -17,8 +17,20 @@ import modelo.Sala;
  * @author rocha
  */
 public class CantadorManager implements IObserver {
+    
+    /**
+     * Componente peer para el envío de eventos.
+     */
     private IPeer componentePeer;
+    
+    /**
+     * Cantador del modelo.
+     */
     private Cantador cantador;
+    
+    /**
+     * Retraso de tiempo en milisegundos para manejar la ventaja del host.
+     */
     private final long RETRASO_MS = 500; 
 
     public void inicializar(IPeer peer) {
@@ -28,43 +40,56 @@ public class CantadorManager implements IObserver {
         
         this.componentePeer = peer;
         this.cantador = Cantador.getInstance();
+        
         cantador.addObserver(this);
     }
     
+    /**
+     * Inicia el canto del cantador en el modelo del jugador que es host.
+     */
     public void iniciarCanto() {
         if (!obtenerNicknameHost().equals(obtenerNicknameJugadorPrincipal())) {
             return;
         }
         
-        cantador.iniciarCanto(5000); // Falta cambiar intervalo según la dificultad
+        cantador.iniciarCanto(5000); // Intervalo mock, falta cambiarlo según la dificultad
     }
     
+    /**
+     * Actualiza la carta de la vista mediante la fachada.
+     */
     private void actualizarCarta() {
         int cartaActual = Cantador.getInstance().getCartaActual();
-        System.out.println("Carta actual: " + cartaActual);
         ModeloJuegoFacade.getInstance().actualizarCarta(cartaActual);
     }
     
+    /**
+     * Envía el evento de carta cantada a todos los demás peers.
+     */
     private void enviarCarta() {
         int cartaActual = cantador.getCartaActual();
         String nicknameHost = obtenerNicknameHost();
         
+        // Enviar evento a otros peers
         EventoCartaCantada evento = new EventoCartaCantada(nicknameHost, cartaActual);
         componentePeer.broadcastEvento(evento);
-        
-        System.out.println("Enviando carta cantada " + " (Carta: " + cartaActual + ") desde host [" + nicknameHost + "]");
+        System.out.println("Enviando carta cantada " + "(Carta: " + cartaActual + ") desde host [" + nicknameHost + "]");
     }
 
-    private String obtenerNicknameHost() {
+    private String obtenerNicknameHost() { // Talvez cambiar a sala
         Jugador host = Sala.getInstance().getHost();
         return host.getNickname();
     }
     
-    private String obtenerNicknameJugadorPrincipal() {
+    private String obtenerNicknameJugadorPrincipal() { // Talvez cambiar a sala
         Jugador principal = Sala.getInstance().getJugadorPrincipal();
         return principal.getNickname();
     }
     
+    /**
+     * Escucha al cantador cada que canta una carta.
+     * @param object objeto Cantador que notificó.
+     */
     @Override
     public void update(Object object) {
         if (object instanceof Cantador) {

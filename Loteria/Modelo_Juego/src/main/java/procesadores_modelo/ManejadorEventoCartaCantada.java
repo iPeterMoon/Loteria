@@ -29,8 +29,6 @@ public class ManejadorEventoCartaCantada extends ManejadorEventos {
         Cantador cantador = Cantador.getInstance();
         int carta = evento.getCartaActual();
         
-        System.out.println("Manejando evento carta cantada (Carta: " + carta + ")");
-        
         // Quitar carta del mazo local
         cantador.quitarCarta(carta);
         

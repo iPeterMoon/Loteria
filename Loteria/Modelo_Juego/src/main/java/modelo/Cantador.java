@@ -76,13 +76,20 @@ public class Cantador extends Subject {
         this.setMazo(mazo);
     }
     
+    /**
+     * Hilo para cantar cartas. Solo se ejecuta en el modelo del jugador que es
+     * host. Quita la carta del mazo, actualiza su carta actual y notifica sobre
+     * la acción. Al acabarse el mazo deja de correr.
+     *
+     * @param intervalo Intervalo en milisegundos entre cada canto.
+     */
     public void iniciarCanto(long intervalo) {
         if (enEjecucion) {
             return;
         }
-        
+
         enEjecucion = true;
-        
+
         new Thread(() -> {
             try {
                 while (!mazo.isEmpty()) {
@@ -91,6 +98,8 @@ public class Cantador extends Subject {
                     
                     // Notifica
                     notifyAllObservers();
+                    
+                    // Aplicar intervalo
                     Thread.sleep(intervalo);
                 }
             } catch (InterruptedException e) {
@@ -101,8 +110,12 @@ public class Cantador extends Subject {
         }).start();
     }
     
+    /**
+     * Método para eliminar una carta del mazo. Es usado por el resto de jugadores que no son host.
+     * @param carta Elemento a quitar del mazo.
+     */
     public void quitarCarta(int carta) {
-        this.mazo.remove(carta);
+        this.mazo.remove(Integer.valueOf(carta));
     }
 
     /**
@@ -140,6 +153,5 @@ public class Cantador extends Subject {
     public void setMazo(Stack<Integer> mazo) {
         this.mazo = mazo;
     }
-
 
 }

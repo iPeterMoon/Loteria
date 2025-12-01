@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import enums.TipoEvento;
 import eventos.Evento;
+import eventos.eventos_aplicacion.EventoCartaCantada;
 import eventos.eventos_aplicacion.EventoFicha;
 import java.util.Map;
 import peer.Peer;
@@ -25,7 +26,8 @@ public class ManejadorEventoApplication extends ManejadorMensajesLlegada {
 
     // Mapa con los tipos de eventos del juego
     private static final Map<TipoEvento, Class<? extends Evento>> EVENTO_MAP = Map.of(
-            TipoEvento.FICHA, EventoFicha.class
+            TipoEvento.FICHA, EventoFicha.class,
+            TipoEvento.CARTA_CANTADA, EventoCartaCantada.class
     );
 
     /**
