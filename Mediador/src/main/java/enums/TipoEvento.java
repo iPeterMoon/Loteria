@@ -9,5 +9,6 @@ public enum TipoEvento {
     NUEVO_PEER,
     HEARTBEAT,
     PEER_DESCONECTADO,
-    SEMILLA
+    SEMILLA,
+    TARJETAS_BARAJEADAS
 }

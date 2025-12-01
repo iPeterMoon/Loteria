@@ -1,13 +1,25 @@
 package managers;
 
 import interfaces.IPeer;
+import mappers.TarjetaMapper;
 import modelo.Cantador;
+import modelo.Jugador;
 import modelo.Sala;
+import modelo.Tarjeta;
 
+import repos.RepoTarjetas;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import dtos.TarjetaDTO;
 import eventos.eventos_aplicacion.EventoSemilla;
+import eventos.eventos_aplicacion.EventoTarjetasBarajeadas;
 import interfaces.IModeloVistaJuego;
 
 /**
@@ -39,6 +51,8 @@ public class InicioPartidaManager {
      */
     public void iniciarPartida() {
         barajearMazo();
+        repartirTarjetas();
+        
     }
 
     /**
@@ -63,4 +77,45 @@ public class InicioPartidaManager {
         componentePeer.broadcastEvento(eventoSeed);
     }
 
+    /**
+     * Metodo auxiliar para repartir las tarjetas a todos los jugadores.
+     */
+    private void repartirTarjetas(){
+        Stack<Tarjeta> tarjetas = barajearTarjetas();
+        Sala sala = Sala.getInstance();
+        Map<String, TarjetaDTO> jugadoresTarjetas = new HashMap<>();
+        Tarjeta tarjeta;
+        List<Jugador> jugadores = new LinkedList<>();
+        jugadores.add(sala.getJugadorPrincipal());
+        jugadores.addAll(sala.getJugadoresSecundario());
+        for(Jugador jugador : sala.getJugadoresSecundario()){
+            tarjeta = tarjetas.pop();
+            jugador.setTarjeta(tarjeta);
+            jugadoresTarjetas.put(jugador.getNickname(), TarjetaMapper.toDTO(tarjeta));
+        }
+        generarEventoTarjetasBarajeadas(jugadoresTarjetas);
+    }
+    
+    /**
+     * Barajea las tarjetas del repositorio de tarjetas
+     * @return
+     */
+    private Stack<Tarjeta> barajearTarjetas(){
+        RepoTarjetas repoTarjetas = RepoTarjetas.getInstance();
+        List<Tarjeta> listaTarjetas = repoTarjetas.obtenerTarjetas();
+        Collections.shuffle(listaTarjetas);
+        Stack<Tarjeta> tarjetas = new Stack<>();
+        tarjetas.addAll(listaTarjetas);
+        return tarjetas;
+    }
+
+    /**
+     * Metodo para enviar a los demás jugadores las tarjetas barajeadas.
+     * @param jugadoresTarjetas Mapa con los nicknames de los jugadores y sus tarjetas.
+     */
+    private void generarEventoTarjetasBarajeadas(Map<String, TarjetaDTO> jugadoresTarjetas){
+        String userSender = Sala.getInstance().getJugadorPrincipal().getNickname();
+        EventoTarjetasBarajeadas evento = new EventoTarjetasBarajeadas(userSender, jugadoresTarjetas);
+        componentePeer.broadcastEvento(evento);
+    }
 }

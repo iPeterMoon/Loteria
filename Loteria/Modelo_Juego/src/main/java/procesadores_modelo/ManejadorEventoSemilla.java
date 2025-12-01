@@ -23,5 +23,4 @@ public class ManejadorEventoSemilla extends ManejadorEventos {
             next.procesar(evento);
         }
     }
-
 }
