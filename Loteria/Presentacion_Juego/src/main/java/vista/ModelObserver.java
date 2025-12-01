@@ -1,7 +1,7 @@
 package vista;
 
 import interfaces.IObserver;
-import modelo.Subject;
+import util.Subject;
 
 /**
  * Clase que representa el ModeloObserver que implementa de IObserver para estar

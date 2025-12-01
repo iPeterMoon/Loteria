@@ -1,7 +1,6 @@
 package vista;
 
-import modelo.JugadorSubject;
-import modelo.Subject;
+import util.Subject;
 
 /**
  * Clase Frame que genara el Frame  principal del juego.

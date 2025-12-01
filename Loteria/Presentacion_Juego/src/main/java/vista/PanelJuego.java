@@ -5,8 +5,8 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
-import control.RegistroControles;
 import modelo.*;
+import util.Subject;
 
 /**
  * clase que representa el panel principal de la interfaz del juego.
