@@ -54,4 +54,6 @@ public interface IModeloJuego {
      * Metodo para colocar una ficha en alguna de las tarjetas de los jugadores
      */
     public void colocarFicha(EventoFicha ficha);
+    
+    public void actualizarCarta(int cartaActual);
 }
