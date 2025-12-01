@@ -6,6 +6,7 @@ package modelo;
 
 import java.awt.Image;
 import java.awt.Point;
+import util.Subject;
 
 /**
  * Clase que representa a un jugador dentro del juego, implementada como un
