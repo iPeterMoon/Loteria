@@ -31,7 +31,7 @@ public class CantadorManager implements IObserver {
     /**
      * Retraso de tiempo en milisegundos para manejar la ventaja del host.
      */
-    private final long RETRASO_MS = 500; 
+    private final long RETRASO_MS = 100; 
 
     public void inicializar(IPeer peer) {
         if (this.componentePeer != null) {
@@ -95,8 +95,8 @@ public class CantadorManager implements IObserver {
         if (object instanceof Cantador) {
             new Thread(() -> {
                 try {
-                    Thread.sleep(RETRASO_MS);
                     enviarCarta();
+                    Thread.sleep(RETRASO_MS);
                     actualizarCarta();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
