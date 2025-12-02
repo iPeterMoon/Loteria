@@ -12,6 +12,7 @@
         <module>Modelo_Juego</module>
         <module>../Red</module>
         <module>../Mediador</module>
+        <module>../Peer</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
