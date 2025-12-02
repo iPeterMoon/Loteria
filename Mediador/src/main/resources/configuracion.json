@@ -1,5 +1,5 @@
 {
-  "ip_servidor": "192.168.0.124",
+  "ip_servidor": "localhost",
   "puerto_discovery": 12345,
   "puerto_matchmaker": 12346
 }

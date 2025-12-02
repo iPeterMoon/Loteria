@@ -21,4 +21,7 @@ public interface IModeloControl {
      * colocó la ficha.
      */
     public void colocarFicha(Point posicion);
+    
+    
+    public void verificarJugadaLlena();
 }

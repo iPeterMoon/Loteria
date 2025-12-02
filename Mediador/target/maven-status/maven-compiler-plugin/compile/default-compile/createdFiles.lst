@@ -6,6 +6,7 @@ dtos\PeerInfo.class
 util\ConfigLoader.class
 dtos\JugadorDTO.class
 eventos\Evento.class
+eventos\eventos_aplicacion\EventoJugada.class
 eventos\eventos_aplicacion\EventoCartaCantada.class
 interfaces\IModeloJuego.class
 util\Subject.class
@@ -17,5 +18,6 @@ eventos\eventos_aplicacion\EventoIniciarPartida.class
 interfaces\IObserver.class
 util\ConfigLoader$ConfiguracionDefault.class
 dtos\FichaDTO.class
+dtos\JugadaDTO.class
 dtos\TarjetaDTO.class
 eventos\eventos_peers\EventoNuevoPeer.class

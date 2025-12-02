@@ -12,5 +12,6 @@ public enum TipoEvento {
     SEMILLA,
     TARJETAS_BARAJEADAS,
     INICIAR_PARTIDA,
-    CARTA_CANTADA
+    CARTA_CANTADA,
+    JUGADA
 }

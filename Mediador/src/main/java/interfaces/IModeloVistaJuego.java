@@ -1,6 +1,7 @@
 package interfaces;
 
 import dtos.FichaDTO;
+import dtos.JugadaDTO;
 import dtos.JugadorDTO;
 
 /**
@@ -18,6 +19,8 @@ public interface IModeloVistaJuego {
      * @param fichaDTO Objeto FichaDTO que contiene los datos de la ficha
      */
     public void colocarFicha(FichaDTO fichaDTO);
+    
+    public void cantarJugada(JugadaDTO jugadaDTO);
 
     /**
      * Método para agregar el jugador principal
@@ -43,4 +46,5 @@ public interface IModeloVistaJuego {
      * @param carta Número de carta cantada actual.
      */
     public void actualizarCarta(int carta);
+
 }

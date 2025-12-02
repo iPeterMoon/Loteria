@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import dtos.FichaDTO;
+import dtos.JugadaDTO;
 import dtos.JugadorDTO;
 import mappers.JugadorMapperVista;
 import vista.FrameJuego;
@@ -129,5 +130,11 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
     @Override
     public void actualizarCarta(int carta) {
         cantador.actualizarCarta(carta);
+    }
+
+    @Override
+    public void cantarJugada(JugadaDTO jugadaDTO) {
+        System.out.println("JUGADA");
+        System.out.println(jugadaDTO.toString());
     }
 }

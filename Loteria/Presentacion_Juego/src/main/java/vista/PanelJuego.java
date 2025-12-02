@@ -1,5 +1,6 @@
 package vista;
 
+import control.RegistroControles;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -9,11 +10,12 @@ import modelo.*;
 import util.Subject;
 
 /**
- * clase que representa el panel principal de la interfaz del juego.
- * Se encarga de mostrar el fondo de la partida, el jugador principal, los 
- * jugadores secundarios, los botones de jugadas disponibles y la carta del cantador.
+ * clase que representa el panel principal de la interfaz del juego. Se encarga
+ * de mostrar el fondo de la partida, el jugador principal, los jugadores
+ * secundarios, los botones de jugadas disponibles y la carta del cantador.
  * además, actualiza la vista en función de los cambios de los JugadorSubject
  * que observa.
+ *
  * @author pedro
  */
 public class PanelJuego extends javax.swing.JPanel {
@@ -21,10 +23,9 @@ public class PanelJuego extends javax.swing.JPanel {
     private Image imagenFondo;
     private List<PanelJugadorSecundario> panelesJugadoresSecundarios;
 
-
     /**
-     * Constructor que crea un nuevo panel de juego, inicializando sus componentes y cargando
-     * los botones de jugadas.
+     * Constructor que crea un nuevo panel de juego, inicializando sus
+     * componentes y cargando los botones de jugadas.
      */
     public PanelJuego() {
         initComponents();
@@ -35,6 +36,12 @@ public class PanelJuego extends javax.swing.JPanel {
         botonChorro.setNombreJugada("Chorro");
         botonCentro.setNombreJugada("Centro");
         botonLlena.setNombreJugada("Llena");
+        botonLlena.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistroControles.getInstance().getControlJugadas().cantarLlena();
+            }
+        });
     }
 
     /**
@@ -160,16 +167,18 @@ public class PanelJuego extends javax.swing.JPanel {
                         .addComponent(botonLlena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
-     * Metodo para inicializa el fondo del panel de juego con una imagen predeterminada.
+     * Metodo para inicializa el fondo del panel de juego con una imagen
+     * predeterminada.
      */
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondoPantalla.png")).getImage();
     }
-    
+
     /**
      * Metodo protegio de JPanel para pintar el Jpanel.
+     *
      * @param g graficas de java.
      */
     @Override
@@ -179,9 +188,11 @@ public class PanelJuego extends javax.swing.JPanel {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
+
     /**
-     * Metodo que actualiza la vista del panel en función de los cambios del Subject.
+     * Metodo que actualiza la vista del panel en función de los cambios del
+     * Subject.
+     *
      * @param subject el objeto observado que notifica los cambios.
      */
     public void actualizarVista(Subject subject) {
@@ -190,9 +201,10 @@ public class PanelJuego extends javax.swing.JPanel {
         repaint();
         revalidate();
     }
-    
+
     /**
      * metodo que actualiza la información de un jugador en la interfaz.
+     *
      * @param subject representa a un jugador.
      */
     private void actualizarJugador(Subject subject) {
@@ -227,7 +239,7 @@ public class PanelJuego extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void actualizarCantador(Subject subject) {
         if (subject instanceof CantadorSubject cantador) {
             if (panelCartaCantador != null) {
@@ -235,9 +247,10 @@ public class PanelJuego extends javax.swing.JPanel {
             }
         }
     }
-    
+
     /**
      * metodo que define el jugador principal de la partida.
+     *
      * @param jugador objeto que representa al jugador principal.
      */
     public void setJugadorPrincipal(JugadorSubject jugador) {
@@ -247,9 +260,10 @@ public class PanelJuego extends javax.swing.JPanel {
         repaint();
         revalidate();
     }
-    
+
     /**
      * Metodo para agregar un nuevo jugador secundario al panel.
+     *
      * @param jugador objetoque representa al jugador secundario.
      */
     public void agregarJugadorSecundario(JugadorSubject jugador) {
@@ -258,9 +272,10 @@ public class PanelJuego extends javax.swing.JPanel {
         this.panelesJugadoresSecundarios.add(panel);
         actualizarPanelesSecundarios();
     }
-    
+
     /**
-     * Metodo que refresca la lista de paneles de jugadores secundarios en la interfaz.
+     * Metodo que refresca la lista de paneles de jugadores secundarios en la
+     * interfaz.
      */
     private void actualizarPanelesSecundarios() {
         panelContenedorSecundarios.removeAll();

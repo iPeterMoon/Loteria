@@ -1,5 +1,6 @@
 package modelo;
 
+import eventos.eventos_aplicacion.EventoJugada;
 import java.awt.Point;
 
 import interfaces.IModeloJuego;
@@ -36,6 +37,11 @@ public class ModeloControlImp implements IModeloControl {
     public void colocarFicha(Point posicion) {
         modeloJuego.validaMovimiento(posicion);
     }
+    
+    @Override
+    public void verificarJugadaLlena() {
+        modeloJuego.validarJugada("LLENA");
+    }
 
     /**
      * Devuelve la interfaz del modelo del juego que utiliza para comunicarse.
@@ -44,4 +50,5 @@ public class ModeloControlImp implements IModeloControl {
     public IModeloJuego getModeloJuego(){
         return modeloJuego;
     }
+
 }

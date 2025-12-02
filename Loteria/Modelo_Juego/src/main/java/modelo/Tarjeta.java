@@ -106,4 +106,22 @@ public class Tarjeta {
         fichas.put(punto, true);
     }
 
+    /**
+     * Checa si la tarjeta esta llena
+     * 
+     * @return true si esta llena false si no
+     */
+    public boolean estaLlena(){
+        if (fichas == null || fichas.isEmpty()) {
+            return false;
+        }
+        
+        for (Boolean tieneFicha : fichas.values()) {
+            if (!tieneFicha) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }

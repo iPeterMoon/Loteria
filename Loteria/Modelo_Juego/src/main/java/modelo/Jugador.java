@@ -99,6 +99,10 @@ public class Jugador {
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
+    
+    public void agregarPuntaje(int puntos) {
+        this.puntos += puntos;
+    }
 
     /**
      * Método para obtener la tarjeta asociada al jugador

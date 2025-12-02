@@ -4,13 +4,17 @@ import interfaces.IModeloJuego;
 import interfaces.IModeloVistaJuego;
 import java.awt.Point;
 import dtos.FichaDTO;
+import dtos.JugadaDTO;
 import dtos.JugadorDTO;
 import eventos.eventos_aplicacion.EventoFicha;
+import eventos.eventos_aplicacion.EventoJugada;
 import interfaces.IPeer;
 import managers.CantadorManager;
+import managers.CantarJugadaManager;
 import managers.InicioPartidaManager;
 import managers.MovimientoManager;
 import mappers.JugadorMapperModelo;
+import repos.JugadasDisponibles;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -18,35 +22,37 @@ import mappers.JugadorMapperModelo;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-
+    
     private static ModeloJuegoFacade instancia;
     //Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
-
+    
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
-    private final CantadorManager cantadorManager = new CantadorManager();
-
+    private final CantadorManager cantadorManager = new CantadorManager();    
+    private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
+    
     private ModeloJuegoFacade() {
     }
-
+    
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-
+    
     public void inicializar(IModeloVistaJuego modeloVista, IPeer peer) {
         if (this.vistaJuego != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
         this.vistaJuego = modeloVista;
-
+        
         movimientoManager.inicializar(peer);
         inicioPartidaManager.inicializar(peer, modeloVista);
         cantadorManager.inicializar(peer);
+        cantarJugadaManager.inicializar(peer);
     }
 
     /**
@@ -103,25 +109,31 @@ public class ModeloJuegoFacade implements IModeloJuego {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vistaJuego.colocarFicha(fichaDTO);
     }
-
+    
+    @Override
+    public void cantarJugada(EventoJugada eventoJugada) {
+        JugadaDTO jugadaDTO = new JugadaDTO(eventoJugada.getUserSender(), eventoJugada.getTipoJugada());
+        vistaJuego.cantarJugada(jugadaDTO);
+    }
+    
     @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
         cantadorManager.iniciarCanto();
     }
-
+    
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
-
+    
     @Override
     public void mostrarFramePartida() {
         inicioPartidaManager.mostrarFramePartida();
     }
-
+    
     /**
      * Actualiza la carta actual mediante la vista.
      * @param cartaActual Número de carta cantada actual.
@@ -130,4 +142,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void actualizarCarta(int cartaActual) {
         vistaJuego.actualizarCarta(cartaActual);
     }
+    
+    @Override
+    public void validarJugada(String jugada) {
+        cantarJugadaManager.cantarJugada(JugadasDisponibles.valueOf(jugada));
+    }
+    
 }
