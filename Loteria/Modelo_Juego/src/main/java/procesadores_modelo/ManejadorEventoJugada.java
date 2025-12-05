@@ -13,7 +13,7 @@ import modelo.ModeloJuegoFacade;
  *
  * @author Jp
  */
-public class ManejadorJugadas extends ManejadorEventos {
+public class ManejadorEventoJugada extends ManejadorEventos {
 
     @Override
     public void procesar(Evento evento) {

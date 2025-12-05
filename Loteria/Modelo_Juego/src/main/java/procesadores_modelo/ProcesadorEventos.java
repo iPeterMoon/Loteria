@@ -21,7 +21,7 @@ public class ProcesadorEventos implements IObserver {
         ManejadorEventoTarjetasBarajeadas eventoTarjetasBarajeadas = new ManejadorEventoTarjetasBarajeadas();
         ManejadorEventoCartaCantada eventoCartaCantada = new ManejadorEventoCartaCantada();
         ManejadorEventoSalaActualizada eventoSalaActualizada= new ManejadorEventoSalaActualizada();
-        ManejadorJugadas eventoJugadas = new ManejadorJugadas();
+        ManejadorEventoJugada eventoJugadas = new ManejadorEventoJugada();
 
         this.manejadorPrincipal = eventoFicha;
 

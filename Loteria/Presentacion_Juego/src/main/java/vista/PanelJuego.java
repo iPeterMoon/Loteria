@@ -36,11 +36,18 @@ public class PanelJuego extends javax.swing.JPanel {
         botonChorro.setNombreJugada("Chorro");
         botonCentro.setNombreJugada("Centro");
         botonLlena.setNombreJugada("Llena");
-        botonLlena.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistroControles.getInstance().getControlJugadas().cantarLlena();
-            }
+
+        botonCuatroEsquinas.addActionListener((java.awt.event.ActionEvent evt) -> {
+            RegistroControles.getInstance().getControlJugadas().cantarCuatroEsquinas();
+        });
+        botonChorro.addActionListener((java.awt.event.ActionEvent evt) -> {
+            RegistroControles.getInstance().getControlJugadas().cantarChorro();
+        });
+        botonCentro.addActionListener((java.awt.event.ActionEvent evt) -> {
+            RegistroControles.getInstance().getControlJugadas().cantarCentro();
+        });
+        botonLlena.addActionListener((java.awt.event.ActionEvent evt) -> {
+            RegistroControles.getInstance().getControlJugadas().cantarLlena();
         });
     }
 

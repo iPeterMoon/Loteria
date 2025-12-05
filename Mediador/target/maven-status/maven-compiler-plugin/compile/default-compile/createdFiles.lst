@@ -9,11 +9,14 @@ eventos\eventos_peers\EventoHeartbeat.class
 interfaces\IPeer.class
 interfaces\IModeloVistaJuego.class
 eventos\eventos_aplicacion\EventoIniciarPartida.class
+interfaces\IModeloVistaConfiguracion.class
 interfaces\IObserver.class
 util\ConfigLoader$ConfiguracionDefault.class
 eventos\eventos_peers\EventoDesconexion.class
 enums\TipoEvento.class
 dtos\PeerInfo.class
+eventos\eventos_aplicacion\EventoSalaActualizada.class
+enums\JugadasDisponibles.class
 util\ConfigLoader.class
 dtos\JugadorDTO.class
 eventos\eventos_aplicacion\EventoUnirsePartida.class
@@ -22,5 +25,6 @@ interfaces\IModeloJuego.class
 eventos\eventos_aplicacion\EventoSemilla.class
 dtos\FichaDTO.class
 dtos\JugadaDTO.class
+eventos\eventos_aplicacion\EventoPeticionInfoSala.class
 dtos\TarjetaDTO.class
 eventos\eventos_peers\EventoNuevoPeer.class

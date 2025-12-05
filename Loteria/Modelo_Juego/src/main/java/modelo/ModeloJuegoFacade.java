@@ -20,7 +20,7 @@ import managers.InicioPartidaManager;
 import managers.MovimientoManager;
 import managers.UnirsePartidaManager;
 import mappers.JugadorMapperModelo;
-import repos.JugadasDisponibles;
+import enums.JugadasDisponibles;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -119,12 +119,6 @@ public class ModeloJuegoFacade implements IModeloJuego {
     }
 
     @Override
-    public void cantarJugada(EventoJugada eventoJugada) {
-        JugadaDTO jugadaDTO = new JugadaDTO(eventoJugada.getUserSender(), eventoJugada.getTipoJugada());
-        vistaJuego.cantarJugada(jugadaDTO);
-    }
-
-    @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
@@ -152,9 +146,29 @@ public class ModeloJuegoFacade implements IModeloJuego {
         vistaJuego.actualizarCarta(cartaActual);
     }
 
+    /**
+     * Valida la jugada recibida como parámetro y la envía al gestor encargado
+     * de procesar el canto de la jugada.
+     *
+     * @param jugada representa la jugada a validar.
+     */
     @Override
-    public void validarJugada(String jugada) {
-        cantarJugadaManager.cantarJugada(JugadasDisponibles.valueOf(jugada));
+    public void validarJugada(JugadasDisponibles jugada) {
+        cantarJugadaManager.cantarJugada(jugada);
+    }
+
+    /**
+     * Recibe un evento de jugada, construye un objeto {@link JugadaDTO} con la
+     * información del usuario y el tipo de jugada, y notifica a la vista para
+     * que se muestre el canto de la jugada.
+     *
+     * @param eventoJugada Objeto que contiene los datos del evento de la
+     * jugada, incluyendo el usuario que la realizó y el tipo de jugada.
+     */
+    @Override
+    public void cantarJugada(EventoJugada eventoJugada) {
+        JugadaDTO jugadaDTO = new JugadaDTO(eventoJugada.getUserSender(), eventoJugada.getTipoJugada());
+        vistaJuego.cantarJugada(jugadaDTO);
     }
 
     /**

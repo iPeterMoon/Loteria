@@ -9,22 +9,23 @@ import interfaces.IPeer;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
 import modelo.Tarjeta;
-import repos.JugadasDisponibles;
+import enums.JugadasDisponibles;
 
 /**
  *
  * @author Jp
  */
 public class CantarJugadaManager {
+
     private IPeer componentePeer;
-    
-    public void inicializar(IPeer peer){
+
+    public void inicializar(IPeer peer) {
         this.componentePeer = peer;
     }
-    
+
     public void cantarJugada(JugadasDisponibles jugada) {
         boolean esValida = validarJugadaLocal(jugada);
-        
+
         if (esValida) {
             EventoJugada evento = new EventoJugada(Sala.getInstance().getJugadorPrincipal().getNickname(), jugada.toString());
             componentePeer.broadcastEvento(evento);
@@ -34,27 +35,54 @@ public class CantarJugadaManager {
             System.out.println("INTENTASTE CANTAR " + jugada.toString() + "PERO TE FALTAN FICHAS");
         }
     }
-    
-    private boolean validarJugadaLocal(JugadasDisponibles jugada){
+
+    private boolean validarJugadaLocal(JugadasDisponibles jugada) {
+        if (jugada == null) {
+            return false;
+        }
+
         Sala sala = Sala.getInstance();
-        
+
         if (sala.getJugadorPrincipal() == null || sala.getJugadorPrincipal().getTarjeta() == null) {
             return false; // No hay jugador principal o tarjeta asignada
         }
-        
+
         Tarjeta tarjeta = sala.getJugadorPrincipal().getTarjeta();
-        
-        if (JugadasDisponibles.LLENA == jugada) {
-            return validarLlena(tarjeta);
-        } else if (true) {
-            //SE PONEN LAS DEMAS JUGADAS Y ASI
+
+        switch (jugada) {
+            case LLENA -> {
+                return validarLlena(tarjeta);
+            }
+            case CENTRO -> {
+                return validarCentro(tarjeta);
+            }
+            case CHORRO -> {
+                return validarChorro(tarjeta);
+            }
+            case CUATROESQUINAS -> {
+                return validarCuatroEsquinas(tarjeta);
+            }
+            default -> {
+                // SI LLEGA ACA NO EXISTE LA JUGADA
+                return false;
+            }
         }
-        
-        // SI LLEGA ACA NO EXISTE LA JUGADA
-        return false;
     }
 
-    private boolean validarLlena(Tarjeta tarjeta) {       
+    private boolean validarLlena(Tarjeta tarjeta) {
         return tarjeta.estaLlena();
+    }
+
+    private boolean validarChorro(Tarjeta tarjeta) {
+        return tarjeta.estaChorro();
+    }
+
+    private boolean validarCentro(Tarjeta tarjeta) {
+        return tarjeta.estaCentro();
+
+    }
+
+    private boolean validarCuatroEsquinas(Tarjeta tarjeta) {
+        return tarjeta.estaCuatroEsquinas();
     }
 }

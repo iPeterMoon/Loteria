@@ -2,6 +2,7 @@ package interfaces;
 
 import dtos.JugadorDTO;
 import dtos.NuevoUsuarioDTO;
+import enums.JugadasDisponibles;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
 import java.awt.Point;
@@ -20,17 +21,10 @@ public interface IModeloJuego {
      * @param posicion Posición del tablero donde se quiere colocar la ficha
      */
     public void validaMovimiento(Point posicion);
-    
-    /**
-     * Método para validar alguna jugada
-     *
-     * @param jugada la jugada a validar
-     */
-    public void validarJugada(String jugada);
 
     /**
-     * Inicia una partida de lotería con los elementos de configuración ya hechos 
-     * y los jugadores ya contemplados.
+     * Inicia una partida de lotería con los elementos de configuración ya
+     * hechos y los jugadores ya contemplados.
      */
     public void iniciarPartida();
 
@@ -51,43 +45,56 @@ public interface IModeloJuego {
     /**
      * Metodo que establece el jugador principal, el que está ejecutando esta
      * instancia del juego
+     *
      * @param jugadorPrincipal
      */
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal);
 
     /**
      * Metodo para agregar un jugador secundario al juego
+     *
      * @param jugadorSecundario Jugador a agregar al juego
      */
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario);
 
     /**
      * Metodo para colocar una ficha en alguna de las tarjetas de los jugadores
+     *
      * @param ficha
      */
     public void colocarFicha(EventoFicha ficha);
-    
+
     /**
      * Actualiza la carta actual mediante la vista.
+     *
      * @param cartaActual Número de carta cantada actual.
      */
     public void actualizarCarta(int cartaActual);
 
-    
+    /**
+     * Método para validar alguna jugada
+     *
+     * @param jugada la jugada a validar
+     */
+    public void validarJugada(JugadasDisponibles jugada);
+
     /**
      * Metodo para hacer una jugada
+     *
      * @param eventoJugada el evento
      */
     public void cantarJugada(EventoJugada eventoJugada);
-    
+
     /**
      * Método para unirse a partida.
+     *
      * @param usuario El usuario a entrar a la partida
      */
     public void unirseSala(NuevoUsuarioDTO usuario);
-    
+
     /**
      * Método que actualiza la sala (los jugadores).
+     *
      * @param jugadores Los jugadores de la sala.
      */
     public void actualizarSala(List<JugadorDTO> jugadores);

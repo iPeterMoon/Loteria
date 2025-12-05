@@ -15,6 +15,7 @@ public class Tarjeta {
      * Mapa de valores punto-entero que representan las cartas que existen en la
      * tarjeta. El punto representa la posición y el entero el número de la
      * carta que se encuentra en dicha posición
+     *
      */
     private Map<Point, Integer> cartas;
     /**
@@ -108,20 +109,122 @@ public class Tarjeta {
 
     /**
      * Checa si la tarjeta esta llena
-     * 
+     *
      * @return true si esta llena false si no
      */
-    public boolean estaLlena(){
+    public boolean estaLlena() {
         if (fichas == null || fichas.isEmpty()) {
             return false;
         }
-        
+
         for (Boolean tieneFicha : fichas.values()) {
             if (!tieneFicha) {
                 return false;
             }
         }
-        
+
         return true;
+    }
+
+    /**
+     * Checa si la jugada de Centro está completa. El centro corresponde a las
+     * posiciones (1,1), (2,1), (1,2) y (2,2).
+     *
+     * @return true si las cuatro posiciones centrales tienen ficha, false si no
+     */
+    public boolean estaCentro() {
+        if (fichas == null || fichas.isEmpty()) {
+            return false;
+        }
+
+        Point[] centro = {
+            new Point(1, 1),
+            new Point(2, 1),
+            new Point(1, 2),
+            new Point(2, 2)
+        };
+
+        for (Point p : centro) {
+            Boolean tieneFicha = fichas.get(p);
+            if (tieneFicha == null || !tieneFicha) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Checa si la jugada de Cuatro Esquinas está completa. Las esquinas
+     * corresponden a las posiciones (0,0), (3,0), (0,3) y (3,3).
+     *
+     * @return true si las cuatro esquinas tienen ficha, false si no
+     */
+    public boolean estaCuatroEsquinas() {
+        if (fichas == null || fichas.isEmpty()) {
+            return false;
+        }
+
+        Point[] esquinas = {
+            new Point(0, 0),
+            new Point(3, 0),
+            new Point(0, 3),
+            new Point(3, 3)
+        };
+
+        for (Point p : esquinas) {
+            Boolean tieneFicha = fichas.get(p);
+            if (tieneFicha == null || !tieneFicha) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Checa si existe un Chorro. Un chorro se cumple con una fila, columna o
+     * diagonal completa.
+     *
+     * @return true si existe un chorro válido, false si no
+     */
+    public boolean estaChorro() {
+        if (fichas == null || fichas.isEmpty()) {
+            return false;
+        }
+
+        Point[][] combinaciones = {
+            // Filas
+            {new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(3, 0)},
+            {new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(3, 1)},
+            {new Point(0, 2), new Point(1, 2), new Point(2, 2), new Point(3, 2)},
+            {new Point(0, 3), new Point(1, 3), new Point(2, 3), new Point(3, 3)},
+            // Columnas
+            {new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(0, 3)},
+            {new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3)},
+            {new Point(2, 0), new Point(2, 1), new Point(2, 2), new Point(2, 3)},
+            {new Point(3, 0), new Point(3, 1), new Point(3, 2), new Point(3, 3)},
+            // Esquineado
+            {new Point(0, 0), new Point(1, 1), new Point(2, 2), new Point(3, 3)},
+            {new Point(3, 0), new Point(2, 1), new Point(1, 2), new Point(0, 3)}
+        };
+
+        for (Point[] combinacion : combinaciones) {
+            boolean completa = true;
+
+            for (Point p : combinacion) {
+                Boolean tieneFicha = fichas.get(p);
+                if (tieneFicha == null || !tieneFicha) {
+                    completa = false;
+                    break;
+                }
+            }
+
+            if (completa) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
