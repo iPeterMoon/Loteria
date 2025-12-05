@@ -6,13 +6,19 @@ import java.awt.Point;
 import dtos.FichaDTO;
 import dtos.JugadaDTO;
 import dtos.JugadorDTO;
+import dtos.JugadorSalaEsperaDTO;
+import dtos.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
+import interfaces.IModeloVistaConfiguracion;
 import interfaces.IPeer;
+import java.util.ArrayList;
+import java.util.List;
 import managers.CantadorManager;
 import managers.CantarJugadaManager;
 import managers.InicioPartidaManager;
 import managers.MovimientoManager;
+import managers.UnirsePartidaManager;
 import mappers.JugadorMapperModelo;
 import repos.JugadasDisponibles;
 
@@ -22,33 +28,35 @@ import repos.JugadasDisponibles;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-    
+
     private static ModeloJuegoFacade instancia;
     //Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
-    
+    private IModeloVistaConfiguracion vistaConfiguracion;
+
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
-    private final CantadorManager cantadorManager = new CantadorManager();    
+    private final CantadorManager cantadorManager = new CantadorManager();
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
-    
+    private final UnirsePartidaManager unirsePartidaManager = new UnirsePartidaManager();
+
     private ModeloJuegoFacade() {
     }
-    
+
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-    
+
     public void inicializar(IModeloVistaJuego modeloVista, IPeer peer) {
         if (this.vistaJuego != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
         this.vistaJuego = modeloVista;
-        
+
         movimientoManager.inicializar(peer);
         inicioPartidaManager.inicializar(peer, modeloVista);
         cantadorManager.inicializar(peer);
@@ -77,7 +85,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         Sala sala = Sala.getInstance();
         sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
     }
-    
+
     /**
      * Valida un movimiento de colocación de ficha en la tarjeta del jugador
      * principal.
@@ -109,43 +117,68 @@ public class ModeloJuegoFacade implements IModeloJuego {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vistaJuego.colocarFicha(fichaDTO);
     }
-    
+
     @Override
     public void cantarJugada(EventoJugada eventoJugada) {
         JugadaDTO jugadaDTO = new JugadaDTO(eventoJugada.getUserSender(), eventoJugada.getTipoJugada());
         vistaJuego.cantarJugada(jugadaDTO);
     }
-    
+
     @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
         cantadorManager.iniciarCanto();
     }
-    
+
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
-    
+
     @Override
     public void mostrarFramePartida() {
         inicioPartidaManager.mostrarFramePartida();
     }
-    
+
     /**
      * Actualiza la carta actual mediante la vista.
+     *
      * @param cartaActual Número de carta cantada actual.
      */
     @Override
     public void actualizarCarta(int cartaActual) {
         vistaJuego.actualizarCarta(cartaActual);
     }
-    
+
     @Override
     public void validarJugada(String jugada) {
         cantarJugadaManager.cantarJugada(JugadasDisponibles.valueOf(jugada));
     }
-    
+
+    /**
+     * Método para unirse a partida.
+     *
+     * @param usuario El usuario a entrar a la partida
+     */
+    @Override
+    public void unirseSala(NuevoUsuarioDTO usuario) {
+        unirsePartidaManager.unirseSala(usuario);
+    }
+
+    /**
+     * Método que actualiza la sala (los jugadores).
+     *
+     * @param jugadores Los jugadores de la sala.
+     */
+    @Override
+    public void actualizarSala(List<JugadorDTO> jugadores) {
+        List<JugadorSalaEsperaDTO> jugadoresSalaEspera = new ArrayList<>();
+        for (JugadorDTO dto : jugadores) {
+            jugadoresSalaEspera.add(JugadorMapperModelo.toSalaEsperaDTO(dto));
+        }
+        vistaConfiguracion.actualizarSala(jugadoresSalaEspera);
+    }
+
 }

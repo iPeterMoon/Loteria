@@ -1,9 +1,11 @@
 package interfaces;
 
 import dtos.JugadorDTO;
+import dtos.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
 import java.awt.Point;
+import java.util.List;
 
 /**
  * Interfaz para definir los métodos necesarios en el modelo del juego
@@ -77,4 +79,16 @@ public interface IModeloJuego {
      * @param eventoJugada el evento
      */
     public void cantarJugada(EventoJugada eventoJugada);
+    
+    /**
+     * Método para unirse a partida.
+     * @param usuario El usuario a entrar a la partida
+     */
+    public void unirseSala(NuevoUsuarioDTO usuario);
+    
+    /**
+     * Método que actualiza la sala (los jugadores).
+     * @param jugadores Los jugadores de la sala.
+     */
+    public void actualizarSala(List<JugadorDTO> jugadores);
 }

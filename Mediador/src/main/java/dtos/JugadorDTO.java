@@ -19,7 +19,7 @@ public class JugadorDTO {
     /**
      * La imagen de perfil asociada al jugador.
      */
-    private Image fotoPerfil;
+    private int fotoPerfil;
 
     /**
      * La puntuación o puntos actuales del jugador.
@@ -49,7 +49,7 @@ public class JugadorDTO {
      * @param jugadorPrincipal Boolean que indica si el jugador es un jugador
      * principal o no
      */
-    public JugadorDTO(String nickname, Image fotoPerfil, int puntos, TarjetaDTO tarjeta, boolean jugadorPrincipal) {
+    public JugadorDTO(String nickname, int fotoPerfil, int puntos, TarjetaDTO tarjeta, boolean jugadorPrincipal) {
         this.nickname = nickname;
         this.fotoPerfil = fotoPerfil;
         this.puntos = puntos;
@@ -99,7 +99,7 @@ public class JugadorDTO {
      *
      * @return La imagen de perfil (objeto Image).
      */
-    public Image getFotoPerfil() {
+    public int getFotoPerfil() {
         return fotoPerfil;
     }
 
@@ -108,7 +108,7 @@ public class JugadorDTO {
      *
      * @param fotoPerfil La nueva imagen de perfil a establecer.
      */
-    public void setFotoPerfil(Image fotoPerfil) {
+    public void setFotoPerfil(int fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 

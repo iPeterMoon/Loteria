@@ -1,4 +1,4 @@
-package paneles;
+package vista;
 
 import controladores.ControlNavegacion;
 import java.awt.Graphics;

@@ -32,7 +32,7 @@ public class JugadorSubject extends Subject {
     /**
      * Imagen asociada al jugador (avatar o foto).
      */
-    private Image foto;
+    private int foto;
 
     /**
      * Tarjeta que posee el jugador.
@@ -59,7 +59,7 @@ public class JugadorSubject extends Subject {
      * @param tarjeta Tarjeta que pertenece al jugador.
      * @param jugadorPrincipal Indica si este jugador es el principal.
      */
-    public JugadorSubject(String nickname, int puntaje, Image foto, ModeloTarjeta tarjeta, boolean jugadorPrincipal) {
+    public JugadorSubject(String nickname, int puntaje, int foto, ModeloTarjeta tarjeta, boolean jugadorPrincipal) {
         this.nickname = nickname;
         this.puntaje = puntaje;
         this.foto = foto;
@@ -121,18 +121,18 @@ public class JugadorSubject extends Subject {
     /**
      * Método para obtener la imagen asociada al jugador.
      *
-     * @return Objeto Image con la foto del jugador.
+     * @return Número asociado a la foto del jugador.
      */
-    public Image getFoto() {
+    public int getFoto() {
         return foto;
     }
 
     /**
      * Método para asignar una nueva imagen al jugador.
      *
-     * @param foto Objeto Image con la foto a asignar.
+     * @param foto Número asociado a la foto a asignar.
      */
-    public void setFoto(Image foto) {
+    public void setFoto(int foto) {
         this.foto = foto;
     }
 

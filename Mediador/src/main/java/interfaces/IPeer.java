@@ -34,4 +34,10 @@ public interface IPeer {
      */
     void setObserver(IObserver observer);
     
+    /**
+     * Envía un evento a un usuario individual.
+     * @param user El usuario al cual le mandará el evento.
+     * @param evento El evento a transmitir.
+     */
+    void directMessage(Evento evento, String user);
 }

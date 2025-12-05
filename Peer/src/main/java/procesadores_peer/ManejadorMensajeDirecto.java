@@ -7,6 +7,7 @@ import dtos.PeerInfo;
 import network.EnvioPeer;
 import mensajes.TipoMensaje;
 import peer.PeersConectados;
+import util.ConfigLoader;
 
 /**
  * Manejador para procesar mensajes directos. Se encarga de enviar mensajes a un

@@ -14,7 +14,7 @@ public class Jugador {
     /**
      * Referencia (Ruta) a la foto de perfil del jugador
      */
-    private String fotoPerfil;
+    private int fotoPerfil;
     /**
      * Puntos ganados del jugador
      */
@@ -38,7 +38,7 @@ public class Jugador {
      * @param puntos Puntos del jugador
      * @param tarjeta Tarjeta del jugador
      */
-    public Jugador(String nickname, String fotoPerfil, int puntos, Tarjeta tarjeta) {
+    public Jugador(String nickname, int fotoPerfil, int puntos, Tarjeta tarjeta) {
         this.nickname = nickname;
         this.fotoPerfil = fotoPerfil;
         this.puntos = puntos;
@@ -68,17 +68,17 @@ public class Jugador {
      *
      * @return Cadena de texto con la ruta de la foto de perfil del jugador
      */
-    public String getFotoPerfil() {
+    public int getFotoPerfil() {
         return fotoPerfil;
     }
 
     /**
      * Método para asignar la ruta de la foto de perfil del jugador
      *
-     * @param fotoPerfil Cadena de texto con la ruta de la foto de perfil del
+     * @param fotoPerfil El id de la ruta de la foto de perfil del
      * jugador
      */
-    public void setFotoPerfil(String fotoPerfil) {
+    public void setFotoPerfil(int fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 

@@ -1,8 +1,8 @@
 package controladores;
 
 import ventanas.VentanaPrincipal;
-import paneles.PanelMenu;
-import paneles.PanelCrearSala;
+import vista.PanelMenu;
+import vista.PanelCrearSala;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
