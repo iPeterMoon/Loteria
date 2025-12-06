@@ -153,10 +153,10 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
     public void setJugador(JugadorSubject jugador) {
         labelNombreJugador.setText(jugador.getNickname());
         labelPuntaje.setText("Puntaje: " + jugador.getPuntaje());
-        if (jugador.getFoto() != null) {
-            fotoJugador = new ImageIcon(jugador.getFoto());
-            labelIcono.setIcon(fotoJugador);
-        }
+//        if (jugador.getFoto() != null) {
+//            fotoJugador = new ImageIcon(jugador.getFoto());
+//            labelIcono.setIcon(fotoJugador);
+//        }
         repaint();
         revalidate();
     }

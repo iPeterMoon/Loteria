@@ -4,19 +4,16 @@
  */
 package vista;
 
-import controladores.ControlAplicacion;
-
 /**
  *
- * @author Luis Rafael Lagarda Encinas 252605
+ * @author Alici
  */
-public class PanelSala extends javax.swing.JPanel {
-    private ControlAplicacion control;
+public class PanelConfiguracionJuego extends javax.swing.JPanel {
+
     /**
-     * Creates new form panelSala
+     * Creates new form PanelConfiguracionJuego
      */
-    public PanelSala(ControlAplicacion control) {
-        this.control = control;
+    public PanelConfiguracionJuego() {
         initComponents();
     }
 
@@ -29,15 +26,18 @@ public class PanelSala extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setMaximumSize(new java.awt.Dimension(1336, 768));
+        setMinimumSize(new java.awt.Dimension(1336, 768));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 1336, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 768, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

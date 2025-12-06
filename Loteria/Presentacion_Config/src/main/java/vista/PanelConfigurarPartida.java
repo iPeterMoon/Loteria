@@ -1,22 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vista;
-
-import controladores.ControlAplicacion;
 
 /**
  *
- * @author Luis Rafael Lagarda Encinas 252605
+ * @author Alici
  */
-public class PanelSala extends javax.swing.JPanel {
-    private ControlAplicacion control;
+public class PanelConfigurarPartida extends javax.swing.JPanel {
+
     /**
-     * Creates new form panelSala
+     * Creates new form PanelConfigurarPartida
      */
-    public PanelSala(ControlAplicacion control) {
-        this.control = control;
+    public PanelConfigurarPartida() {
         initComponents();
     }
 
@@ -33,11 +26,11 @@ public class PanelSala extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

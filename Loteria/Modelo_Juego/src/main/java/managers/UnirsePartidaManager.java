@@ -28,7 +28,7 @@ public class UnirsePartidaManager {
     
     public void obtenerInfoSala(){
         //como le mandara el evento al match si no tiene usuario?
-        EventoPeticionInfoSala eventoPeticionInfoSala = new EventoPeticionInfoSala(?????????????);
-        componentePeer.directMessage(eventoPeticionInfoSala, "MATCHMAKER");
+//        EventoPeticionInfoSala eventoPeticionInfoSala = new EventoPeticionInfoSala(?????????????);
+//        componentePeer.directMessage(eventoPeticionInfoSala, "MATCHMAKER");
     }
 }

@@ -6,7 +6,7 @@ import dtos.NuevoUsuarioDTO;
  *
  * @author norma
  */
-public interface IModeloControlConfiguracion {
+public interface IModeloControlNegocio {
 
     public void verificarExistenciaPartida();
     

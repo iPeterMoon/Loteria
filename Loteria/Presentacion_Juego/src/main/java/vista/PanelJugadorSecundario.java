@@ -56,7 +56,6 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         labelFoto = new javax.swing.JLabel();
         labelNombre = new javax.swing.JLabel();
         labelPuntaje = new javax.swing.JLabel();
-        panelTarjetaSecundaria = new vista.PanelTarjetaSecundaria();
 
         setMaximumSize(new java.awt.Dimension(275, 130));
         setMinimumSize(new java.awt.Dimension(275, 130));
@@ -78,7 +77,6 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         labelPuntaje.setForeground(new java.awt.Color(255, 255, 255));
         labelPuntaje.setText("Puntaje: 0");
         add(labelPuntaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 104, -1, -1));
-        add(panelTarjetaSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_jugador_secundario.png"))
@@ -129,7 +127,7 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     public void setJugador(JugadorSubject jugador) {
         labelNombre.setText(jugador.getNickname());
         labelPuntaje.setText("Puntaje: " + jugador.getPuntaje());
-        fotoJugador = new ImageIcon(jugador.getFoto());
+//        fotoJugador = new ImageIcon(jugador.getFoto());
         cargarFoto();
         repaint();
         revalidate();
@@ -151,7 +149,7 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
      * @param jugador jugador
      */
     public void actualizarTarjetaAbstracta(JugadorSubject jugador) {
-        panelTarjetaSecundaria.actualizarFichas(jugador.getTarjeta());
+//        panelTarjetaSecundaria.actualizarFichas(jugador.getTarjeta());
         repaint();
         revalidate();
     }
@@ -160,6 +158,5 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     private javax.swing.JLabel labelFoto;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPuntaje;
-    private vista.PanelTarjetaSecundaria panelTarjetaSecundaria;
     // End of variables declaration//GEN-END:variables
 }

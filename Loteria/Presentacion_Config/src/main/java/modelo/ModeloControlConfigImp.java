@@ -7,28 +7,28 @@ import interfaces.IModeloJuego;
  *
  * @author norma
  */
-public class ModeloControlImp implements IModeloControlConfiguracion{
-   
+public class ModeloControlConfigImp implements IModeloControlNegocio {
+
     private IModeloJuego modeloJuego;
 
-    public ModeloControlImp(IModeloJuego modeloJuego) {
+    public ModeloControlConfigImp(IModeloJuego modeloJuego) {
         this.modeloJuego = modeloJuego;
     }
-    
+
     @Override
-    public void verificarExistenciaPartida(){
-        
+    public void verificarExistenciaPartida() {
+
     }
-    
+
     @Override
     public void obtenerAvatars() {
 //        Map<Integer, Image> opciones = modeloJuego.obtenerAvatars();
 //        vista.mostrarAvatares(opciones);
     }
-    
+
     @Override
-    public void unirseSala(NuevoUsuarioDTO usuario){
+    public void unirseSala(NuevoUsuarioDTO usuario) {
         modeloJuego.unirseSala(usuario);
     }
-    
+
 }

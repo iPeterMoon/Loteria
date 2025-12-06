@@ -8,23 +8,38 @@ import java.awt.CardLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import util.Subject;
+import vista.PanelConfiguracionUsuario;
+import vista.PanelConfigurarPartida;
+import vista.PanelMenu;
 
 /**
  *
  * @author Jp
  */
-public class VentanaPrincipal extends JFrame {
+public class FrameConfiguracion extends JFrame {
 
     private CardLayout cardLayout;
+    private PanelConfiguracionUsuario panelConfiguracionUsuario = new PanelConfiguracionUsuario();
+    private PanelConfigurarPartida panelConfiguracionPartida = new PanelConfigurarPartida();
+    private PanelMenu panelMenu = new PanelMenu();
     private JPanel panelContenedor;
+    private static FrameConfiguracion instancia;
 
     /**
      * Creates new form VentanaPrincipal
      *
      */
-    public VentanaPrincipal() {
+    private FrameConfiguracion() {
         iniciarVentana();
         initComponents();
+    }
+
+    public static FrameConfiguracion getInstancia() {
+        if (instancia == null) {
+            instancia = new FrameConfiguracion();
+        }
+        return instancia;
     }
 
     public CardLayout getCardLayout() {
@@ -44,7 +59,7 @@ public class VentanaPrincipal extends JFrame {
         setLayout(new java.awt.BorderLayout()); // <-- Cambia el layout del JFrame
         cardLayout = new CardLayout();
         panelContenedor = new JPanel(cardLayout);
-        add(panelContenedor,java.awt.BorderLayout.CENTER);
+        add(panelContenedor, java.awt.BorderLayout.CENTER);
     }
 
     private void setIconImage() {
@@ -53,6 +68,27 @@ public class VentanaPrincipal extends JFrame {
         } catch (NullPointerException e) {
             System.err.println("Icono no encontrado: /cartas/1.jpeg");
         }
+    }
+
+    /**
+     * Metodo para actualizar la vista del jugador.
+     *
+     * @param subject representacion del sujeto.
+     */
+    public void actualizarVista(Subject subject) {
+        panelConfiguracionUsuario.actualizarVista(subject);
+    }
+
+    public PanelConfiguracionUsuario getPanelConfiguracionUsuario() {
+        return panelConfiguracionUsuario;
+    }
+
+    public PanelConfigurarPartida getPanelConfiguracionPartida() {
+        return panelConfiguracionPartida;
+    }
+
+    public PanelMenu getPanelMenu() {
+        return panelMenu;
     }
 
     /**
