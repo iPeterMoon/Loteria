@@ -6,7 +6,7 @@ import dtos.SalaDTO;
 import enums.TipoEvento;
 import enums.TipoNivel;
 import eventos.Evento;
-import eventos.eventos_aplicacion.EventoPeticionInfoSala;
+import eventos.eventos_aplicacion.EventoInfoSala;
 import eventos.eventos_aplicacion.EventoSalaActualizada;
 import eventos.eventos_aplicacion.EventoUnirseSala;
 import implementaciones.Matchmaker;
@@ -38,7 +38,7 @@ public class ManejadorUnirseSala extends ManejadorEventos {
         
         sala.agregarJugador(nuevoJugador);
                 
-        EventoPeticionInfoSala eventoPeticionInfoSala = new EventoPeticionInfoSala("MATCHMAKER", obtenerSalaActual());
+        EventoInfoSala eventoPeticionInfoSala = new EventoInfoSala("MATCHMAKER", obtenerSalaActual());
         matchmaker.directMessage(eventoPeticionInfoSala, evento.getUserSender());
                 
         EventoSalaActualizada eventoSalaActualizada = new EventoSalaActualizada("MATCHMAKER",sala.getJugadores());

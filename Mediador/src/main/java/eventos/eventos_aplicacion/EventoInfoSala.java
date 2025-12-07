@@ -8,12 +8,12 @@ import eventos.Evento;
  *
  * @author norma
  */
-public class EventoPeticionInfoSala extends Evento {
+public class EventoInfoSala extends Evento {
     
     private SalaDTO sala;
     
-    public EventoPeticionInfoSala(String userSender, SalaDTO sala) {
-        super(TipoEvento.PETICION_INFO_SALA, userSender);
+    public EventoInfoSala(String userSender, SalaDTO sala) {
+        super(TipoEvento.INFO_SALA, userSender);
         this.sala = sala;
     }
 

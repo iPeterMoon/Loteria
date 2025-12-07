@@ -7,7 +7,7 @@ package procesadores_modelo;
 import dtos.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
-import eventos.eventos_aplicacion.EventoPeticionInfoSala;
+import eventos.eventos_aplicacion.EventoInfoSala;
 import java.util.ArrayList;
 import java.util.List;
 import mappers.JugadorMapperModelo;
@@ -19,18 +19,18 @@ import modelo.Sala;
  *
  * @author norma
  */
-public class ManejadorEventoPeticionInfoSala extends ManejadorEventos{
+public class ManejadorEventoInfoSala extends ManejadorEventos{
 
     @Override
     public void procesar(Evento evento) {
-        if (evento.getTipoEvento().equals(TipoEvento.PETICION_INFO_SALA)) {
-            manejarPeticionInfoSala((EventoPeticionInfoSala) evento);
+        if (evento.getTipoEvento().equals(TipoEvento.INFO_SALA)) {
+            manejarPeticionInfoSala((EventoInfoSala) evento);
         } else if (next != null) {
             next.procesar(evento);
         }
     }
 
-    private void manejarPeticionInfoSala(EventoPeticionInfoSala evento) {
+    private void manejarPeticionInfoSala(EventoInfoSala evento) {
         Sala sala = Sala.getInstance();
         List<JugadorDTO> jugadoresDTO = evento.getSala().getJugadores();
 

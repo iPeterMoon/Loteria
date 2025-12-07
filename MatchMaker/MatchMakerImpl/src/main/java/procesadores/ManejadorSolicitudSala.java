@@ -1,6 +1,14 @@
 package procesadores;
 
+import dtos.ConfiguracionJuegoDTO;
+import dtos.JugadorDTO;
+import dtos.SalaDTO;
+import enums.TipoEvento;
 import eventos.Evento;
+import eventos.eventos_aplicacion.EventoInfoSala;
+import eventos.eventos_aplicacion.EventoSolicitudSala;
+import implementaciones.Matchmaker;
+import implementaciones.Sala;
 
 /**
  *
@@ -8,10 +16,30 @@ import eventos.Evento;
  */
 public class ManejadorSolicitudSala extends ManejadorEventos {
 
+    Matchmaker matchmaker = Matchmaker.getInstance();
+    Sala sala = Sala.getInstance();
+    
     @Override
     public void procesar(Evento evento) {
-        // TODO Auto-generated method stub (NORMA)
-        throw new UnsupportedOperationException("Unimplemented method 'procesar'");
+        if (evento.getTipoEvento().equals(TipoEvento.SOLICITUD_SALA)) {
+            manejarSolicitudSala((EventoSolicitudSala) evento);
+        } else if (next != null) {
+            next.procesar(evento);
+        }
     }
+    
+    private void manejarSolicitudSala(EventoSolicitudSala evento) {
+        JugadorDTO nuevoJugador = new JugadorDTO();      
+        EventoInfoSala eventoPeticionInfoSala = new EventoInfoSala("MATCHMAKER", obtenerSalaActual());
+        matchmaker.directMessage(eventoPeticionInfoSala, evento.getUserSender()); 
+    }
+    
+     private SalaDTO obtenerSalaActual(){
+        ConfiguracionJuegoDTO configuracionJuego = new ConfiguracionJuegoDTO(sala.getConfiguracion().getLimiteJugadores()
+                , sala.getConfiguracion().getPuntajeMax(), sala.getConfiguracion().getDificultad(), sala.getConfiguracion().getPuntajes());
+        SalaDTO salaActual = new SalaDTO(sala.getJugadores(), sala.getHost(), configuracionJuego);
+        return salaActual;
+    }
+    
 
 }

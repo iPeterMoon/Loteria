@@ -1,7 +1,7 @@
 package managers;
 
 import dtos.NuevoUsuarioDTO;
-import eventos.eventos_aplicacion.EventoPeticionInfoSala;
+import eventos.eventos_aplicacion.EventoInfoSala;
 import eventos.eventos_aplicacion.EventoUnirseSala;
 import interfaces.IPeer;
 

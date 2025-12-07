@@ -16,5 +16,6 @@ public enum TipoEvento {
     JUGADA,
     UNIRSE_SALA,
     SALA_ACTUALIZADA,
-    PETICION_INFO_SALA
+    INFO_SALA,
+    SOLICITUD_SALA
 }
