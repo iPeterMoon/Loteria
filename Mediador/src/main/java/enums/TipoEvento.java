@@ -17,5 +17,6 @@ public enum TipoEvento {
     UNIRSE_SALA,
     SALA_ACTUALIZADA,
     INFO_SALA,
-    SOLICITUD_SALA
+    SOLICITUD_SALA,
+    SALA_CREADA
 }

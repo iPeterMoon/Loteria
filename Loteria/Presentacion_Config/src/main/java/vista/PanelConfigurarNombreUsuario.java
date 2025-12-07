@@ -38,7 +38,7 @@ public class PanelConfigurarNombreUsuario extends javax.swing.JPanel {
     }
 
     public String obtenerNombreIngresado() {
-        return txtNombreUsuario.getText();
+        return txtNombreUsuario.getText().trim();
     }
 
     /**

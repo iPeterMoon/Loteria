@@ -4,17 +4,20 @@
  */
 package modelo;
 
+import dtos.aplicacion.MensajeDTO;
+import enums.TipoMensajePantalla;
 import util.Subject;
 
 /**
  *
  * @author Alici
  */
-public abstract class MensajeSubject extends Subject {
+public class MensajeSubject extends Subject {
 
     private String titulo;
     private String mensaje;
     private boolean fueExitoso;
+    private TipoMensajePantalla tipoMensaje;
 
     public String getMensaje() {
         return mensaje;
@@ -26,6 +29,18 @@ public abstract class MensajeSubject extends Subject {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public TipoMensajePantalla getTipoMensaje() {
+        return tipoMensaje;
+    }
+
+    public void actualizarMensaje(MensajeDTO mensajeDTO) {
+        titulo = mensajeDTO.getTitulo();
+        mensaje = mensajeDTO.getMensaje();
+        fueExitoso = mensajeDTO.isFueExitoso();
+        tipoMensaje = mensajeDTO.getTipoMensaje();
+        notifyAllObservers();
     }
 
 }

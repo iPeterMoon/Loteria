@@ -12,18 +12,18 @@ import modelo.IModeloControlNegocio;
  * @author Alici
  */
 public class ControlConfiguracion {
-
+    
     private final IModeloControlNegocio controlModelo;
-
+    
     public ControlConfiguracion(IModeloControlNegocio controlModelo) {
         if (controlModelo == null) {
             throw new IllegalArgumentException("La dependencia IModeloControlConfiguracion no puede ser nula.");
         }
         this.controlModelo = controlModelo;
     }
-
-    public void configurarUsuario(NuevoUsuarioDTO nuevoUsuario) {
-//        controlModelo.
+    
+    public void configurarUsuarioNuevaSala(NuevoUsuarioDTO nuevoUsuario) {
+        controlModelo.configurarUsuarioNuevaSala(nuevoUsuario);
     }
-
+    
 }

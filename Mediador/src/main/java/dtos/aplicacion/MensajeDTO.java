@@ -4,6 +4,8 @@
  */
 package dtos.aplicacion;
 
+import enums.TipoMensajePantalla;
+
 /**
  *
  * @author Alici
@@ -12,8 +14,17 @@ public class MensajeDTO {
 
     private String titulo;
     private String mensaje;
+    private boolean fueExitoso;
+    private TipoMensajePantalla tipoMensaje;
 
     public MensajeDTO() {
+    }
+
+    public MensajeDTO(String titulo, String mensaje, boolean fueExitoso, TipoMensajePantalla tipoMensaje) {
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.fueExitoso = fueExitoso;
+        this.tipoMensaje = tipoMensaje;
     }
 
     public String getTitulo() {
@@ -30,6 +41,22 @@ public class MensajeDTO {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public boolean isFueExitoso() {
+        return fueExitoso;
+    }
+
+    public void setFueExitoso(boolean fueExitoso) {
+        this.fueExitoso = fueExitoso;
+    }
+
+    public TipoMensajePantalla getTipoMensaje() {
+        return tipoMensaje;
+    }
+
+    public void setTipoMensaje(TipoMensajePantalla tipoMensaje) {
+        this.tipoMensaje = tipoMensaje;
     }
 
 }

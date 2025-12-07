@@ -4,12 +4,14 @@ import Modal.MensajeDialog;
 import controladores.ControlesConfiguracionFactory;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.TipoConfiguracion;
+import enums.TipoMensajePantalla;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import modelo.AvatarSubject;
 import modelo.ConfiguracionSubject;
-import modelo.ValidacionUsuarioSubject;
+import modelo.MensajeSubject;
 import util.Subject;
 
 /**
@@ -18,12 +20,18 @@ import util.Subject;
  */
 public class PanelConfiguracionUsuario extends javax.swing.JPanel {
 
+    private Frame ventanaPrincipal;
+
     /**
      * Creates new form PanelConfiguracionUsuario
      */
     public PanelConfiguracionUsuario() {
         initComponents();
         setBotonesCrearSala();
+    }
+
+    public void configurarFramePadre(Frame ventanaPadre) {
+        ventanaPrincipal = ventanaPadre;
     }
 
     /**
@@ -47,15 +55,17 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
     }
 
     private void actualizarMensaje(Subject subject) {
-        if (subject instanceof ValidacionUsuarioSubject validacion) {
-            MensajeDialog mensajeDialog = new MensajeDialog(null, true);
-            mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
-            mensajeDialog.mostrarDialogo();
+        if (subject instanceof MensajeSubject validacion) {
+            if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_USUARIO) {
+                MensajeDialog mensajeDialog = new MensajeDialog(ventanaPrincipal, true);
+                mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
+                mensajeDialog.mostrarDialogo();
 
-            if (validacion.isExitoso()) {
-                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-                controles.getControlAplicacion().mostrarPanelConfigurarSala();
-                resetCampos();
+                if (validacion.isExitoso()) {
+                    ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                    controles.getControlAplicacion().mostrarPanelConfigurarSala();
+                    resetCampos();
+                }
             }
         }
     }
@@ -108,7 +118,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
                 ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
                 NuevoUsuarioDTO nuevoUsuario = new NuevoUsuarioDTO();
                 nuevoUsuario.setNickname(panelConfigurarNombreUsuario.obtenerNombreIngresado());
-                controles.getControlConfiguracion().configurarUsuario(nuevoUsuario);
+                controles.getControlConfiguracion().configurarUsuarioNuevaSala(nuevoUsuario);
             }
         };
         btnRegresar.setAction(accionRegresar);

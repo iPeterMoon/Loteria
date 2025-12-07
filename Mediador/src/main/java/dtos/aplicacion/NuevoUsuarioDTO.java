@@ -24,7 +24,7 @@ public class NuevoUsuarioDTO {
     /**
      * Valor para identificar si es quien creó la sala o no.
      */
-    private boolean jugadorPrincipal;
+    private boolean esHost;
 
     /**
      * Constructor vacío.
@@ -49,8 +49,8 @@ public class NuevoUsuarioDTO {
      *
      * @return boolean indicando si el jugador es principal o no
      */
-    public boolean isJugadorPrincipal() {
-        return jugadorPrincipal;
+    public boolean isEsHost() {
+        return esHost;
     }
 
     /**
@@ -59,8 +59,8 @@ public class NuevoUsuarioDTO {
      * @param esJugadorPrincipal Boolean indicando si el jugador es principal o
      * no
      */
-    public void setJugadorPrincipal(boolean esJugadorPrincipal) {
-        this.jugadorPrincipal = esJugadorPrincipal;
+    public void setEsHost(boolean esHost) {
+        this.esHost = esHost;
     }
 
     /**

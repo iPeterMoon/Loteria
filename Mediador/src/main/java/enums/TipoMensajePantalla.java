@@ -6,12 +6,9 @@ package enums;
 
 /**
  *
- * @author Jp
+ * @author Alici
  */
-public enum JugadasDisponibles {
-    CHORRO,
-    CENTRO,
-    CUATROESQUINAS,
-    LLENA;
-
+public enum TipoMensajePantalla {
+    VALIDACION_USUARIO,
+    VALIDACION_CONFIG_PARTIDA;
 }

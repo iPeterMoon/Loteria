@@ -3,6 +3,7 @@ package modelo;
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import enums.Pantalla;
 import dtos.aplicacion.JugadorSalaEsperaDTO;
+import dtos.aplicacion.MensajeDTO;
 import enums.TipoNivel;
 import interfaces.IModeloVistaConfiguracion;
 import interfaces.IObserver;
@@ -19,6 +20,7 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     private SalaSubject salaSubject;
     private ConfiguracionSubject configuracionSubject;
     private AvatarSubject avatarSubject;
+    private MensajeSubject mensajeSubject;
     private PantallaActualSubject pantallaSubject;
     private List<JugadorSalaEsperaDTO> jugadores;
     private IObserver observer = new ModelObserverConfig();
@@ -36,6 +38,11 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
         configurarSalaSubject();
     }
 
+    public AvatarSubject getAvatarSubject() {
+        return avatarSubject;
+    }
+
+    
 //    //Son iguales??
 //    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores) {
 //        this.salaSubject.setJugadores(jugadores);
@@ -55,11 +62,17 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
         configurarSalaSubject();
         configurarAvatarSubject();
         configurarPantallaActualSubject();
+        configurarMensajeSubject();
     }
 
     private void configurarSalaSubject() {
         this.salaSubject = new SalaSubject();
         this.salaSubject.addObserver(this.observer);
+    }
+
+    private void configurarMensajeSubject() {
+        this.mensajeSubject = new MensajeSubject();
+        this.mensajeSubject.addObserver(observer);
     }
 
     private void configurarAvatarSubject() {
@@ -82,6 +95,11 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
 
     public void actualizarPantalla(Pantalla pantalla) {
         pantallaSubject.setPantallaActual(pantalla);
+    }
+
+    @Override
+    public void actualizarMensaje(MensajeDTO mensaje) {
+        mensajeSubject.actualizarMensaje(mensaje);
     }
 
 }

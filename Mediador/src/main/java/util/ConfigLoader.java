@@ -21,6 +21,7 @@ public class ConfigLoader {
         String ip_servidor = "automundo.ddns.net";
         int puerto_discovery = 5000;
         int puerto_matchmaker = 6000;
+        String usuario_matchmaker = "MATCHMAKER";
     }
 
     // Constructor privado para Singleton
@@ -65,4 +66,9 @@ public class ConfigLoader {
     public int getPuertoMatchmaker() {
         return config.puerto_matchmaker;
     }
+
+    public String getUsuarioMatchmaker() {
+        return config.usuario_matchmaker;
+    }
+
 }

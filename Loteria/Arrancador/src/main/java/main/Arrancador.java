@@ -2,12 +2,18 @@ package main;
 
 import controladores.ControlesConfiguracionFactory;
 import interfaces.IModeloJuego;
+import interfaces.IModeloVistaConfiguracion;
+import interfaces.IModeloVistaJuego;
+import interfaces.IObserver;
 import modelo.IModeloControlAplicacion;
 import modelo.IModeloControlNegocio;
 import modelo.ModeloControlAplicacion;
 import modelo.ModeloControlConfigImp;
 import modelo.ModeloJuegoFacade;
+import modelo.ModeloVistaConfiguracionFacade;
+import modelo.ModeloVistaFacade;
 import peer.PeerFacade;
+import procesadores_modelo.ProcesadorEventos;
 import ventanas.FrameConfiguracion;
 
 /**
@@ -33,18 +39,19 @@ public class Arrancador {
 
 //        controlesFactory.getControlAplicacion().iniciar();
 //        //Obtener la fachada de la vista.
-//        IModeloVistaJuego modeloVista = ModeloVistaFacade.getInstance();
+        IModeloVistaJuego modeloVistaJuego = ModeloVistaFacade.getInstance();
+        IModeloVistaConfiguracion modeloVistaConfiguracion = ModeloVistaConfiguracionFacade.getInstance();
 //
 //        //Iniciar el componente de peer
-//        IObserver modeloJuegoObserver = new ProcesadorEventos();
-//        PeerFacade nuevoPeer = new PeerFacade();
-//        nuevoPeer.setObserver(modeloJuegoObserver);
+        IObserver modeloJuegoObserver = new ProcesadorEventos();
+        PeerFacade nuevoPeer = new PeerFacade();
+        nuevoPeer.setObserver(modeloJuegoObserver);
 //        
 //        Cantador cantador = Cantador.getInstance();
 //
 //        // 1. Configuración de dependencias del Modelo
 //        // 1.1 Crear ModeloJuego (necesita IModeloVista)
-//        ModeloJuegoFacade.getInstance().inicializar(modeloVista, nuevoPeer);
+        ModeloJuegoFacade.getInstance().inicializar(modeloVistaJuego, modeloVistaConfiguracion, nuevoPeer);
 //        IModeloJuego modeloJuego = ModeloJuegoFacade.getInstance();
 //
 //        // 1.2 Crear ModeloControl(necesita IModeloJuego)

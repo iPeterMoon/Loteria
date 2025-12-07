@@ -7,6 +7,7 @@ import dtos.aplicacion.FichaDTO;
 import dtos.aplicacion.JugadaDTO;
 import dtos.aplicacion.JugadorDTO;
 import dtos.aplicacion.JugadorSalaEsperaDTO;
+import dtos.aplicacion.MensajeDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
@@ -30,38 +31,40 @@ import enums.TipoNivel;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-    
+
     private static ModeloJuegoFacade instancia;
     //Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
     private IModeloVistaConfiguracion vistaConfiguracion;
-    
+
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
     private final CantadorManager cantadorManager = new CantadorManager();
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
     private final UnirsePartidaManager unirsePartidaManager = new UnirsePartidaManager();
     private final ConfiguracionManager configuracionManager = new ConfiguracionManager();
-    
+
     private ModeloJuegoFacade() {
     }
-    
+
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-    
-    public void inicializar(IModeloVistaJuego modeloVista, IPeer peer) {
+
+    public void inicializar(IModeloVistaJuego modeloVistaJuego, IModeloVistaConfiguracion modeloVistaConfiguracion, IPeer peer) {
         if (this.vistaJuego != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
-        this.vistaJuego = modeloVista;
-        
+        this.vistaJuego = modeloVistaJuego;
+        this.vistaConfiguracion = modeloVistaConfiguracion;
+
         movimientoManager.inicializar(peer);
-        inicioPartidaManager.inicializar(peer, modeloVista);
+        configuracionManager.inicializar(peer);
+        inicioPartidaManager.inicializar(peer, modeloVistaJuego);
         cantadorManager.inicializar(peer);
         cantarJugadaManager.inicializar(peer);
     }
@@ -120,20 +123,20 @@ public class ModeloJuegoFacade implements IModeloJuego {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vistaJuego.colocarFicha(fichaDTO);
     }
-    
+
     @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
         cantadorManager.iniciarCanto();
     }
-    
+
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
-    
+
     @Override
     public void mostrarFramePartida() {
         inicioPartidaManager.mostrarFramePartida();
@@ -197,9 +200,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
         }
         vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera);
     }
-    
+
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
+     *
      * @param limiteJugadores El limite de jugadores en la sala.
      * @param nivel El nivel de la partida.
      */
@@ -207,15 +211,19 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
         vistaConfiguracion.actualizarDatosSala(limiteJugadores, nivel);
     }
-    
+
     @Override
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario) {
         configuracionManager.configurarUsuarioNuevaSala(usuario);
+    }
+
+    public void mostrarMensaje(MensajeDTO mensaje) {
+        vistaConfiguracion.actualizarMensaje(mensaje);
     }
 
     @Override
     public void actualizarSala(List<JugadorDTO> jugadores) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

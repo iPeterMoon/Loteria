@@ -23,7 +23,7 @@ import vista.PanelSalaEspera;
  * @author Jp
  */
 public class FrameConfiguracion extends JFrame {
-
+    
     private CardLayout cardLayout;
     private PanelConfiguracionUsuario panelConfiguracionUsuario = new PanelConfiguracionUsuario();
     private PanelConfiguracionJuego panelConfiguracionPartida = new PanelConfiguracionJuego();
@@ -41,39 +41,41 @@ public class FrameConfiguracion extends JFrame {
         initComponents();
         configurarCardLayout();
     }
-
+    
     public static FrameConfiguracion getInstancia() {
         if (instancia == null) {
             instancia = new FrameConfiguracion();
         }
         return instancia;
     }
-
+    
     public void configurarCardLayout() {
         cargarPantallas();
         cardLayout.show(panelContenedor, Pantalla.MENU.getNombre());
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
-
+    
     private void cargarPantallas() {
         panelContenedor.add(panelMenu, Pantalla.MENU.getNombre());
         panelContenedor.add(panelConfiguracionUsuario, Pantalla.CONFIGURAR_USUARIO.getNombre());
         panelContenedor.add(panelConfiguracionPartida, Pantalla.CONFIGURAR_PARTIDA.getNombre());
+        
+        panelConfiguracionUsuario.configurarFramePadre(this);
     }
-
+    
     private void iniciarVentana() {
         setIconImage();
         setLayout();
     }
-
+    
     private void setLayout() {
         setLayout(new java.awt.BorderLayout()); // <-- Cambia el layout del JFrame
         cardLayout = new CardLayout();
         panelContenedor = new JPanel(cardLayout);
         add(panelContenedor, java.awt.BorderLayout.CENTER);
     }
-
+    
     private void setIconImage() {
         try {
             setIconImage(new ImageIcon(getClass().getResource("/cartas/1.jpeg")).getImage());
@@ -92,7 +94,7 @@ public class FrameConfiguracion extends JFrame {
             cardLayout.show(panelContenedor, pantalla.getPantallaActual().getNombre());
         }
         panelConfiguracionUsuario.actualizarVista(subject);
-
+        
         if (subject instanceof SalaSubject sala) {
             panelSalaEspera.actualizarSala(sala.getJugadores(), sala.getNivel(), sala.getLimiteJugadores());
         }
