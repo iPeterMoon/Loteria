@@ -4,7 +4,7 @@
  */
 package vista;
 
-import dtos.JugadorSalaEsperaDTO;
+import dtos.aplicacion.JugadorSalaEsperaDTO;
 import java.awt.GridLayout;
 import java.util.List;
 
@@ -19,19 +19,19 @@ public class PanelListaJugadores extends javax.swing.JPanel {
      */
     public PanelListaJugadores() {
         initComponents();
-        pnlContenedorLista.setLayout(new GridLayout(1, 0, 10, 0)); 
+        pnlContenedorLista.setLayout(new GridLayout(1, 0, 10, 0));
     }
-    
+
     public void actualizarListaJugadores(List<JugadorSalaEsperaDTO> jugadores, int limiteMaximo) {
         pnlContenedorLista.removeAll();
 
         for (JugadorSalaEsperaDTO jugador : jugadores) {
             PanelJugadorIndividual panelJugador = new PanelJugadorIndividual();
-            panelJugador.configurarJugador(jugador); 
+            panelJugador.configurarJugador(jugador);
             pnlContenedorLista.add(panelJugador);
         }
 
-        lblCantidadJugadores.setText("(" + jugadores.size() + "/" + limiteMaximo + ")"); 
+        lblCantidadJugadores.setText("(" + jugadores.size() + "/" + limiteMaximo + ")");
 
         pnlContenedorLista.revalidate();
         pnlContenedorLista.repaint();

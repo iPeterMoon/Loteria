@@ -212,5 +212,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario) {
         configuracionManager.configurarUsuarioNuevaSala(usuario);
     }
+
+    @Override
+    public void actualizarSala(List<JugadorDTO> jugadores) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

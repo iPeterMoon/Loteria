@@ -1,7 +1,6 @@
 package modelo;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
-import dtos.JugadorSalaEsperaDTO;
 import enums.TipoNivel;
 import java.util.List;
 import java.util.ArrayList;
@@ -51,8 +50,8 @@ public class SalaSubject extends Subject {
         this.jugadores = jugadores;
         notifyAllObservers();
     }
-    
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel){
+
+    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
         this.limiteJugadores = limiteJugadores;
         this.nivel = nivel;
         notifyAllObservers();

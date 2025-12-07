@@ -1,6 +1,6 @@
 package vista;
 
-import dtos.JugadorSalaEsperaDTO;
+import dtos.aplicacion.JugadorSalaEsperaDTO;
 
 /**
  *

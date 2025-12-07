@@ -29,24 +29,6 @@ public class ControlAplicacion {
         this.controlModelo = controlModelo;
     }
 
-    public void iniciar() {
-        cardLayout = ventanaPrincipal.getCardLayout();
-
-        // OBTENER PANELES DEL CARDLAYOUT
-        PanelMenu panelMenu = ventanaPrincipal.getPanelMenu();
-        PanelConfiguracionUsuario panelConfUsuario = ventanaPrincipal.getPanelConfiguracionUsuario();
-        PanelSalaEspera panelSalaEspera = ventanaPrincipal.getPanelSalaEspera();
-
-        // AGREGAR PANELES AL CARDLAYOUT
-        panelContenedor.add(panelMenu, MENU);
-        panelContenedor.add(panelConfUsuario, CONFIGURACION_USUARIO);
-        panelContenedor.add(panelSalaEspera, SALA_ESPERA);
-
-        cardLayout.show(panelContenedor, MENU);
-        ventanaPrincipal.setVisible(true);
-        ventanaPrincipal.setLocationRelativeTo(null);
-    }
-
     public void cambiarAvatar(int accion) {
         controlModelo.siguienteAvatar(accion);
     }
@@ -69,7 +51,7 @@ public class ControlAplicacion {
      */
     public void mostrarPanelSala() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -78,18 +60,18 @@ public class ControlAplicacion {
      */
     public void mostrarPanelSalaEsperaJuego() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void mostrarPanelSalaEspera(boolean unido) {
-        cardLayout.show(panelContenedor, SALA_ESPERA);
-        PanelSalaEspera panelSalaEspera = ventanaPrincipal.getPanelSalaEspera();
+        controlModelo.siguientePantalla(Pantalla.SALA_ESPERA);
 
-        if (unido) {
-            panelSalaEspera.configurarModoJugadorUnido();
-        } else {
-            panelSalaEspera.configurarModoJugadorNoUnido();
-        }
+        //hay que mover esto al frame de ser posible
+//        if (unido) {
+//            panelSalaEspera.configurarModoJugadorUnido();
+//        } else {
+//            panelSalaEspera.configurarModoJugadorNoUnido();
+//        }
     }
 
     public void unirseASala() {

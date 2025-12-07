@@ -2,7 +2,7 @@ package modelo;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import enums.Pantalla;
-import dtos.JugadorSalaEsperaDTO;
+import dtos.aplicacion.JugadorSalaEsperaDTO;
 import enums.TipoNivel;
 import interfaces.IModeloVistaConfiguracion;
 import interfaces.IObserver;
@@ -36,11 +36,10 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
         configurarSalaSubject();
     }
 
-    //Son iguales??
-    @Override
-    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores) {
-        this.salaSubject.setJugadores(jugadores);
-    }
+//    //Son iguales??
+//    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores) {
+//        this.salaSubject.setJugadores(jugadores);
+//    }
     /// -->>
     @Override
     public void actualizarJugadoresSala(List<JugadorSalaEsperaDTO> jugadores) {

@@ -11,7 +11,8 @@ package enums;
 public enum Pantalla {
     MENU("menu"),
     CONFIGURAR_USUARIO("configurar_usuario"),
-    CONFIGURAR_PARTIDA("configurar_partida");
+    CONFIGURAR_PARTIDA("configurar_partida"),
+    SALA_ESPERA("sala_espera");
 
     private final String nombre;
 

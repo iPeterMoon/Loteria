@@ -1,4 +1,4 @@
-package dtos;
+package dtos.aplicacion;
 
 import enums.JugadasDisponibles;
 import enums.TipoNivel;

@@ -1,6 +1,6 @@
 package modelo;
 
-import dtos.aplicacion.ConfiguracionDTO;
+import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 
 /**
@@ -17,5 +17,5 @@ public interface IModeloControlNegocio {
 
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuarioNuevo);
 
-    public void configurarPartida(ConfiguracionDTO configuracion);
+    public void configurarPartida(ConfiguracionJuegoDTO configuracion);
 }

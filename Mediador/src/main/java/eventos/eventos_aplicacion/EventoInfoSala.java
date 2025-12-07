@@ -1,6 +1,6 @@
 package eventos.eventos_aplicacion;
 
-import dtos.SalaDTO;
+import dtos.aplicacion.SalaDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 

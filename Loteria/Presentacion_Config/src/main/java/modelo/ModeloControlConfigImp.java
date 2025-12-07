@@ -1,6 +1,6 @@
 package modelo;
 
-import dtos.aplicacion.ConfiguracionDTO;
+import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import interfaces.IModeloJuego;
 
@@ -38,7 +38,7 @@ public class ModeloControlConfigImp implements IModeloControlNegocio {
     }
 
     @Override
-    public void configurarPartida(ConfiguracionDTO configuracion) {
+    public void configurarPartida(ConfiguracionJuegoDTO configuracion) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
