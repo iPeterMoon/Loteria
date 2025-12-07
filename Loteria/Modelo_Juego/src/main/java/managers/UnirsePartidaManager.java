@@ -22,7 +22,7 @@ public class UnirsePartidaManager {
      
     public void unirseSala(NuevoUsuarioDTO usuario){
         componentePeer.setUser(usuario.getNickname());
-        EventoUnirsePartida eventoUnirsePartida = new EventoUnirsePartida(usuario.getNickname(), usuario.getNickname(), usuario.getIdAvatarSeleccionado());
+        EventoUnirseSala eventoUnirsePartida = new EventoUnirseSala(usuario.getNickname(), usuario.getNickname(), usuario.getIdAvatarSeleccionado());
         componentePeer.directMessage(eventoUnirsePartida, "MATCHMAKER");
     }
     

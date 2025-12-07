@@ -11,14 +11,32 @@ import eventos.Evento;
  *
  * @author norma
  */
-public class EventoUnirsePartida extends Evento{
+public class EventoUnirseSala extends Evento{
     
     private String nickname;
     private int avatar;
     
-    public EventoUnirsePartida(String userSender, String nickname, int avatar) {
+    public EventoUnirseSala(String userSender, String nickname, int avatar) {
         super(TipoEvento.UNIRSE_SALA, userSender);
         this.nickname = nickname;
         this.avatar = avatar;
     }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(int avatar) {
+        this.avatar = avatar;
+    }
+    
+    
 }

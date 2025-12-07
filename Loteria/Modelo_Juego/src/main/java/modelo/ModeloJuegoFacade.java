@@ -22,6 +22,7 @@ import managers.UnirsePartidaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
 import managers.ConfiguracionManager;
+import enums.TipoNivel;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -189,12 +190,22 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * @param jugadores Los jugadores de la sala.
      */
     @Override
-    public void actualizarSala(List<JugadorDTO> jugadores) {
+    public void actualizarJugadoresSala(List<JugadorDTO> jugadores) {
         List<JugadorSalaEsperaDTO> jugadoresSalaEspera = new ArrayList<>();
         for (JugadorDTO dto : jugadores) {
             jugadoresSalaEspera.add(JugadorMapperModelo.toSalaEsperaDTO(dto));
         }
-        vistaConfiguracion.actualizarSala(jugadoresSalaEspera);
+        vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera);
+    }
+    
+    /**
+     * Método que actualiza los datos de la sala (limite de jugadores y nivel).
+     * @param limiteJugadores El limite de jugadores en la sala.
+     * @param nivel El nivel de la partida.
+     */
+    @Override
+    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
+        vistaConfiguracion.actualizarDatosSala(limiteJugadores, nivel);
     }
     
     @Override

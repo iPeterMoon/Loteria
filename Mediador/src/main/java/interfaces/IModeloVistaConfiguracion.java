@@ -1,6 +1,7 @@
 package interfaces;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
+import enums.TipoNivel;
 import java.util.List;
 
 /**
@@ -9,7 +10,8 @@ import java.util.List;
  */
 public interface IModeloVistaConfiguracion {
     
-    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores);
+    public void actualizarJugadoresSala(List<JugadorSalaEsperaDTO> jugadores);
     
-    public void obtenerDatosDeLaSala(List<JugadorSalaEsperaDTO> jugadores, String nivel);
+    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
+    
 }

@@ -1,6 +1,8 @@
 package modelo;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
+import dtos.JugadorSalaEsperaDTO;
+import enums.TipoNivel;
 import java.util.List;
 import java.util.ArrayList;
 import util.Subject;
@@ -11,25 +13,34 @@ import util.Subject;
  */
 public class SalaSubject extends Subject {
 
-    private String nivel;
-
+    private TipoNivel nivel;
+    private int limiteJugadores;
     private List<JugadorSalaEsperaDTO> jugadores;
 
     public SalaSubject() {
         this.jugadores = new ArrayList<>();
     }
 
-    public SalaSubject(String nivel, List<JugadorSalaEsperaDTO> jugadores) {
+    public SalaSubject(TipoNivel nivel, int limiteJugadores, List<JugadorSalaEsperaDTO> jugadores) {
         this.nivel = nivel;
+        this.limiteJugadores = limiteJugadores;
         this.jugadores = jugadores;
     }
 
-    public String getNivel() {
+    public TipoNivel getNivel() {
         return nivel;
     }
 
-    public void setNivel(String nivel) {
+    public void setNivel(TipoNivel nivel) {
         this.nivel = nivel;
+    }
+
+    public int getLimiteJugadores() {
+        return limiteJugadores;
+    }
+
+    public void setLimiteJugadores(int limiteJugadores) {
+        this.limiteJugadores = limiteJugadores;
     }
 
     public List<JugadorSalaEsperaDTO> getJugadores() {
@@ -40,20 +51,11 @@ public class SalaSubject extends Subject {
         this.jugadores = jugadores;
         notifyAllObservers();
     }
-
-    public void agregarJugador(JugadorSalaEsperaDTO nuevoJugador) {
-        if (this.jugadores == null) {
-            this.jugadores = new ArrayList<>();
-        }
-        this.jugadores.add(nuevoJugador);
+    
+    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel){
+        this.limiteJugadores = limiteJugadores;
+        this.nivel = nivel;
         notifyAllObservers();
-    }
-
-    public void eliminarJugador(String nickname) {
-        if (this.jugadores != null) {
-            this.jugadores.removeIf(j -> j.getNickname().equals(nickname));
-            notifyAllObservers();
-        }
     }
 
 }
