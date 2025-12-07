@@ -184,7 +184,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
      */
     @Override
     public void unirseSala(NuevoUsuarioDTO usuario) {
-        unirsePartidaManager.unirseSala(usuario);
+        boolean usuarioValido = configuracionManager.configurarUsuarioUnirseSala(usuario);
+        if (usuarioValido) {
+            unirsePartidaManager.unirseSala(usuario);
+        }
     }
 
     /**

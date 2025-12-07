@@ -22,14 +22,9 @@ public class ModeloControlConfigImp implements IModeloControlNegocio {
     }
     
     @Override
-    public void obtenerAvatars() {
-//        Map<Integer, Image> opciones = modeloJuego.obtenerAvatars();
-//        vista.mostrarAvatares(opciones);
-    }
-    
-    @Override
-    public void unirseSala(NuevoUsuarioDTO usuario) {
-        modeloJuego.unirseSala(usuario);
+    public void unirseSala(NuevoUsuarioDTO usuarioNuevo) {
+        usuarioNuevo.setIdAvatarSeleccionado(ModeloVistaConfiguracionFacade.getInstance().getAvatarSubject().getNumeroAvatar());
+        modeloJuego.unirseSala(usuarioNuevo);
     }
     
     @Override

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import peerManager.PeerCleaner;
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import enums.TipoEvento;
 import eventos.eventos_peers.EventoHeartbeat;
 

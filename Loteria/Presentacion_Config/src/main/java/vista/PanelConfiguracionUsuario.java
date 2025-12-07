@@ -21,6 +21,7 @@ import util.Subject;
 public class PanelConfiguracionUsuario extends javax.swing.JPanel {
 
     private Frame ventanaPrincipal;
+    private TipoConfiguracion configuracionActual;
 
     /**
      * Creates new form PanelConfiguracionUsuario
@@ -63,7 +64,12 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
 
                 if (validacion.isExitoso()) {
                     ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-                    controles.getControlAplicacion().mostrarPanelConfigurarSala();
+
+                    if (this.configuracionActual == TipoConfiguracion.CREAR_SALA) {
+                        controles.getControlAplicacion().mostrarPanelConfigurarSala();
+                    } else if (this.configuracionActual == TipoConfiguracion.UNIRSE_SALA) {
+                        controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                    }
                     resetCampos();
                 }
             }
@@ -73,6 +79,9 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
     private void actualizarBotones(Subject subject) {
         if (subject instanceof ConfiguracionSubject configuracionSubject) {
             TipoConfiguracion configuracion = configuracionSubject.getTipoConfiguracion();
+            
+            this.configuracionActual = configuracion; 
+          
             if (configuracion == TipoConfiguracion.CREAR_SALA) {
                 setBotonesCrearSala();
             }
@@ -95,7 +104,9 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-                controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                NuevoUsuarioDTO nuevoUsuario = new NuevoUsuarioDTO();
+                nuevoUsuario.setNickname(panelConfigurarNombreUsuario.obtenerNombreIngresado());
+                controles.getControlConfiguracion().unirseSala(nuevoUsuario);
             }
         };
         btnRegresar.setAction(accionRegresar);
@@ -141,9 +152,9 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
     private void initComponents() {
 
         panelConfigurarNombreUsuario = new vista.PanelConfigurarNombreUsuario();
+        btnSiguiente = new javax.swing.JButton();
         panelSeleccionarAvatar = new vista.PanelSeleccionarAvatar();
         jLabel1 = new javax.swing.JLabel();
-        btnSiguiente = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 178, 0));
@@ -151,15 +162,15 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1336, 768));
         setPreferredSize(new java.awt.Dimension(1336, 768));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 60)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Configuración de usuario");
-
         btnSiguiente.setBackground(new java.awt.Color(100, 13, 95));
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
         btnSiguiente.setText("placeholder...");
         btnSiguiente.setActionCommand("");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 60)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Configuración de usuario");
 
         btnRegresar.setBackground(new java.awt.Color(235, 91, 0));
         btnRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

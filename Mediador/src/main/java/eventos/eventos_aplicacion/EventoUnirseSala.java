@@ -4,6 +4,7 @@
  */
 package eventos.eventos_aplicacion;
 
+import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 
@@ -13,30 +14,19 @@ import eventos.Evento;
  */
 public class EventoUnirseSala extends Evento{
     
-    private String nickname;
-    private int avatar;
+    private NuevoUsuarioDTO usuario;
     
-    public EventoUnirseSala(String userSender, String nickname, int avatar) {
+    public EventoUnirseSala(String userSender, NuevoUsuarioDTO usuario) {
         super(TipoEvento.UNIRSE_SALA, userSender);
-        this.nickname = nickname;
-        this.avatar = avatar;
+        this.usuario = usuario;
     }
 
-    public String getNickname() {
-        return nickname;
+    public NuevoUsuarioDTO getUsuario() {
+        return usuario;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(int avatar) {
-        this.avatar = avatar;
-    }
-    
+    public void setUsuario(NuevoUsuarioDTO usuario) {
+        this.usuario = usuario;
+    }   
     
 }

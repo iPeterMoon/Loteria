@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 
 public class ListaPeers {
 // Mapa privado de peers conectados (sin tiempos)

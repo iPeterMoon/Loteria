@@ -2,6 +2,7 @@ package procesadores;
 
 import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.NuevoUsuarioDTO;
 import dtos.aplicacion.SalaDTO;
 import enums.TipoEvento;
 import enums.TipoNivel;
@@ -11,6 +12,7 @@ import eventos.eventos_aplicacion.EventoSalaActualizada;
 import eventos.eventos_aplicacion.EventoUnirseSala;
 import implementaciones.Matchmaker;
 import implementaciones.Sala;
+import util.ConfigLoader;
 
 /**
  *
@@ -32,16 +34,17 @@ public class ManejadorUnirseSala extends ManejadorEventos {
 
     private void manejarUnirseSala(EventoUnirseSala evento) {
         
+        NuevoUsuarioDTO usuarioDTO = evento.getUsuario();
         JugadorDTO nuevoJugador = new JugadorDTO();
-        nuevoJugador.setNickname(evento.getNickname());
-        nuevoJugador.setFotoPerfil(evento.getAvatar());
+        nuevoJugador.setNickname(usuarioDTO.getNickname());
+        nuevoJugador.setFotoPerfil(usuarioDTO.getIdAvatarSeleccionado());
         
         sala.agregarJugador(nuevoJugador);
                 
-        EventoInfoSala eventoPeticionInfoSala = new EventoInfoSala("MATCHMAKER", obtenerSalaActual());
+        EventoInfoSala eventoPeticionInfoSala = new EventoInfoSala(ConfigLoader.getInstance().getUsuarioMatchmaker(), obtenerSalaActual());
         matchmaker.directMessage(eventoPeticionInfoSala, evento.getUserSender());
                 
-        EventoSalaActualizada eventoSalaActualizada = new EventoSalaActualizada("MATCHMAKER",sala.getJugadores());
+        EventoSalaActualizada eventoSalaActualizada = new EventoSalaActualizada(ConfigLoader.getInstance().getUsuarioMatchmaker(),sala.getJugadores());
         matchmaker.broadcast(eventoSalaActualizada);
         
     }

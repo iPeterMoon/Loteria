@@ -58,10 +58,8 @@ public class ConfiguracionManager {
         }
     }
 
-    public void configurarUsuarioUnirseSala(NuevoUsuarioDTO usuarioNuevo) {
-        if (validarUsuario(usuarioNuevo)) {
-            // aqui se enviaria el evento de unirse a sala
-        }
+    public boolean configurarUsuarioUnirseSala(NuevoUsuarioDTO usuarioNuevo) {
+        return validarUsuario(usuarioNuevo);
     }
 
     private boolean validarUsuario(NuevoUsuarioDTO usuarioNuevo) {

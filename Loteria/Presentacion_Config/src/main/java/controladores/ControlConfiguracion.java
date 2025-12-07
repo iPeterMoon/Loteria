@@ -26,4 +26,8 @@ public class ControlConfiguracion {
         controlModelo.configurarUsuarioNuevaSala(nuevoUsuario);
     }
     
+    public void unirseSala(NuevoUsuarioDTO nuevoUsuario) {
+        controlModelo.unirseSala(nuevoUsuario);
+    }
+    
 }

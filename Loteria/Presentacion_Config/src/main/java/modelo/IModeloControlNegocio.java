@@ -11,8 +11,6 @@ public interface IModeloControlNegocio {
 
     public void verificarExistenciaPartida();
 
-    public void obtenerAvatars();
-
     public void unirseSala(NuevoUsuarioDTO usuario);
 
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuarioNuevo);
