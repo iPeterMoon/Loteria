@@ -1,8 +1,8 @@
 package procesadores;
 
-import dtos.ConfiguracionJuegoDTO;
-import dtos.JugadorDTO;
-import dtos.SalaDTO;
+import dtos.aplicacion.ConfiguracionJuegoDTO;
+import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.SalaDTO;
 import enums.TipoEvento;
 import enums.TipoNivel;
 import eventos.Evento;

@@ -1,6 +1,7 @@
 package implementaciones;
 
-import dtos.JugadorDTO;
+import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.SalaDTO;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class Sala {
 
     /**
      * La lista de jugadores en la sala.
+     *
      * @return Lista de jugadores en la sala.
      */
     public List<JugadorDTO> getJugadores() {
@@ -75,5 +77,11 @@ public class Sala {
     public ConfiguracionJuego getConfiguracion() {
         return configuracion;
     }
-    
+
+    public void configurarNuevaSala(ConfiguracionJuego configuracion, JugadorDTO host) {
+        this.configuracion = configuracion;
+        this.jugadorHost = host.getNickname();
+        this.jugadores.add(host);
+    }
+
 }

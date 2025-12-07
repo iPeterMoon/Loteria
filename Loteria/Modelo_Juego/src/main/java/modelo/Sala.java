@@ -24,7 +24,9 @@ public class Sala {
     /**
      * Jugador host de la ronda
      */
-    private Jugador host;
+    private String host;
+
+    private ConfiguracionJuego configuracion;
 
     private static Sala instance;
 
@@ -67,16 +69,24 @@ public class Sala {
         this.jugadoresSecundario = jugadoresSecundario;
     }
 
-    public Jugador getHost() {
+    public void agregarJugadorSecundario(Jugador jugador) {
+        jugadoresSecundario.add(jugador);
+    }
+
+    public ConfiguracionJuego getConfiguracion() {
+        return configuracion;
+    }
+
+    public void setConfiguracion(ConfiguracionJuego configuracion) {
+        this.configuracion = configuracion;
+    }
+
+    public String getHost() {
         return host;
     }
 
-    public void setHost(Jugador host) {
+    public void setHost(String host) {
         this.host = host;
     }
 
-    public void agregarJugadorSecundario(Jugador jugador){
-        jugadoresSecundario.add(jugador);
-    }
-    
 }

@@ -17,33 +17,33 @@ import modelo.Sala;
  * @author rocha
  */
 public class CantadorManager implements IObserver {
-    
+
     /**
      * Componente peer para el envío de eventos.
      */
     private IPeer componentePeer;
-    
+
     /**
      * Cantador del modelo.
      */
     private Cantador cantador;
-    
+
     /**
      * Retraso de tiempo en milisegundos para manejar la ventaja del host.
      */
-    private final long RETRASO_MS = 100; 
+    private final long RETRASO_MS = 100;
 
     public void inicializar(IPeer peer) {
         if (this.componentePeer != null) {
             return;
         }
-        
+
         this.componentePeer = peer;
         this.cantador = Cantador.getInstance();
-        
+
         cantador.addObserver(this);
     }
-    
+
     /**
      * Inicia el canto del cantador en el modelo del jugador que es host.
      */
@@ -51,10 +51,10 @@ public class CantadorManager implements IObserver {
         if (!obtenerNicknameHost().equals(obtenerNicknameJugadorPrincipal())) {
             return;
         }
-        
+
         cantador.iniciarCanto(5000); // Intervalo mock, falta cambiarlo según la dificultad
     }
-    
+
     /**
      * Actualiza la carta de la vista mediante la fachada.
      */
@@ -62,14 +62,14 @@ public class CantadorManager implements IObserver {
         int cartaActual = Cantador.getInstance().getCartaActual();
         ModeloJuegoFacade.getInstance().actualizarCarta(cartaActual);
     }
-    
+
     /**
      * Envía el evento de carta cantada a todos los demás peers.
      */
     private void enviarCarta() {
         int cartaActual = cantador.getCartaActual();
         String nicknameHost = obtenerNicknameHost();
-        
+
         // Enviar evento a otros peers
         EventoCartaCantada evento = new EventoCartaCantada(nicknameHost, cartaActual);
         componentePeer.broadcastEvento(evento);
@@ -77,17 +77,18 @@ public class CantadorManager implements IObserver {
     }
 
     private String obtenerNicknameHost() { // Talvez cambiar a sala
-        Jugador host = Sala.getInstance().getHost();
-        return host.getNickname();
+        String host = Sala.getInstance().getHost();
+        return host;
     }
-    
+
     private String obtenerNicknameJugadorPrincipal() { // Talvez cambiar a sala
         Jugador principal = Sala.getInstance().getJugadorPrincipal();
         return principal.getNickname();
     }
-    
+
     /**
      * Escucha al cantador cada que canta una carta.
+     *
      * @param object objeto Cantador que notificó.
      */
     @Override

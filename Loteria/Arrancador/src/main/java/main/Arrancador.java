@@ -13,6 +13,7 @@ import modelo.ModeloJuegoFacade;
 import modelo.ModeloVistaConfiguracionFacade;
 import modelo.ModeloVistaFacade;
 import peer.PeerFacade;
+import procesadores.ProcesadorEventosMatchmaker;
 import procesadores_modelo.ProcesadorEventos;
 import ventanas.FrameConfiguracion;
 
@@ -44,8 +45,10 @@ public class Arrancador {
 //
 //        //Iniciar el componente de peer
         IObserver modeloJuegoObserver = new ProcesadorEventos();
+        IObserver modeloMatchmakerObserver = new ProcesadorEventosMatchmaker();
         PeerFacade nuevoPeer = new PeerFacade();
         nuevoPeer.setObserver(modeloJuegoObserver);
+        nuevoPeer.setObserver(modeloMatchmakerObserver);
 //        
 //        Cantador cantador = Cantador.getInstance();
 //

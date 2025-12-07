@@ -19,7 +19,7 @@ import modelo.Sala;
  *
  * @author norma
  */
-public class ManejadorEventoInfoSala extends ManejadorEventos{
+public class ManejadorEventoRecibirSala extends ManejadorEventos{
 
     @Override
     public void procesar(Evento evento) {
@@ -47,4 +47,5 @@ public class ManejadorEventoInfoSala extends ManejadorEventos{
                 evento.getSala().getConfiguracion().getDificultad());
         ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
     }
+    
 }
