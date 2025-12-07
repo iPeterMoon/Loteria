@@ -1,8 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package org.itson.arrancadormatchmaker;
+
+
+import implementaciones.Matchmaker;
+import interfaces.IObserver;
+import interfaces.IPeer;
+import peer.PeerFacade;
+import procesadores.ProcesadorEventos;
 
 /**
  *
@@ -11,6 +14,13 @@ package org.itson.arrancadormatchmaker;
 public class ArrancadorMatchMaker {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        IObserver matchmakerObserver = new ProcesadorEventos();
+        IPeer peer = new PeerFacade();
+        peer.setObserver(matchmakerObserver);
+
+        Matchmaker.getInstance().setPeer(peer);
+
+        peer.setUser("MATCHMAKER");
+        peer.start();
     }
 }
