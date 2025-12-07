@@ -37,6 +37,14 @@ public class Sala {
     }
 
     /**
+     * La lista de jugadores en la sala.
+     * @return Lista de jugadores en la sala.
+     */
+    public List<JugadorDTO> getJugadores() {
+        return jugadores;
+    }
+
+    /**
      * Establece el jugador que es el host de la sala con su nombre de usuario
      *
      * @param jugadorHost nombre de usuario del host
@@ -60,4 +68,12 @@ public class Sala {
     public void setConfiguracion(ConfiguracionJuego configuracion) {
         this.configuracion = configuracion;
     }
+
+    /**
+     * @return La configuración del juego.
+     */
+    public ConfiguracionJuego getConfiguracion() {
+        return configuracion;
+    }
+    
 }

@@ -6,6 +6,7 @@ package vista;
 
 import controladores.ControlesConfiguracionFactory;
 import dtos.JugadorSalaEsperaDTO;
+import enums.TipoNivel;
 import java.util.List;
 
 /**
@@ -21,9 +22,9 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores, String nivel, int limiteJugadores) {
+    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores, TipoNivel nivel, int limiteJugadores) {
         panelListaJugadores.actualizarListaJugadores(jugadores, limiteJugadores);
-        labelNivel.setText(nivel);
+        labelNivel.setText(nivel.toString());
     }
 
     public void configurarModoJugadorUnido() {

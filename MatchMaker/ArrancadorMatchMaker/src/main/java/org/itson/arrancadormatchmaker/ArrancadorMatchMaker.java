@@ -1,7 +1,7 @@
 package org.itson.arrancadormatchmaker;
 
 
-import implementaciones.Matchmaker;
+import implementacion.MatchMaker;
 import interfaces.IObserver;
 import interfaces.IPeer;
 import peer.PeerFacade;
@@ -18,7 +18,7 @@ public class ArrancadorMatchMaker {
         IPeer peer = new PeerFacade();
         peer.setObserver(matchmakerObserver);
 
-        Matchmaker.getInstance().setPeer(peer);
+        MatchMaker.getInstance().setPeer(peer);
 
         peer.setUser("MATCHMAKER");
         peer.start();

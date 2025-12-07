@@ -1,6 +1,8 @@
 eventos\eventos_aplicacion\EventoTarjetasBarajeadas.class
 eventos\eventos_aplicacion\EventoFicha.class
+dtos\SalaDTO.class
 dtos\JugadorSalaEsperaDTO.class
+enums\TipoNivel.class
 eventos\Evento.class
 eventos\eventos_aplicacion\EventoJugada.class
 dtos\NuevoUsuarioDTO.class
@@ -12,14 +14,15 @@ eventos\eventos_aplicacion\EventoIniciarPartida.class
 interfaces\IModeloVistaConfiguracion.class
 interfaces\IObserver.class
 util\ConfigLoader$ConfiguracionDefault.class
+dtos\ConfiguracionJuegoDTO.class
 eventos\eventos_peers\EventoDesconexion.class
 enums\TipoEvento.class
 dtos\PeerInfo.class
 eventos\eventos_aplicacion\EventoSalaActualizada.class
 enums\JugadasDisponibles.class
+eventos\eventos_aplicacion\EventoUnirseSala.class
 util\ConfigLoader.class
 dtos\JugadorDTO.class
-eventos\eventos_aplicacion\EventoUnirsePartida.class
 eventos\eventos_aplicacion\EventoCartaCantada.class
 interfaces\IModeloJuego.class
 eventos\eventos_aplicacion\EventoSemilla.class

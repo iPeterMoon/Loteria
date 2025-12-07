@@ -21,6 +21,7 @@ public class ProcesadorEventos implements IObserver {
         ManejadorEventoTarjetasBarajeadas eventoTarjetasBarajeadas = new ManejadorEventoTarjetasBarajeadas();
         ManejadorEventoCartaCantada eventoCartaCantada = new ManejadorEventoCartaCantada();
         ManejadorEventoSalaActualizada eventoSalaActualizada= new ManejadorEventoSalaActualizada();
+        ManejadorEventoPeticionInfoSala eventoPetecionInfoSala = new ManejadorEventoPeticionInfoSala();
         ManejadorEventoJugada eventoJugadas = new ManejadorEventoJugada();
 
         this.manejadorPrincipal = eventoFicha;
@@ -29,7 +30,9 @@ public class ProcesadorEventos implements IObserver {
         eventoSemilla.setNext(eventoTarjetasBarajeadas);
         eventoTarjetasBarajeadas.setNext(eventoCartaCantada);
         eventoCartaCantada.setNext(eventoSalaActualizada);
-        eventoSalaActualizada.setNext(eventoJugadas);
+        eventoSalaActualizada.setNext(eventoPetecionInfoSala);
+        eventoPetecionInfoSala.setNext(eventoJugadas);
+        
     }
 
     private void procesar(Evento evento) {

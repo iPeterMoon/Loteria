@@ -35,6 +35,10 @@ public class Matchmaker {
     public void broadcast(Evento evento) {
         peer.broadcastEvento(evento);
     }
+    
+    public void directMessage(Evento evento, String user){
+        peer.directMessage(evento, user);
+    }
 
     //TODO: Enviar mensaje a jugadores de sala? DENISE
 }

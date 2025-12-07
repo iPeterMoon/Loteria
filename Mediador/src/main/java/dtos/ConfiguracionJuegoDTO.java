@@ -1,4 +1,4 @@
-package implementaciones;
+package dtos;
 
 import enums.JugadasDisponibles;
 import enums.TipoNivel;
@@ -8,17 +8,17 @@ import java.util.Map;
  *
  * @author norma
  */
-public class ConfiguracionJuego {
-
+public class ConfiguracionJuegoDTO {
+    
     private int limiteJugadores;
     private int puntajeMax;
     private TipoNivel dificultad;
     private Map<JugadasDisponibles, Integer> puntajes;
 
-    public ConfiguracionJuego() {
+    public ConfiguracionJuegoDTO() {
     }
 
-    public ConfiguracionJuego(int limiteJugadores, int puntajeMax, TipoNivel dificultad, Map<JugadasDisponibles, Integer> puntajes) {
+    public ConfiguracionJuegoDTO(int limiteJugadores, int puntajeMax, TipoNivel dificultad, Map<JugadasDisponibles, Integer> puntajes) {
         this.limiteJugadores = limiteJugadores;
         this.puntajeMax = puntajeMax;
         this.dificultad = dificultad;

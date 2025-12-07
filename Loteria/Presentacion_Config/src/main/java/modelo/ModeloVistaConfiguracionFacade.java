@@ -1,6 +1,7 @@
 package modelo;
 
 import dtos.JugadorSalaEsperaDTO;
+import enums.TipoNivel;
 import interfaces.IModeloVistaConfiguracion;
 import interfaces.IObserver;
 import java.util.List;
@@ -33,15 +34,13 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     }
 
     @Override
-    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores) {
-        this.salaSubject.setJugadores(jugadores);
+    public void actualizarJugadoresSala(List<JugadorSalaEsperaDTO> jugadores) {
+        salaSubject.setJugadores(jugadores);
     }
-
+    
     @Override
-    public void obtenerDatosDeLaSala(List<JugadorSalaEsperaDTO> jugadores, String nivel, int limiteJugadores) {
-        this.salaSubject.setJugadores(jugadores);
-        this.salaSubject.setNivel(nivel);
-        this.salaSubject.setLimiteJugadores(limiteJugadores);
+    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel){
+        salaSubject.actualizarDatosSala(limiteJugadores, nivel);
     }
 
     private void configurarAvatarSubject() {

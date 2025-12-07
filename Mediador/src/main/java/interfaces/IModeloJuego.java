@@ -3,6 +3,7 @@ package interfaces;
 import dtos.JugadorDTO;
 import dtos.NuevoUsuarioDTO;
 import enums.JugadasDisponibles;
+import enums.TipoNivel;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
 import java.awt.Point;
@@ -97,5 +98,12 @@ public interface IModeloJuego {
      *
      * @param jugadores Los jugadores de la sala.
      */
-    public void actualizarSala(List<JugadorDTO> jugadores);
+    public void actualizarJugadoresSala(List<JugadorDTO> jugadores);
+    
+    /**
+     * Método que actualiza los datos de la sala (limite de jugadores y nivel).
+     * @param limiteJugadores El limite de jugadores en la sala.
+     * @param nivel El nivel de la partida.
+     */
+    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
 }

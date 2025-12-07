@@ -1,5 +1,6 @@
 package eventos.eventos_aplicacion;
 
+import dtos.SalaDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 
@@ -9,7 +10,19 @@ import eventos.Evento;
  */
 public class EventoPeticionInfoSala extends Evento {
     
-    public EventoPeticionInfoSala(String userSender) {
+    private SalaDTO sala;
+    
+    public EventoPeticionInfoSala(String userSender, SalaDTO sala) {
         super(TipoEvento.PETICION_INFO_SALA, userSender);
+        this.sala = sala;
     }
+
+    public SalaDTO getSala() {
+        return sala;
+    }
+
+    public void setSala(SalaDTO sala) {
+        this.sala = sala;
+    }
+   
 }

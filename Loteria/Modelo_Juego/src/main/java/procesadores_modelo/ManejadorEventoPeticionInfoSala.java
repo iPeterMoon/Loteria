@@ -7,7 +7,7 @@ package procesadores_modelo;
 import dtos.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
-import eventos.eventos_aplicacion.EventoSalaActualizada;
+import eventos.eventos_aplicacion.EventoPeticionInfoSala;
 import java.util.ArrayList;
 import java.util.List;
 import mappers.JugadorMapperModelo;
@@ -19,28 +19,32 @@ import modelo.Sala;
  *
  * @author norma
  */
-public class ManejadorEventoSalaActualizada extends ManejadorEventos {
+public class ManejadorEventoPeticionInfoSala extends ManejadorEventos{
 
     @Override
     public void procesar(Evento evento) {
-        if (evento.getTipoEvento().equals(TipoEvento.SALA_ACTUALIZADA)) {
-            manejarSalaActualizada((EventoSalaActualizada) evento);
+        if (evento.getTipoEvento().equals(TipoEvento.PETICION_INFO_SALA)) {
+            manejarPeticionInfoSala((EventoPeticionInfoSala) evento);
         } else if (next != null) {
             next.procesar(evento);
         }
     }
 
-    private void manejarSalaActualizada(EventoSalaActualizada evento) {
+    private void manejarPeticionInfoSala(EventoPeticionInfoSala evento) {
         Sala sala = Sala.getInstance();
-        List<JugadorDTO> jugadoresDTO = evento.getJugadores();
+        List<JugadorDTO> jugadoresDTO = evento.getSala().getJugadores();
 
         List<Jugador> jugadores = new ArrayList<>();
         for (JugadorDTO jugadorDTO : jugadoresDTO) {
             jugadores.add(JugadorMapperModelo.toJugador(jugadorDTO));
         }
 
+        //falta guardar la info de la sala (mapper falta hacerlo). (pero falta modificar los atributos de la sala y crear la clase configuración.
+        
         sala.setJugadoresSecundario(jugadores);
 
+        ModeloJuegoFacade.getInstance().actualizarDatosSala(evento.getSala().getConfiguracion().getLimiteJugadores(), 
+                evento.getSala().getConfiguracion().getDificultad());
         ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
     }
 }
