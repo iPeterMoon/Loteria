@@ -4,17 +4,23 @@
  */
 package modelo;
 
+import enums.Pantalla;
+
 /**
  *
  * @author Alici
  */
 public class ModeloControlAplicacion implements IModeloControlAplicacion {
-
+    
     ModeloVistaConfiguracionFacade modeloFacade = ModeloVistaConfiguracionFacade.getInstance();
-
+    
     @Override
     public void siguienteAvatar(int accion) {
         modeloFacade.actualizarAvatar(accion);
     }
-
+    
+    public void siguientePantalla(Pantalla pantallaSiguiente) {
+        modeloFacade.actualizarPantalla(pantallaSiguiente);
+    }
+    
 }

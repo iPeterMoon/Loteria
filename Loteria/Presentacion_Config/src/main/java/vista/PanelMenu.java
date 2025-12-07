@@ -85,7 +85,7 @@ public class PanelMenu extends JPanel {
     private void buttonCrearSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCrearSalaActionPerformed
         // TODO add your handling code here:
         ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-        controles.getControlAplicacion().mostrarPanelCrearSala();
+        controles.getControlAplicacion().mostrarPanelConfigurarUsuario();
     }//GEN-LAST:event_buttonCrearSalaActionPerformed
 
     private void buttonBuscarSalaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buttonBuscarSalaActionPerformed

@@ -4,8 +4,13 @@
  */
 package vista;
 
+import controladores.ControlesConfiguracionFactory;
 import enums.TipoConfiguracion;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import modelo.AvatarSubject;
+import modelo.ConfiguracionSubject;
 import util.Subject;
 
 /**
@@ -19,15 +24,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
      */
     public PanelConfiguracionUsuario() {
         initComponents();
-    }
-
-    public void configurarSiguientePantalla(TipoConfiguracion configuracion) {
-        if (configuracion == TipoConfiguracion.CREAR_SALA) {
-            btnSiguiente.setText("Configurar partida");
-        }
-        if (configuracion == TipoConfiguracion.UNIRSE_SALA) {
-            btnSiguiente.setText("Unirme a la sala");
-        }
+        setBotonesCrearSala();
     }
 
     /**
@@ -47,6 +44,66 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
             panelSeleccionarAvatar.actualizarAvatar(avatarSubject.getNumeroAvatar());
             panelSeleccionarAvatar.repaint();
         }
+    }
+
+    private void actualizarBotones(Subject subject) {
+        if (subject instanceof ConfiguracionSubject configuracionSubject) {
+            TipoConfiguracion configuracion = configuracionSubject.getTipoConfiguracion();
+            if (configuracion == TipoConfiguracion.CREAR_SALA) {
+                setBotonesCrearSala();
+            }
+            if (configuracion == TipoConfiguracion.UNIRSE_SALA) {
+                setBotonesUnirsePartida();
+            }
+        }
+    }
+
+    private void setBotonesUnirsePartida() {
+        Action accionRegresar = new AbstractAction("Volver") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelSala();
+            }
+        };
+
+        Action accionSiguiente = new AbstractAction("Unirme a la sala") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+            }
+        };
+        btnRegresar.setAction(accionRegresar);
+        btnSiguiente.setAction(accionSiguiente);
+    }
+
+    private void setBotonesCrearSala() {
+        Action accionRegresar = new AbstractAction("Volver") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelMenu();
+                resetCampos();
+            }
+        };
+
+        Action accionSiguiente = new AbstractAction("Configurar partida") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelConfigurarSala();
+                resetCampos();
+            }
+        };
+        btnRegresar.setAction(accionRegresar);
+        btnSiguiente.setAction(accionSiguiente);
+
+    }
+
+    private void resetCampos() {
+        panelConfigurarNombreUsuario.reset();
+        panelSeleccionarAvatar.reset();
     }
 
     /**
@@ -76,13 +133,8 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
         btnSiguiente.setBackground(new java.awt.Color(100, 13, 95));
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
-        btnSiguiente.setText("JButton1");
+        btnSiguiente.setText("placeholder...");
         btnSiguiente.setActionCommand("");
-        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSiguienteActionPerformed(evt);
-            }
-        });
 
         btnRegresar.setBackground(new java.awt.Color(235, 91, 0));
         btnRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -118,18 +170,14 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
                     .addComponent(panelSeleccionarAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelConfigurarNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(61, 61, 61))
         );
 
         getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSiguienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

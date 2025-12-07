@@ -1,11 +1,7 @@
 package controladores;
 
-import ventanas.FrameConfiguracion;
-import vista.PanelMenu;
-import java.awt.CardLayout;
-import javax.swing.JPanel;
+import enums.Pantalla;
 import modelo.IModeloControlAplicacion;
-import vista.PanelConfiguracionUsuario;
 
 /**
  *
@@ -14,11 +10,6 @@ import vista.PanelConfiguracionUsuario;
 public class ControlAplicacion {
 
     private final IModeloControlAplicacion controlModelo;
-    private FrameConfiguracion ventanaPrincipal;
-    private JPanel panelContenedor;
-    private CardLayout cardLayout;
-    private final String MENU = "MENU";
-    private final String CONFIGURACION_USUARIO = "CONFIGURAR_USUARIO";
 
     public ControlAplicacion(IModeloControlAplicacion controlModelo) {
         if (controlModelo == null) {
@@ -27,33 +18,35 @@ public class ControlAplicacion {
         this.controlModelo = controlModelo;
     }
 
-    public void iniciar() {
-        this.ventanaPrincipal = FrameConfiguracion.getInstancia();
-        panelContenedor = ventanaPrincipal.getPanelContenedor();
-        cardLayout = ventanaPrincipal.getCardLayout();
-
-        //OBTENER PANELES DEL CARDLAYOUT
-        PanelMenu panelMenu = ventanaPrincipal.getPanelMenu();
-        PanelConfiguracionUsuario panelConfUsuario = ventanaPrincipal.getPanelConfiguracionUsuario();
-
-        //AGREGAR PANELES AL CARDLAYOUT
-        panelContenedor.add(panelMenu, MENU);
-        panelContenedor.add(panelConfUsuario, CONFIGURACION_USUARIO);
-
-        cardLayout.show(panelContenedor, MENU);
-        ventanaPrincipal.setVisible(true);
-        ventanaPrincipal.setLocationRelativeTo(null);
-    }
-
     public void cambiarAvatar(int accion) {
         controlModelo.siguienteAvatar(accion);
     }
 
     public void mostrarPanelMenu() {
-        cardLayout.show(panelContenedor, MENU);
+        controlModelo.siguientePantalla(Pantalla.MENU);
     }
 
-    public void mostrarPanelCrearSala() {
-        cardLayout.show(panelContenedor, CONFIGURACION_USUARIO);
+    public void mostrarPanelConfigurarUsuario() {
+        controlModelo.siguientePantalla(Pantalla.CONFIGURAR_USUARIO);
+    }
+
+    public void mostrarPanelConfigurarSala() {
+        controlModelo.siguientePantalla(Pantalla.CONFIGURAR_PARTIDA);
+    }
+
+    /**
+     * Método para redirigir al panel de la sala creada, donde existe una sala
+     * pero el jugador aun no se une
+     */
+    public void mostrarPanelSala() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    /**
+     * Método para redirigir al panel de la sala despues de configurar su
+     * usuario para unirse
+     */
+    public void mostrarPanelSalaEsperaJuego() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

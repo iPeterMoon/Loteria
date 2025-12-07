@@ -7,6 +7,7 @@ import modelo.IModeloControlNegocio;
 import modelo.ModeloControlAplicacion;
 import modelo.ModeloControlConfigImp;
 import modelo.ModeloJuegoFacade;
+import peer.PeerFacade;
 import ventanas.FrameConfiguracion;
 
 /**
@@ -19,18 +20,18 @@ public class Arrancador {
 
     public static void main(String[] args) {
 
-        FrameConfiguracion ventanaConf = FrameConfiguracion.getInstancia();
-//        ControlAplicacion controlAplicacion = new ControlAplicacion();
+        FrameConfiguracion frameInicio = FrameConfiguracion.getInstancia();
 
         ControlesConfiguracionFactory controlesFactory = ControlesConfiguracionFactory.getInstance();
+
         IModeloControlAplicacion modeloAplicacion = new ModeloControlAplicacion();
         IModeloJuego modeloJuego = ModeloJuegoFacade.getInstance();
 
         IModeloControlNegocio modeloControl = new ModeloControlConfigImp(modeloJuego);
 
         controlesFactory.inicializar(modeloControl, modeloAplicacion);
-        controlesFactory.getControlAplicacion().iniciar();
 
+//        controlesFactory.getControlAplicacion().iniciar();
 //        //Obtener la fachada de la vista.
 //        IModeloVistaJuego modeloVista = ModeloVistaFacade.getInstance();
 //

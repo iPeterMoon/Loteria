@@ -3,6 +3,7 @@ package vista;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JTextField;
 
 /**
  *
@@ -30,6 +31,10 @@ public class PanelConfigurarNombreUsuario extends javax.swing.JPanel {
         if (iconFondo != null) {
             g.drawImage(iconFondo, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+
+    public void reset() {
+        txtNombreUsuario.setText("");
     }
 
     /**

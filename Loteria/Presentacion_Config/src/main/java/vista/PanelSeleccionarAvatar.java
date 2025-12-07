@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  * @author Alici
  */
 public class PanelSeleccionarAvatar extends javax.swing.JPanel {
-    
+
     private Image iconFondo;
 
     /**
@@ -24,11 +24,11 @@ public class PanelSeleccionarAvatar extends javax.swing.JPanel {
         obtenerFondo();
         initComponents();
     }
-    
+
     private void obtenerFondo() {
         iconFondo = new ImageIcon(getClass().getResource("/fondos/fondo_seleccionAvatar.png")).getImage();
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -36,9 +36,23 @@ public class PanelSeleccionarAvatar extends javax.swing.JPanel {
             g.drawImage(iconFondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
+
     public void actualizarAvatar(int siguienteAvatar) {
         panelAvatar.actualizarAvatar(siguienteAvatar);
+    }
+
+    public void reset() {
+        actualizarAvatar(1);
+    }
+
+    private void accionLeftArrow() {
+        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+        controles.getControlAplicacion().cambiarAvatar(-1);
+    }
+
+    private void accionRightArrow() {
+        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+        controles.getControlAplicacion().cambiarAvatar(1);
     }
 
     /**
@@ -117,14 +131,11 @@ public class PanelSeleccionarAvatar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblLeftArrowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLeftArrowMouseClicked
-        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-        controles.getControlAplicacion().cambiarAvatar(-1);
-
+        accionLeftArrow();
     }//GEN-LAST:event_lblLeftArrowMouseClicked
 
     private void lblRightArrowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRightArrowMouseClicked
-        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-        controles.getControlAplicacion().cambiarAvatar(1);
+        accionRightArrow();
     }//GEN-LAST:event_lblRightArrowMouseClicked
 
 

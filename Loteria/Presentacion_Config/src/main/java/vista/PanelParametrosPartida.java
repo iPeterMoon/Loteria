@@ -4,12 +4,12 @@ package vista;
  *
  * @author Alici
  */
-public class PanelConfigurarPartida extends javax.swing.JPanel {
+public class PanelParametrosPartida extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelConfigurarPartida
      */
-    public PanelConfigurarPartida() {
+    public PanelParametrosPartida() {
         initComponents();
     }
 

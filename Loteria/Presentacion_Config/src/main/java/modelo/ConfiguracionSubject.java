@@ -21,4 +21,9 @@ public class ConfiguracionSubject extends Subject {
         }
         return instancia;
     }
+
+    public TipoConfiguracion getTipoConfiguracion() {
+        return tipoConfiguracion;
+    }
+
 }

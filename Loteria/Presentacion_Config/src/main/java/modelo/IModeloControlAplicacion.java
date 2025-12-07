@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import enums.Pantalla;
+
 /**
  *
  * @author Alici
@@ -11,4 +13,6 @@ package modelo;
 public interface IModeloControlAplicacion {
 
     public void siguienteAvatar(int accion);
+
+    public void siguientePantalla(Pantalla pantallaSiguiente);
 }

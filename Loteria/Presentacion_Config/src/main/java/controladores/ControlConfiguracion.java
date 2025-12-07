@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import dtos.aplicacion.NuevoUsuarioDTO;
 import modelo.IModeloControlNegocio;
 
 /**
@@ -19,6 +20,10 @@ public class ControlConfiguracion {
             throw new IllegalArgumentException("La dependencia IModeloControlConfiguracion no puede ser nula.");
         }
         this.controlModelo = controlModelo;
+    }
+
+    public void configurarUsuario(NuevoUsuarioDTO nuevoUsuario) {
+        
     }
 
 }
