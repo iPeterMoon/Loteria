@@ -1,7 +1,7 @@
 package mappers;
 
-import dtos.JugadorDTO;
-import dtos.TarjetaDTO;
+import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.TarjetaDTO;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 

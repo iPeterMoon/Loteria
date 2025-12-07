@@ -4,7 +4,7 @@
  */
 package procesadores_modelo;
 
-import dtos.JugadorDTO;
+import dtos.aplicacion.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 import eventos.eventos_aplicacion.EventoSalaActualizada;

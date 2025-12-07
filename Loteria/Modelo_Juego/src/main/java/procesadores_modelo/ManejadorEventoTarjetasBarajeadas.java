@@ -7,7 +7,7 @@ import mappers.TarjetaMapper;
 import modelo.Jugador;
 import modelo.Sala;
 import modelo.Tarjeta;
-import dtos.TarjetaDTO;
+import dtos.aplicacion.TarjetaDTO;
 import java.util.HashMap;
 import java.util.Map;
 

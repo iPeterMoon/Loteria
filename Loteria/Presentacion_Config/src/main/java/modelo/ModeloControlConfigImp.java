@@ -1,6 +1,6 @@
 package modelo;
 
-import dtos.NuevoUsuarioDTO;
+import dtos.aplicacion.NuevoUsuarioDTO;
 import interfaces.IModeloJuego;
 
 /**

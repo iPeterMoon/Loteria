@@ -1,6 +1,6 @@
 package eventos.eventos_peers;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import enums.TipoEvento;
 import eventos.Evento;
 

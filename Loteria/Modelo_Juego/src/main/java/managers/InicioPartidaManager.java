@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
-import dtos.TarjetaDTO;
+import dtos.aplicacion.TarjetaDTO;
 import eventos.eventos_aplicacion.EventoIniciarPartida;
 import eventos.eventos_aplicacion.EventoSemilla;
 import eventos.eventos_aplicacion.EventoTarjetasBarajeadas;

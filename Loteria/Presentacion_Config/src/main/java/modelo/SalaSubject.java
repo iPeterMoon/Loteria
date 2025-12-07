@@ -1,6 +1,6 @@
 package modelo;
 
-import dtos.JugadorSalaEsperaDTO;
+import dtos.aplicacion.JugadorSalaEsperaDTO;
 import java.util.List;
 import java.util.ArrayList;
 import util.Subject;

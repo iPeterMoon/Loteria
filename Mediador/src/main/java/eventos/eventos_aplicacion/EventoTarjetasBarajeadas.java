@@ -2,7 +2,7 @@ package eventos.eventos_aplicacion;
 
 import java.util.Map;
 
-import dtos.TarjetaDTO;
+import dtos.aplicacion.TarjetaDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 

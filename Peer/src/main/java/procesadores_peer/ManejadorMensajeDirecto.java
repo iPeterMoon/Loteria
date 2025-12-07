@@ -3,7 +3,7 @@ package procesadores_peer;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import network.EnvioPeer;
 import mensajes.TipoMensaje;
 import peer.PeersConectados;

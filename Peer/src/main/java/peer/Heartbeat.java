@@ -2,7 +2,7 @@ package peer;
 
 import com.google.gson.Gson;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import eventos.eventos_peers.EventoHeartbeat;
 import network.OutgoingMessageDispatcher;
 

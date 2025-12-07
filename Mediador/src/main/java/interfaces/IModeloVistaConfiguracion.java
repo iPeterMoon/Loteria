@@ -1,6 +1,6 @@
 package interfaces;
 
-import dtos.JugadorSalaEsperaDTO;
+import dtos.aplicacion.JugadorSalaEsperaDTO;
 import java.util.List;
 
 /**

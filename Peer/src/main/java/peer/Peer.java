@@ -1,7 +1,7 @@
 package peer;
 
 import com.google.gson.Gson;
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import eventos.Evento;
 import interfaces.IObserver;
 import mensajes.MensajeBroadcast;

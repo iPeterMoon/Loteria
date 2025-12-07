@@ -1,4 +1,4 @@
-package dtos;
+package dtos.peer;
 
 import java.io.Serializable;
 import java.util.Objects;

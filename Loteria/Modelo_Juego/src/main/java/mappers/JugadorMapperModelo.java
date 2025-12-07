@@ -1,8 +1,8 @@
 package mappers;
 
-import dtos.JugadorDTO;
-import dtos.JugadorSalaEsperaDTO;
-import dtos.TarjetaDTO;
+import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.JugadorSalaEsperaDTO;
+import dtos.aplicacion.TarjetaDTO;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.Map;

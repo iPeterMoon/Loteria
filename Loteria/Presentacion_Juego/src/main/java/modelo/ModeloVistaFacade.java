@@ -4,9 +4,9 @@ import interfaces.IModeloVistaJuego;
 import java.util.LinkedList;
 import java.util.List;
 
-import dtos.FichaDTO;
-import dtos.JugadaDTO;
-import dtos.JugadorDTO;
+import dtos.aplicacion.FichaDTO;
+import dtos.aplicacion.JugadaDTO;
+import dtos.aplicacion.JugadorDTO;
 import mappers.JugadorMapperVista;
 import vista.FrameJuego;
 import interfaces.IObserver;

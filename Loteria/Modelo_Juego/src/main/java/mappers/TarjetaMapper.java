@@ -1,6 +1,6 @@
 package mappers;
 
-import dtos.TarjetaDTO;
+import dtos.aplicacion.TarjetaDTO;
 import java.awt.Point;
 import java.util.Map;
 import modelo.Tarjeta;

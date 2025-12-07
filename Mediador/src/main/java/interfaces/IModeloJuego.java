@@ -1,7 +1,7 @@
 package interfaces;
 
-import dtos.JugadorDTO;
-import dtos.NuevoUsuarioDTO;
+import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.JugadasDisponibles;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;

@@ -1,8 +1,8 @@
 package interfaces;
 
-import dtos.FichaDTO;
-import dtos.JugadaDTO;
-import dtos.JugadorDTO;
+import dtos.aplicacion.FichaDTO;
+import dtos.aplicacion.JugadaDTO;
+import dtos.aplicacion.JugadorDTO;
 
 /**
  * Interfaz que define el contrato para la comunicación entre el modelo de la

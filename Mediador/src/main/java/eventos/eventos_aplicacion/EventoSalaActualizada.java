@@ -1,6 +1,6 @@
 package eventos.eventos_aplicacion;
 
-import dtos.JugadorDTO;
+import dtos.aplicacion.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 import java.util.List;
