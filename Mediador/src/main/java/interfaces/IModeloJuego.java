@@ -98,4 +98,6 @@ public interface IModeloJuego {
      * @param jugadores Los jugadores de la sala.
      */
     public void actualizarSala(List<JugadorDTO> jugadores);
+
+    public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario);
 }

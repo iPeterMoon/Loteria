@@ -21,6 +21,7 @@ import managers.MovimientoManager;
 import managers.UnirsePartidaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
+import managers.ConfiguracionManager;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -28,35 +29,36 @@ import enums.JugadasDisponibles;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-
+    
     private static ModeloJuegoFacade instancia;
     //Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
     private IModeloVistaConfiguracion vistaConfiguracion;
-
+    
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
     private final CantadorManager cantadorManager = new CantadorManager();
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
     private final UnirsePartidaManager unirsePartidaManager = new UnirsePartidaManager();
-
+    private final ConfiguracionManager configuracionManager = new ConfiguracionManager();
+    
     private ModeloJuegoFacade() {
     }
-
+    
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-
+    
     public void inicializar(IModeloVistaJuego modeloVista, IPeer peer) {
         if (this.vistaJuego != null) {
             //Asegura que no se inicialice dos veces
             return;
         }
         this.vistaJuego = modeloVista;
-
+        
         movimientoManager.inicializar(peer);
         inicioPartidaManager.inicializar(peer, modeloVista);
         cantadorManager.inicializar(peer);
@@ -117,20 +119,20 @@ public class ModeloJuegoFacade implements IModeloJuego {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vistaJuego.colocarFicha(fichaDTO);
     }
-
+    
     @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
         cantadorManager.iniciarCanto();
     }
-
+    
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
-
+    
     @Override
     public void mostrarFramePartida() {
         inicioPartidaManager.mostrarFramePartida();
@@ -194,5 +196,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
         }
         vistaConfiguracion.actualizarSala(jugadoresSalaEspera);
     }
-
+    
+    @Override
+    public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario) {
+        configuracionManager.configurarUsuarioNuevaSala(usuario);
+    }
+    
 }

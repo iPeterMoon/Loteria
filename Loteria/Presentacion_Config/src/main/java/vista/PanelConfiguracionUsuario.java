@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vista;
 
+import Modal.MensajeDialog;
 import controladores.ControlesConfiguracionFactory;
+import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.TipoConfiguracion;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import modelo.AvatarSubject;
 import modelo.ConfiguracionSubject;
+import modelo.ValidacionUsuarioSubject;
 import util.Subject;
 
 /**
@@ -35,6 +34,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
      */
     public void actualizarVista(Subject subject) {
         actualizarAvatar(subject);
+        actualizarMensaje(subject);
         repaint();
         revalidate();
     }
@@ -43,6 +43,20 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
         if (subject instanceof AvatarSubject avatarSubject) {
             panelSeleccionarAvatar.actualizarAvatar(avatarSubject.getNumeroAvatar());
             panelSeleccionarAvatar.repaint();
+        }
+    }
+
+    private void actualizarMensaje(Subject subject) {
+        if (subject instanceof ValidacionUsuarioSubject validacion) {
+            MensajeDialog mensajeDialog = new MensajeDialog(null, true);
+            mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
+            mensajeDialog.mostrarDialogo();
+
+            if (validacion.isExitoso()) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelConfigurarSala();
+                resetCampos();
+            }
         }
     }
 
@@ -92,8 +106,9 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-                controles.getControlAplicacion().mostrarPanelConfigurarSala();
-                resetCampos();
+                NuevoUsuarioDTO nuevoUsuario = new NuevoUsuarioDTO();
+                nuevoUsuario.setNickname(panelConfigurarNombreUsuario.obtenerNombreIngresado());
+                controles.getControlConfiguracion().configurarUsuario(nuevoUsuario);
             }
         };
         btnRegresar.setAction(accionRegresar);

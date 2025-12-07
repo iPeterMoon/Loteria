@@ -23,7 +23,7 @@ public class ControlConfiguracion {
     }
 
     public void configurarUsuario(NuevoUsuarioDTO nuevoUsuario) {
-        
+        controlModelo.
     }
 
 }
