@@ -8,10 +8,12 @@ import java.awt.CardLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import modelo.SalaSubject;
 import util.Subject;
 import vista.PanelConfiguracionUsuario;
 import vista.PanelConfigurarPartida;
 import vista.PanelMenu;
+import vista.PanelSalaEspera;
 
 /**
  *
@@ -22,6 +24,7 @@ public class FrameConfiguracion extends JFrame {
     private CardLayout cardLayout;
     private PanelConfiguracionUsuario panelConfiguracionUsuario = new PanelConfiguracionUsuario();
     private PanelConfigurarPartida panelConfiguracionPartida = new PanelConfigurarPartida();
+    private PanelSalaEspera panelSalaEspera = new PanelSalaEspera();
     private PanelMenu panelMenu = new PanelMenu();
     private JPanel panelContenedor;
     private static FrameConfiguracion instancia;
@@ -77,6 +80,10 @@ public class FrameConfiguracion extends JFrame {
      */
     public void actualizarVista(Subject subject) {
         panelConfiguracionUsuario.actualizarVista(subject);
+        
+        if (subject instanceof SalaSubject sala) {
+            panelSalaEspera.actualizarSala(sala.getJugadores(), sala.getNivel(), sala.getLimiteJugadores());
+        }
     }
 
     public PanelConfiguracionUsuario getPanelConfiguracionUsuario() {
@@ -85,6 +92,10 @@ public class FrameConfiguracion extends JFrame {
 
     public PanelConfigurarPartida getPanelConfiguracionPartida() {
         return panelConfiguracionPartida;
+    }
+    
+    public PanelSalaEspera getPanelSalaEspera() {
+        return panelSalaEspera;
     }
 
     public PanelMenu getPanelMenu() {

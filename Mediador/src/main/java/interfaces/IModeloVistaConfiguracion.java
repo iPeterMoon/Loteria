@@ -11,5 +11,5 @@ public interface IModeloVistaConfiguracion {
     
     public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores);
     
-    public void obtenerDatosDeLaSala(List<JugadorSalaEsperaDTO> jugadores, String nivel);
+    public void obtenerDatosDeLaSala(List<JugadorSalaEsperaDTO> jugadores, String nivel, int limiteJugadores);
 }

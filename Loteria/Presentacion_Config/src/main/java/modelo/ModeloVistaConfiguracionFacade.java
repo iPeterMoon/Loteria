@@ -28,26 +28,30 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     }
 
     private ModeloVistaConfiguracionFacade() {
-        this.salaSubject = new SalaSubject();
-        this.salaSubject.addObserver(this.observer);
         configurarAvatarSubject();
+        configurarSalaSubject();
     }
 
     @Override
     public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores) {
         this.salaSubject.setJugadores(jugadores);
-
     }
 
     @Override
-    public void obtenerDatosDeLaSala(List<JugadorSalaEsperaDTO> jugadores, String nivel) {
+    public void obtenerDatosDeLaSala(List<JugadorSalaEsperaDTO> jugadores, String nivel, int limiteJugadores) {
         this.salaSubject.setJugadores(jugadores);
         this.salaSubject.setNivel(nivel);
+        this.salaSubject.setLimiteJugadores(limiteJugadores);
     }
 
     private void configurarAvatarSubject() {
         avatarSubject = new AvatarSubject();
         avatarSubject.addObserver(observer);
+    }
+    
+    private void configurarSalaSubject() {
+        this.salaSubject = new SalaSubject();
+        this.salaSubject.addObserver(observer);
     }
 
     public void actualizarAvatar(int direccion) {

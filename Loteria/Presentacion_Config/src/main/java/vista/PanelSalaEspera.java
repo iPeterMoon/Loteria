@@ -4,6 +4,10 @@
  */
 package vista;
 
+import controladores.ControlesConfiguracionFactory;
+import dtos.JugadorSalaEsperaDTO;
+import java.util.List;
+
 /**
  *
  * @author norma
@@ -17,6 +21,25 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores, String nivel, int limiteJugadores) {
+        panelListaJugadores.actualizarListaJugadores(jugadores, limiteJugadores);
+        labelNivel.setText(nivel);
+    }
+
+    public void configurarModoJugadorUnido() {
+        btnAbandonarSala.setVisible(true);
+        lblEspera.setVisible(true);
+        btnSalir.setVisible(false);
+        btnUnirme.setVisible(false);
+    }
+
+    public void configurarModoJugadorNoUnido() {
+        btnSalir.setVisible(true);
+        btnUnirme.setVisible(true);
+        lblEspera.setVisible(false);
+        btnAbandonarSala.setVisible(false);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,11 +50,13 @@ public class PanelSalaEspera extends javax.swing.JPanel {
     private void initComponents() {
 
         lblSala = new javax.swing.JLabel();
-        panelListaJugadores1 = new vista.PanelListaJugadores();
+        panelListaJugadores = new vista.PanelListaJugadores();
         btnAbandonarSala = new javax.swing.JButton();
         lblNivel = new javax.swing.JLabel();
         labelNivel = new javax.swing.JLabel();
         lblEspera = new javax.swing.JLabel();
+        btnUnirme = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 178, 0));
 
@@ -57,6 +82,26 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         lblEspera.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblEspera.setText("Esperando a que inicice la partida...");
 
+        btnUnirme.setBackground(new java.awt.Color(100, 13, 95));
+        btnUnirme.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnUnirme.setForeground(new java.awt.Color(255, 255, 255));
+        btnUnirme.setText("Unirme a la sala");
+        btnUnirme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnirmeActionPerformed(evt);
+            }
+        });
+
+        btnSalir.setBackground(new java.awt.Color(235, 91, 0));
+        btnSalir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,19 +112,25 @@ public class PanelSalaEspera extends javax.swing.JPanel {
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(panelListaJugadores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(64, 64, 64)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblNivel)
                                     .addComponent(labelNivel)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnAbandonarSala)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 457, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+                                .addComponent(btnSalir)
+                                .addGap(168, 168, 168)
                                 .addComponent(lblEspera))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(389, 389, 389)
                         .addComponent(lblSala)))
-                .addGap(34, 34, 34))
+                .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(368, 368, 368)
+                .addComponent(btnUnirme)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,31 +140,47 @@ public class PanelSalaEspera extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(panelListaJugadores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(lblNivel)
                         .addGap(18, 18, 18)
                         .addComponent(labelNivel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(btnUnirme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAbandonarSala)
-                    .addComponent(lblEspera))
-                .addGap(36, 36, 36))
+                    .addComponent(lblEspera)
+                    .addComponent(btnSalir))
+                .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbandonarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbandonarSalaActionPerformed
-        // TODO add your handling code here:
+        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+        controles.getControlAplicacion().abandonarSala();
     }//GEN-LAST:event_btnAbandonarSalaActionPerformed
+
+    private void btnUnirmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirmeActionPerformed
+        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+        controles.getControlAplicacion().unirseASala();
+    }//GEN-LAST:event_btnUnirmeActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+        controles.getControlAplicacion().salir();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbandonarSala;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnUnirme;
     private javax.swing.JLabel labelNivel;
     private javax.swing.JLabel lblEspera;
     private javax.swing.JLabel lblNivel;
     private javax.swing.JLabel lblSala;
-    private vista.PanelListaJugadores panelListaJugadores1;
+    private vista.PanelListaJugadores panelListaJugadores;
     // End of variables declaration//GEN-END:variables
 }
