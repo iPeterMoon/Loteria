@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import eventos.eventos_peers.EventoDesconexion;
 import network.OutgoingMessageDispatcher;
 

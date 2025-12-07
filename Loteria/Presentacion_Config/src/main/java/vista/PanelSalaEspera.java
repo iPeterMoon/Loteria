@@ -8,6 +8,8 @@ import controladores.ControlesConfiguracionFactory;
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import enums.TipoNivel;
 import java.util.List;
+import modelo.SalaSubject;
+import util.Subject;
 
 /**
  *
@@ -22,8 +24,17 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void actualizarSala(List<JugadorSalaEsperaDTO> jugadores, TipoNivel nivel, int limiteJugadores) {
-//        panelListaJugadores.actualizarListaJugadores(jugadores, limiteJugadores);
+    
+    public void actualizarVista(Subject subject) {
+        if (subject instanceof SalaSubject salaSubject) {
+            actualizarDatosSala(salaSubject.getJugadores(), salaSubject.getNivel(), salaSubject.getLimiteJugadores());
+            repaint();
+            revalidate();
+        }
+    }
+    
+    public void actualizarDatosSala(List<JugadorSalaEsperaDTO> jugadores, TipoNivel nivel, int limiteJugadores) {
+        panelListaJugadores.actualizarListaJugadores(jugadores, limiteJugadores);
         labelNivel.setText(nivel.toString());
     }
 

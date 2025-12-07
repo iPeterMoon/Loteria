@@ -3,6 +3,7 @@ package managers;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoUnirseSala;
 import interfaces.IPeer;
+import util.ConfigLoader;
 
 /**
  *
@@ -21,8 +22,8 @@ public class UnirsePartidaManager {
 
     public void unirseSala(NuevoUsuarioDTO usuario) {
         componentePeer.setUser(usuario.getNickname());
-        EventoUnirseSala eventoUnirsePartida = new EventoUnirseSala(usuario.getNickname(), usuario.getNickname(), usuario.getIdAvatarSeleccionado());
-        componentePeer.directMessage(eventoUnirsePartida, "MATCHMAKER");
+        EventoUnirseSala eventoUnirsePartida = new EventoUnirseSala(usuario.getNickname(), usuario);
+        componentePeer.directMessage(eventoUnirsePartida, ConfigLoader.getInstance().getUsuarioMatchmaker());
     }
 
     public void obtenerInfoSala() {

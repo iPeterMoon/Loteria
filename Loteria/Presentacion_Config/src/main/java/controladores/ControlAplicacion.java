@@ -21,6 +21,7 @@ public class ControlAplicacion {
     private final String MENU = "MENU";
     private final String CONFIGURACION_USUARIO = "CONFIGURAR_USUARIO";
     private final String SALA_ESPERA = "SALA_ESPERA";
+    private final String SALA_ESPERA_NO_UNIDO = "SALA_ESPERA_NO_UNIDO";
 
     public ControlAplicacion(IModeloControlAplicacion controlModelo) {
         if (controlModelo == null) {
@@ -50,8 +51,7 @@ public class ControlAplicacion {
      * pero el jugador aun no se une
      */
     public void mostrarPanelSala() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        controlModelo.siguientePantalla(Pantalla.SALA_ESPERA_NO_UNIDO);
     }
 
     /**
@@ -59,19 +59,7 @@ public class ControlAplicacion {
      * usuario para unirse
      */
     public void mostrarPanelSalaEsperaJuego() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void mostrarPanelSalaEspera(boolean unido) {
         controlModelo.siguientePantalla(Pantalla.SALA_ESPERA);
-
-        //hay que mover esto al frame de ser posible
-//        if (unido) {
-//            panelSalaEspera.configurarModoJugadorUnido();
-//        } else {
-//            panelSalaEspera.configurarModoJugadorNoUnido();
-//        }
     }
 
     public void unirseASala() {

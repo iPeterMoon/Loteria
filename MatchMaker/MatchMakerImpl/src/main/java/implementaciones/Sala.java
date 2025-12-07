@@ -1,6 +1,6 @@
 package implementaciones;
 
-import dtos.JugadorDTO;
+import dtos.aplicacion.JugadorDTO;
 import java.util.LinkedList;
 import java.util.List;
 

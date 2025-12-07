@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 
 import peerManager.ListaPeers;
 import peerManager.PeerCleaner;
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import enums.TipoEvento;
 import eventos.eventos_peers.EventoNuevoPeer;
 import network.Envio;
