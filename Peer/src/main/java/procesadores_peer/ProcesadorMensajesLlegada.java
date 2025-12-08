@@ -12,9 +12,11 @@ public class ProcesadorMensajesLlegada extends ProcesadorMensajes{
     public ProcesadorMensajesLlegada() {
         // Inicializar manejadores
         ManejadorMensajesLlegada nuevoPeer = new ManejadorNuevoPeer();
+        ManejadorEventoDesconexion eventoDesconexion = new ManejadorEventoDesconexion();
         ManejadorMensajesLlegada eventoJuego = new ManejadorEventoApplication();
 
-        nuevoPeer.setNext(eventoJuego);
+        nuevoPeer.setNext(eventoDesconexion);
+        eventoDesconexion.setNext(eventoJuego);
 
         this.manejadorPrincipal = nuevoPeer;
     }

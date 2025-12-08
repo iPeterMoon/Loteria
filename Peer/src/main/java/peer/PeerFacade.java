@@ -68,6 +68,13 @@ public class PeerFacade implements IPeer {
         this.peer.setObserver(observer);
     }
 
+    /**
+     * Lógica de cierre y desconexión controlada del Peer
+     */
+    public void abandonar() {
+        this.peer.abandonar(); 
+    }
+
     @Override
     public void stop() {
         this.peer.stop();

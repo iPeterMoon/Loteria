@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import peerManager.ListaPeers;
 import dtos.peer.PeerInfo;
 import enums.TipoEvento;
-import eventos.eventos_peers.EventoDesconexion; 
+import eventos.eventos_peers.EventoPeerDesconectado; 
 import network.Envio;
 
 /**
@@ -27,8 +27,8 @@ private final Gson gson = new Gson();
         
         if (tipo.equals(TipoEvento.PEER_DESCONECTADO)) {
             // Deserializamos para obtener la info del caído
-            EventoDesconexion evento = gson.fromJson(json, EventoDesconexion.class);
-            peerCaido = evento.getPeerCaido(); // o getPeer() según tu clase evento
+            EventoPeerDesconectado evento = gson.fromJson(json, EventoPeerDesconectado.class);
+            peerCaido = evento.getPeerDesconectado(); // o getPeer() según tu clase evento
             
             // Solo hacemos broadcast (avisar a los demás)
             enviarDesconexionAPeers();
@@ -59,7 +59,7 @@ private final Gson gson = new Gson();
      */
     private String generarEvento(PeerInfo peer) {
         // Creamos el evento para serializarlo correctamente
-        EventoDesconexion evento = new EventoDesconexion(peer);
+        EventoPeerDesconectado evento = new EventoPeerDesconectado(peer);
         return gson.toJson(evento);
     }
 

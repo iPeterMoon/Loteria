@@ -198,7 +198,6 @@ public class ModeloJuegoFacade implements IModeloJuego {
     /**
      * Método para abandonar la sala de espera.
      * 
-     * @param jugador El jugador que abandonara la sala de espera.
      */
     @Override
     public void abandonarSala() {
@@ -218,6 +217,8 @@ public class ModeloJuegoFacade implements IModeloJuego {
         }
         vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera);
     }
+    
+    
 
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
@@ -263,5 +264,11 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void cerrarSalaEspera(){
         vistaConfiguracion.cerrarVentana();
     }
+    
+    public void eliminarJugadorDePartida(String user){
+        vistaJuego.eliminarJugadorSecundario(user);
+    }
+
+
 
 }

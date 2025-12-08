@@ -1,5 +1,6 @@
 package vista;
 
+import modelo.JugadorSubject;
 import util.Subject;
 
 /**
@@ -52,6 +53,17 @@ public class FrameJuego extends javax.swing.JFrame {
      */
     public void actualizarVista(Subject subject){
         panelJuego.actualizarVista(subject);
+    }
+    
+    /**
+     * Método para eliminar un jugador de la vista.
+     * Delega la acción al panel principal del juego.
+     * * @param nickname El nombre del jugador a eliminar.
+     */
+    public void eliminarJugador(JugadorSubject jugador){
+        if (panelJuego != null) {
+            panelJuego.eliminarJugador(jugador);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

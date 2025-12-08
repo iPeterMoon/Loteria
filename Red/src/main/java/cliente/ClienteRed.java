@@ -14,11 +14,19 @@ import dtos.Mensaje;
  */
 public class ClienteRed implements Runnable {
 
+    private static ClienteRed instance;
     private final Map<String, PrintWriter> connections = new ConcurrentHashMap<>();
     private final Map<String, Socket> sockets = new ConcurrentHashMap<>();
     private volatile boolean isRunning = true;
 
     public ClienteRed() {
+    }
+
+    public static ClienteRed getInstance() {
+        if (instance == null) {
+            instance = new ClienteRed();
+        }
+        return instance;
     }
 
     @Override

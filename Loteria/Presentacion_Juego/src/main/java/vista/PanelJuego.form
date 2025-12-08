@@ -115,6 +115,9 @@
         <Property name="text" type="java.lang.String" value="Abandonar"/>
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAbandonarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="vista.PanelJugadorPrincipal" name="panelJugadorPrincipal">
     </Component>

@@ -58,5 +58,7 @@ public interface IModeloControl {
      * </p>
      */
     public void verificarJugadaCuatroEsquinas();
+    
+    public void abandonarPartida();
 
 }

@@ -11,6 +11,9 @@ import java.util.concurrent.ExecutorService;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
 import network.RecepcionPeer;
+import procesadores_peer.ProcesadorMensajesLlegada;
+import procesadores_peer.ProcesadorMensajesSalida;
+import util.ConfigLoader;
 import utilPeer.PoolHilos;
 import network.OutgoingMessageDispatcher;
 
@@ -26,6 +29,10 @@ public class Peer {
     private EnvioPeer envioHandler;
     private RecepcionPeer recepcionHandler;
     private IObserver observer;
+    private Heartbeat heartbeat;
+    private ProcesadorMensajesLlegada procesadorLlegada;
+    private ProcesadorMensajesSalida procesadorSalida;
+    private final Gson gson = new Gson();
 
     private Peer() {
         this.myInfo = new PeerInfo(null, "", 0);
@@ -86,8 +93,8 @@ public class Peer {
 
     private void empezarHeartbeat() {
         ExecutorService threadPool = PoolHilos.getInstance().getThreadPool();
-        Heartbeat heartbeat = new Heartbeat(myInfo);
-        threadPool.submit(heartbeat);
+        this.heartbeat = new Heartbeat(myInfo);
+        threadPool.submit(this.heartbeat);
     }
 
     public void broadcastEvento(Evento evento) {
@@ -128,10 +135,20 @@ public class Peer {
         envioHandler.stop();
         recepcionHandler.stop();
         System.out.println("[Peer] Detenido.");
+        red.PoolHilos.getInstance().shutdown();
     }
 
     public void setObserver(IObserver observer) {
         this.observer = observer;
+    }
+
+    /**
+     * Método invocado por la UI para que el Peer abandone la partida.
+     */
+    public void abandonar() {
+        System.out.println(">>> [PEER] Abandonando la partida voluntariamente...");
+        // 2. Detener todos los servicios de red de forma segura.
+        stop();
     }
 
 }

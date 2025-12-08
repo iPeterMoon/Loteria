@@ -11,6 +11,7 @@ public class RegistroControles {
 
     private ControlSeleccionarCarta controlSeleccionarJugada;
     private ControlJugadas controlJugadas;
+    private ControlAbandonarPartida controlAbandonarPartida;
 
     /**
      * Constructor privado para evitar la instanciación externa.
@@ -36,7 +37,13 @@ public class RegistroControles {
             //Evitar doble inicialización
             return;
         }
-        this.controlJugadas = new ControlJugadas(modeloControl);
+
+        this.controlAbandonarPartida = new ControlAbandonarPartida(modeloControl);
+        if (this.controlAbandonarPartida != null) {
+            //Evitar doble inicialización
+            return;
+        }
+        this.controlAbandonarPartida = new ControlAbandonarPartida(modeloControl);
     }
 
     /**
@@ -56,6 +63,13 @@ public class RegistroControles {
             throw new IllegalStateException("El Registro de Controles no ha sido inicializado. Llame a inicializar() en Arrancador");
         }
         return controlJugadas;
+    }
+
+    public ControlAbandonarPartida getControlAbandonarPartida() {
+        if (controlAbandonarPartida == null) {
+            throw new IllegalStateException("El Registro de Controles no ha sido inicializado. Llame a inicializar() en Arrancador");
+        }
+        return controlAbandonarPartida;
     }
 
 }

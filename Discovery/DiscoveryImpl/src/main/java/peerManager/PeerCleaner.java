@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.gson.Gson;
 
 import dtos.peer.PeerInfo;
-import eventos.eventos_peers.EventoDesconexion;
+import eventos.eventos_peers.EventoPeerDesconectado;
 import network.OutgoingMessageDispatcher;
 
 public class PeerCleaner implements Runnable {
@@ -93,8 +93,8 @@ public class PeerCleaner implements Runnable {
     private void crearEventoDesconexion(PeerInfo peerCaido){
         if (peerCaido != null) {
             System.out.println("[PeerCleaner] Peer muerto detectado: " + peerCaido.getUser()+"@"+ListaPeers.obtenerKey(peerCaido));            
-            // El constructor ya lo definimos arriba: new EventoDesconexion(peerCaido)
-            EventoDesconexion evento = new EventoDesconexion(peerCaido);
+            // El constructor ya lo definimos arriba: new EventoPeerDesconectado(peerCaido)
+            EventoPeerDesconectado evento = new EventoPeerDesconectado(peerCaido);
                         
             Gson gson = new Gson();
             String eventoJson = gson.toJson(evento);

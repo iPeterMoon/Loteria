@@ -137,4 +137,20 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
         System.out.println("JUGADA");
         System.out.println(jugadaDTO.toString());
     }
+
+    @Override
+    public void eliminarJugadorSecundario(String user) {
+        JugadorSubject jugadorAEliminar = null;
+        for(JugadorSubject jugador : jugadores){
+            if(jugador.getNickname().equals(user)){
+                jugadorAEliminar = jugador;
+                break;
+            }
+        }
+        
+        if(jugadorAEliminar != null){
+            jugadores.remove(jugadorAEliminar);
+            FrameJuego.getInstance().eliminarJugador(jugadorAEliminar);
+        }
+    }
 }
