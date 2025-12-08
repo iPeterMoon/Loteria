@@ -112,5 +112,15 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     public void actualizarTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
         configuracionSubject.setTipoConfiguracion(tipoConfiguracion);
     }
+
+    @Override
+    public void actualizarJugadorPrincipal(String user) {
+        SalaSubject.getInstance().setJugadorPrincipalUser(user);
+    }
+
+    @Override
+    public void cerrarVentana() {
+        pantallaSubject.setPantallaActual(Pantalla.CERRAR);
+    }
     
 }

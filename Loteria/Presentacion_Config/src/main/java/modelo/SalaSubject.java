@@ -16,6 +16,7 @@ public class SalaSubject extends Subject {
     private TipoNivel nivel;
     private int limiteJugadores;
     private List<JugadorSalaEsperaDTO> jugadores;
+    private String jugadorPrincipalUser;
 
     private static SalaSubject instance;
     
@@ -76,5 +77,18 @@ public class SalaSubject extends Subject {
         this.nivel = nivel;
         notifyAllObservers();
     }
+
+    public String getJugadorPrincipalUser() {
+        return jugadorPrincipalUser;
+    }
+
+    public void setJugadorPrincipalUser(String jugadorPrincipalUser) {
+        System.out.println("[SalaSubject] Seteando jugadorPrincipalUser: " + jugadorPrincipalUser);
+        this.jugadorPrincipalUser = jugadorPrincipalUser;
+        System.out.println("[SalaSubject] Notificando observadores...");
+        notifyAllObservers();
+    }
+    
+    
 
 }

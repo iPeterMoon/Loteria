@@ -28,6 +28,7 @@ import util.ConfigLoader;
 public class ConfiguracionManager {
     
     private IPeer componentePeer;
+    private IModeloVistaConfiguracion modeloVistaConfiguracion;
     private final int numeroJugadasDisponibles = 4;
     private NuevoUsuarioDTO usuarioNuevaSala;
 
@@ -38,11 +39,12 @@ public class ConfiguracionManager {
         }
     }
 
-    public void inicializar(IPeer peer) {
+    public void inicializar(IPeer peer, IModeloVistaConfiguracion modeloVistaConfiguracion) {
         if (this.componentePeer != null) {
             return;
         }
         this.componentePeer = peer;
+        this.modeloVistaConfiguracion = modeloVistaConfiguracion;
     }
 
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionSala) {
@@ -61,6 +63,15 @@ public class ConfiguracionManager {
 
             Sala.getInstance().setJugadorPrincipal(jugadorPrincipal);
             componentePeer.setUser(usuarioNuevaSala.getNickname());
+            
+            // Actualizar SalaSubject a través de la fachada para que la UI se entere
+            if (modeloVistaConfiguracion != null) {
+                System.out.println("[ConfiguracionManager] Actualizando jugadorPrincipal: " + usuarioNuevaSala.getNickname());
+                modeloVistaConfiguracion.actualizarJugadorPrincipal(usuarioNuevaSala.getNickname());
+            } else {
+                System.err.println("[ConfiguracionManager] modeloVistaConfiguracion es NULL!");
+            }
+            
             // enviar evento a matchmaker para que se lo envié a todos
             componentePeer.directMessage(eventoSalaCreada, ConfigLoader.getInstance().getUsuarioMatchmaker());
         }

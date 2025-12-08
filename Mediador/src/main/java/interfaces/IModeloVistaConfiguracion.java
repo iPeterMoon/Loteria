@@ -20,4 +20,7 @@ public interface IModeloVistaConfiguracion {
 
     public void actualizarTipoConfiguracion(TipoConfiguracion tipoConfiguracion);
 
+    public void actualizarJugadorPrincipal(String user);
+    
+    public void cerrarVentana();
 }

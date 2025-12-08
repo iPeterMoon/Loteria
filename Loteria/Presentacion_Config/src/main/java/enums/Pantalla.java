@@ -13,7 +13,8 @@ public enum Pantalla {
     CONFIGURAR_USUARIO("configurar_usuario"),
     CONFIGURAR_PARTIDA("configurar_partida"),
     SALA_ESPERA("sala_espera"),
-    SALA_ESPERA_NO_UNIDO("sala_espera_no_unido");
+    SALA_ESPERA_NO_UNIDO("sala_espera_no_unido"),
+    CERRAR("cerrar");
 
     private final String nombre;
 

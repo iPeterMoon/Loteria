@@ -66,11 +66,11 @@ public class ModeloJuegoFacade implements IModeloJuego {
         this.vistaConfiguracion = modeloVistaConfiguracion;
 
         movimientoManager.inicializar(peer);
-        configuracionManager.inicializar(peer);
+        configuracionManager.inicializar(peer, modeloVistaConfiguracion);
         inicioPartidaManager.inicializar(peer, modeloVistaJuego);
         cantadorManager.inicializar(peer);
         cantarJugadaManager.inicializar(peer);
-        unirsePartidaManager.inicializar(peer);
+        unirsePartidaManager.inicializar(peer, modeloVistaConfiguracion);
     }
 
     /**
@@ -94,6 +94,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal) {
         Sala sala = Sala.getInstance();
         sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
+        vistaConfiguracion.actualizarJugadorPrincipal(jugadorPrincipal.getNickname());
     }
 
     /**
@@ -112,7 +113,6 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void validaMovimiento(Point posicion) {
         movimientoManager.validaMovimiento(posicion);
-        mostrarFramePartida();
     }
 
     /**
@@ -258,6 +258,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego) {
         configuracionManager.crearNuevaSala(configuracionJuego);
+    }
+    
+    public void cerrarSalaEspera(){
+        vistaConfiguracion.cerrarVentana();
     }
 
 }

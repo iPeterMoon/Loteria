@@ -13,6 +13,7 @@ public class ControlesConfiguracionFactory {
 
     private ControlConfiguracion controlConfiguracion;
     private ControlAplicacion controlAplicacion;
+    private ControlIniciarPartida controlIniciarPartida;
 
     /**
      * Constructor privado para evitar la instanciación externa.
@@ -39,6 +40,13 @@ public class ControlesConfiguracionFactory {
             return;
         }
         this.controlAplicacion = new ControlAplicacion(modeloAplicacion);
+        
+        if (this.controlIniciarPartida != null) {
+            //Evitar doble inicialización
+            return;
+        }
+        this.controlIniciarPartida = new ControlIniciarPartida(modeloControl);
+        
     }
 
     /**
@@ -58,6 +66,13 @@ public class ControlesConfiguracionFactory {
             throw new IllegalStateException("El Registro de Controles no ha sido inicializado. Llame a inicializar() en Arrancador");
         }
         return controlConfiguracion;
+    }
+    
+    public ControlIniciarPartida getControlIniciarPartida() {
+        if(controlIniciarPartida == null){
+            throw new IllegalStateException("El Registro de Controles no ha sido inicializado. Llame a inicializar() en el Arrancador");
+        }
+        return controlIniciarPartida;
     }
 
 }

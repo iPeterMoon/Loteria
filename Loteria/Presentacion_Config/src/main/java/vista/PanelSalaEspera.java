@@ -5,9 +5,7 @@
 package vista;
 
 import controladores.ControlesConfiguracionFactory;
-import dtos.aplicacion.JugadorSalaEsperaDTO;
-import enums.TipoNivel;
-import java.util.List;
+import modelo.ModeloVistaConfiguracionFacade;
 import modelo.SalaSubject;
 import util.Subject;
 
@@ -26,29 +24,45 @@ public class PanelSalaEspera extends javax.swing.JPanel {
 
     public void actualizarVista(Subject subject) {
         if (subject instanceof SalaSubject salaSubject) {
-            actualizarDatosSala(salaSubject.getJugadores(), salaSubject.getNivel(), salaSubject.getLimiteJugadores());
+            actualizarDatosSala(salaSubject);
             repaint();
             revalidate();
         }
     }
 
-    public void actualizarDatosSala(List<JugadorSalaEsperaDTO> jugadores, TipoNivel nivel, int limiteJugadores) {
-        panelListaJugadores.actualizarListaJugadores(jugadores, limiteJugadores);
-        labelNivel.setText(nivel.toString());
+    public void actualizarDatosSala(SalaSubject sala) {
+        if(sala.getHost() != null){
+            panelListaJugadores.actualizarListaJugadores(sala.getJugadores(), sala.getLimiteJugadores());
+            labelNivel.setText(sala.getNivel().toString());
+            actualizarBotones(sala);
+        }
     }
 
     public void configurarModoJugadorUnido() {
         btnAbandonarSala.setVisible(true);
         lblEspera.setVisible(true);
-        btnUnirme.setVisible(false);
+        btnAccion.setVisible(false);
     }
 
     public void configurarModoJugadorNoUnido() {
-        btnUnirme.setVisible(true);
+        btnAccion.setVisible(true);
         lblEspera.setVisible(false);
         btnAbandonarSala.setVisible(false);
     }
 
+    private void actualizarBotones(SalaSubject sala){
+        String principalNickname = sala.getJugadorPrincipalUser();
+        if(principalNickname != null){
+            btnAbandonarSala.setVisible(true);
+            if(principalNickname.equals(sala.getHost())){
+                btnAccion.setText("Iniciar Partida");
+            } else {
+                lblEspera.setVisible(true);
+                btnAccion.setVisible(false);
+            }
+        };
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +77,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         lblNivel = new javax.swing.JLabel();
         labelNivel = new javax.swing.JLabel();
         lblEspera = new javax.swing.JLabel();
-        btnUnirme = new javax.swing.JButton();
+        btnAccion = new javax.swing.JButton();
         panelListaJugadores = new vista.PanelListaJugadores();
 
         setBackground(new java.awt.Color(255, 178, 0));
@@ -95,14 +109,14 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         lblEspera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEspera.setText("Esperando a que inicice la partida...");
 
-        btnUnirme.setBackground(new java.awt.Color(100, 13, 95));
-        btnUnirme.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnUnirme.setForeground(new java.awt.Color(255, 255, 255));
-        btnUnirme.setText("Unirme a la sala");
-        btnUnirme.setFocusPainted(false);
-        btnUnirme.addActionListener(new java.awt.event.ActionListener() {
+        btnAccion.setBackground(new java.awt.Color(100, 13, 95));
+        btnAccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnAccion.setForeground(new java.awt.Color(255, 255, 255));
+        btnAccion.setText("Unirme a la sala");
+        btnAccion.setFocusPainted(false);
+        btnAccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUnirmeActionPerformed(evt);
+                btnAccionActionPerformed(evt);
             }
         });
 
@@ -119,7 +133,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUnirme, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEspera, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(lblSala, javax.swing.GroupLayout.PREFERRED_SIZE, 1275, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -145,7 +159,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUnirme, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -155,15 +169,22 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         controles.getControlConfiguracion().abandonarSala();
     }//GEN-LAST:event_btnAbandonarSalaActionPerformed
 
-    private void btnUnirmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirmeActionPerformed
-        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-        controles.getControlAplicacion().unirseASala();
-    }//GEN-LAST:event_btnUnirmeActionPerformed
+    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
+        if(btnAccion.getText().equals("Unirme a la sala")){
+            ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+            controles.getControlAplicacion().unirseASala();
+        } else if (btnAccion.getText().equals("Iniciar Partida")){
+            ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+            controles.getControlIniciarPartida().iniciarPartida();
+            // Cerrar la ventana de configuración a través del modelo
+            ModeloVistaConfiguracionFacade.getInstance().cerrarVentana();
+        }
+    }//GEN-LAST:event_btnAccionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbandonarSala;
-    private javax.swing.JButton btnUnirme;
+    private javax.swing.JButton btnAccion;
     private javax.swing.JLabel labelNivel;
     private javax.swing.JLabel lblEspera;
     private javax.swing.JLabel lblNivel;

@@ -17,4 +17,6 @@ public interface IModeloControlNegocio {
     public void configurarPartida(ConfiguracionJuegoDTO configuracion);
        
     public void abandonarSala();
+    
+    public void iniciarPartida();
 }

@@ -106,7 +106,10 @@ public class FrameConfiguracion extends JFrame {
 
         if (subject instanceof PantallaActualSubject pantalla) {
             Pantalla pantallaActual = pantalla.getPantallaActual();
-
+            if(pantallaActual == Pantalla.CERRAR){
+                this.setVisible(false);
+                return;
+            }
             cardLayout.show(panelContenedor, pantallaActual.getNombre());
 
             if (pantallaActual == Pantalla.SALA_ESPERA) {

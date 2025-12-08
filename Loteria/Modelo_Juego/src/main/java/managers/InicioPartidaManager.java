@@ -55,6 +55,8 @@ public class InicioPartidaManager {
         barajearMazo();
         repartirTarjetas();
         generarEventoInicioPartida();
+        mostrarFramePartida();
+        cerrarFrameConfiguracion();
     }
 
     /**
@@ -145,5 +147,12 @@ public class InicioPartidaManager {
         String userSender = Sala.getInstance().getJugadorPrincipal().getNickname();
         EventoIniciarPartida evento = new EventoIniciarPartida(userSender);
         componentePeer.broadcastEvento(evento);
+    }
+    
+    private void cerrarFrameConfiguracion(){
+        System.out.println("[InicioPartidaManager] Enviando evento para cerrar FrameConfiguracion...");
+        // El cierre se realiza a través del PantallaActualSubject
+        // El ModeloVistaConfiguracion notificará a través de cerrarVentana()
+        // que establecerá Pantalla.CERRAR
     }
 }

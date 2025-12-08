@@ -42,5 +42,10 @@ public class ModeloControlConfigImp implements IModeloControlNegocio {
     public void abandonarSala(){
         modeloJuego.abandonarSala();
     }
+
+    @Override
+    public void iniciarPartida() {
+        modeloJuego.iniciarPartida();
+    }
     
 }
