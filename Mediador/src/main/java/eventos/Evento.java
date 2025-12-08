@@ -1,7 +1,8 @@
 package eventos;
 
-import enums.TipoEvento;
 import java.io.Serializable;
+
+import enums.TipoEvento;
 
 /**
  * Clase base abstracta (Contrato) para todos los eventos.

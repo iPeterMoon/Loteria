@@ -1,6 +1,9 @@
 package peer;
 
 import com.google.gson.Gson;
+
+import cliente.ClienteRed;
+import dtos.MensajeDesconexion;
 import dtos.PeerInfo;
 import eventos.Evento;
 import interfaces.IObserver;
@@ -11,6 +14,9 @@ import java.util.concurrent.ExecutorService;
 import network.DiscoveryRegistrar;
 import network.EnvioPeer;
 import network.RecepcionPeer;
+import procesadores_peer.ProcesadorMensajesLlegada;
+import procesadores_peer.ProcesadorMensajesSalida;
+import util.ConfigLoader;
 import utilPeer.PoolHilos;
 import network.OutgoingMessageDispatcher;
 
@@ -26,6 +32,10 @@ public class Peer {
     private EnvioPeer envioHandler;
     private RecepcionPeer recepcionHandler;
     private IObserver observer;
+    private Heartbeat heartbeat;
+    private ProcesadorMensajesLlegada procesadorLlegada;
+    private ProcesadorMensajesSalida procesadorSalida;
+    private final Gson gson = new Gson();
 
     private Peer() {
         this.myInfo = new PeerInfo(null, "", 0);
@@ -86,8 +96,8 @@ public class Peer {
 
     private void empezarHeartbeat() {
         ExecutorService threadPool = PoolHilos.getInstance().getThreadPool();
-        Heartbeat heartbeat = new Heartbeat(myInfo);
-        threadPool.submit(heartbeat);
+        this.heartbeat = new Heartbeat(myInfo);
+        threadPool.submit(this.heartbeat);
     }
 
     public void broadcastEvento(Evento evento) {
@@ -128,10 +138,65 @@ public class Peer {
         envioHandler.stop();
         recepcionHandler.stop();
         System.out.println("[Peer] Detenido.");
+        red.PoolHilos.getInstance().shutdown();
     }
 
     public void setObserver(IObserver observer) {
         this.observer = observer;
     }
 
+    /**
+     * Método invocado por la UI para que el Peer abandone la partida.
+     */
+    public void abandonar() {
+        System.out.println(">>> [PEER] Abandonando la partida voluntariamente...");
+
+        // 1. Notificar al Servidor de Descubrimiento (Salida limpia)
+        notificarAbandonoAlServidor();
+
+        // 2. Detener todos los servicios de red de forma segura.
+        stop();
+    }
+
+    /**
+     * Crea el JSON del evento de desconexión y lo envía directamente al
+     * Servidor Utiliza la infraestructura EnvioPeer, que delega a
+     * EnvioPeer.directMessage()
+     */
+    private void notificarAbandonoAlServidor() {
+        try {
+            // Crear el DTO que será el cuerpo del mensaje, usando la información local
+            MensajeDesconexion eventoDesconexion = new MensajeDesconexion(this.myInfo);
+
+            // Convertir el Evento a JSON
+            String jsonDesconexion = gson.toJson(eventoDesconexion);
+
+            // Crear el PeerInfo del Destino 
+            PeerInfo serverInfo = new PeerInfo(
+                    "discovery",
+                    ConfigLoader.getInstance().getIpServidor(),
+                    ConfigLoader.getInstance().getPuertoDiscovery()
+            );
+
+            // Enviar el mensaje: Se delega a EnvioPeer para resolver y enviar
+            EnvioPeer.getInstance().directMessage(serverInfo, jsonDesconexion);
+
+            System.out.println(">>> [PEER] Notificación de abandono enviada al Servidor.");
+
+        } catch (Exception e) {
+            System.err.println("[Peer] Error al notificar la desconexión al servidor: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Lógica ejecutada cuando el Peer local es elegido como el nuevo Host tras
+     * la desconexión del anterior
+     *
+     * * @param miInfo La información del Peer local (que ahora es Host)
+     */
+    public void promoverseAHost(PeerInfo miInfo) {
+
+        System.out.println(">>> [HOST] PROMOCIÓN EXITOSA: El Peer " + miInfo.getUser() + " ha asumido el rol de Host.");
+
+    }
 }
