@@ -13,16 +13,16 @@ import interfaces.IObserver;
  */
 public class ProcesadorEventos implements IObserver {
 
-    private IHandler manejadorPrincipal;
+    private final IHandler manejadorPrincipal;
 
     public ProcesadorEventos() {
         ManejadorEventos eventoFicha = new ManejadorEventoColocarFicha();
-        ManejadorEventoSemilla eventoSemilla = new ManejadorEventoSemilla();
-        ManejadorEventoTarjetasBarajeadas eventoTarjetasBarajeadas = new ManejadorEventoTarjetasBarajeadas();
-        ManejadorEventoCartaCantada eventoCartaCantada = new ManejadorEventoCartaCantada();
-        ManejadorEventoSalaActualizada eventoSalaActualizada = new ManejadorEventoSalaActualizada();
-        ManejadorEventoRecibirSala eventoInfoSala = new ManejadorEventoRecibirSala();
-        ManejadorEventoJugada eventoJugadas = new ManejadorEventoJugada();
+        ManejadorEventos eventoSemilla = new ManejadorEventoSemilla();
+        ManejadorEventos eventoTarjetasBarajeadas = new ManejadorEventoTarjetasBarajeadas();
+        ManejadorEventos eventoCartaCantada = new ManejadorEventoCartaCantada();
+        ManejadorEventos eventoSalaActualizada = new ManejadorEventoSalaActualizada();
+        ManejadorEventos eventoInfoSala = new ManejadorEventoInfoSala();
+        ManejadorEventos eventoJugadas = new ManejadorEventoJugada();
 
         this.manejadorPrincipal = eventoFicha;
 

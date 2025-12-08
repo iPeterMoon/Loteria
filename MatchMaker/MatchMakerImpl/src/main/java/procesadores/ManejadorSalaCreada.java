@@ -7,11 +7,10 @@ import dtos.aplicacion.SalaDTO;
 import enums.TipoEvento;
 import eventos.Evento;
 import eventos.eventos_aplicacion.EventoCrearSala;
-import eventos.eventos_aplicacion.EventoNuevaSala;
+import eventos.eventos_aplicacion.EventoInfoSala;
 import implementaciones.ConfiguracionJuego;
 import implementaciones.Matchmaker;
 import implementaciones.Sala;
-import java.util.List;
 import mappers.ConfiguracionMapperMatchmaker;
 import mappers.JugadorMapperMatchmaker;
 import mappers.SalaMapperMatchmaker;
@@ -37,9 +36,11 @@ public class ManejadorSalaCreada extends ManejadorEventos {
             Sala.getInstance().configurarNuevaSala(configuracion, host);
             SalaDTO salaDTO = SalaMapperMatchmaker.toSalaDTO(configuracionDTO);
 
-            EventoNuevaSala eventoNuevaSala = new EventoNuevaSala(ConfigLoader.getInstance().getUsuarioMatchmaker(), salaDTO);
+            EventoInfoSala eventoNuevaSala = new EventoInfoSala(ConfigLoader.getInstance().getUsuarioMatchmaker(), salaDTO);
 
             Matchmaker.getInstance().broadcast(eventoNuevaSala);
+        } else if (next != null){
+            next.procesar(evento);
         }
 
     }

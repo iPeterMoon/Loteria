@@ -5,8 +5,8 @@
 package vista;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
-import java.awt.GridLayout;
 import java.util.List;
+
 import javax.swing.JScrollPane;
 
 /**
@@ -23,10 +23,6 @@ public class PanelListaJugadores extends javax.swing.JPanel {
      */
     public PanelListaJugadores() {
         initComponents();
-        
-        pnlContenedorLista.setLayout(new GridLayout(1, 0, 10, 0));
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
     }
 
     public void actualizarListaJugadores(List<JugadorSalaEsperaDTO> jugadores, int limiteMaximo) {
@@ -70,20 +66,11 @@ public class PanelListaJugadores extends javax.swing.JPanel {
         lblCantidadJugadores.setText("(1/2)");
 
         scroll.setBackground(new java.awt.Color(255, 153, 153));
+        scroll.setBorder(null);
+        scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        pnlContenedorLista.setBackground(new java.awt.Color(255, 204, 204));
-
-        javax.swing.GroupLayout pnlContenedorListaLayout = new javax.swing.GroupLayout(pnlContenedorLista);
-        pnlContenedorLista.setLayout(pnlContenedorListaLayout);
-        pnlContenedorListaLayout.setHorizontalGroup(
-            pnlContenedorListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 606, Short.MAX_VALUE)
-        );
-        pnlContenedorListaLayout.setVerticalGroup(
-            pnlContenedorListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
-        );
-
+        pnlContenedorLista.setBackground(new java.awt.Color(217, 22, 86));
+        pnlContenedorLista.setLayout(new javax.swing.BoxLayout(pnlContenedorLista, javax.swing.BoxLayout.Y_AXIS));
         scroll.setViewportView(pnlContenedorLista);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -93,12 +80,12 @@ public class PanelListaJugadores extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblJugadores)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblCantidadJugadores)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(308, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +95,7 @@ public class PanelListaJugadores extends javax.swing.JPanel {
                     .addComponent(lblJugadores)
                     .addComponent(lblCantidadJugadores))
                 .addGap(18, 18, 18)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

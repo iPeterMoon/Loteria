@@ -99,7 +99,8 @@ public class FrameConfiguracion extends JFrame {
             }
             if (configuracion.getTipoConfiguracion().equals(TipoConfiguracion.UNIRSE_SALA)) {
                 panelConfiguracionUsuario.setConfiguracionActual(TipoConfiguracion.UNIRSE_SALA);
-                cardLayout.show(panelContenedor, Pantalla.SALA_ESPERA_NO_UNIDO.getNombre());
+                panelSalaEspera.configurarModoJugadorNoUnido();
+                cardLayout.show(panelContenedor, Pantalla.SALA_ESPERA.getNombre());
             }
         }
 

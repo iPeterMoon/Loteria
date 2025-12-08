@@ -1,6 +1,7 @@
 package vista;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
+import modelo.SalaSubject;
 
 /**
  *
@@ -18,6 +19,14 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
     public void configurarJugador(JugadorSalaEsperaDTO jugador) {
         lblNickname.setText(jugador.getNickname());
         pnlAvatar.actualizarAvatar(jugador.getFotoPerfil());
+        if(!isHost(jugador)){
+            lblCorona.setVisible(false);
+        }
+    }
+    
+    private boolean isHost(JugadorSalaEsperaDTO jugador){
+        SalaSubject sala = SalaSubject.getInstance();
+        return jugador.getNickname().equals(sala.getHost());
     }
 
     /**
@@ -31,8 +40,11 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
 
         lblNickname = new javax.swing.JLabel();
         pnlAvatar = new vista.PanelAvatar();
+        lblCorona = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(217, 22, 86));
+        setMaximumSize(new java.awt.Dimension(580, 170));
+        setMinimumSize(new java.awt.Dimension(580, 170));
 
         lblNickname.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         lblNickname.setForeground(new java.awt.Color(255, 255, 255));
@@ -49,6 +61,8 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
             .addGap(0, 140, Short.MAX_VALUE)
         );
 
+        lblCorona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/corona.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -58,24 +72,33 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
                 .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(lblNickname)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addComponent(lblCorona)
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(lblNickname)))
+                        .addGap(0, 10, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(lblNickname)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(lblCorona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblCorona;
     private javax.swing.JLabel lblNickname;
     private vista.PanelAvatar pnlAvatar;
     // End of variables declaration//GEN-END:variables

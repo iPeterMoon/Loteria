@@ -70,6 +70,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         inicioPartidaManager.inicializar(peer, modeloVistaJuego);
         cantadorManager.inicializar(peer);
         cantarJugadaManager.inicializar(peer);
+        unirsePartidaManager.inicializar(peer);
     }
 
     /**

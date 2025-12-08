@@ -109,8 +109,6 @@ public interface IModeloJuego {
      */
     public void actualizarSala(List<JugadorDTO> jugadores);
 
-    public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario);
-
     public void actualizarJugadoresSala(List<JugadorDTO> jugadores);
 
     /**

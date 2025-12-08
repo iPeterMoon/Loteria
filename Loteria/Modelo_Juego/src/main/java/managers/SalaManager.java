@@ -1,10 +1,10 @@
 package managers;
 
-import dtos.aplicacion.JugadorDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoSalirSalaEspera;
 import eventos.eventos_aplicacion.EventoUnirseSala;
 import interfaces.IPeer;
+import modelo.Jugador;
 import modelo.Sala;
 import util.ConfigLoader;
 
@@ -25,11 +25,13 @@ public class SalaManager {
 
     public void unirseSala(NuevoUsuarioDTO usuario) {
         componentePeer.setUser(usuario.getNickname());
+        Jugador jugadorPrincipal = new Jugador(usuario.getNickname(), usuario.getIdAvatarSeleccionado(), 0, null);
+        Sala.getInstance().setJugadorPrincipal(jugadorPrincipal);
         EventoUnirseSala eventoUnirsePartida = new EventoUnirseSala(usuario.getNickname(), usuario);
         componentePeer.directMessage(eventoUnirsePartida, ConfigLoader.getInstance().getUsuarioMatchmaker());
     }
     
-        public void abandonarSala(){
+    public void abandonarSala(){
         EventoSalirSalaEspera eventoSalirSalaEspera = new EventoSalirSalaEspera(Sala.getInstance().getJugadorPrincipal().getNickname());
         componentePeer.directMessage(eventoSalirSalaEspera, ConfigLoader.getInstance().getUsuarioMatchmaker());
     }

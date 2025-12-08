@@ -72,7 +72,7 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     }
     
     private void configurarSalaSubject() {
-        this.salaSubject = new SalaSubject();
+        this.salaSubject = SalaSubject.getInstance();
         this.salaSubject.addObserver(this.observer);
     }
     

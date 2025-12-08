@@ -9,8 +9,10 @@ import dtos.aplicacion.MensajeDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.JugadasDisponibles;
 import enums.TipoMensajePantalla;
+import enums.TipoNivel;
 import eventos.eventos_aplicacion.EventoCrearSala;
 import eventos.eventos_aplicacion.EventoSolicitudSala;
+import interfaces.IModeloVistaConfiguracion;
 import interfaces.IPeer;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,7 @@ import util.ConfigLoader;
  * @author Alici
  */
 public class ConfiguracionManager {
-
+    
     private IPeer componentePeer;
     private final int numeroJugadasDisponibles = 4;
     private NuevoUsuarioDTO usuarioNuevaSala;

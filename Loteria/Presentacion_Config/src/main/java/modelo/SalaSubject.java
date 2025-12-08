@@ -12,28 +12,37 @@ import util.Subject;
  */
 public class SalaSubject extends Subject {
 
-    private String host;
+    private String hostUser;
     private TipoNivel nivel;
     private int limiteJugadores;
     private List<JugadorSalaEsperaDTO> jugadores;
 
-    public SalaSubject() {
+    private static SalaSubject instance;
+    
+    private SalaSubject() {
         this.jugadores = new ArrayList<>();
     }
+    
+    public static SalaSubject getInstance(){
+        if(instance == null){
+            instance = new SalaSubject();
+        }
+        return instance;
+    }
 
-    public SalaSubject(String host,TipoNivel nivel, int limiteJugadores, List<JugadorSalaEsperaDTO> jugadores) {
-        this.host = host;
+    public void configurarSala(String hostUser,TipoNivel nivel, int limiteJugadores, List<JugadorSalaEsperaDTO> jugadores) {
+        this.hostUser = hostUser;
         this.nivel = nivel;
         this.limiteJugadores = limiteJugadores;
         this.jugadores = jugadores;
     }
 
     public String getHost() {
-        return host;
+        return hostUser;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setHostUser(String hostUser) {
+        this.hostUser = hostUser;
     }
 
     public TipoNivel getNivel() {
@@ -62,7 +71,7 @@ public class SalaSubject extends Subject {
     }
 
     public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
-        this.host = host;
+        this.hostUser = host;
         this.limiteJugadores = limiteJugadores;
         this.nivel = nivel;
         notifyAllObservers();

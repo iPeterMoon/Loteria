@@ -4,8 +4,6 @@
  */
 package dtos.aplicacion;
 
-import java.awt.Image;
-
 /**
  *
  * @author norma
@@ -17,7 +15,7 @@ public class JugadorSalaEsperaDTO {
     private int fotoPerfil;
     
     private boolean jugadorPrincipal;
-
+    
     public JugadorSalaEsperaDTO() {
     }
 
@@ -50,6 +48,5 @@ public class JugadorSalaEsperaDTO {
     public void setJugadorPrincipal(boolean jugadorPrincipal) {
         this.jugadorPrincipal = jugadorPrincipal;
     }
-    
     
 }

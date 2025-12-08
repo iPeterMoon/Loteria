@@ -40,12 +40,10 @@ public class PanelSalaEspera extends javax.swing.JPanel {
     public void configurarModoJugadorUnido() {
         btnAbandonarSala.setVisible(true);
         lblEspera.setVisible(true);
-        btnSalir.setVisible(false);
         btnUnirme.setVisible(false);
     }
 
     public void configurarModoJugadorNoUnido() {
-        btnSalir.setVisible(true);
         btnUnirme.setVisible(true);
         lblEspera.setVisible(false);
         btnAbandonarSala.setVisible(false);
@@ -61,23 +59,24 @@ public class PanelSalaEspera extends javax.swing.JPanel {
     private void initComponents() {
 
         lblSala = new javax.swing.JLabel();
-        panelListaJugadores = new vista.PanelListaJugadores();
         btnAbandonarSala = new javax.swing.JButton();
         lblNivel = new javax.swing.JLabel();
         labelNivel = new javax.swing.JLabel();
         lblEspera = new javax.swing.JLabel();
         btnUnirme = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
+        panelListaJugadores = new vista.PanelListaJugadores();
 
         setBackground(new java.awt.Color(255, 178, 0));
 
         lblSala.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        lblSala.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSala.setText("Sala");
 
         btnAbandonarSala.setBackground(new java.awt.Color(235, 91, 0));
         btnAbandonarSala.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAbandonarSala.setForeground(new java.awt.Color(255, 255, 255));
         btnAbandonarSala.setText("Abandonar Sala");
+        btnAbandonarSala.setFocusPainted(false);
         btnAbandonarSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAbandonarSalaActionPerformed(evt);
@@ -85,31 +84,25 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         });
 
         lblNivel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        lblNivel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNivel.setText("Nivel");
 
         labelNivel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelNivel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNivel.setText("Básico");
 
         lblEspera.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEspera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEspera.setText("Esperando a que inicice la partida...");
 
         btnUnirme.setBackground(new java.awt.Color(100, 13, 95));
         btnUnirme.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnUnirme.setForeground(new java.awt.Color(255, 255, 255));
         btnUnirme.setText("Unirme a la sala");
+        btnUnirme.setFocusPainted(false);
         btnUnirme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUnirmeActionPerformed(evt);
-            }
-        });
-
-        btnSalir.setBackground(new java.awt.Color(235, 91, 0));
-        btnSalir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
             }
         });
 
@@ -118,30 +111,20 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblNivel)
-                                    .addComponent(labelNivel)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAbandonarSala)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
-                                .addComponent(btnSalir)
-                                .addGap(168, 168, 168)
-                                .addComponent(lblEspera))))
+                            .addComponent(lblNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUnirme, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEspera, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblSala, javax.swing.GroupLayout.PREFERRED_SIZE, 1275, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(389, 389, 389)
-                        .addComponent(lblSala)))
-                .addGap(28, 28, 28))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(368, 368, 368)
-                .addComponent(btnUnirme)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(13, 13, 13)
+                        .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,21 +133,20 @@ public class PanelSalaEspera extends javax.swing.JPanel {
                 .addComponent(lblSala)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(34, 34, 34)
                         .addComponent(lblNivel)
                         .addGap(18, 18, 18)
-                        .addComponent(labelNivel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(btnUnirme)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelNivel)
+                        .addGap(419, 419, 419)
+                        .addComponent(lblEspera))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAbandonarSala)
-                    .addComponent(lblEspera)
-                    .addComponent(btnSalir))
-                .addGap(17, 17, 17))
+                    .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUnirme, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -178,15 +160,9 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         controles.getControlAplicacion().unirseASala();
     }//GEN-LAST:event_btnUnirmeActionPerformed
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-        controles.getControlAplicacion().salir();
-    }//GEN-LAST:event_btnSalirActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbandonarSala;
-    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnUnirme;
     private javax.swing.JLabel labelNivel;
     private javax.swing.JLabel lblEspera;
