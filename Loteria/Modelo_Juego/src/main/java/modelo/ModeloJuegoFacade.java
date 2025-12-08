@@ -81,7 +81,12 @@ public class ModeloJuegoFacade implements IModeloJuego {
      */
     @Override
     public JugadorDTO getJugadorPrincipal() {
-        return JugadorMapperModelo.toDTO(Sala.getInstance().getJugadorPrincipal(), true);
+        Sala sala = Sala.getInstance();
+        if(sala.getJugadorPrincipal() != null){
+            return JugadorMapperModelo.toDTO(Sala.getInstance().getJugadorPrincipal(), true);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -93,8 +98,12 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal) {
         Sala sala = Sala.getInstance();
-        sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
-        vistaConfiguracion.actualizarJugadorPrincipal(jugadorPrincipal.getNickname());
+        if(jugadorPrincipal != null){
+            sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
+            vistaConfiguracion.actualizarJugadorPrincipal(jugadorPrincipal.getNickname());
+        } else {
+            sala.setJugadorPrincipal(null);
+        }
     }
 
     /**

@@ -6,6 +6,7 @@ import eventos.eventos_aplicacion.EventoUnirseSala;
 import interfaces.IPeer;
 import interfaces.IModeloVistaConfiguracion;
 import modelo.Jugador;
+import modelo.ModeloJuegoFacade;
 import modelo.Sala;
 import util.ConfigLoader;
 
@@ -45,7 +46,9 @@ public class SalaManager {
     
     public void abandonarSala(){
         EventoSalirSalaEspera eventoSalirSalaEspera = new EventoSalirSalaEspera(Sala.getInstance().getJugadorPrincipal().getNickname());
+        ModeloJuegoFacade.getInstance().setJugadorPrincipal(null);
         componentePeer.directMessage(eventoSalirSalaEspera, ConfigLoader.getInstance().getUsuarioMatchmaker());
+        this.componentePeer.setUser(null);
     }
 
 }
