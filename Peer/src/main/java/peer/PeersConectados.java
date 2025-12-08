@@ -2,6 +2,7 @@ package peer;
 
 import dtos.PeerInfo;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -44,7 +45,7 @@ public class PeersConectados {
         if(info != null) {
             if(!esMismoPeer(info, this.myInfo)){
                 listaPeers.put(generarClave(info), info);
-                System.out.println("Se Unió un nuevo Peer! ["+info.getUser()+"@"+info.getIp()+":"+info.getPort()+"]");
+                imprimirListaPeers();
             }
         } else {
             System.err.println("Se intentó procesar un Peer nulo");
@@ -96,5 +97,34 @@ public class PeersConectados {
         }
     }
     
+    /**
+     * Obtiene la información de un peer por su nombre de usuario
+     * @param user Nombre de usuario del peer a buscar
+     * @return PeerInfo del peer si existe, null si no se encuentra
+     */
+    public PeerInfo obtenerPeerPorUsuario(String user) {
+        if (user == null || user.isEmpty()) {
+            return null;
+        }
+        for (PeerInfo peer : listaPeers.values()) {
+            if (user.equals(peer.getUser())) {
+                return peer;
+            }
+        }
+        return null;
+    }
     
+    /**
+     * Obtiene una colección de todos los peers conectados
+     * @return Colección de PeerInfo de todos los peers conectados
+     */
+    public Collection<PeerInfo> obtenerTodosLosPeers() {
+        return listaPeers.values();
+    }
+    
+    private void imprimirListaPeers(){
+        for (PeerInfo peer : listaPeers.values()) {
+            System.out.println(peer.getUser()+"@"+peer.getIp()+":"+peer.getPort());
+        }
+    }
 }

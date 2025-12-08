@@ -1,6 +1,6 @@
 package main;
 
-import discovery.Discovery;
+import discovery.DiscoveryAssembler;
 
 /**
  *
@@ -10,7 +10,7 @@ public class Arrancador {
 
     public static void main(String[] args){
         
-        Discovery discovery = Discovery.getInstance();
+        DiscoveryAssembler discovery = DiscoveryAssembler.getInstance();
         discovery.start();
     }
 }

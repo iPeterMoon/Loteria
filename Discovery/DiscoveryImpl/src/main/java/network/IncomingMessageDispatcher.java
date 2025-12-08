@@ -9,26 +9,37 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
- * @author norma
+ * @author Alici
  */
 public class IncomingMessageDispatcher {
-
     private static BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
 
+    private IncomingMessageDispatcher() {
+    }
+
+    /**
+     * Metodo para meter un mensaje en la cola de llegada
+     * @param mensaje Mensaje a meter
+     */
     public static void dispatch(String mensaje) {
         if (mensaje == null || incomingQueue == null) {
             System.err.println("Error: Mensaje o cola de entrada nulos en el despachador.");
             return;
         }
         try {
-            incomingQueue.put(mensaje); 
+            incomingQueue.put(mensaje);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            System.err.println("Error al despachar mensaje de entrada: " + e.getMessage());
+            System.err.println("Error al despachar mensaje de entrada:" + e.getMessage());
         }
     }
 
-    public static String take() throws InterruptedException{
+    /**
+     * Metodo apra sacar un mensaje de la cola de llegada
+     * @return Mensaje sacado de la cola.
+     * @throws InterruptedException
+     */
+    public static String take() throws InterruptedException {
         return incomingQueue.take();
     }
 }

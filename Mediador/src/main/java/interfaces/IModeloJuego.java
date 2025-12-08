@@ -1,7 +1,7 @@
 package interfaces;
 
-import dtos.FichaDTO;
 import dtos.JugadorDTO;
+import eventos.eventos_aplicacion.EventoFicha;
 import java.awt.Point;
 
 /**
@@ -27,13 +27,13 @@ public interface IModeloJuego {
     public JugadorDTO getJugadorPrincipal();
 
     /**
-     * Metodo que establece el jugador principal, el que está ejecutando esta instancia del juego
+     * Metodo que establece el jugador principal, el que está ejecutando esta
+     * instancia del juego
      */
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal);
-    
+
     /**
      * Metodo para colocar una ficha en alguna de las tarjetas de los jugadores
-     * @param ficha DTO con la posicion de la ficha y el jugador
      */
-    public void colocarFicha(FichaDTO ficha);
+    public void colocarFicha(EventoFicha ficha);
 }
