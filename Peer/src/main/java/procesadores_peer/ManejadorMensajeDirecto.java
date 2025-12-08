@@ -3,10 +3,11 @@ package procesadores_peer;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import network.EnvioPeer;
 import mensajes.TipoMensaje;
 import peer.PeersConectados;
+import util.ConfigLoader;
 
 /**
  * Manejador para procesar mensajes directos. Se encarga de enviar mensajes a un
@@ -63,7 +64,7 @@ public class ManejadorMensajeDirecto extends ManejadorMensajesSalida {
      * @return DTO con la información del PeerDestinatario
      */
     private PeerInfo extraerPeerDestinatario(JsonObject json) {
-        String user = json.get("userReceiver").getAsString();
+        String user = json.get("user").getAsString();
         PeersConectados peers = PeersConectados.getInstance();
         PeerInfo peerDestino = peers.obtenerPeerPorUsuario(user);
         return peerDestino;

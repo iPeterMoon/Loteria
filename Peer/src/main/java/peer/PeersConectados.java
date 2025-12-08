@@ -1,6 +1,6 @@
 package peer;
 
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 
 import java.util.Collection;
 import java.util.Map;

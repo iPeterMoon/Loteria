@@ -1,5 +1,6 @@
 package modelo;
 
+import enums.JugadasDisponibles;
 import java.awt.Point;
 
 import interfaces.IModeloJuego;
@@ -14,10 +15,11 @@ import interfaces.IModeloJuego;
  */
 public class ModeloControlImp implements IModeloControl {
 
-    private IModeloJuego modeloJuego;
+    private final IModeloJuego modeloJuego;
 
     /**
      * Constructor vacío
+     * @param modeloJuego
      */
     public ModeloControlImp(IModeloJuego modeloJuego) {
         this.modeloJuego = modeloJuego;
@@ -38,10 +40,64 @@ public class ModeloControlImp implements IModeloControl {
     }
 
     /**
+     * Verifica la jugada de tipo Llena enviando la validación al modelo del
+     * juego.
+     * <p>
+     * Solicita al modelo que valide si se cumplen las condiciones necesarias
+     * para cantar la jugada Llena.
+     * </p>
+     */
+    @Override
+    public void verificarJugadaLlena() {
+        modeloJuego.validarJugada(JugadasDisponibles.LLENA);
+    }
+
+    /**
+     * Verifica la jugada de tipo Chorro enviando la validación al modelo del
+     * juego.
+     * <p>
+     * Solicita al modelo que valide si se cumplen las condiciones necesarias
+     * para cantar la jugada Llena.
+     * </p>
+     */
+    @Override
+    public void verificarJugadaChorro() {
+        modeloJuego.validarJugada(JugadasDisponibles.CHORRO);
+    }
+
+    /**
+     * Verifica la jugada de tipo Centro enviando la validación al modelo del
+     * juego.
+     * <p>
+     * Solicita al modelo que valide si se cumplen las condiciones necesarias
+     * para cantar la jugada Llena.
+     * </p>
+     */
+    @Override
+    public void verificarJugadaCentro() {
+        modeloJuego.validarJugada(JugadasDisponibles.CENTRO);
+    }
+
+    /**
+     * Verifica la jugada de tipo Cuatro esquinas enviando la validación al
+     * modelo del juego.
+     * <p>
+     * Solicita al modelo que valide si se cumplen las condiciones necesarias
+     * para cantar la jugada Llena.
+     * </p>
+     */
+    @Override
+    public void verificarJugadaCuatroEsquinas() {
+        modeloJuego.validarJugada(JugadasDisponibles.CUATROESQUINAS);
+    }
+
+    /**
      * Devuelve la interfaz del modelo del juego que utiliza para comunicarse.
+     *
      * @return La interfaz del modelo de juego.
      */
-    public IModeloJuego getModeloJuego(){
+    public IModeloJuego getModeloJuego() {
         return modeloJuego;
     }
+
 }

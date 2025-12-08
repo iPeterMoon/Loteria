@@ -1,62 +1,109 @@
-package managers; 
 
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package managers;
+
+import eventos.eventos_aplicacion.EventoCartaCantada;
+import interfaces.IObserver;
 import interfaces.IPeer;
-//eventocartacantada import eventos.EventoCartaCantada;
+import modelo.Cantador;
+import modelo.Jugador;
+import modelo.ModeloJuegoFacade;
+import modelo.Sala;
 
-public class CantadorManager {
+/**
+ *
+ * @author rocha
+ */
+public class CantadorManager implements IObserver {
 
-    private IPeer peer;
-    private boolean cantando = false;
-    private Thread hiloCantador;
+    /**
+     * Componente peer para el envío de eventos.
+     */
+    private IPeer componentePeer;
 
-    // Se llama desde la Facade al iniciar el programa
+    /**
+     * Cantador del modelo.
+     */
+    private Cantador cantador;
+
+    /**
+     * Retraso de tiempo en milisegundos para manejar la ventaja del host.
+     */
+    private final long RETRASO_MS = 100;
+
     public void inicializar(IPeer peer) {
-        this.peer = peer;
+        if (this.componentePeer != null) {
+            return;
+        }
+
+        this.componentePeer = peer;
+        this.cantador = Cantador.getInstance();
+
+        cantador.addObserver(this);
     }
 
     /**
-     * Inicia el ciclo de cantar cartas 
-     * @param intervalo Tiempo en milisegundos entre cartas
+     * Inicia el canto del cantador en el modelo del jugador que es host.
      */
-    public void iniciarCanto(long intervalo) {
-        if (cantando) return; // Si ya está corriendo, no hace nada
-        
-        this.cantando = true;
-        System.out.println(">>> [CANTADOR] ¡Soy el Host! Iniciando hilo de cartas...");
-
-        hiloCantador = new Thread(() -> {
-            try {
-                while (cantando) {
-                    // 1. Esperar el tiempo definido
-                    Thread.sleep(intervalo);
-                    
-                    // 2. Aquí va la lógica real de seleccionar carta
-                    System.out.println(">>> [CANTADOR] Enviando carta a la red...");
-                    
-                    /* DESCOMENTAR CUANDO TENGAS TU CLASE DE CARTA:
-                    EventoCartaCantada evento = new EventoCartaCantada("CartaX");
-                    if (peer != null) {
-                        peer.enviarObjeto(evento);
-                    }
-                    */
-                }
-            } catch (InterruptedException e) {
-                System.out.println(">>> [CANTADOR] Hilo interrumpido.");
-            }
-        });
-        
-        hiloCantador.start();
-    }
-
-    public void detenerCanto() {
-        this.cantando = false;
-        if (hiloCantador != null) {
-            hiloCantador.interrupt();
+    public void iniciarCanto() {
+        if (!obtenerNicknameHost().equals(obtenerNicknameJugadorPrincipal())) {
+            return;
         }
-        System.out.println(">>> [CANTADOR] Detenido.");
+
+        cantador.iniciarCanto(5000); // Intervalo mock, falta cambiarlo según la dificultad
     }
 
-    public boolean isCantando() {
-        return cantando;
+    /**
+     * Actualiza la carta de la vista mediante la fachada.
+     */
+    private void actualizarCarta() {
+        int cartaActual = Cantador.getInstance().getCartaActual();
+        ModeloJuegoFacade.getInstance().actualizarCarta(cartaActual);
+    }
+
+    /**
+     * Envía el evento de carta cantada a todos los demás peers.
+     */
+    private void enviarCarta() {
+        int cartaActual = cantador.getCartaActual();
+        String nicknameHost = obtenerNicknameHost();
+
+        // Enviar evento a otros peers
+        EventoCartaCantada evento = new EventoCartaCantada(nicknameHost, cartaActual);
+        componentePeer.broadcastEvento(evento);
+        System.out.println("Enviando carta cantada " + "(Carta: " + cartaActual + ") desde host [" + nicknameHost + "]");
+    }
+
+    private String obtenerNicknameHost() { // Talvez cambiar a sala
+        String host = Sala.getInstance().getHost();
+        return host;
+    }
+
+    private String obtenerNicknameJugadorPrincipal() { // Talvez cambiar a sala
+        Jugador principal = Sala.getInstance().getJugadorPrincipal();
+        return principal.getNickname();
+    }
+
+    /**
+     * Escucha al cantador cada que canta una carta.
+     *
+     * @param object objeto Cantador que notificó.
+     */
+    @Override
+    public void update(Object object) {
+        if (object instanceof Cantador) {
+            new Thread(() -> {
+                try {
+                    enviarCarta();
+                    Thread.sleep(RETRASO_MS);
+                    actualizarCarta();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        }
     }
 }

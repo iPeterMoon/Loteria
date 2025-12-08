@@ -1,5 +1,6 @@
 red\EnvioHandler.class
-servidor\ManejadorConexionEntrante.class
+cliente\OutgoingMessageDispatcher.class
+servidor\IncomingMessageDispatcher.class
 interfaces\IRecepcion.class
 red\PoolHilos.class
 red\RecepcionHandler.class

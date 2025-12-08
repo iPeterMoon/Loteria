@@ -1,7 +1,7 @@
 package mappers;
 
-import dtos.JugadorDTO;
-import dtos.TarjetaDTO;
+import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.TarjetaDTO;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -40,9 +40,9 @@ public class JugadorMapperVista {
      */
     public static JugadorDTO toDTO(JugadorSubject jugador, boolean esJugadorPrincipal) {
         TarjetaDTO tarjetaDTO = new TarjetaDTO(jugador.getTarjeta().getCartas(), jugador.getTarjeta().getFichas());
-        ImageIcon imagenIcono = new ImageIcon(jugador.getFoto());
-        Image imagenPerfil = imagenIcono.getImage();
+//        ImageIcon imagenIcono = new ImageIcon(jugador.getFoto());
+//        Image imagenPerfil = imagenIcono.getImage();
 
-        return new JugadorDTO(jugador.getNickname(), imagenPerfil, jugador.getPuntaje(), tarjetaDTO, esJugadorPrincipal);
+        return new JugadorDTO(jugador.getNickname(), jugador.getFoto(), jugador.getPuntaje(), tarjetaDTO, esJugadorPrincipal);
     }
 }

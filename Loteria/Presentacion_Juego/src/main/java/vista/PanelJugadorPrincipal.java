@@ -153,14 +153,30 @@ public class PanelJugadorPrincipal extends javax.swing.JPanel {
     public void setJugador(JugadorSubject jugador) {
         labelNombreJugador.setText(jugador.getNickname());
         labelPuntaje.setText("Puntaje: " + jugador.getPuntaje());
-        if (jugador.getFoto() != null) {
-            fotoJugador = new ImageIcon(jugador.getFoto());
+
+        String rutaAvatar = obtenerRutaAvatar(jugador.getFoto());
+        fotoJugador = cargarYEscalarImagen(rutaAvatar);
+        if (fotoJugador.getImage() != null) {
             labelIcono.setIcon(fotoJugador);
         }
+
         repaint();
         revalidate();
     }
 
+    /**
+     * Método auxiliar para convertir el ID del avatar en una ruta de archivo.
+     * AJUSTA los nombres de los archivos según tus recursos reales.
+     */
+    private String obtenerRutaAvatar(int idAvatar) {
+        // Ejemplo: Si tus avatares son "avatar_1.png", "avatar_2.png", etc.
+        // Si el id es 0 o inválido, regresa el default.
+        if (idAvatar <= 0) return RUTA_RECURSO_ICONO_DEFAULT;
+        
+        // Ajusta esta ruta a donde tengas tus avatares guardados
+        return "/avatars/" + idAvatar + ".jpg"; 
+    }
+    
     /**
      * Comprueba si el jugador proporcionado es el mismo que se está mostrando
      * actualmente en este panel, basándose en la comparación de sus nicknames.

@@ -1,10 +1,7 @@
 package peer;
 
 import com.google.gson.Gson;
-
-import cliente.ClienteRed;
-import dtos.MensajeDesconexion;
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import eventos.Evento;
 import interfaces.IObserver;
 import mensajes.MensajeBroadcast;
@@ -72,7 +69,7 @@ public class Peer {
 
             envioHandler.empezarEnvio();
 
-            DiscoveryRegistrar.registrar(myInfo);
+            DiscoveryRegistrar.registrar(myInfo); 
 
             empezarHeartbeat();
 

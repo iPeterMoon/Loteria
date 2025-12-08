@@ -1,0 +1,231 @@
+package vista;
+
+import Modal.MensajeDialog;
+import controladores.ControlesConfiguracionFactory;
+import dtos.aplicacion.NuevoUsuarioDTO;
+import enums.TipoConfiguracion;
+import enums.TipoMensajePantalla;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import modelo.AvatarSubject;
+import modelo.ConfiguracionSubject;
+import modelo.MensajeSubject;
+import util.Subject;
+
+/**
+ *
+ * @author Alici
+ */
+public class PanelConfiguracionUsuario extends javax.swing.JPanel {
+    
+    private Frame ventanaPrincipal;
+    private TipoConfiguracion configuracionActual;
+
+    /**
+     * Creates new form PanelConfiguracionUsuario
+     */
+    public PanelConfiguracionUsuario() {
+        initComponents();
+    }
+    
+    public void setConfiguracionActual(TipoConfiguracion configuracionActual) {
+        this.configuracionActual = configuracionActual;
+        
+    }
+    
+    public void configurarFramePadre(Frame ventanaPadre) {
+        ventanaPrincipal = ventanaPadre;
+    }
+
+    /**
+     * Metodo que actualiza la vista del panel en función de los cambios del
+     * Subject.
+     *
+     * @param subject el objeto observado que notifica los cambios.
+     */
+    public void actualizarVista(Subject subject) {
+        actualizarAvatar(subject);
+        actualizarMensaje(subject);
+        actualizarBotones(subject);
+        repaint();
+        revalidate();
+    }
+    
+    private void actualizarAvatar(Subject subject) {
+        if (subject instanceof AvatarSubject avatarSubject) {
+            panelSeleccionarAvatar.actualizarAvatar(avatarSubject.getNumeroAvatar());
+            panelSeleccionarAvatar.repaint();
+        }
+    }
+    
+    private void actualizarMensaje(Subject subject) {
+        if (subject instanceof MensajeSubject validacion) {
+            if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_USUARIO) {
+                MensajeDialog mensajeDialog = new MensajeDialog(ventanaPrincipal, true);
+                mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
+                mensajeDialog.mostrarDialogo();
+                
+                if (validacion.isExitoso()) {
+                    ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                    
+                    if (this.configuracionActual == TipoConfiguracion.CREAR_SALA) {
+                        controles.getControlAplicacion().mostrarPanelConfigurarSala();
+                    } else if (this.configuracionActual == TipoConfiguracion.UNIRSE_SALA) {
+                        controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                    }
+                    resetCampos();
+                }
+            }
+        }
+    }
+    
+    private void actualizarBotones(Subject subject) {
+        if (subject instanceof ConfiguracionSubject configuracionSubject) {
+            TipoConfiguracion configuracion = configuracionSubject.getTipoConfiguracion();
+            
+            this.configuracionActual = configuracion;
+            
+            if (configuracion == TipoConfiguracion.CREAR_SALA) {
+                setBotonesCrearSala();
+            }
+            if (configuracion == TipoConfiguracion.UNIRSE_SALA) {
+                setBotonesUnirsePartida();
+            }
+        }
+    }
+    
+    private void setBotonesUnirsePartida() {
+        Action accionRegresar = new AbstractAction("Volver") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelSala();
+            }
+        };
+        
+        Action accionSiguiente = new AbstractAction("Unirme a la sala") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                NuevoUsuarioDTO nuevoUsuario = new NuevoUsuarioDTO();
+                nuevoUsuario.setNickname(panelConfigurarNombreUsuario.obtenerNombreIngresado());
+                controles.getControlConfiguracion().unirseSala(nuevoUsuario);
+            }
+        };
+        btnRegresar.setAction(accionRegresar);
+        btnSiguiente.setAction(accionSiguiente);
+    }
+    
+    private void setBotonesCrearSala() {
+        Action accionRegresar = new AbstractAction("Volver") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                controles.getControlAplicacion().mostrarPanelMenu();
+                resetCampos();
+            }
+        };
+        
+        Action accionSiguiente = new AbstractAction("Configurar partida") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                NuevoUsuarioDTO nuevoUsuario = new NuevoUsuarioDTO();
+                nuevoUsuario.setNickname(panelConfigurarNombreUsuario.obtenerNombreIngresado());
+                controles.getControlConfiguracion().configurarUsuarioNuevaSala(nuevoUsuario);
+            }
+        };
+        btnRegresar.setAction(accionRegresar);
+        btnSiguiente.setAction(accionSiguiente);
+        
+    }
+    
+    private void resetCampos() {
+        panelConfigurarNombreUsuario.reset();
+        panelSeleccionarAvatar.reset();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        panelConfigurarNombreUsuario = new vista.PanelConfigurarNombreUsuario();
+        btnSiguiente = new javax.swing.JButton();
+        panelSeleccionarAvatar = new vista.PanelSeleccionarAvatar();
+        jLabel1 = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 178, 0));
+        setMaximumSize(new java.awt.Dimension(1336, 768));
+        setMinimumSize(new java.awt.Dimension(1336, 768));
+        setPreferredSize(new java.awt.Dimension(1336, 768));
+
+        btnSiguiente.setBackground(new java.awt.Color(100, 13, 95));
+        btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
+        btnSiguiente.setText("placeholder...");
+        btnSiguiente.setActionCommand("");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 60)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Configuración de usuario");
+
+        btnRegresar.setBackground(new java.awt.Color(235, 91, 0));
+        btnRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("Volver");
+        btnRegresar.setPreferredSize(new java.awt.Dimension(218, 47));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(panelConfigurarNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(panelSeleccionarAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(92, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(jLabel1)
+                .addGap(66, 66, 66)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelSeleccionarAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelConfigurarNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
+        );
+
+        getAccessibleContext().setAccessibleName("");
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSiguiente;
+    private javax.swing.JLabel jLabel1;
+    private vista.PanelConfigurarNombreUsuario panelConfigurarNombreUsuario;
+    private vista.PanelSeleccionarAvatar panelSeleccionarAvatar;
+    // End of variables declaration//GEN-END:variables
+}

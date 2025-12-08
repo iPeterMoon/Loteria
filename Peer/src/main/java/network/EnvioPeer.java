@@ -1,7 +1,7 @@
 package network;
 
 import com.google.gson.Gson;
-import dtos.PeerInfo;
+import dtos.peer.PeerInfo;
 import factory.RedFactory;
 import interfaces.IEnvio;
 import java.util.concurrent.ExecutorService;

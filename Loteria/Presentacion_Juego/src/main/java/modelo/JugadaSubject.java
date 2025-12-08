@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import util.Subject;
+
 /**
  * Clase que representa una jugada dentro del juego, implementada como un sujeto
  * (Subject) dentro del patrón de diseño Observer.

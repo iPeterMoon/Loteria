@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 import modelo.JugadorSubject;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  * Clase que representa a los jugadores secuntarios
@@ -18,12 +19,19 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     private static final int ANCHO_ALTO = 80;
     private ImageIcon fotoJugador;
 
+    private PanelTarjetaSecundaria panelTarjetaSecundaria;
+    
     /**
      * Constructor que inicaliza a los jugadores secundarios
      */
     public PanelJugadorSecundario() {
         setOpaque(true);
         initComponents();
+        
+        panelTarjetaSecundaria = new PanelTarjetaSecundaria();
+        
+        this.add(panelTarjetaSecundaria, new AbsoluteConstraints(160,10, -1 , -1));
+        
         dibujarFondo();
         cargarFotoJugador();
     }
@@ -56,7 +64,6 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         labelFoto = new javax.swing.JLabel();
         labelNombre = new javax.swing.JLabel();
         labelPuntaje = new javax.swing.JLabel();
-        panelTarjetaSecundaria = new vista.PanelTarjetaSecundaria();
 
         setMaximumSize(new java.awt.Dimension(275, 130));
         setMinimumSize(new java.awt.Dimension(275, 130));
@@ -78,7 +85,6 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
         labelPuntaje.setForeground(new java.awt.Color(255, 255, 255));
         labelPuntaje.setText("Puntaje: 0");
         add(labelPuntaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 104, -1, -1));
-        add(panelTarjetaSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     private void dibujarFondo() {
         imagenFondo = new javax.swing.ImageIcon(getClass().getResource("/fondos/fondo_jugador_secundario.png"))
@@ -102,7 +108,7 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
      * Metodo que carga la foto o avatar del jugador.
      */
     private void cargarFotoJugador() {
-        fotoJugador = cargarFoto();
+        fotoJugador = cargarFoto("/imagenes_alt/icon_imagen.png");
         labelFoto.setIcon(fotoJugador);
     }
 
@@ -111,11 +117,10 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
      *
      * @return icono para el jugador.
      */
-    private ImageIcon cargarFoto() {
-        String url = "/imagenes_alt/icon_imagen.png";
-        URL recurso = getClass().getResource(url);
+    private ImageIcon cargarFoto(String ruta) {
+        URL recurso = getClass().getResource(ruta);
         if (recurso == null) {
-            System.err.println("No se encontró la imagen: " + url);
+            return new ImageIcon();
         }
         ImageIcon original = new ImageIcon(recurso);
         Image imagenEscalada = original.getImage().getScaledInstance(ANCHO_ALTO, ANCHO_ALTO, Image.SCALE_SMOOTH);
@@ -129,10 +134,27 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     public void setJugador(JugadorSubject jugador) {
         labelNombre.setText(jugador.getNickname());
         labelPuntaje.setText("Puntaje: " + jugador.getPuntaje());
-        fotoJugador = new ImageIcon(jugador.getFoto());
-        cargarFoto();
+        
+        String rutaAvatar = obtenerRutaAvatar(jugador.getFoto());
+        fotoJugador = cargarFoto(rutaAvatar);
+        if (fotoJugador.getImage() != null) {
+            labelFoto.setIcon(fotoJugador);
+        }
+        
+        if (panelTarjetaSecundaria != null && jugador.getTarjeta() != null) {
+             panelTarjetaSecundaria.actualizarFichas(jugador.getTarjeta());
+        }
+        
         repaint();
         revalidate();
+    }
+    
+    /**
+     * Método auxiliar para rutas de avatar (igual que en principal).
+     */
+    private String obtenerRutaAvatar(int idAvatar) {
+        if (idAvatar <= 0) return "/imagenes_alt/icon_imagen.png";
+        return "/avatars/" + idAvatar + ".jpg"; 
     }
 
     /**
@@ -151,7 +173,11 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
      * @param jugador jugador
      */
     public void actualizarTarjetaAbstracta(JugadorSubject jugador) {
-        panelTarjetaSecundaria.actualizarFichas(jugador.getTarjeta());
+        
+        if (panelTarjetaSecundaria != null) {
+            panelTarjetaSecundaria.actualizarFichas(jugador.getTarjeta());
+        }
+        
         repaint();
         revalidate();
     }
@@ -160,6 +186,5 @@ public class PanelJugadorSecundario extends javax.swing.JPanel {
     private javax.swing.JLabel labelFoto;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPuntaje;
-    private vista.PanelTarjetaSecundaria panelTarjetaSecundaria;
     // End of variables declaration//GEN-END:variables
 }

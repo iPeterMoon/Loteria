@@ -1,0 +1,42 @@
+package procesadores;
+
+import eventos.Evento;
+import interfaces.IObserver;
+
+/**
+ *
+ * @author norma
+ */
+public class ProcesadorEventosMatchmaker implements IObserver {
+
+    private IHandler manejadorPrincipal;
+
+    public ProcesadorEventosMatchmaker() {
+        IHandler solicitudSala = new ManejadorSolicitudSala();
+        IHandler salaCreada = new ManejadorSalaCreada();
+        IHandler unirseSala = new ManejadorUnirseSala();
+        IHandler nuevaSala = new ManejadorSalaCreada();
+        IHandler desconexion = new ManejadorDesconexion();
+
+        manejadorPrincipal = solicitudSala;
+        solicitudSala.setNext(salaCreada);
+        salaCreada.setNext(unirseSala);
+        unirseSala.setNext(nuevaSala);
+        nuevaSala.setNext(desconexion);
+    }
+
+    private void procesar(Evento evento) {
+        try {
+            manejadorPrincipal.procesar(evento);
+        } catch (Exception e) {
+            System.err.println("[ProcesadorEventosMatchmaker] Evento inválido: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(Object object) {
+        if (object instanceof Evento evento) {
+            procesar(evento);
+        }
+    }
+}

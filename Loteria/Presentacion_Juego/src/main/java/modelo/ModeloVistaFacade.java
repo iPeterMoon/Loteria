@@ -1,11 +1,12 @@
 package modelo;
 
-import interfaces.IModeloVista;
+import interfaces.IModeloVistaJuego;
 import java.util.LinkedList;
 import java.util.List;
 
-import dtos.FichaDTO;
-import dtos.JugadorDTO;
+import dtos.aplicacion.FichaDTO;
+import dtos.aplicacion.JugadaDTO;
+import dtos.aplicacion.JugadorDTO;
 import mappers.JugadorMapperVista;
 import vista.FrameJuego;
 import interfaces.IObserver;
@@ -23,7 +24,7 @@ import vista.ModelObserver;
  *
  * @author rocha
  */
-public class ModeloVistaFacade implements IModeloVista {
+public class ModeloVistaFacade implements IModeloVistaJuego {
 
     private static ModeloVistaFacade instancia;
 
@@ -38,15 +39,14 @@ public class ModeloVistaFacade implements IModeloVista {
      * Lista de jugadores que participan en el juego.
      */
     private List<JugadorSubject> jugadores;
-    /**
-     * Frame del juego
-     */
-    private FrameJuego frameJuego;
 
     /**
      * Observador
      */
     private IObserver observer = new ModelObserver();
+    
+    private CantadorSubject cantador;
+    
     /**
      * Constructor privado que inicializa la lista de jugadores.
      *
@@ -55,6 +55,8 @@ public class ModeloVistaFacade implements IModeloVista {
      */
     private ModeloVistaFacade() {
         this.jugadores = new LinkedList<>();
+        this.cantador = new CantadorSubject();
+        configurarCantador();
     }
 
     /**
@@ -119,6 +121,20 @@ public class ModeloVistaFacade implements IModeloVista {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-        frameJuego = frame;
+    }
+    
+    private void configurarCantador() {
+        cantador.addObserver(observer);
+    }
+    
+    @Override
+    public void actualizarCarta(int carta) {
+        cantador.actualizarCarta(carta);
+    }
+
+    @Override
+    public void cantarJugada(JugadaDTO jugadaDTO) {
+        System.out.println("JUGADA");
+        System.out.println(jugadaDTO.toString());
     }
 }

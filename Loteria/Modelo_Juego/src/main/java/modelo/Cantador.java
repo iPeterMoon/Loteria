@@ -1,22 +1,32 @@
 package modelo;
 
 import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import util.Subject;
 
 /**
  * Clase singleton que representa el cantador de cartas del juego.
  *
  * @author Alici
  */
-public class Cantador {
+public class Cantador extends Subject {
+
+    public final static int TOTAL_CARTAS_LOTERIA = 54;
 
     /**
      * Carta que esta siendo actualmente cantada
      */
     private int cartaActual;
+    
     /**
      * Mazo (representado como una pila) de cartas que tiene el cantador
      */
     private Stack<Integer> mazo;
+    
+    private boolean enEjecucion;
 
     /**
      * Instancia unica de la clase Cantador
@@ -27,6 +37,7 @@ public class Cantador {
      * Constructor vacio
      */
     private Cantador() {
+        this.enEjecucion = false;
     }
 
     /**
@@ -39,6 +50,72 @@ public class Cantador {
             instance = new Cantador();
         }
         return instance;
+    }
+
+    /**
+     * Prepara el mazo para una nueva partida 
+     * @param semilla Semilla con la que se barajeará el mazo
+     */
+    public void prepararMazo(Long semilla){
+        reiniciarMazo();
+        List<Integer> listaMazo = new ArrayList<>(mazo);
+        Collections.shuffle(listaMazo, new Random(semilla));
+        mazo.clear();
+        mazo.addAll(listaMazo);
+    }
+
+    /**
+     * Metodo para reiniciar el mazo de cartas, vuelve a crear un stack y se lo pasa 
+     * al cantador
+     */
+    private void reiniciarMazo() {
+        Stack<Integer> mazo = new Stack<>();
+        for(int i = 1; i <= Cantador.TOTAL_CARTAS_LOTERIA; i++){
+            mazo.push(i);
+        }
+        this.setMazo(mazo);
+    }
+    
+    /**
+     * Hilo para cantar cartas. Solo se ejecuta en el modelo del jugador que es
+     * host. Quita la carta del mazo, actualiza su carta actual y notifica sobre
+     * la acción. Al acabarse el mazo deja de correr.
+     *
+     * @param intervalo Intervalo en milisegundos entre cada canto.
+     */
+    public void iniciarCanto(long intervalo) {
+        if (enEjecucion) {
+            return;
+        }
+
+        enEjecucion = true;
+
+        new Thread(() -> {
+            try {
+                while (!mazo.isEmpty()) {
+                    // Quita carta del mazo y actualiza carta actual
+                    cartaActual = mazo.pop();
+                    
+                    // Notifica
+                    notifyAllObservers();
+                    
+                    // Aplicar intervalo
+                    Thread.sleep(intervalo);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                enEjecucion = false;
+            }
+        }).start();
+    }
+    
+    /**
+     * Método para eliminar una carta del mazo. Es usado por el resto de jugadores que no son host.
+     * @param carta Elemento a quitar del mazo.
+     */
+    public void quitarCarta(int carta) {
+        this.mazo.remove(Integer.valueOf(carta));
     }
 
     /**

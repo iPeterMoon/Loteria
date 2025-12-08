@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import util.Subject;
+
 /**
  * Clase que representa el cantador de cartas del juego implementado como sujeto
  * (Subject) dentro del patrón de diseño Observer.
@@ -43,6 +45,7 @@ public class CantadorSubject extends Subject {
      */
     public void actualizarCarta(int carta) {
         this.cartaActual = carta;
+        this.notifyAllObservers();
     }
 
     /**

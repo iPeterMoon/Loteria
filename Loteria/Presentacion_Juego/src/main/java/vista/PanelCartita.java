@@ -178,7 +178,12 @@ public class PanelCartita extends javax.swing.JPanel {
         }
         return new ImageIcon(imagenEscalada);
     }
-
+    
+    public void actualizarCartaCantador(int carta) {
+        iconoOriginal = cargarCarta(carta);
+        iconoActual = iconoOriginal;
+    }
+    
     /**
      * Metodo que carga la ficha que puede colocarse sobre la carta.
      * 

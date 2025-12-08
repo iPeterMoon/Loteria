@@ -94,6 +94,45 @@ public class PanelTarjeta extends javax.swing.JPanel {
     }
     
     /**
+     * Metodo que actualiza la tarjeta con una nueva tarjeta del modelo
+     * Reemplaza las cartas mostradas con las del modelo y luego actualiza las fichas
+     * @param tarjeta tarjeta del Jugador con las cartas aleatorias
+     */
+    public void actualizarTarjeta(ModeloTarjeta tarjeta){
+        // Limpiar el panel de cartas antigas
+        panelCartitas.removeAll();
+        
+        // Agregar nuevas cartas basadas en el ModeloTarjeta
+        for (int idx = 0; idx < panelCartitas.getComponentCount(); idx++) {
+            java.awt.Component comp = panelCartitas.getComponent(idx);
+            if (comp instanceof PanelCartita) {
+                panelCartitas.remove(comp);
+            }
+        }
+        
+        // Recrear las cartas con los números del ModeloTarjeta
+        if (tarjeta != null && tarjeta.getCartas() != null) {
+            for (int fila = 0; fila < 4; fila++) {
+                for (int col = 0; col < 4; col++) {
+                    Point posicion = new Point(fila, col);
+                    Integer numeroCarta = tarjeta.getCartas().get(posicion);
+                    if (numeroCarta != null) {
+                        this.tarjeta[fila][col] = new PanelCartita(numeroCarta, posicion);
+                        panelCartitas.add(this.tarjeta[fila][col]);
+                    }
+                }
+            }
+        }
+        
+        // Actualizar las fichas
+        actualizarFichas(tarjeta);
+        
+        // Refrescar la interfaz
+        panelCartitas.revalidate();
+        panelCartitas.repaint();
+    }
+    
+    /**
      * Metodo que actualiza la tarjeta para insertar las fichas
      * @param tarjeta tarjeta del  Jugador
      */

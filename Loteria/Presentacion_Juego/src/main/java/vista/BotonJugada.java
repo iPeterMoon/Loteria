@@ -53,6 +53,10 @@ public class BotonJugada extends javax.swing.JPanel {
         this.nombreJugada = nombreJugada;
         this.botonJugada.setText(nombreJugada);
     }
+    
+    public void addActionListener(java.awt.event.ActionListener listener) {
+        this.botonJugada.addActionListener(listener);
+    }
 
     /**
      * Método generado automáticamente por el editor de formularios para
