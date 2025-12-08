@@ -9,11 +9,11 @@ import dtos.aplicacion.NuevoUsuarioDTO;
  */
 public interface IModeloControlNegocio {
 
-    public void verificarExistenciaPartida();
-
+//    public void verificarExistenciaPartida();
     public void unirseSala(NuevoUsuarioDTO usuario);
 
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuarioNuevo);
 
     public void configurarPartida(ConfiguracionJuegoDTO configuracion);
+
 }

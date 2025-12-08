@@ -1,5 +1,6 @@
 package interfaces;
 
+import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.JugadorDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.JugadasDisponibles;
@@ -113,4 +114,6 @@ public interface IModeloJuego {
     public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
 
     public void obtenerSala();
+
+    public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego);
 }

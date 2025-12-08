@@ -4,17 +4,59 @@
  */
 package vista;
 
+import Modal.MensajeDialog;
+import controladores.ControlesConfiguracionFactory;
+import dtos.aplicacion.ConfiguracionJuegoDTO;
+import enums.TipoConfiguracion;
+import enums.TipoMensajePantalla;
+import java.awt.Frame;
+import modelo.MensajeSubject;
+import util.Subject;
+
 /**
  *
  * @author Alici
  */
 public class PanelConfiguracionJuego extends javax.swing.JPanel {
 
+    private Frame ventanaPrincipal;
+
     /**
      * Creates new form PanelConfiguracionJuego
      */
     public PanelConfiguracionJuego() {
         initComponents();
+    }
+
+    public void configurarFramePadre(Frame ventanaPadre) {
+        ventanaPrincipal = ventanaPadre;
+    }
+
+    public void actualizarVista(Subject subject) {
+        actualizarMensaje(subject);
+        repaint();
+        revalidate();
+    }
+
+    private void mandarConfiguracionSala() {
+        ConfiguracionJuegoDTO configuracionJuegoDTO = panelParametrosPartida.obtenerConfiguracion();
+        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+        controles.getControlConfiguracion().configurarPartida(configuracionJuegoDTO);
+    }
+
+    private void actualizarMensaje(Subject subject) {
+        if (subject instanceof MensajeSubject validacion) {
+            if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_CONFIG_PARTIDA) {
+                MensajeDialog mensajeDialog = new MensajeDialog(ventanaPrincipal, true);
+                mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
+                mensajeDialog.mostrarDialogo();
+
+                if (validacion.isExitoso()) {
+                    ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                    controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                }
+            }
+        }
     }
 
     /**
@@ -27,35 +69,65 @@ public class PanelConfiguracionJuego extends javax.swing.JPanel {
     private void initComponents() {
 
         lblTitulo = new javax.swing.JLabel();
+        btnCrearSala = new javax.swing.JButton();
+        panelParametrosPartida = new vista.PanelParametrosPartida();
 
         setBackground(new java.awt.Color(255, 178, 0));
         setMaximumSize(new java.awt.Dimension(1336, 768));
         setMinimumSize(new java.awt.Dimension(1336, 768));
+        setPreferredSize(new java.awt.Dimension(1336, 768));
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 60)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Configuración de partida");
 
+        btnCrearSala.setBackground(new java.awt.Color(100, 13, 95));
+        btnCrearSala.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnCrearSala.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrearSala.setText("Crear sala");
+        btnCrearSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearSalaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(100, 100, 100))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCrearSala, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(88, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelParametrosPartida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(88, 88, 88))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(14, 14, 14)
                 .addComponent(lblTitulo)
-                .addContainerGap(643, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(panelParametrosPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCrearSala, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addGap(66, 66, 66))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCrearSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearSalaActionPerformed
+        mandarConfiguracionSala();
+    }//GEN-LAST:event_btnCrearSalaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrearSala;
     private javax.swing.JLabel lblTitulo;
+    private vista.PanelParametrosPartida panelParametrosPartida;
     // End of variables declaration//GEN-END:variables
 }

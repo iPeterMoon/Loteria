@@ -10,7 +10,6 @@ import dtos.aplicacion.NuevoUsuarioDTO;
 import enums.JugadasDisponibles;
 import enums.TipoMensajePantalla;
 import eventos.eventos_aplicacion.EventoCrearSala;
-import eventos.eventos_aplicacion.EventoInfoSala;
 import eventos.eventos_aplicacion.EventoSolicitudSala;
 import interfaces.IPeer;
 import java.util.List;
@@ -110,7 +109,7 @@ public class ConfiguracionManager {
 
     private boolean validarConfiguracionSala(ConfiguracionJuegoDTO configuracion) {
         if (configuracion == null || configuracion.getPuntajes().isEmpty() || configuracion.getDificultad() == null) {
-            MensajeDTO mensaje = new MensajeDTO("Configuración invalida", "<html>El nombre de usuario debe tener un máximo de 20 carácteres</html>", false, TipoMensajePantalla.VALIDACION_CONFIG_PARTIDA);
+            MensajeDTO mensaje = new MensajeDTO("Configuración invalida", "<html>Debe seleccionar una dificultad</html>", false, TipoMensajePantalla.VALIDACION_CONFIG_PARTIDA);
             ModeloJuegoFacade.getInstance().mostrarMensaje(mensaje);
             return false;
         }

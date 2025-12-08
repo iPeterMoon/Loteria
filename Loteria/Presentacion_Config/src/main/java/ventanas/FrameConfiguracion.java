@@ -63,6 +63,7 @@ public class FrameConfiguracion extends JFrame {
         panelContenedor.add(panelSalaEspera, Pantalla.SALA_ESPERA.getNombre());
 
         panelConfiguracionUsuario.configurarFramePadre(this);
+        panelConfiguracionPartida.configurarFramePadre(this);
     }
 
     private void iniciarVentana() {
@@ -98,6 +99,7 @@ public class FrameConfiguracion extends JFrame {
             }
             if (configuracion.getTipoConfiguracion().equals(TipoConfiguracion.UNIRSE_SALA)) {
                 panelConfiguracionUsuario.setConfiguracionActual(TipoConfiguracion.UNIRSE_SALA);
+                cardLayout.show(panelContenedor, Pantalla.SALA_ESPERA_NO_UNIDO.getNombre());
             }
         }
 
@@ -114,6 +116,7 @@ public class FrameConfiguracion extends JFrame {
         }
 
         panelConfiguracionUsuario.actualizarVista(subject);
+        panelConfiguracionPartida.actualizarVista(subject);
 
         if (subject instanceof SalaSubject sala) {
             panelSalaEspera.actualizarVista(subject);

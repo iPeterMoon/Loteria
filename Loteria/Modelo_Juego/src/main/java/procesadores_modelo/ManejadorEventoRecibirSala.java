@@ -44,27 +44,26 @@ public class ManejadorEventoRecibirSala extends ManejadorEventos {
 
             }
         }
-        List<JugadorDTO> jugadoresDTO = evento.getSala().getJugadores();
-        actualizarJugadoresSecundario(jugadoresDTO);
 
-        ModeloJuegoFacade.getInstance().actualizarDatosSala(evento.getSala().getConfiguracion().getLimiteJugadores(),
-                evento.getSala().getConfiguracion().getDificultad());
-        ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
+//        ModeloJuegoFacade.getInstance().actualizarDatosSala(
+//                evento.getSala().getConfiguracion().getLimiteJugadores(),
+//                evento.getSala().getConfiguracion().getDificultad());
+//        ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
     }
 
     private void configurarSala(SalaDTO salaDTO) {
         Sala sala = Sala.getInstance();
         sala.setConfiguracion(SalaMapperModelo.toConfiguracionJuego(salaDTO));
         sala.setHost(salaDTO.getJugadorHost());
+        List<JugadorDTO> jugadoresDTO = salaDTO.getJugadores();
+        actualizarJugadoresSecundario(jugadoresDTO);
     }
 
     private void actualizarJugadoresSecundario(List<JugadorDTO> jugadores) {
         Sala sala = Sala.getInstance();
         List<Jugador> jugadoresSecundarios = new ArrayList<>();
         for (JugadorDTO jugadorDTO : jugadores) {
-            if (jugadorDTO.getNickname().equals(sala.getJugadorPrincipal().getNickname())) {
-                jugadoresSecundarios.add(JugadorMapperModelo.toJugador(jugadorDTO));
-            }
+            jugadoresSecundarios.add(JugadorMapperModelo.toJugador(jugadorDTO));
         }
         sala.setJugadoresSecundario(jugadoresSecundarios);
     }

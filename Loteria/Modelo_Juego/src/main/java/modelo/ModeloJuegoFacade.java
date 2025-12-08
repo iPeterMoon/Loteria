@@ -1,5 +1,6 @@
 package modelo;
 
+import dtos.aplicacion.ConfiguracionJuegoDTO;
 import interfaces.IModeloJuego;
 import interfaces.IModeloVistaJuego;
 import java.awt.Point;
@@ -32,29 +33,29 @@ import enums.TipoNivel;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-
+    
     private static ModeloJuegoFacade instancia;
     //Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
     private IModeloVistaConfiguracion vistaConfiguracion;
-
+    
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
     private final CantadorManager cantadorManager = new CantadorManager();
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
     private final UnirsePartidaManager unirsePartidaManager = new UnirsePartidaManager();
     private final ConfiguracionManager configuracionManager = new ConfiguracionManager();
-
+    
     private ModeloJuegoFacade() {
     }
-
+    
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-
+    
     public void inicializar(IModeloVistaJuego modeloVistaJuego, IModeloVistaConfiguracion modeloVistaConfiguracion, IPeer peer) {
         if (this.vistaJuego != null) {
             //Asegura que no se inicialice dos veces
@@ -62,7 +63,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         }
         this.vistaJuego = modeloVistaJuego;
         this.vistaConfiguracion = modeloVistaConfiguracion;
-
+        
         movimientoManager.inicializar(peer);
         configuracionManager.inicializar(peer);
         inicioPartidaManager.inicializar(peer, modeloVistaJuego);
@@ -124,20 +125,20 @@ public class ModeloJuegoFacade implements IModeloJuego {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vistaJuego.colocarFicha(fichaDTO);
     }
-
+    
     @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
         cantadorManager.iniciarCanto();
     }
-
+    
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
-
+    
     @Override
     public void mostrarFramePartida() {
         inicioPartidaManager.mostrarFramePartida();
@@ -215,27 +216,33 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
         vistaConfiguracion.actualizarDatosSala(limiteJugadores, nivel);
     }
-
+    
     @Override
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario) {
         configuracionManager.configurarUsuarioNuevaSala(usuario);
     }
-
+    
     public void mostrarMensaje(MensajeDTO mensaje) {
         vistaConfiguracion.actualizarMensaje(mensaje);
     }
-
+    
     @Override
     public void actualizarSala(List<JugadorDTO> jugadores) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     public void cambiarTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
         vistaConfiguracion.actualizarTipoConfiguracion(tipoConfiguracion);
     }
-
+    
+    @Override
     public void obtenerSala() {
         configuracionManager.obtenerSala();
     }
-
+    
+    @Override
+    public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego) {
+        configuracionManager.crearNuevaSala(configuracionJuego);
+    }
+    
 }
