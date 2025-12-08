@@ -20,7 +20,7 @@ import managers.CantadorManager;
 import managers.CantarJugadaManager;
 import managers.InicioPartidaManager;
 import managers.MovimientoManager;
-import managers.UnirsePartidaManager;
+import managers.SalaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
 import enums.TipoConfiguracion;
@@ -33,37 +33,38 @@ import enums.TipoNivel;
  * @author Alici
  */
 public class ModeloJuegoFacade implements IModeloJuego {
-    
+
     private static ModeloJuegoFacade instancia;
-    //Dejo espacio para el modeloVistaConfiguración
+    // Dejo espacio para el modeloVistaConfiguración
     private IModeloVistaJuego vistaJuego;
     private IModeloVistaConfiguracion vistaConfiguracion;
-    
+
     private final MovimientoManager movimientoManager = new MovimientoManager();
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
     private final CantadorManager cantadorManager = new CantadorManager();
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
-    private final UnirsePartidaManager unirsePartidaManager = new UnirsePartidaManager();
+    private final SalaManager unirsePartidaManager = new SalaManager();
     private final ConfiguracionManager configuracionManager = new ConfiguracionManager();
-    
+
     private ModeloJuegoFacade() {
     }
-    
+
     public static ModeloJuegoFacade getInstance() {
         if (instancia == null) {
             instancia = new ModeloJuegoFacade();
         }
         return instancia;
     }
-    
-    public void inicializar(IModeloVistaJuego modeloVistaJuego, IModeloVistaConfiguracion modeloVistaConfiguracion, IPeer peer) {
+
+    public void inicializar(IModeloVistaJuego modeloVistaJuego, IModeloVistaConfiguracion modeloVistaConfiguracion,
+            IPeer peer) {
         if (this.vistaJuego != null) {
-            //Asegura que no se inicialice dos veces
+            // Asegura que no se inicialice dos veces
             return;
         }
         this.vistaJuego = modeloVistaJuego;
         this.vistaConfiguracion = modeloVistaConfiguracion;
-        
+
         movimientoManager.inicializar(peer);
         configuracionManager.inicializar(peer);
         inicioPartidaManager.inicializar(peer, modeloVistaJuego);
@@ -105,7 +106,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * actualice la interfaz.
      *
      * @param posicion Posición en la tarjeta donde el jugador intenta colocar
-     * la ficha.
+     *                 la ficha.
      */
     @Override
     public void validaMovimiento(Point posicion) {
@@ -118,27 +119,27 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * jugador
      *
      * @param ficha DTO con la posicion de la ficha y el jugador a quien va a
-     * colocarse la ficha.
+     *              colocarse la ficha.
      */
     @Override
     public void colocarFicha(EventoFicha ficha) {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
         vistaJuego.colocarFicha(fichaDTO);
     }
-    
+
     @Override
     public void iniciarPartida() {
         inicioPartidaManager.iniciarPartida();
         inicioPartidaManager.mostrarFramePartida();
         cantadorManager.iniciarCanto();
     }
-    
+
     @Override
     public void agregarJugadorSecundario(JugadorDTO jugadorSecundario) {
         Sala sala = Sala.getInstance();
         sala.agregarJugadorSecundario(JugadorMapperModelo.toJugador(jugadorSecundario));
     }
-    
+
     @Override
     public void mostrarFramePartida() {
         inicioPartidaManager.mostrarFramePartida();
@@ -171,7 +172,8 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * que se muestre el canto de la jugada.
      *
      * @param eventoJugada Objeto que contiene los datos del evento de la
-     * jugada, incluyendo el usuario que la realizó y el tipo de jugada.
+     *                     jugada, incluyendo el usuario que la realizó y el tipo de
+     *                     jugada.
      */
     @Override
     public void cantarJugada(EventoJugada eventoJugada) {
@@ -193,6 +195,16 @@ public class ModeloJuegoFacade implements IModeloJuego {
     }
 
     /**
+     * Método para abandonar la sala de espera.
+     * 
+     * @param jugador El jugador que abandonara la sala de espera.
+     */
+    @Override
+    public void abandonarSala() {
+        unirsePartidaManager.abandonarSala();
+    }
+
+    /**
      * Método que actualiza la sala (los jugadores).
      *
      * @param jugadores Los jugadores de la sala.
@@ -209,40 +221,42 @@ public class ModeloJuegoFacade implements IModeloJuego {
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
      *
+     * @param host            El host de la sala.
      * @param limiteJugadores El limite de jugadores en la sala.
-     * @param nivel El nivel de la partida.
+     * @param nivel           El nivel de la partida.
      */
     @Override
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
-        vistaConfiguracion.actualizarDatosSala(limiteJugadores, nivel);
+    public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
+        vistaConfiguracion.actualizarDatosSala(host, limiteJugadores, nivel);
     }
-    
+
     @Override
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario) {
         configuracionManager.configurarUsuarioNuevaSala(usuario);
     }
-    
+
     public void mostrarMensaje(MensajeDTO mensaje) {
         vistaConfiguracion.actualizarMensaje(mensaje);
     }
-    
+
     @Override
     public void actualizarSala(List<JugadorDTO> jugadores) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public void cambiarTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
         vistaConfiguracion.actualizarTipoConfiguracion(tipoConfiguracion);
     }
-    
+
     @Override
     public void obtenerSala() {
         configuracionManager.obtenerSala();
     }
-    
+
     @Override
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego) {
         configuracionManager.crearNuevaSala(configuracionJuego);
     }
-    
+
 }

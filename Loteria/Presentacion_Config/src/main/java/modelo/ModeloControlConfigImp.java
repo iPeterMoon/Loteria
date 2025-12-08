@@ -37,4 +37,10 @@ public class ModeloControlConfigImp implements IModeloControlNegocio {
         modeloJuego.crearNuevaSala(configuracion);
     }
 
+    
+    @Override
+    public void abandonarSala(){
+        modeloJuego.abandonarSala();
+    }
+    
 }

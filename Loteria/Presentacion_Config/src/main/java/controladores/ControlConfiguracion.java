@@ -35,4 +35,9 @@ public class ControlConfiguracion {
         controlModelo.configurarPartida(configuracionJuego);
     }
 
+    
+    public void abandonarSala() {
+        controlModelo.abandonarSala();
+    }
+    
 }

@@ -19,5 +19,7 @@ public enum TipoEvento {
     INFO_SALA,
     SOLICITUD_SALA,
     CREAR_SALA,
-    NUEVA_SALA
+    NUEVA_SALA,
+    SALA_CREADA,
+    SALIR_SALA_ESPERA
 }

@@ -12,6 +12,7 @@ import util.Subject;
  */
 public class SalaSubject extends Subject {
 
+    private String host;
     private TipoNivel nivel;
     private int limiteJugadores;
     private List<JugadorSalaEsperaDTO> jugadores;
@@ -20,10 +21,19 @@ public class SalaSubject extends Subject {
         this.jugadores = new ArrayList<>();
     }
 
-    public SalaSubject(TipoNivel nivel, int limiteJugadores, List<JugadorSalaEsperaDTO> jugadores) {
+    public SalaSubject(String host,TipoNivel nivel, int limiteJugadores, List<JugadorSalaEsperaDTO> jugadores) {
+        this.host = host;
         this.nivel = nivel;
         this.limiteJugadores = limiteJugadores;
         this.jugadores = jugadores;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public TipoNivel getNivel() {
@@ -51,7 +61,8 @@ public class SalaSubject extends Subject {
         notifyAllObservers();
     }
 
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
+    public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
+        this.host = host;
         this.limiteJugadores = limiteJugadores;
         this.nivel = nivel;
         notifyAllObservers();

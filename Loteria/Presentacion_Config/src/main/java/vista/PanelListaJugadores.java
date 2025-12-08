@@ -7,6 +7,7 @@ package vista;
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import java.awt.GridLayout;
 import java.util.List;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -17,9 +18,15 @@ public class PanelListaJugadores extends javax.swing.JPanel {
     /**
      * Creates new form PanelListaJugadores
      */
+    /**
+     * Creates new form PanelListaJugadores
+     */
     public PanelListaJugadores() {
         initComponents();
+        
         pnlContenedorLista.setLayout(new GridLayout(1, 0, 10, 0));
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
     }
 
     public void actualizarListaJugadores(List<JugadorSalaEsperaDTO> jugadores, int limiteMaximo) {
@@ -28,6 +35,7 @@ public class PanelListaJugadores extends javax.swing.JPanel {
         for (JugadorSalaEsperaDTO jugador : jugadores) {
             PanelJugadorIndividual panelJugador = new PanelJugadorIndividual();
             panelJugador.configurarJugador(jugador);
+            
             pnlContenedorLista.add(panelJugador);
         }
 
@@ -46,24 +54,12 @@ public class PanelListaJugadores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlContenedorLista = new javax.swing.JPanel();
         lblJugadores = new javax.swing.JLabel();
         lblCantidadJugadores = new javax.swing.JLabel();
+        scroll = new javax.swing.JScrollPane();
+        pnlContenedorLista = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(217, 22, 86));
-
-        pnlContenedorLista.setBackground(new java.awt.Color(225, 45, 104));
-
-        javax.swing.GroupLayout pnlContenedorListaLayout = new javax.swing.GroupLayout(pnlContenedorLista);
-        pnlContenedorLista.setLayout(pnlContenedorListaLayout);
-        pnlContenedorListaLayout.setHorizontalGroup(
-            pnlContenedorListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
-        );
-        pnlContenedorListaLayout.setVerticalGroup(
-            pnlContenedorListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
-        );
 
         lblJugadores.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lblJugadores.setForeground(new java.awt.Color(255, 255, 255));
@@ -73,6 +69,23 @@ public class PanelListaJugadores extends javax.swing.JPanel {
         lblCantidadJugadores.setForeground(new java.awt.Color(255, 255, 255));
         lblCantidadJugadores.setText("(1/2)");
 
+        scroll.setBackground(new java.awt.Color(255, 153, 153));
+
+        pnlContenedorLista.setBackground(new java.awt.Color(255, 204, 204));
+
+        javax.swing.GroupLayout pnlContenedorListaLayout = new javax.swing.GroupLayout(pnlContenedorLista);
+        pnlContenedorLista.setLayout(pnlContenedorListaLayout);
+        pnlContenedorListaLayout.setHorizontalGroup(
+            pnlContenedorListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 606, Short.MAX_VALUE)
+        );
+        pnlContenedorListaLayout.setVerticalGroup(
+            pnlContenedorListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 290, Short.MAX_VALUE)
+        );
+
+        scroll.setViewportView(pnlContenedorLista);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,12 +93,12 @@ public class PanelListaJugadores extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlContenedorLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblJugadores)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblCantidadJugadores)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +108,7 @@ public class PanelListaJugadores extends javax.swing.JPanel {
                     .addComponent(lblJugadores)
                     .addComponent(lblCantidadJugadores))
                 .addGap(18, 18, 18)
-                .addComponent(pnlContenedorLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -105,5 +118,6 @@ public class PanelListaJugadores extends javax.swing.JPanel {
     private javax.swing.JLabel lblCantidadJugadores;
     private javax.swing.JLabel lblJugadores;
     private javax.swing.JPanel pnlContenedorLista;
+    private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
 }
