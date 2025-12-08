@@ -54,8 +54,8 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     }
 
     @Override
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
-        salaSubject.actualizarDatosSala(limiteJugadores, nivel);
+    public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
+        salaSubject.actualizarDatosSala(host, limiteJugadores, nivel);
     }
 
     private void configurarSubjects() {

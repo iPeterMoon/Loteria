@@ -30,4 +30,8 @@ public class ControlConfiguracion {
         controlModelo.unirseSala(nuevoUsuario);
     }
     
+    public void abandonarSala() {
+        controlModelo.abandonarSala();
+    }
+    
 }

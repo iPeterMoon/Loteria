@@ -19,7 +19,7 @@ import managers.CantadorManager;
 import managers.CantarJugadaManager;
 import managers.InicioPartidaManager;
 import managers.MovimientoManager;
-import managers.UnirsePartidaManager;
+import managers.SalaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
 import managers.ConfiguracionManager;
@@ -41,7 +41,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     private final InicioPartidaManager inicioPartidaManager = new InicioPartidaManager();
     private final CantadorManager cantadorManager = new CantadorManager();
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
-    private final UnirsePartidaManager unirsePartidaManager = new UnirsePartidaManager();
+    private final SalaManager unirsePartidaManager = new SalaManager();
     private final ConfiguracionManager configuracionManager = new ConfiguracionManager();
 
     private ModeloJuegoFacade() {
@@ -189,6 +189,15 @@ public class ModeloJuegoFacade implements IModeloJuego {
             unirsePartidaManager.unirseSala(usuario);
         }
     }
+    
+    /**
+     * Método para abandonar la sala de espera.
+     * @param jugador El jugador que abandonara la sala de espera.
+     */
+    @Override
+    public void abandonarSala(){
+        unirsePartidaManager.abandonarSala();
+    }
 
     /**
      * Método que actualiza la sala (los jugadores).
@@ -207,12 +216,13 @@ public class ModeloJuegoFacade implements IModeloJuego {
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
      *
+     * @param host El host de la sala.
      * @param limiteJugadores El limite de jugadores en la sala.
      * @param nivel El nivel de la partida.
      */
     @Override
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel) {
-        vistaConfiguracion.actualizarDatosSala(limiteJugadores, nivel);
+    public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
+        vistaConfiguracion.actualizarDatosSala(host, limiteJugadores, nivel);
     }
 
     @Override
@@ -222,11 +232,6 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     public void mostrarMensaje(MensajeDTO mensaje) {
         vistaConfiguracion.actualizarMensaje(mensaje);
-    }
-
-    @Override
-    public void actualizarSala(List<JugadorDTO> jugadores) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

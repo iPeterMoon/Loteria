@@ -92,16 +92,20 @@ public interface IModeloJuego {
      * @param usuario El usuario a entrar a la partida
      */
     public void unirseSala(NuevoUsuarioDTO usuario);
+    
+    /**
+     * Método para abandonar la sala de espera.
+     * @param jugador El jugador que abandonara la sala de espera.
+     */
+    public void abandonarSala();
 
+    public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario);
+    
     /**
      * Método que actualiza la sala (los jugadores).
      *
      * @param jugadores Los jugadores de la sala.
      */
-    public void actualizarSala(List<JugadorDTO> jugadores);
-
-    public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario);
-    
     public void actualizarJugadoresSala(List<JugadorDTO> jugadores);
     
     /**
@@ -109,5 +113,5 @@ public interface IModeloJuego {
      * @param limiteJugadores El limite de jugadores en la sala.
      * @param nivel El nivel de la partida.
      */
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
+    public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel);
 }

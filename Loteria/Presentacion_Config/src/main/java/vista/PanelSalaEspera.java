@@ -24,7 +24,6 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         initComponents();
     }
 
-    
     public void actualizarVista(Subject subject) {
         if (subject instanceof SalaSubject salaSubject) {
             actualizarDatosSala(salaSubject.getJugadores(), salaSubject.getNivel(), salaSubject.getLimiteJugadores());
@@ -32,7 +31,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             revalidate();
         }
     }
-    
+
     public void actualizarDatosSala(List<JugadorSalaEsperaDTO> jugadores, TipoNivel nivel, int limiteJugadores) {
         panelListaJugadores.actualizarListaJugadores(jugadores, limiteJugadores);
         labelNivel.setText(nivel.toString());
@@ -171,7 +170,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
 
     private void btnAbandonarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbandonarSalaActionPerformed
         ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-        controles.getControlAplicacion().abandonarSala();
+        controles.getControlConfiguracion().abandonarSala();
     }//GEN-LAST:event_btnAbandonarSalaActionPerformed
 
     private void btnUnirmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirmeActionPerformed

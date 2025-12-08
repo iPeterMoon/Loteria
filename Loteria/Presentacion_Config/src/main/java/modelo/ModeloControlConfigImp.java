@@ -37,4 +37,9 @@ public class ModeloControlConfigImp implements IModeloControlNegocio {
     public void configurarPartida(ConfiguracionJuegoDTO configuracion) {
     }
     
+    @Override
+    public void abandonarSala(){
+        modeloJuego.abandonarSala();
+    }
+    
 }

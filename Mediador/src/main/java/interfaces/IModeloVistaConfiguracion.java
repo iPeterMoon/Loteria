@@ -13,7 +13,7 @@ public interface IModeloVistaConfiguracion {
 
     public void actualizarJugadoresSala(List<JugadorSalaEsperaDTO> jugadores);
 
-    public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
+    public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel);
 
     public void actualizarMensaje(MensajeDTO mensaje);
 

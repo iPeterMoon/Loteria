@@ -63,7 +63,7 @@ public class ControlAplicacion {
     }
 
     public void unirseASala() {
-        //
+        mostrarPanelConfigurarUsuario();
     }
 
     public void abandonarSala() {

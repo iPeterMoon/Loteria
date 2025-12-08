@@ -16,4 +16,6 @@ public interface IModeloControlNegocio {
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuarioNuevo);
 
     public void configurarPartida(ConfiguracionJuegoDTO configuracion);
+    
+    public void abandonarSala();
 }

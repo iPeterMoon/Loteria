@@ -39,7 +39,7 @@ public class ManejadorEventoInfoSala extends ManejadorEventos{
         
         sala.setJugadoresSecundario(jugadores);
 
-        ModeloJuegoFacade.getInstance().actualizarDatosSala(evento.getSala().getConfiguracion().getLimiteJugadores(), 
+        ModeloJuegoFacade.getInstance().actualizarDatosSala(evento.getSala().getJugadorHost(),evento.getSala().getConfiguracion().getLimiteJugadores(), 
                 evento.getSala().getConfiguracion().getDificultad());
         ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
     }

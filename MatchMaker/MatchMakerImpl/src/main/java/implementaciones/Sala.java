@@ -36,8 +36,13 @@ public class Sala {
         this.jugadores.add(jugador);
     }
 
+    public void setJugadorHost(String jugadorHost) {
+        this.jugadorHost = jugadorHost;
+    }
+
     /**
      * La lista de jugadores en la sala.
+     *
      * @return Lista de jugadores en la sala.
      */
     public List<JugadorDTO> getJugadores() {
@@ -75,5 +80,13 @@ public class Sala {
     public ConfiguracionJuego getConfiguracion() {
         return configuracion;
     }
-    
+
+    public boolean eliminarJugador(String nickname) {
+        return jugadores.removeIf(jugador -> jugador.getNickname().equals(nickname));
+    }
+
+    public void limpiarJugadores() {
+        this.jugadores.clear();
+    }
+
 }
