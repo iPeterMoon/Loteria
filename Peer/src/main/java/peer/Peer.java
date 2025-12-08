@@ -147,53 +147,8 @@ public class Peer {
      */
     public void abandonar() {
         System.out.println(">>> [PEER] Abandonando la partida voluntariamente...");
-
-        // 1. Notificar al Servidor de Descubrimiento (Salida limpia)
-        notificarAbandonoAlServidor();
-
         // 2. Detener todos los servicios de red de forma segura.
         stop();
     }
 
-    /**
-     * Crea el JSON del evento de desconexión y lo envía directamente al
-     * Servidor Utiliza la infraestructura EnvioPeer, que delega a
-     * EnvioPeer.directMessage()
-     */
-    private void notificarAbandonoAlServidor() {
-        try {
-            // Crear el DTO que será el cuerpo del mensaje, usando la información local
-            MensajeDesconexion eventoDesconexion = new MensajeDesconexion(this.myInfo);
-
-            // Convertir el Evento a JSON
-            String jsonDesconexion = gson.toJson(eventoDesconexion);
-
-            // Crear el PeerInfo del Destino 
-            PeerInfo serverInfo = new PeerInfo(
-                    "discovery",
-                    ConfigLoader.getInstance().getIpServidor(),
-                    ConfigLoader.getInstance().getPuertoDiscovery()
-            );
-
-            // Enviar el mensaje: Se delega a EnvioPeer para resolver y enviar
-            EnvioPeer.getInstance().directMessage(serverInfo, jsonDesconexion);
-
-            System.out.println(">>> [PEER] Notificación de abandono enviada al Servidor.");
-
-        } catch (Exception e) {
-            System.err.println("[Peer] Error al notificar la desconexión al servidor: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Lógica ejecutada cuando el Peer local es elegido como el nuevo Host tras
-     * la desconexión del anterior
-     *
-     * * @param miInfo La información del Peer local (que ahora es Host)
-     */
-    public void promoverseAHost(PeerInfo miInfo) {
-
-        System.out.println(">>> [HOST] PROMOCIÓN EXITOSA: El Peer " + miInfo.getUser() + " ha asumido el rol de Host.");
-
-    }
 }

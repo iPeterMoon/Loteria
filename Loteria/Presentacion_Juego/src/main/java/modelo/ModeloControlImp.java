@@ -100,4 +100,9 @@ public class ModeloControlImp implements IModeloControl {
         return modeloJuego;
     }
 
+    @Override
+    public void abandonarPartida() {
+        System.exit(0);
+    }
+
 }

@@ -198,7 +198,6 @@ public class ModeloJuegoFacade implements IModeloJuego {
     /**
      * Método para abandonar la sala de espera.
      * 
-     * @param jugador El jugador que abandonara la sala de espera.
      */
     @Override
     public void abandonarSala() {
@@ -218,6 +217,8 @@ public class ModeloJuegoFacade implements IModeloJuego {
         }
         vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera);
     }
+    
+    
 
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
@@ -263,48 +264,11 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void cerrarSalaEspera(){
         vistaConfiguracion.cerrarVentana();
     }
-
-    //  LÓGICA DE ABANDONAR PARTIDA 
-
-    public void procesarDesconexion(Evento evento) {
-        String idDesconectado = evento.getUserSender(); 
-        
-        // 1. Acceder a la Sala
-        Sala sala = Sala.getInstance();
-        
-        // 2. Eliminar al jugador desconectado de la lista general
-        // (Asumimos que 'getJugadores()' trae la lista donde están todos para saber el orden)
-        List<Jugador> listaJugadores = sala.getJugadores();
-        
-        if (listaJugadores != null) {
-            // Borramos al que se fue buscando por Nickname o ID
-            listaJugadores.removeIf(j -> j.getNickname().equals(idDesconectado));
-        }
-
-        // 3. Obtener MI identidad (Jugador Principal)
-        Jugador yoPrincipal = sala.getJugadorPrincipal();
-
-        // 4. VERIFICACIÓN DE HOST (Diagrama 5)
-        // Regla: El nuevo Host es SIEMPRE el índice 0 de la lista actualizada.
-        if (listaJugadores != null && !listaJugadores.isEmpty() && yoPrincipal != null) {
-            
-            // Obtenemos al primero de la fila
-            Jugador nuevoLider = listaJugadores.get(0);
-
-            // Comparamos: ¿El primero de la lista soy YO?
-            if (nuevoLider.getNickname().equals(yoPrincipal.getNickname())) {
-                
-                // Evitamos reiniciar si ya estamos cantando
-                if (!cantadorManager.isCantando()) {
-                    System.out.println(">>> [MIGRACION] El Host anterior se fue.");
-                    System.out.println(">>> [MIGRACION] Soy el Jugador Principal y estoy en el índice 0.");
-                    System.out.println(">>> [MIGRACION] ASUMIENDO ROL DE HOST.");
-                    
-                    // Iniciamos el canto (3 segundos de espera para dar tiempo a los demás)
-                    cantadorManager.iniciarCanto(3000);
-                }
-            }
-        }
+    
+    public void eliminarJugadorDePartida(String user){
+        vistaJuego.eliminarJugadorSecundario(user);
     }
+
+
 
 }

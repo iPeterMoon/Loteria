@@ -1,4 +1,4 @@
-package eventos.eventos_peers;
+package eventos.eventos_aplicacion;
 
 import java.util.List;
 

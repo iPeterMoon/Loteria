@@ -1,5 +1,6 @@
 package vista;
 
+import control.ControlAbandonarPartida;
 import control.RegistroControles;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -81,6 +82,11 @@ public class PanelJuego extends javax.swing.JPanel {
         botonAbandonar.setForeground(new java.awt.Color(255, 255, 255));
         botonAbandonar.setText("Abandonar");
         botonAbandonar.setFocusPainted(false);
+        botonAbandonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAbandonarActionPerformed(evt);
+            }
+        });
 
         botonCuatroEsquinas.setRequestFocusEnabled(false);
 
@@ -174,6 +180,11 @@ public class PanelJuego extends javax.swing.JPanel {
                         .addComponent(botonLlena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonAbandonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbandonarActionPerformed
+        ControlAbandonarPartida control = RegistroControles.getInstance().getControlAbandonarPartida();
+        control.abandonarPartida();
+    }//GEN-LAST:event_botonAbandonarActionPerformed
 
     /**
      * Metodo para inicializa el fondo del panel de juego con una imagen
@@ -280,6 +291,26 @@ public class PanelJuego extends javax.swing.JPanel {
         actualizarPanelesSecundarios();
     }
 
+    /**
+     * Metodo para eliminar un jugador secundario del panel.
+     * Busca por nickname, lo elimina de la lista y actualiza la vista.
+     * @param jugador El jugador a eliminar
+     */
+    public void eliminarJugador(JugadorSubject jugador) {
+        PanelJugadorSecundario aEliminar = null;
+        for (PanelJugadorSecundario panel : panelesJugadoresSecundarios) {
+            if (panel.esMismoJugador(jugador)) {
+                aEliminar = panel;
+                break;
+            }
+        }
+        
+        if (aEliminar != null) {
+            panelesJugadoresSecundarios.remove(aEliminar);
+            actualizarPanelesSecundarios();
+        }
+    }
+    
     /**
      * Metodo que refresca la lista de paneles de jugadores secundarios en la
      * interfaz.

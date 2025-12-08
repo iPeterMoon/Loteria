@@ -46,5 +46,11 @@ public interface IModeloVistaJuego {
      * @param carta Número de carta cantada actual.
      */
     public void actualizarCarta(int carta);
+    
+    /**
+     * Metodo para eliminar a un jugador en caso de desconexión
+     * @param user User del jugador que se va a eliminar.
+     */
+    public void eliminarJugadorSecundario(String user);
 
 }
