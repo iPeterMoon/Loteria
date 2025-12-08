@@ -16,10 +16,10 @@ import modelo.Sala;
  *
  * @author petermoon
  */
-public class ManejadorEventoDesconexion extends ManejadorEventos{
+public class ManejadorEventoDesconexion extends ManejadorEventos {
 
     private String userDesconectado;
-    
+
     @Override
     public void procesar(Evento evento) {
         if (evento.getTipoEvento().equals(TipoEvento.PEER_DESCONECTADO)) {
@@ -27,41 +27,28 @@ public class ManejadorEventoDesconexion extends ManejadorEventos{
             procesarDesconexion(eventoDesconexion);
         } else if (next != null) {
             next.procesar(evento);
-        }}
-    
-        //  LÓGICA DE ABANDONAR PARTIDA 
+        }
+    }
 
+    //  LÓGICA DE ABANDONAR PARTIDA 
     private void procesarDesconexion(EventoPeerDesconectado evento) {
-        this.userDesconectado = evento.getUserSender(); 
-        
+        this.userDesconectado = evento.getUserSender();
+
         // 1. Acceder a la Sala
         Sala sala = Sala.getInstance();
-        
+
         // 2. Eliminar al jugador desconectado de la lista general
         List<Jugador> listaJugadores = sala.getJugadoresSecundario();
-        
+
         if (listaJugadores != null) {
             // Borramos al que se fue buscando por Nickname o ID
             listaJugadores.removeIf(j -> j.getNickname().equals(userDesconectado));
         }
-        
+
         actualizarJugadoresEnVista();
     }
-    
-   private void actualizarJugadoresEnVista(){
-       actualizarJugadoresEnConfiguracion();
-   }
-   
-   private void actualizarJugadoresEnConfiguracion(){
-       Sala sala = Sala.getInstance();
-       
-       List<JugadorDTO> jugadoresDTO = new ArrayList<>();
-       jugadoresDTO.add(JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true));
-       for(Jugador jugador : sala.getJugadoresSecundario()){
-           jugadoresDTO.add(JugadorMapperModelo.toDTO(jugador, false));
-       }
-       
-       ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
-       ModeloJuegoFacade.getInstance().eliminarJugadorDePartida(userDesconectado);
-   }
+
+    private void actualizarJugadoresEnVista() {
+        ModeloJuegoFacade.getInstance().eliminarJugadorDePartida(userDesconectado);
+    }
 }

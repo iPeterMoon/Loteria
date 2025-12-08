@@ -1,5 +1,6 @@
 package managers;
 
+import dtos.aplicacion.MensajeDTO;
 import interfaces.IPeer;
 import mappers.JugadorMapperModelo;
 import mappers.TarjetaMapper;
@@ -19,10 +20,12 @@ import java.util.Random;
 import java.util.Stack;
 
 import dtos.aplicacion.TarjetaDTO;
+import enums.TipoMensajePantalla;
 import eventos.eventos_aplicacion.EventoIniciarPartida;
 import eventos.eventos_aplicacion.EventoSemilla;
 import eventos.eventos_aplicacion.EventoTarjetasBarajeadas;
 import interfaces.IModeloVistaJuego;
+import modelo.ModeloJuegoFacade;
 
 /**
  * Manejador para el inicio de una nueva partida.
@@ -52,11 +55,16 @@ public class InicioPartidaManager {
      * para barajear el mazo y mostrar la pantalla de la partida.
      */
     public void iniciarPartida() {
-        barajearMazo();
-        repartirTarjetas();
-        generarEventoInicioPartida();
-        mostrarFramePartida();
-        cerrarFrameConfiguracion();
+        if(!Sala.getInstance().getJugadoresSecundario().isEmpty()){
+            barajearMazo();
+            repartirTarjetas();
+            generarEventoInicioPartida();
+            mostrarFramePartida();
+            cerrarFrameConfiguracion();
+        } else {
+            MensajeDTO mensaje = new MensajeDTO("No se puede iniciar", "<html>No puede iniciar la partida si no hay más jugadores</html>", false, TipoMensajePantalla.VALIDACION_SALA_ESPERA);
+            ModeloJuegoFacade.getInstance().mostrarMensaje(mensaje);
+        }
     }
 
     /**

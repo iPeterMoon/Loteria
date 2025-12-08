@@ -10,5 +10,6 @@ package enums;
  */
 public enum TipoMensajePantalla {
     VALIDACION_USUARIO,
-    VALIDACION_CONFIG_PARTIDA;
+    VALIDACION_CONFIG_PARTIDA,
+    VALIDACION_SALA_ESPERA;
 }

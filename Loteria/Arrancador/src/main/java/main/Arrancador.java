@@ -33,7 +33,7 @@ public class Arrancador {
 
     public static void main(String[] args) {
 
-        FrameConfiguracion frameInicio = FrameConfiguracion.getInstancia();
+//        FrameConfiguracion frameInicio = FrameConfiguracion.getInstancia();
 
         ControlesConfiguracionFactory controlesFactory = ControlesConfiguracionFactory.getInstance();
 
@@ -54,7 +54,7 @@ public class Arrancador {
         PeerFacade nuevoPeer = new PeerFacade();
         nuevoPeer.setObserver(modeloJuegoObserver);
 //        
-        Cantador cantador = Cantador.getInstance();
+//        Cantador cantador = Cantador.getInstance();
 //
 //        // 1. Configuración de dependencias del Modelo
 //        // 1.1 Crear ModeloJuego (necesita IModeloVista)

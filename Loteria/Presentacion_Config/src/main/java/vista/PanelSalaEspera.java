@@ -4,7 +4,11 @@
  */
 package vista;
 
+import Modal.MensajeDialog;
 import controladores.ControlesConfiguracionFactory;
+import enums.TipoMensajePantalla;
+import java.awt.Frame;
+import modelo.MensajeSubject;
 import modelo.ModeloVistaConfiguracionFacade;
 import modelo.SalaSubject;
 import util.Subject;
@@ -15,18 +19,26 @@ import util.Subject;
  */
 public class PanelSalaEspera extends javax.swing.JPanel {
 
+    private Frame ventanaPrincipal;
+    
     /**
      * Creates new form PanelSalaEspera
      */
     public PanelSalaEspera() {
         initComponents();
     }
+    
+    public void configurarFramePadre(Frame ventanaPadre) {
+        ventanaPrincipal = ventanaPadre;
+    }
 
     public void actualizarVista(Subject subject) {
         if (subject instanceof SalaSubject salaSubject) {
             actualizarDatosSala(salaSubject);
-            repaint();
-            revalidate();
+            this.repaint();
+            this.revalidate();
+        } else if (subject instanceof MensajeSubject){
+            actualizarMensaje(subject);
         }
     }
 
@@ -35,6 +47,8 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             panelListaJugadores.actualizarListaJugadores(sala.getJugadores(), sala.getLimiteJugadores());
             labelNivel.setText(sala.getNivel().toString());
             actualizarBotones(sala);
+            panelListaJugadores.revalidate();
+            panelListaJugadores.repaint();
         }
     }
 
@@ -56,11 +70,30 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             btnAbandonarSala.setVisible(true);
             if(principalNickname.equals(sala.getHost())){
                 btnAccion.setText("Iniciar Partida");
+                btnAccion.setVisible(true);
+                lblEspera.setVisible(false);
             } else {
                 lblEspera.setVisible(true);
                 btnAccion.setVisible(false);
             }
-        };
+        }
+        repaint();
+        revalidate();
+    }
+    
+    private void actualizarMensaje(Subject subject) {
+        if (subject instanceof MensajeSubject validacion) {
+            if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_SALA_ESPERA) {
+                MensajeDialog mensajeDialog = new MensajeDialog(ventanaPrincipal, true);
+                mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
+                mensajeDialog.mostrarDialogo();
+
+                if (validacion.isExitoso()) {
+                    ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                    controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                }
+            }
+        }
     }
     
     /**

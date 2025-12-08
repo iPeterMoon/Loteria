@@ -123,6 +123,7 @@ public class FrameConfiguracion extends JFrame {
 
         panelConfiguracionUsuario.actualizarVista(subject);
         panelConfiguracionPartida.actualizarVista(subject);
+        panelSalaEspera.actualizarVista(subject);
 
         if (subject instanceof SalaSubject sala) {
             panelSalaEspera.actualizarVista(subject);

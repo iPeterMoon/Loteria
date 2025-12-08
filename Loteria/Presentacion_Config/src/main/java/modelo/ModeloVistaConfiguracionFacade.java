@@ -7,6 +7,7 @@ import enums.TipoConfiguracion;
 import enums.TipoNivel;
 import interfaces.IModeloVistaConfiguracion;
 import interfaces.IObserver;
+import java.util.ArrayList;
 import java.util.List;
 import vista.ModelObserverConfig;
 

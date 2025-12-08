@@ -92,5 +92,17 @@ public class Sala {
     public boolean salaCreada() {
         return host != null && configuracion != null;
     }
+    
+    public boolean isInSala(String user){
+        if (jugadorPrincipal.getNickname().equals(user)){
+            return true;
+        }
+        for(Jugador jugador : jugadoresSecundario){
+            if(jugador.getNickname().equals(user)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

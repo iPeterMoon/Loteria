@@ -94,7 +94,6 @@ public class ConfiguracionManager {
         }
 
         List<Jugador> jugadoresSala = Sala.getInstance().getJugadoresSecundario();
-        jugadoresSala.add(Sala.getInstance().getJugadorPrincipal());
         for (Jugador jugador : jugadoresSala) {
             if (jugador != null && jugador.getNickname().equals(usuarioNuevo.getNickname().trim())) {
                 MensajeDTO mensaje = new MensajeDTO("Usuario invalido", "<html>Nombre de usuario ya seleccionado</html>", false, TipoMensajePantalla.VALIDACION_USUARIO);

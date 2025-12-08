@@ -35,11 +35,20 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
 
         if (evento.getSala() == null) {
             modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.CREAR_SALA);
-        } else {
+            resetearSala();
+        } else if (!Sala.getInstance().salaCreada()) {
             SalaDTO salaDTO = evento.getSala();
             configurarSala(salaDTO);
         }
 
+    }
+
+    private void resetearSala() {
+        Sala sala = Sala.getInstance();
+
+        sala.setJugadorPrincipal(null);
+        sala.getJugadoresSecundario().clear();
+        sala.setConfiguracion(null);
     }
 
     private void configurarSala(SalaDTO salaDTO) {
@@ -54,8 +63,11 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
     private synchronized void actualizarJugadoresSecundario(List<JugadorDTO> jugadores) {
         Sala sala = Sala.getInstance();
         List<Jugador> jugadoresSecundarios = new ArrayList<>();
+        String nicknamePrincipal = (sala.getJugadorPrincipal() != null) ? sala.getJugadorPrincipal().getNickname() : "";
         for (JugadorDTO jugadorDTO : jugadores) {
-            jugadoresSecundarios.add(JugadorMapperModelo.toJugador(jugadorDTO));
+            if (!jugadorDTO.getNickname().equals(nicknamePrincipal)) {
+                jugadoresSecundarios.add(JugadorMapperModelo.toJugador(jugadorDTO));
+            }
         }
         sala.setJugadoresSecundario(jugadoresSecundarios);
     }
@@ -63,21 +75,26 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
     private void actualizarVista() {
         Sala sala = Sala.getInstance();
 
+        modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.UNIRSE_SALA);
+
         modeloJuegoFacade.actualizarDatosSala(
                 sala.getHost(),
                 sala.getConfiguracion().getLimiteJugadores(),
                 sala.getConfiguracion().getDificultad());
+
         List<JugadorDTO> jugadoresDTO = new ArrayList<>();
-        for (Jugador jugador : sala.getJugadoresSecundario()) {
-            if (sala.getJugadorPrincipal() != null) {
-                boolean isPrincipal = jugador.getNickname().equals(sala.getJugadorPrincipal().getNickname());
-                jugadoresDTO.add(JugadorMapperModelo.toDTO(jugador, isPrincipal));
-            } else {
-                jugadoresDTO.add(JugadorMapperModelo.toDTO(jugador, false));
-            }
+        if (sala.getJugadorPrincipal() != null) {
+            jugadoresDTO.add(JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true));
         }
+
+        for (Jugador jugador : sala.getJugadoresSecundario()) {
+            jugadoresDTO.add(JugadorMapperModelo.toDTO(jugador, false));
+        }
+
         modeloJuegoFacade.actualizarJugadoresSala(jugadoresDTO);
 
-        modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.UNIRSE_SALA);
+        if (sala.getJugadorPrincipal() != null) {
+            modeloJuegoFacade.setJugadorPrincipal(JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true));
+        }
     }
 }

@@ -3,35 +3,30 @@ package procesadores;
 import dtos.aplicacion.JugadorDTO;
 import enums.TipoEvento;
 import eventos.Evento;
+import eventos.eventos_aplicacion.EventoSalaActualizada;
+import eventos.eventos_aplicacion.EventoSalirSalaEspera;
 import eventos.eventos_aplicacion.EventoInfoSala;
 import eventos.eventos_aplicacion.EventoNuevoHost;
-import eventos.eventos_aplicacion.EventoPeerDesconectado;
-import eventos.eventos_aplicacion.EventoSalaActualizada;
 import implementaciones.Matchmaker;
 import implementaciones.Sala;
 import util.ConfigLoader;
 
-/**
- *
- * @author petermoon
- */
-public class ManejadorDesconexion extends ManejadorEventos{
+public class ManejadorSalirSalaEspera extends ManejadorEventos {
 
     Sala sala = Sala.getInstance();
     Matchmaker matchmaker = Matchmaker.getInstance();
 
-    
     @Override
     public void procesar(Evento evento) {
-    if (evento.getTipoEvento().equals(TipoEvento.PEER_DESCONECTADO)) {
-            manejarDesconexion((EventoPeerDesconectado) evento);
+        if (evento.getTipoEvento().equals(TipoEvento.SALIR_SALA_ESPERA)) {
+            manejarSalirSalaEspera((EventoSalirSalaEspera) evento);
         } else if (next != null) {
             next.procesar(evento);
         }
     }
 
-    private void manejarDesconexion(EventoPeerDesconectado evento) {
-        String jugadorAEliminar = evento.getPeerDesconectado().getUser();
+    private void manejarSalirSalaEspera(EventoSalirSalaEspera evento) {
+        String jugadorAEliminar = evento.getUserSender();
         boolean eraHost = jugadorAEliminar.equals(sala.getHost());
 
         sala.eliminarJugador(jugadorAEliminar);
@@ -46,7 +41,7 @@ public class ManejadorDesconexion extends ManejadorEventos{
             );
             matchmaker.broadcast(eventoSalaEliminada);
 
-        } else if (eraHost){
+        } else if(eraHost){
             String nuevoHost = obtenerNuevoHost(jugadorAEliminar);
             if(nuevoHost != null){
                 EventoNuevoHost eventoNuevoHost = new EventoNuevoHost(
@@ -83,5 +78,4 @@ public class ManejadorDesconexion extends ManejadorEventos{
         }
         return null;
     }
-
 }

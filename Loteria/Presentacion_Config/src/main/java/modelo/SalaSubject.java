@@ -36,6 +36,7 @@ public class SalaSubject extends Subject {
         this.nivel = nivel;
         this.limiteJugadores = limiteJugadores;
         this.jugadores = jugadores;
+        notifyAllObservers();
     }
 
     public String getHost() {
@@ -44,6 +45,7 @@ public class SalaSubject extends Subject {
 
     public void setHostUser(String hostUser) {
         this.hostUser = hostUser;
+        notifyAllObservers();
     }
 
     public TipoNivel getNivel() {
