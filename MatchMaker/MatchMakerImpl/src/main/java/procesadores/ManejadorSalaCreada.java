@@ -25,7 +25,7 @@ public class ManejadorSalaCreada extends ManejadorEventos {
 
     @Override
     public void procesar(Evento evento) {
-        if (evento.getTipoEvento().equals(TipoEvento.SALA_CREADA)) {
+        if (evento.getTipoEvento().equals(TipoEvento.CREAR_SALA)) {
             EventoCrearSala eventoSalaCreada = (EventoCrearSala) evento;
 
             ConfiguracionJuegoDTO configuracionDTO = eventoSalaCreada.getConfiguracionSala();

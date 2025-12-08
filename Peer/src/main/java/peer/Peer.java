@@ -62,7 +62,7 @@ public class Peer {
 
             envioHandler.empezarEnvio();
 
-            DiscoveryRegistrar.registrar(myInfo);
+            DiscoveryRegistrar.registrar(myInfo); 
 
             empezarHeartbeat();
 

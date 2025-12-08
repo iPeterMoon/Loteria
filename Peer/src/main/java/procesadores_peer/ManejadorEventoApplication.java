@@ -3,7 +3,7 @@ package procesadores_peer;
 import com.google.gson.JsonObject;
 import eventos.Evento;
 import peer.Peer;
-import network.EventoApplicationMapper;
+import utilPeer.EventoApplicationMapper;
 
 /**
  * Manejador que procesa los eventos de aplicación recibidos del JSON.

@@ -19,11 +19,11 @@ public class EventoCrearSala extends Evento {
     private NuevoUsuarioDTO usuarioHost;
 
     public EventoCrearSala(String userSender) {
-        super(TipoEvento.SALA_CREADA, userSender);
+        super(TipoEvento.CREAR_SALA, userSender);
     }
 
     public EventoCrearSala(ConfiguracionJuegoDTO configuracionSala, NuevoUsuarioDTO usuarioHost, String userSender) {
-        super(TipoEvento.SALA_CREADA, userSender);
+        super(TipoEvento.CREAR_SALA, userSender);
         this.configuracionSala = configuracionSala;
         this.usuarioHost = usuarioHost;
     }

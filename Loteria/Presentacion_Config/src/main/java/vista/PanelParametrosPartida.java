@@ -1,16 +1,35 @@
 package vista;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Alici
  */
 public class PanelParametrosPartida extends javax.swing.JPanel {
 
+    private Image iconFondo;
+
     /**
      * Creates new form PanelConfigurarPartida
      */
     public PanelParametrosPartida() {
+        obtenerFondo();
         initComponents();
+    }
+
+    private void obtenerFondo() {
+        iconFondo = new ImageIcon(getClass().getResource("/fondos/fondo_configuracionSala.png")).getImage();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (iconFondo != null) {
+            g.drawImage(iconFondo, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 
     /**
@@ -22,15 +41,19 @@ public class PanelParametrosPartida extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setBackground(new java.awt.Color(255, 178, 0));
+        setMaximumSize(new java.awt.Dimension(1160, 527));
+        setMinimumSize(new java.awt.Dimension(1160, 527));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1160, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 527, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -89,4 +89,8 @@ public class Sala {
         this.host = host;
     }
 
+    public boolean salaCreada() {
+        return host != null && configuracion != null;
+    }
+
 }

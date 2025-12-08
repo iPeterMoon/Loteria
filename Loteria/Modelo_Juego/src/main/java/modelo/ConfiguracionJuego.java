@@ -18,4 +18,37 @@ public class ConfiguracionJuego {
     private int puntajeMax;
     private TipoNivel dificultad;
     private Map<JugadasDisponibles, Integer> puintajes;
+
+    public int getLimiteJugadores() {
+        return limiteJugadores;
+    }
+
+    public void setLimiteJugadores(int limiteJugadores) {
+        this.limiteJugadores = limiteJugadores;
+    }
+
+    public int getPuntajeMax() {
+        return puntajeMax;
+    }
+
+    public void setPuntajeMax(int puntajeMax) {
+        this.puntajeMax = puntajeMax;
+    }
+
+    public TipoNivel getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(TipoNivel dificultad) {
+        this.dificultad = dificultad;
+    }
+
+    public Map<JugadasDisponibles, Integer> getPuintajes() {
+        return puintajes;
+    }
+
+    public void setPuintajes(Map<JugadasDisponibles, Integer> puintajes) {
+        this.puintajes = puintajes;
+    }
+
 }

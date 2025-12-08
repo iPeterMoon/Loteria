@@ -101,13 +101,16 @@ public interface IModeloJuego {
     public void actualizarSala(List<JugadorDTO> jugadores);
 
     public void configurarUsuarioNuevaSala(NuevoUsuarioDTO usuario);
-    
+
     public void actualizarJugadoresSala(List<JugadorDTO> jugadores);
-    
+
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
+     *
      * @param limiteJugadores El limite de jugadores en la sala.
      * @param nivel El nivel de la partida.
      */
     public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
+
+    public void obtenerSala();
 }

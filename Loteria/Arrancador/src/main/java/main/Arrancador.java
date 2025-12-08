@@ -1,14 +1,20 @@
 package main;
 
+import control.RegistroControles;
 import controladores.ControlesConfiguracionFactory;
 import interfaces.IModeloJuego;
 import interfaces.IModeloVistaConfiguracion;
 import interfaces.IModeloVistaJuego;
 import interfaces.IObserver;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.Cantador;
+import modelo.IModeloControl;
 import modelo.IModeloControlAplicacion;
 import modelo.IModeloControlNegocio;
 import modelo.ModeloControlAplicacion;
 import modelo.ModeloControlConfigImp;
+import modelo.ModeloControlImp;
 import modelo.ModeloJuegoFacade;
 import modelo.ModeloVistaConfiguracionFacade;
 import modelo.ModeloVistaFacade;
@@ -34,9 +40,9 @@ public class Arrancador {
         IModeloControlAplicacion modeloAplicacion = new ModeloControlAplicacion();
         IModeloJuego modeloJuego = ModeloJuegoFacade.getInstance();
 
-        IModeloControlNegocio modeloControl = new ModeloControlConfigImp(modeloJuego);
+        IModeloControlNegocio modeloControlConfiguracion = new ModeloControlConfigImp(modeloJuego);
 
-        controlesFactory.inicializar(modeloControl, modeloAplicacion);
+        controlesFactory.inicializar(modeloControlConfiguracion, modeloAplicacion);
 
 //        controlesFactory.getControlAplicacion().iniciar();
 //        //Obtener la fachada de la vista.
@@ -50,21 +56,27 @@ public class Arrancador {
         nuevoPeer.setObserver(modeloJuegoObserver);
         nuevoPeer.setObserver(modeloMatchmakerObserver);
 //        
-//        Cantador cantador = Cantador.getInstance();
+        Cantador cantador = Cantador.getInstance();
 //
 //        // 1. Configuración de dependencias del Modelo
 //        // 1.1 Crear ModeloJuego (necesita IModeloVista)
         ModeloJuegoFacade.getInstance().inicializar(modeloVistaJuego, modeloVistaConfiguracion, nuevoPeer);
-//        IModeloJuego modeloJuego = ModeloJuegoFacade.getInstance();
 //
 //        // 1.2 Crear ModeloControl(necesita IModeloJuego)
-//        IModeloControl modeloControl = new ModeloControlImp(modeloJuego);
+        IModeloControl modeloControlJuego = new ModeloControlImp(modeloJuego);
 //
 //        //Inicializar el registro de controles
-//        RegistroControles.getInstance().inicializar(modeloControl);
+        RegistroControles.getInstance().inicializar(modeloControlJuego);
 //
 //        //Iniciar peer
-//        nuevoPeer.start();
+        nuevoPeer.start();
+
+        try {
+            Thread.sleep(1000);
+            modeloJuego.obtenerSala();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Arrancador.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //
 //        // Jugador Principal
 //        String nickname = JOptionPane.showInputDialog("Ingresa tu nickname");

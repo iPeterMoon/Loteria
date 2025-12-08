@@ -5,16 +5,17 @@
 package ventanas;
 
 import enums.Pantalla;
+import enums.TipoConfiguracion;
 import java.awt.CardLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import modelo.ConfiguracionSubject;
 import modelo.PantallaActualSubject;
 import modelo.SalaSubject;
 import util.Subject;
 import vista.PanelConfiguracionJuego;
 import vista.PanelConfiguracionUsuario;
-import vista.PanelParametrosPartida;
 import vista.PanelMenu;
 import vista.PanelSalaEspera;
 
@@ -51,7 +52,6 @@ public class FrameConfiguracion extends JFrame {
 
     public void configurarCardLayout() {
         cargarPantallas();
-        cardLayout.show(panelContenedor, Pantalla.MENU.getNombre());
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
@@ -91,6 +91,16 @@ public class FrameConfiguracion extends JFrame {
      * @param subject representacion del sujeto.
      */
     public void actualizarVista(Subject subject) {
+        if (subject instanceof ConfiguracionSubject configuracion) {
+            if (configuracion.getTipoConfiguracion().equals(TipoConfiguracion.CREAR_SALA)) {
+                panelConfiguracionUsuario.setConfiguracionActual(TipoConfiguracion.CREAR_SALA);
+                cardLayout.show(panelContenedor, Pantalla.MENU.getNombre());
+            }
+            if (configuracion.getTipoConfiguracion().equals(TipoConfiguracion.UNIRSE_SALA)) {
+                panelConfiguracionUsuario.setConfiguracionActual(TipoConfiguracion.UNIRSE_SALA);
+            }
+        }
+
         if (subject instanceof PantallaActualSubject pantalla) {
             Pantalla pantallaActual = pantalla.getPantallaActual();
 

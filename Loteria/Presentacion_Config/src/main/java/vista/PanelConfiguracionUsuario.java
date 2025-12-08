@@ -19,7 +19,7 @@ import util.Subject;
  * @author Alici
  */
 public class PanelConfiguracionUsuario extends javax.swing.JPanel {
-
+    
     private Frame ventanaPrincipal;
     private TipoConfiguracion configuracionActual;
 
@@ -28,9 +28,13 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
      */
     public PanelConfiguracionUsuario() {
         initComponents();
-        setBotonesCrearSala();
     }
-
+    
+    public void setConfiguracionActual(TipoConfiguracion configuracionActual) {
+        this.configuracionActual = configuracionActual;
+        
+    }
+    
     public void configurarFramePadre(Frame ventanaPadre) {
         ventanaPrincipal = ventanaPadre;
     }
@@ -44,27 +48,28 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
     public void actualizarVista(Subject subject) {
         actualizarAvatar(subject);
         actualizarMensaje(subject);
+        actualizarBotones(subject);
         repaint();
         revalidate();
     }
-
+    
     private void actualizarAvatar(Subject subject) {
         if (subject instanceof AvatarSubject avatarSubject) {
             panelSeleccionarAvatar.actualizarAvatar(avatarSubject.getNumeroAvatar());
             panelSeleccionarAvatar.repaint();
         }
     }
-
+    
     private void actualizarMensaje(Subject subject) {
         if (subject instanceof MensajeSubject validacion) {
             if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_USUARIO) {
                 MensajeDialog mensajeDialog = new MensajeDialog(ventanaPrincipal, true);
                 mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
                 mensajeDialog.mostrarDialogo();
-
+                
                 if (validacion.isExitoso()) {
                     ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-
+                    
                     if (this.configuracionActual == TipoConfiguracion.CREAR_SALA) {
                         controles.getControlAplicacion().mostrarPanelConfigurarSala();
                     } else if (this.configuracionActual == TipoConfiguracion.UNIRSE_SALA) {
@@ -75,13 +80,13 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void actualizarBotones(Subject subject) {
         if (subject instanceof ConfiguracionSubject configuracionSubject) {
             TipoConfiguracion configuracion = configuracionSubject.getTipoConfiguracion();
             
-            this.configuracionActual = configuracion; 
-          
+            this.configuracionActual = configuracion;
+            
             if (configuracion == TipoConfiguracion.CREAR_SALA) {
                 setBotonesCrearSala();
             }
@@ -90,7 +95,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void setBotonesUnirsePartida() {
         Action accionRegresar = new AbstractAction("Volver") {
             @Override
@@ -99,7 +104,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
                 controles.getControlAplicacion().mostrarPanelSala();
             }
         };
-
+        
         Action accionSiguiente = new AbstractAction("Unirme a la sala") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,7 +117,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
         btnRegresar.setAction(accionRegresar);
         btnSiguiente.setAction(accionSiguiente);
     }
-
+    
     private void setBotonesCrearSala() {
         Action accionRegresar = new AbstractAction("Volver") {
             @Override
@@ -122,7 +127,7 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
                 resetCampos();
             }
         };
-
+        
         Action accionSiguiente = new AbstractAction("Configurar partida") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -134,9 +139,9 @@ public class PanelConfiguracionUsuario extends javax.swing.JPanel {
         };
         btnRegresar.setAction(accionRegresar);
         btnSiguiente.setAction(accionSiguiente);
-
+        
     }
-
+    
     private void resetCampos() {
         panelConfigurarNombreUsuario.reset();
         panelSeleccionarAvatar.reset();

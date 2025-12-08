@@ -22,6 +22,7 @@ import managers.MovimientoManager;
 import managers.UnirsePartidaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
+import enums.TipoConfiguracion;
 import managers.ConfiguracionManager;
 import enums.TipoNivel;
 
@@ -227,6 +228,14 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void actualizarSala(List<JugadorDTO> jugadores) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void cambiarTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
+        vistaConfiguracion.actualizarTipoConfiguracion(tipoConfiguracion);
+    }
+
+    public void obtenerSala() {
+        configuracionManager.obtenerSala();
     }
 
 }

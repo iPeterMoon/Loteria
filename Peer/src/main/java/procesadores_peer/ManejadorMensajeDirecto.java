@@ -64,7 +64,7 @@ public class ManejadorMensajeDirecto extends ManejadorMensajesSalida {
      * @return DTO con la información del PeerDestinatario
      */
     private PeerInfo extraerPeerDestinatario(JsonObject json) {
-        String user = json.get("userReceiver").getAsString();
+        String user = json.get("user").getAsString();
         PeersConectados peers = PeersConectados.getInstance();
         PeerInfo peerDestino = peers.obtenerPeerPorUsuario(user);
         return peerDestino;

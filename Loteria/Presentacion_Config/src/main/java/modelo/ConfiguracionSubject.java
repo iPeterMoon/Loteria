@@ -8,22 +8,20 @@ import util.Subject;
  * @author Alici
  */
 public class ConfiguracionSubject extends Subject {
-
-    private static ConfiguracionSubject instancia;
+    
     private TipoConfiguracion tipoConfiguracion;
-
-    private ConfiguracionSubject() {
+    
+    public ConfiguracionSubject() {
+        setTipoConfiguracion(TipoConfiguracion.CREAR_SALA);
     }
-
-    public static ConfiguracionSubject getInstancia() {
-        if (instancia == null) {
-            instancia = new ConfiguracionSubject();
-        }
-        return instancia;
-    }
-
+    
     public TipoConfiguracion getTipoConfiguracion() {
         return tipoConfiguracion;
     }
-
+    
+    public void setTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
+        this.tipoConfiguracion = tipoConfiguracion;
+        notifyAllObservers();
+    }
+    
 }

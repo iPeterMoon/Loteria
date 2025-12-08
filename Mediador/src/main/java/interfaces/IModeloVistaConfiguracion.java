@@ -2,6 +2,7 @@ package interfaces;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import dtos.aplicacion.MensajeDTO;
+import enums.TipoConfiguracion;
 import enums.TipoNivel;
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface IModeloVistaConfiguracion {
     public void actualizarDatosSala(int limiteJugadores, TipoNivel nivel);
 
     public void actualizarMensaje(MensajeDTO mensaje);
+
+    public void actualizarTipoConfiguracion(TipoConfiguracion tipoConfiguracion);
 
 }
