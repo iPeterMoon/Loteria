@@ -106,7 +106,7 @@ public class FrameConfiguracion extends JFrame {
 
         if (subject instanceof PantallaActualSubject pantalla) {
             Pantalla pantallaActual = pantalla.getPantallaActual();
-            if(pantallaActual == Pantalla.CERRAR){
+            if (pantallaActual == Pantalla.CERRAR) {
                 this.setVisible(false);
                 return;
             }
@@ -116,7 +116,9 @@ public class FrameConfiguracion extends JFrame {
                 panelSalaEspera.configurarModoJugadorUnido();
             } else if (pantallaActual == Pantalla.SALA_ESPERA_NO_UNIDO) {
                 panelSalaEspera.configurarModoJugadorNoUnido();
+                cardLayout.show(panelContenedor, Pantalla.SALA_ESPERA.getNombre());
             }
+
         }
 
         panelConfiguracionUsuario.actualizarVista(subject);
@@ -139,6 +141,7 @@ public class FrameConfiguracion extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Loteria Mexicana");
         setMinimumSize(new java.awt.Dimension(1336, 768));
+        setResizable(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
