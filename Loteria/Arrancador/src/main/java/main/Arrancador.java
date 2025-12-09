@@ -2,13 +2,13 @@ package main;
 
 import control.RegistroControles;
 import controladores.ControlesConfiguracionFactory;
-import interfaces.IModeloJuego;
-import interfaces.IModeloVistaConfiguracion;
-import interfaces.IModeloVistaJuego;
-import interfaces.IObserver;
+import interfaces.aplicacion.IModeloJuego;
+import interfaces.aplicacion.IModeloVistaConfiguracion;
+import interfaces.aplicacion.IModeloVistaJuego;
+import util.IObserver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.Cantador;
+//import modelo.Cantador;
 import modelo.IModeloControl;
 import modelo.IModeloControlAplicacion;
 import modelo.IModeloControlNegocio;

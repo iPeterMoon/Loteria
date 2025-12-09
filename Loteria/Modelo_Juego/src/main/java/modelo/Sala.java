@@ -4,8 +4,11 @@
  */
 package modelo;
 
+import enums.JugadasDisponibles;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -28,10 +31,15 @@ public class Sala {
 
     private ConfiguracionJuego configuracion;
 
+    private Map<JugadasDisponibles, Boolean> estaDisponible;
+
     private static Sala instance;
 
     private Sala() {
         jugadoresSecundario = new LinkedList<>();
+
+        estaDisponible = new HashMap<>();
+        resetearJugadasDisponibles();
     }
 
     public static Sala getInstance() {
@@ -105,4 +113,36 @@ public class Sala {
         return false;
     }
 
+    public void resetearJugadasDisponibles() {
+        for (JugadasDisponibles jugada : JugadasDisponibles.values()) {
+            estaDisponible.put(jugada, Boolean.TRUE);
+        }
+    }
+
+    public void agregarPuntaje(String nickname, JugadasDisponibles jugada) {
+        estaDisponible.put(jugada, Boolean.FALSE);
+
+        for (Jugador jugador : jugadoresSecundario) {
+            if (jugador.getNickname().equals(nickname)) {
+                jugador.setPuntos(jugador.getPuntos() + configuracion.getPuintajes().get(jugada));
+                return;
+            }
+        }
+        if (jugadorPrincipal.getNickname().equals(nickname)) {
+            jugadorPrincipal.setPuntos(jugadorPrincipal.getPuntos() + configuracion.getPuintajes().get(jugada));
+        }
+        
+        imprimirPuntajes();
+    }
+
+    private void imprimirPuntajes() {
+        for (Jugador jugador : jugadoresSecundario) {
+            System.out.println(jugador.getNickname() + ": " + jugador.getPuntos());
+        }
+        System.out.println(jugadorPrincipal.getNickname() + ": " + jugadorPrincipal.getPuntos());
+    }
+
+    public String getNicknameJugadorPrincipal() {
+        return jugadorPrincipal.getNickname();
+    }
 }

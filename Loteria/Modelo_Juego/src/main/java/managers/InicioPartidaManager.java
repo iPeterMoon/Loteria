@@ -1,7 +1,7 @@
 package managers;
 
 import dtos.aplicacion.MensajeDTO;
-import interfaces.IPeer;
+import interfaces.peer.IPeer;
 import mappers.JugadorMapperModelo;
 import mappers.TarjetaMapper;
 import modelo.Cantador;
@@ -24,7 +24,7 @@ import enums.TipoMensajePantalla;
 import eventos.eventos_aplicacion.EventoIniciarPartida;
 import eventos.eventos_aplicacion.EventoSemilla;
 import eventos.eventos_aplicacion.EventoTarjetasBarajeadas;
-import interfaces.IModeloVistaJuego;
+import interfaces.aplicacion.IModeloVistaJuego;
 import modelo.ModeloJuegoFacade;
 
 /**

@@ -33,6 +33,7 @@ public class BotonJugada extends javax.swing.JPanel {
      */
     public void setEstado(boolean estado) {
         this.estado = estado;
+        this.setEnabled(estado);
     }
 
     /**
@@ -56,6 +57,10 @@ public class BotonJugada extends javax.swing.JPanel {
     
     public void addActionListener(java.awt.event.ActionListener listener) {
         this.botonJugada.addActionListener(listener);
+    }
+    
+    public void removeActionListener(java.awt.event.ActionListener listener) {
+        this.botonJugada.removeActionListener(listener);
     }
 
     /**

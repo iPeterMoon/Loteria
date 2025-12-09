@@ -1,6 +1,6 @@
 package modelo;
 
-import interfaces.IModeloVistaJuego;
+import interfaces.aplicacion.IModeloVistaJuego;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import dtos.aplicacion.JugadaDTO;
 import dtos.aplicacion.JugadorDTO;
 import mappers.JugadorMapperVista;
 import vista.FrameJuego;
-import interfaces.IObserver;
+import util.IObserver;
 import vista.ModelObserver;
 
 /**
@@ -29,7 +29,7 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
     private static ModeloVistaFacade instancia;
 
     public static ModeloVistaFacade getInstance() {
-        if(instancia == null) {
+        if (instancia == null) {
             instancia = new ModeloVistaFacade();
         }
         return instancia;
@@ -44,9 +44,11 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
      * Observador
      */
     private IObserver observer = new ModelObserver();
-    
+
     private CantadorSubject cantador;
-    
+
+    private JugadaSubject jugada;
+
     /**
      * Constructor privado que inicializa la lista de jugadores.
      *
@@ -56,6 +58,10 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
     private ModeloVistaFacade() {
         this.jugadores = new LinkedList<>();
         this.cantador = new CantadorSubject();
+
+        this.jugada = new JugadaSubject();
+        jugada.addObserver(observer);
+
         configurarCantador();
     }
 
@@ -122,11 +128,11 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
     }
-    
+
     private void configurarCantador() {
         cantador.addObserver(observer);
     }
-    
+
     @Override
     public void actualizarCarta(int carta) {
         cantador.actualizarCarta(carta);
@@ -134,21 +140,32 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
 
     @Override
     public void cantarJugada(JugadaDTO jugadaDTO) {
-        System.out.println("JUGADA");
-        System.out.println(jugadaDTO.toString());
+        jugada.setNombre(jugadaDTO.getNombreJugada());
+        jugada.setJugador(jugadaDTO.getNicknameJugador());
+        jugada.setPuntos(jugadaDTO.getPuntos());
+        jugada.notifyAllObservers();
+
+        for (JugadorSubject jugador : jugadores) {
+            if (jugador.getNickname().equals(jugadaDTO.getNicknameJugador())) {
+                int nuevoPuntaje = jugador.getPuntaje() + jugadaDTO.getPuntos();
+                jugador.setPuntaje(nuevoPuntaje);
+                jugador.notifyAllObservers();
+                break;
+            }
+        }
     }
 
     @Override
     public void eliminarJugadorSecundario(String user) {
         JugadorSubject jugadorAEliminar = null;
-        for(JugadorSubject jugador : jugadores){
-            if(jugador.getNickname().equals(user)){
+        for (JugadorSubject jugador : jugadores) {
+            if (jugador.getNickname().equals(user)) {
                 jugadorAEliminar = jugador;
                 break;
             }
         }
-        
-        if(jugadorAEliminar != null){
+
+        if (jugadorAEliminar != null) {
             jugadores.remove(jugadorAEliminar);
             FrameJuego.getInstance().eliminarJugador(jugadorAEliminar);
         }

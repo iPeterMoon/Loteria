@@ -1,7 +1,5 @@
 package dtos.aplicacion;
 
-import java.awt.Image;
-
 /**
  * Objeto para transferir datos que representa la información de un jugador en
  * la sala de espera. Esta clase se utiliza para transferir datos del jugador
@@ -56,8 +54,7 @@ public class NuevoUsuarioDTO {
     /**
      * Asigna si el jugador es un jugador principal o no.
      *
-     * @param esJugadorPrincipal Boolean indicando si el jugador es principal o
-     * no
+     * @param esHost Boolean indicando si el jugador es principal o no
      */
     public void setEsHost(boolean esHost) {
         this.esHost = esHost;

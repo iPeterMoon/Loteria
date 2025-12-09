@@ -43,23 +43,13 @@ public class RecepcionPeer {
 
             ejecutarHilos();
 
-            // Usamos un DatagramSocket conectado a un IP pública (no se envía tráfico)
-            // para conocer la interfaz local que se usaría para salir a Internet.
-            String ip;
-            try (DatagramSocket ds = new DatagramSocket()) {
-                ds.connect(InetAddress.getByName("8.8.8.8"), 53);
-                ip = ds.getLocalAddress().getHostAddress();
-                if (ip == null || ip.isBlank()) {
-                    ip = InetAddress.getLocalHost().getHostAddress();
-                }
-            } catch (Exception ex) {
-                // Fallback al mecanismo tradicional
-                ip = InetAddress.getLocalHost().getHostAddress();
-            }
-
+            String ip = NetworkHelper.obtenerIpPrioritaria();
+            
+            System.out.println("[RecepcionPeer] IP Publicada para otros peers: " + ip);
+            
             return ip + ":" + port;
 
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             System.out.println("Problema al obtener la dirección ip");
             return null;
         }

@@ -22,10 +22,7 @@ public class JugadaSubject extends Subject {
      */
     private String nombre;
 
-    /**
-     * Estado actual de la jugada.
-     */
-    private boolean estado;
+    private String jugador;
 
     /**
      * Cantidad de puntos que otorga la jugada.
@@ -42,12 +39,12 @@ public class JugadaSubject extends Subject {
      * Constructor que inicializa una jugada con los valores dados.
      *
      * @param nombre Nombre de la jugada.
-     * @param estado Estado de la jugada (activa o no).
+     * @param jugador
      * @param puntos Puntos que otorga la jugada.
      */
-    public JugadaSubject(String nombre, boolean estado, int puntos) {
+    public JugadaSubject(String nombre, String jugador, int puntos) {
         this.nombre = nombre;
-        this.estado = estado;
+        this.jugador = jugador;
         this.puntos = puntos;
     }
 
@@ -69,22 +66,12 @@ public class JugadaSubject extends Subject {
         this.nombre = nombre;
     }
 
-    /**
-     * Método para obtener el estado actual de la jugada.
-     *
-     * @return true si la jugada ya fue cantada, false en caso contrario.
-     */
-    public boolean isEstado() {
-        return estado;
+    public String getJugador() {
+        return jugador;
     }
 
-    /**
-     * Método para asignar un nuevo estado a la jugada.
-     *
-     * @param estado Valor booleano que indica el estado de la jugada.
-     */
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setJugador(String jugador) {
+        this.jugador = jugador;
     }
 
     /**
@@ -105,15 +92,9 @@ public class JugadaSubject extends Subject {
         this.puntos = puntos;
     }
 
-    /**
-     * Método que devuelve una representación en cadena del estado de la jugada,
-     * incluyendo nombre, estado y puntos.
-     *
-     * @return Cadena con la información de la jugada.
-     */
     @Override
     public String toString() {
-        return "JugadaSubject{" + "nombre=" + nombre + ", estado=" + estado + ", puntos=" + puntos + '}';
+        return "JugadaSubject{" + "nombre=" + nombre + ", jugador=" + jugador + ", puntos=" + puntos + '}';
     }
 
 }

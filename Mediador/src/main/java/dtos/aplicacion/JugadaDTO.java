@@ -12,10 +12,12 @@ public class JugadaDTO {
 
     private String nicknameJugador;
     private String nombreJugada;
+    private int puntos;
 
-    public JugadaDTO(String nicknameJugador, String nombreJugada) {
+    public JugadaDTO(String nicknameJugador, String nombreJugada, int puntos) {
         this.nicknameJugador = nicknameJugador;
         this.nombreJugada = nombreJugada;
+        this.puntos = puntos;
     }
 
     public String getNicknameJugador() {
@@ -34,9 +36,17 @@ public class JugadaDTO {
         this.nombreJugada = nombreJugada;
     }
 
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
     @Override
     public String toString() {
-        return "JugadaDTO{" + "nicknameJugador=" + nicknameJugador + ", nombreJugada=" + nombreJugada + '}';
+        return "JugadaDTO{" + "nicknameJugador=" + nicknameJugador + ", nombreJugada=" + nombreJugada + ", puntos=" + puntos + '}';
     }
 
 }

@@ -1,8 +1,8 @@
 package modelo;
 
 import dtos.aplicacion.ConfiguracionJuegoDTO;
-import interfaces.IModeloJuego;
-import interfaces.IModeloVistaJuego;
+import interfaces.aplicacion.IModeloJuego;
+import interfaces.aplicacion.IModeloVistaJuego;
 import java.awt.Point;
 import dtos.aplicacion.FichaDTO;
 import dtos.aplicacion.JugadaDTO;
@@ -12,8 +12,8 @@ import dtos.aplicacion.MensajeDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
-import interfaces.IModeloVistaConfiguracion;
-import interfaces.IPeer;
+import interfaces.aplicacion.IModeloVistaConfiguracion;
+import interfaces.peer.IPeer;
 import java.util.ArrayList;
 import java.util.List;
 import managers.CantadorManager;
@@ -117,7 +117,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * actualice la interfaz.
      *
      * @param posicion Posición en la tarjeta donde el jugador intenta colocar
-     *                 la ficha.
+     * la ficha.
      */
     @Override
     public void validaMovimiento(Point posicion) {
@@ -129,7 +129,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * jugador
      *
      * @param ficha DTO con la posicion de la ficha y el jugador a quien va a
-     *              colocarse la ficha.
+     * colocarse la ficha.
      */
     @Override
     public void colocarFicha(EventoFicha ficha) {
@@ -182,13 +182,21 @@ public class ModeloJuegoFacade implements IModeloJuego {
      * que se muestre el canto de la jugada.
      *
      * @param eventoJugada Objeto que contiene los datos del evento de la
-     *                     jugada, incluyendo el usuario que la realizó y el tipo de
-     *                     jugada.
+     * jugada, incluyendo el usuario que la realizó y el tipo de jugada.
      */
     @Override
     public void cantarJugada(EventoJugada eventoJugada) {
-        JugadaDTO jugadaDTO = new JugadaDTO(eventoJugada.getUserSender(), eventoJugada.getTipoJugada());
+        String usuario = eventoJugada.getUserSender();
+        String jugada = eventoJugada.getTipoJugada();
+        int puntaje = Sala.getInstance().getConfiguracion().getPuintajes().get(JugadasDisponibles.valueOf(jugada));
+        JugadaDTO jugadaDTO = new JugadaDTO(usuario, jugada, puntaje);
+        
         vistaJuego.cantarJugada(jugadaDTO);
+        Sala.getInstance().agregarPuntaje(eventoJugada.getUserSender(), JugadasDisponibles.valueOf(eventoJugada.getTipoJugada()));
+        if (eventoJugada.getTipoJugada().equals("LLENA")) {
+            cantadorManager.detenerCantador();
+            finalizarRonda("El jugador " + eventoJugada.getUserSender() + "ganó");
+        }
     }
 
     /**
@@ -206,7 +214,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     /**
      * Método para abandonar la sala de espera.
-     * 
+     *
      */
     @Override
     public void abandonarSala() {
@@ -226,15 +234,13 @@ public class ModeloJuegoFacade implements IModeloJuego {
         }
         vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera);
     }
-    
-    
 
     /**
      * Método que actualiza los datos de la sala (limite de jugadores y nivel).
      *
-     * @param host            El host de la sala.
+     * @param host El host de la sala.
      * @param limiteJugadores El limite de jugadores en la sala.
-     * @param nivel           El nivel de la partida.
+     * @param nivel El nivel de la partida.
      */
     @Override
     public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
@@ -253,7 +259,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void actualizarSala(List<JugadorDTO> jugadores) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void cambiarTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
@@ -269,15 +275,23 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego) {
         configuracionManager.crearNuevaSala(configuracionJuego);
     }
-    
-    public void cerrarSalaEspera(){
+
+    public void cerrarSalaEspera() {
         vistaConfiguracion.cerrarVentana();
     }
-    
-    public void eliminarJugadorDePartida(String user){
+
+    public void eliminarJugadorDePartida(String user) {
         vistaJuego.eliminarJugadorSecundario(user);
     }
 
+    @Override
+    public void finalizarRonda(String motivo) {
+        System.out.println("Se acabo la ronda: " + motivo);
 
+        if (cantadorManager != null) {
+            cantadorManager.detenerCantador();
+            System.out.println("Se acabo la ronda");
+        }
+    }
 
 }

@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.aplicacion;
 
 import dtos.aplicacion.FichaDTO;
 import dtos.aplicacion.JugadaDTO;

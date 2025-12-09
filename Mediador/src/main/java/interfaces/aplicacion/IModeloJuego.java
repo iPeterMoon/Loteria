@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.aplicacion;
 
 import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.JugadorDTO;
@@ -122,4 +122,6 @@ public interface IModeloJuego {
     public void obtenerSala();
 
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego);
+    
+    public void finalizarRonda(String motivo);
 }

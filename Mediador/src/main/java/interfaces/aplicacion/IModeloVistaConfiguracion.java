@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.aplicacion;
 
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import dtos.aplicacion.MensajeDTO;

@@ -5,7 +5,7 @@
 package managers;
 
 import eventos.eventos_aplicacion.EventoJugada;
-import interfaces.IPeer;
+import interfaces.peer.IPeer;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
 import modelo.Tarjeta;

@@ -1,7 +1,7 @@
 package managers;
 
 import eventos.eventos_aplicacion.EventoFicha;
-import interfaces.IPeer;
+import interfaces.peer.IPeer;
 import java.awt.Point;
 import modelo.Cantador;
 import modelo.ModeloJuegoFacade;

@@ -1,7 +1,7 @@
 package implementaciones;
 
 import eventos.Evento;
-import interfaces.IPeer;
+import interfaces.peer.IPeer;
 
 /**
  *
