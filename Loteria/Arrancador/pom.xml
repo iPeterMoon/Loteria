@@ -18,11 +18,6 @@
         </dependency>
         <dependency>
             <groupId>com.mycompany</groupId>
-            <artifactId>Mediador</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mycompany</groupId>
             <artifactId>Peer</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

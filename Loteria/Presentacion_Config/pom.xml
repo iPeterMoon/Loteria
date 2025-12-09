@@ -13,15 +13,15 @@
     <name>Presentacion_Config</name>
     <dependencies>
         <dependency>
-            <groupId>com</groupId>
-            <artifactId>Presentacion_Juego</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.mycompany</groupId>
             <artifactId>Mediador</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE250</version>
         </dependency>
     </dependencies>
 </project>
