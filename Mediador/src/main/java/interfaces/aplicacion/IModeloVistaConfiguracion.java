@@ -23,4 +23,6 @@ public interface IModeloVistaConfiguracion {
     public void actualizarJugadorPrincipal(String user);
     
     public void cerrarVentana();
+    
+    public void mostrarSalaEspera();
 }

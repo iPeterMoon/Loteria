@@ -53,4 +53,9 @@ public interface IModeloVistaJuego {
      */
     public void eliminarJugadorSecundario(String user);
 
+    public void cerrarVentana();
+
+    public void actualizarJugadorPrincipal(JugadorDTO dto);
+    
+    public void limpiarEstadoJuego();
 }

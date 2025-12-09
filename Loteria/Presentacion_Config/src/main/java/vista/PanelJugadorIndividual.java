@@ -14,6 +14,7 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
      */
     public PanelJugadorIndividual() {
         initComponents();
+        labelPuntaje.setVisible(false);
     }
 
     public void configurarJugador(JugadorSalaEsperaDTO jugador) {
@@ -21,6 +22,10 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
         pnlAvatar.actualizarAvatar(jugador.getFotoPerfil());
         if(!isHost(jugador)){
             lblCorona.setVisible(false);
+        }
+        if (jugador.getPuntos() > 0) {
+            labelPuntaje.setVisible(true);
+            labelPuntaje.setText(jugador.getPuntos() + " pts");
         }
     }
     
@@ -41,6 +46,7 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
         lblNickname = new javax.swing.JLabel();
         pnlAvatar = new vista.PanelAvatar();
         lblCorona = new javax.swing.JLabel();
+        labelPuntaje = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(217, 22, 86));
         setMaximumSize(new java.awt.Dimension(580, 170));
@@ -63,6 +69,10 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
 
         lblCorona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/corona.png"))); // NOI18N
 
+        labelPuntaje.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelPuntaje.setForeground(new java.awt.Color(255, 255, 255));
+        labelPuntaje.setText("0 pts");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,7 +82,9 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
                 .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(lblNickname)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addGap(93, 93, 93)
+                .addComponent(labelPuntaje)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addComponent(lblCorona)
                 .addGap(34, 34, 34))
         );
@@ -87,7 +99,9 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
                                 .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(70, 70, 70)
-                                .addComponent(lblNickname)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblNickname)
+                                    .addComponent(labelPuntaje))))
                         .addGap(0, 10, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -98,6 +112,7 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel labelPuntaje;
     private javax.swing.JLabel lblCorona;
     private javax.swing.JLabel lblNickname;
     private vista.PanelAvatar pnlAvatar;

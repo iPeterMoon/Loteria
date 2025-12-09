@@ -33,7 +33,7 @@ public class Tarjeta {
         reiniciarFichas();
     }
 
-    private void reiniciarFichas() {
+    public void reiniciarFichas() {
         for (int i = 0; i < 16; i++) {
             int fila = i / 4;
             int col = i % 4;

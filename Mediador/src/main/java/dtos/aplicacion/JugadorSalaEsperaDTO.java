@@ -11,11 +11,13 @@ package dtos.aplicacion;
 public class JugadorSalaEsperaDTO {
 
     private String nickname;
-    
+
     private int fotoPerfil;
-    
+
     private boolean jugadorPrincipal;
-    
+
+    private int puntos;
+
     public JugadorSalaEsperaDTO() {
     }
 
@@ -23,6 +25,14 @@ public class JugadorSalaEsperaDTO {
         this.nickname = nickname;
         this.fotoPerfil = fotoPerfil;
         this.jugadorPrincipal = jugadorPrincipal;
+        this.puntos = 0;
+    }
+
+    public JugadorSalaEsperaDTO(String nickname, int fotoPerfil, boolean jugadorPrincipal, int puntos) {
+        this.nickname = nickname;
+        this.fotoPerfil = fotoPerfil;
+        this.jugadorPrincipal = jugadorPrincipal;
+        this.puntos = puntos;
     }
 
     public String getNickname() {
@@ -48,5 +58,13 @@ public class JugadorSalaEsperaDTO {
     public void setJugadorPrincipal(boolean jugadorPrincipal) {
         this.jugadorPrincipal = jugadorPrincipal;
     }
-    
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
 }

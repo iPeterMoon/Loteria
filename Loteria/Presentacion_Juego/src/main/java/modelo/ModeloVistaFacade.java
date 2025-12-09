@@ -170,4 +170,34 @@ public class ModeloVistaFacade implements IModeloVistaJuego {
             FrameJuego.getInstance().eliminarJugador(jugadorAEliminar);
         }
     }
+
+    @Override
+    public void cerrarVentana() {
+        if (FrameJuego.getInstance() != null) {
+            FrameJuego.destruirInstancia();
+        }
+        
+        jugadores.clear();
+    }
+
+    @Override
+    public void actualizarJugadorPrincipal(JugadorDTO jugadorDTO) {
+        for (JugadorSubject jugador : jugadores) {
+            if (jugador.isJugadorPrincipal()) {
+                jugador.setNickname(jugadorDTO.getNickname());
+                jugador.setPuntaje(jugadorDTO.getPuntos());
+                jugador.setFoto(jugadorDTO.getFotoPerfil());
+                
+                jugador.setTarjeta(JugadorMapperVista.toJugadorSubject(jugadorDTO).getTarjeta());
+                
+                jugador.notifyAllObservers();
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void limpiarEstadoJuego() {
+        jugadores.clear();
+    }
 }

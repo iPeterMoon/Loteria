@@ -34,13 +34,16 @@ public class ManejadorEventoSalaActualizada extends ManejadorEventos {
         Sala sala = Sala.getInstance();
         List<JugadorDTO> jugadoresDTO = evento.getJugadores();
 
-        List<Jugador> jugadores = new ArrayList<>();
+        List<Jugador> jugadoresSecundarios = new ArrayList<>();
+        String nicknamePrincipal = (sala.getJugadorPrincipal() != null) ? sala.getJugadorPrincipal().getNickname() : "";
+
         for (JugadorDTO jugadorDTO : jugadoresDTO) {
-            jugadores.add(JugadorMapperModelo.toJugador(jugadorDTO));
+            if (!jugadorDTO.getNickname().equals(nicknamePrincipal)) {
+                jugadoresSecundarios.add(JugadorMapperModelo.toJugador(jugadorDTO));
+            }
         }
 
-        sala.setJugadoresSecundario(jugadores);
-
+        sala.setJugadoresSecundario(jugadoresSecundarios);
         ModeloJuegoFacade.getInstance().actualizarJugadoresSala(jugadoresDTO);
     }
 }

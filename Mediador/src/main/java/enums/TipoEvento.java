@@ -21,5 +21,6 @@ public enum TipoEvento {
     CREAR_SALA,
     NUEVA_SALA,
     SALIR_SALA_ESPERA,
-    NUEVO_HOST
+    NUEVO_HOST,
+    FIN_RONDA
 }

@@ -65,6 +65,13 @@ public class FrameJuego extends javax.swing.JFrame {
             panelJuego.eliminarJugador(jugador);
         }
     }
+    
+    public static void destruirInstancia() {
+        if (frameJuego != null) {
+            frameJuego.dispose();
+            frameJuego = null;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

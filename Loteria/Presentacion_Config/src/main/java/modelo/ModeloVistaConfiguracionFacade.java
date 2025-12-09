@@ -9,6 +9,7 @@ import interfaces.aplicacion.IModeloVistaConfiguracion;
 import util.IObserver;
 import java.util.ArrayList;
 import java.util.List;
+import ventanas.FrameConfiguracion;
 import vista.ModelObserverConfig;
 
 /**
@@ -122,6 +123,12 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     @Override
     public void cerrarVentana() {
         pantallaSubject.setPantallaActual(Pantalla.CERRAR);
+    }
+    
+    @Override
+    public void mostrarSalaEspera() {
+        FrameConfiguracion.getInstancia().setVisible(true);
+        pantallaSubject.setPantallaActual(Pantalla.SALA_ESPERA);
     }
     
 }

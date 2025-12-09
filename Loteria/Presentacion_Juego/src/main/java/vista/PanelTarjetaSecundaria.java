@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import javax.swing.BorderFactory;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 import modelo.ModeloTarjeta;
 

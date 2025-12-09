@@ -3,13 +3,12 @@ package mappers;
 import dtos.aplicacion.JugadorDTO;
 import dtos.aplicacion.JugadorSalaEsperaDTO;
 import dtos.aplicacion.TarjetaDTO;
-import java.awt.Image;
 import java.awt.Point;
 import java.util.Map;
-import javax.swing.ImageIcon;
 import modelo.Tarjeta;
 
 import modelo.Jugador;
+import modelo.Sala;
 
 /**
  * Clase utilitaria (Mapper) encargada de la conversión de objetos entre el
@@ -62,7 +61,6 @@ public class JugadorMapperModelo {
         // asumimos que el DTO viene de un jugador remoto y no necesitamos la ruta de archivo local.
         // Usamos una cadena vacía "" o nula para evitar errores.
 //        String rutaFotoPerfil = "";
-
         return new Jugador(
                 jugadorDTO.getNickname(),
                 jugadorDTO.getFotoPerfil(),
@@ -96,10 +94,34 @@ public class JugadorMapperModelo {
      * mapeados.
      */
     public static JugadorSalaEsperaDTO toSalaEsperaDTO(JugadorDTO jugadorDTO) {
+        Sala sala = Sala.getInstance();
+
+        boolean esHost = false;
+        if (sala.getHost() != null) {
+            esHost = sala.getHost().equals(jugadorDTO.getNickname());
+        }
+
+        Jugador jugadorReal = null;
+        if (sala.getJugadorPrincipal() != null && sala.getJugadorPrincipal().getNickname().equals(jugadorDTO.getNickname())) {
+            jugadorReal = sala.getJugadorPrincipal();
+        } else {
+            if (sala.getJugadoresSecundario() != null) {
+                for (Jugador j : sala.getJugadoresSecundario()) {
+                    if (j.getNickname().equals(jugadorDTO.getNickname())) {
+                        jugadorReal = j;
+                        break;
+                    }
+                }
+            }
+        }
+
+        int puntos = jugadorReal != null ? jugadorReal.getPuntos() : 0;
+
         return new JugadorSalaEsperaDTO(
                 jugadorDTO.getNickname(),
                 jugadorDTO.getFotoPerfil(),
-                jugadorDTO.isJugadorPrincipal()
+                jugadorDTO.isJugadorPrincipal(),
+                puntos
         );
     }
 

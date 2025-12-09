@@ -82,7 +82,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public JugadorDTO getJugadorPrincipal() {
         Sala sala = Sala.getInstance();
-        if(sala.getJugadorPrincipal() != null){
+        if (sala.getJugadorPrincipal() != null) {
             return JugadorMapperModelo.toDTO(Sala.getInstance().getJugadorPrincipal(), true);
         } else {
             return null;
@@ -98,7 +98,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void setJugadorPrincipal(JugadorDTO jugadorPrincipal) {
         Sala sala = Sala.getInstance();
-        if(jugadorPrincipal != null){
+        if (jugadorPrincipal != null) {
             sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
             vistaConfiguracion.actualizarJugadorPrincipal(jugadorPrincipal.getNickname());
         } else {
@@ -152,7 +152,21 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     @Override
     public void mostrarFramePartida() {
+        // 1. Crear la nueva ventana
         inicioPartidaManager.mostrarFramePartida();
+        
+        // 2. Inyectar los datos frescos
+        Sala sala = Sala.getInstance();
+        
+        if (sala.getJugadorPrincipal() != null) {
+            JugadorDTO dto = JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true);
+            vistaJuego.agregarJugadorPrincipal(dto); 
+        }
+        
+        for (Jugador j : sala.getJugadoresSecundario()) {
+            JugadorDTO dto = JugadorMapperModelo.toDTO(j, false);
+            vistaJuego.agregarJugadorSecundario(dto);
+        }
     }
 
     /**
@@ -186,16 +200,22 @@ public class ModeloJuegoFacade implements IModeloJuego {
      */
     @Override
     public void cantarJugada(EventoJugada eventoJugada) {
+        ConfiguracionJuego configuracionJuego = Sala.getInstance().getConfiguracion();
+
         String usuario = eventoJugada.getUserSender();
         String jugada = eventoJugada.getTipoJugada();
-        int puntaje = Sala.getInstance().getConfiguracion().getPuintajes().get(JugadasDisponibles.valueOf(jugada));
+        int puntaje = configuracionJuego.getPuintajes().get(JugadasDisponibles.valueOf(jugada));
         JugadaDTO jugadaDTO = new JugadaDTO(usuario, jugada, puntaje);
-        
+
         vistaJuego.cantarJugada(jugadaDTO);
         Sala.getInstance().agregarPuntaje(eventoJugada.getUserSender(), JugadasDisponibles.valueOf(eventoJugada.getTipoJugada()));
+
         if (eventoJugada.getTipoJugada().equals("LLENA")) {
             cantadorManager.detenerCantador();
             finalizarRonda("El jugador " + eventoJugada.getUserSender() + "ganó");
+
+            String nuevoHost = eventoJugada.getUserSender();
+            vistaConfiguracion.actualizarDatosSala(nuevoHost, configuracionJuego.getLimiteJugadores(), configuracionJuego.getDificultad());
         }
     }
 
@@ -290,8 +310,27 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
         if (cantadorManager != null) {
             cantadorManager.detenerCantador();
-            System.out.println("Se acabo la ronda");
+        }
+
+        if (vistaJuego != null) {
+            vistaJuego.cerrarVentana();
+        }
+
+        if (vistaConfiguracion != null) {
+            vistaConfiguracion.mostrarSalaEspera();
+
+            Sala sala = Sala.getInstance();
+            List<JugadorDTO> todosLosJugadores = new ArrayList<>();
+
+            if (sala.getJugadorPrincipal() != null) {
+                todosLosJugadores.add(JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true));
+            }
+
+            for (Jugador j : sala.getJugadoresSecundario()) {
+                todosLosJugadores.add(JugadorMapperModelo.toDTO(j, false));
+            }
+
+            actualizarJugadoresSala(todosLosJugadores);
         }
     }
-
 }

@@ -17,6 +17,7 @@ interfaces\aplicacion\IModeloJuego.class
 eventos\eventos_aplicacion\EventoIniciarPartida.class
 util\ConfigLoader$ConfiguracionDefault.class
 eventos\eventos_peers\EventoPeerDesconectado.class
+eventos\eventos_aplicacion\EventoFinRonda.class
 eventos\eventos_aplicacion\EventoInfoSala.class
 dtos\aplicacion\JugadorSalaEsperaDTO.class
 util\IObserver.class

@@ -6,6 +6,7 @@
 package managers;
 
 import eventos.eventos_aplicacion.EventoCartaCantada;
+import eventos.eventos_aplicacion.EventoFinRonda;
 import util.IObserver;
 import interfaces.peer.IPeer;
 import modelo.Cantador;
@@ -99,6 +100,8 @@ public class CantadorManager implements IObserver {
         if (object instanceof Cantador) {
             if (!cantador.isEnEjecucion() && cantador.getMazo().isEmpty()) {
                 System.out.println("SE ACABARON LAS CARTAS");
+                EventoFinRonda evento = new EventoFinRonda(Sala.getInstance().getHost(), "SE ACABARON LAS CARTAS");
+                componentePeer.broadcastEvento(evento);
                 ModeloJuegoFacade.getInstance().finalizarRonda("Se acabaron las cartas");
                 return;
             }

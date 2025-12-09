@@ -56,6 +56,9 @@ public class InicioPartidaManager {
      */
     public void iniciarPartida() {
         if(!Sala.getInstance().getJugadoresSecundario().isEmpty()){
+            Sala.getInstance().resetearJugadasDisponibles();
+            Cantador.getInstance().detenerCanto();
+            
             barajearMazo();
             repartirTarjetas();
             generarEventoInicioPartida();
@@ -102,6 +105,7 @@ public class InicioPartidaManager {
         jugadores.addAll(sala.getJugadoresSecundario());
         for(Jugador jugador : jugadores){
             tarjeta = tarjetas.pop();
+            tarjeta.reiniciarFichas();
             jugador.setTarjeta(tarjeta);
             jugadoresTarjetas.put(jugador.getNickname(), TarjetaMapper.toDTO(tarjeta));
         }

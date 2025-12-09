@@ -26,6 +26,7 @@ public class ProcesadorEventos implements IObserver {
         ManejadorEventos eventoJugadas = new ManejadorEventoJugada();
         ManejadorEventos eventoDesconexion = new ManejadorEventoDesconexion();
         ManejadorEventos eventoNuevoHost = new ManejadorEventoNuevoHost();
+        ManejadorEventos eventoFinRonda = new ManejadorEventoFinRonda();
 
         this.manejadorPrincipal = eventoFicha;
 
@@ -38,6 +39,7 @@ public class ProcesadorEventos implements IObserver {
         eventoInfoSala.setNext(eventoJugadas);
         eventoJugadas.setNext(eventoDesconexion);
         eventoDesconexion.setNext(eventoNuevoHost);
+        eventoNuevoHost.setNext(eventoFinRonda);
 
     }
 
