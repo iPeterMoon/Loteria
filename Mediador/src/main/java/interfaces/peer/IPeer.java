@@ -1,6 +1,7 @@
-package interfaces;
+package interfaces.peer;
 
 import eventos.Evento;
+import util.IObserver;
 
 /**
  *

@@ -6,15 +6,15 @@
 package managers;
 
 import eventos.eventos_aplicacion.EventoCartaCantada;
-import interfaces.IObserver;
-import interfaces.IPeer;
+import util.IObserver;
+import interfaces.peer.IPeer;
 import modelo.Cantador;
-import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
 
 /**
- *
+ * Manejador para el cantador del modelo.
+ * 
  * @author rocha
  */
 public class CantadorManager implements IObserver {
@@ -49,11 +49,14 @@ public class CantadorManager implements IObserver {
      * Inicia el canto del cantador en el modelo del jugador que es host.
      */
     public void iniciarCanto() {
-        if (!obtenerNicknameHost().equals(obtenerNicknameJugadorPrincipal())) {
+        Sala sala = Sala.getInstance();
+        if (!sala.getHost().equals(sala.getNicknameJugadorPrincipal())) {
             return;
         }
 
-        cantador.iniciarCanto(5000); // Intervalo mock, falta cambiarlo según la dificultad
+        // Obtiene el intervalo de la configuración
+        int intervalo = sala.getConfiguracion().getDificultad().getIntervalo();
+        cantador.iniciarCanto(intervalo);
     }
     
     /**
@@ -69,7 +72,7 @@ public class CantadorManager implements IObserver {
      * Actualiza la carta de la vista mediante la fachada.
      */
     private void actualizarCarta() {
-        int cartaActual = Cantador.getInstance().getCartaActual();
+        int cartaActual = cantador.getCartaActual();
         ModeloJuegoFacade.getInstance().actualizarCarta(cartaActual);
     }
 
@@ -78,22 +81,12 @@ public class CantadorManager implements IObserver {
      */
     private void enviarCarta() {
         int cartaActual = cantador.getCartaActual();
-        String nicknameHost = obtenerNicknameHost();
+        String nicknameHost = Sala.getInstance().getHost();
 
         // Enviar evento a otros peers
         EventoCartaCantada evento = new EventoCartaCantada(nicknameHost, cartaActual);
         componentePeer.broadcastEvento(evento);
         System.out.println("Enviando carta cantada " + "(Carta: " + cartaActual + ") desde host [" + nicknameHost + "]");
-    }
-
-    private String obtenerNicknameHost() { // Talvez cambiar a sala
-        String host = Sala.getInstance().getHost();
-        return host;
-    }
-
-    private String obtenerNicknameJugadorPrincipal() { // Talvez cambiar a sala
-        Jugador principal = Sala.getInstance().getJugadorPrincipal();
-        return principal.getNickname();
     }
 
     /**

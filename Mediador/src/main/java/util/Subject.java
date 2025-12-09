@@ -6,7 +6,6 @@ package util;
 
 import java.util.LinkedList;
 import java.util.List;
-import interfaces.IObserver;
 
 /**
  * Clase abstracta que representa el sujeto (Subject) en el patrón de diseño

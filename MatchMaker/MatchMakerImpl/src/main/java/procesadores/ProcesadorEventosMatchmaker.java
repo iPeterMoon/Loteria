@@ -1,7 +1,7 @@
 package procesadores;
 
 import eventos.Evento;
-import interfaces.IObserver;
+import util.IObserver;
 
 /**
  *

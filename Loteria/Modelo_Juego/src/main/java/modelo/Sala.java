@@ -142,4 +142,7 @@ public class Sala {
         System.out.println(jugadorPrincipal.getNickname() + ": " + jugadorPrincipal.getPuntos());
     }
 
+    public String getNicknameJugadorPrincipal() {
+        return jugadorPrincipal.getNickname();
+    }
 }

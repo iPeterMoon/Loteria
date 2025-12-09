@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.aplicacion;
 
 import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.JugadorDTO;

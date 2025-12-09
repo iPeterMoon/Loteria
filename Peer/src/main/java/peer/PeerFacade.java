@@ -1,8 +1,8 @@
 package peer;
 
 import eventos.Evento;
-import interfaces.IObserver;
-import interfaces.IPeer;
+import util.IObserver;
+import interfaces.peer.IPeer;
 
 /**
  * Clase Fachada para proporcionar un único punto de acceso simple para todas

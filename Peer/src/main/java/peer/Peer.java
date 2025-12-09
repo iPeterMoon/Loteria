@@ -3,7 +3,7 @@ package peer;
 import com.google.gson.Gson;
 import dtos.peer.PeerInfo;
 import eventos.Evento;
-import interfaces.IObserver;
+import util.IObserver;
 import mensajes.MensajeBroadcast;
 import mensajes.MensajeDirecto;
 

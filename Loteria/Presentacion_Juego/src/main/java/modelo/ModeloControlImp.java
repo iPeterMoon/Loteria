@@ -3,7 +3,7 @@ package modelo;
 import enums.JugadasDisponibles;
 import java.awt.Point;
 
-import interfaces.IModeloJuego;
+import interfaces.aplicacion.IModeloJuego;
 
 /**
  * Implementación de la interfaz IModeloControl.

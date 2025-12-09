@@ -1,6 +1,6 @@
 package modelo;
 
-import interfaces.IModeloVistaJuego;
+import interfaces.aplicacion.IModeloVistaJuego;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import dtos.aplicacion.JugadaDTO;
 import dtos.aplicacion.JugadorDTO;
 import mappers.JugadorMapperVista;
 import vista.FrameJuego;
-import interfaces.IObserver;
+import util.IObserver;
 import vista.ModelObserver;
 
 /**

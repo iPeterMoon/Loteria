@@ -2,7 +2,7 @@ package modelo;
 
 import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
-import interfaces.IModeloJuego;
+import interfaces.aplicacion.IModeloJuego;
 
 /**
  *

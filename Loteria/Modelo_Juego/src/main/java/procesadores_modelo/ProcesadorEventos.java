@@ -5,7 +5,7 @@
 package procesadores_modelo;
 
 import eventos.Evento;
-import interfaces.IObserver;
+import util.IObserver;
 
 /**
  *

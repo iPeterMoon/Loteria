@@ -1,8 +1,8 @@
 package modelo;
 
 import dtos.aplicacion.ConfiguracionJuegoDTO;
-import interfaces.IModeloJuego;
-import interfaces.IModeloVistaJuego;
+import interfaces.aplicacion.IModeloJuego;
+import interfaces.aplicacion.IModeloVistaJuego;
 import java.awt.Point;
 import dtos.aplicacion.FichaDTO;
 import dtos.aplicacion.JugadaDTO;
@@ -12,8 +12,8 @@ import dtos.aplicacion.MensajeDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoJugada;
-import interfaces.IModeloVistaConfiguracion;
-import interfaces.IPeer;
+import interfaces.aplicacion.IModeloVistaConfiguracion;
+import interfaces.peer.IPeer;
 import java.util.ArrayList;
 import java.util.List;
 import managers.CantadorManager;

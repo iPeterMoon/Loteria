@@ -4,7 +4,7 @@
  */
 package vista;
 
-import interfaces.IObserver;
+import util.IObserver;
 import util.Subject;
 import ventanas.FrameConfiguracion;
 

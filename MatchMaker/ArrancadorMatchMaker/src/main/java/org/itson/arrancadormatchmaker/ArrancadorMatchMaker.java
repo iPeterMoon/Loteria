@@ -1,8 +1,8 @@
 package org.itson.arrancadormatchmaker;
 
 import implementaciones.Matchmaker;
-import interfaces.IObserver;
-import interfaces.IPeer;
+import util.IObserver;
+import interfaces.peer.IPeer;
 import peer.PeerFacade;
 import procesadores.ProcesadorEventosMatchmaker;
 import util.ConfigLoader;
