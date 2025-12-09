@@ -13,12 +13,15 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.net.URL;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
  * clase que representa las 54 cartas del juego.
- * 
+ *
  * @author Jp
  */
 public class PanelCartita extends javax.swing.JPanel {
@@ -53,9 +56,9 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Constructro que inicaliza el JPanel con la posicion de la carta.
-     * 
+     *
      * @param numeroCarta indice de la carta.
-     * @param posicion    posicion de la carta.
+     * @param posicion posicion de la carta.
      */
     public PanelCartita(int numeroCarta, Point posicion) {
         initComponents();
@@ -67,8 +70,8 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Contructor que inicializa el JPanel que valida la carta.
-     * 
-     * @param abstracta   abstraccion.
+     *
+     * @param abstracta abstraccion.
      * @param numeroCarta indice de la carta.
      */
     public PanelCartita(boolean abstracta, int numeroCarta) {
@@ -88,9 +91,9 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo para inicializar la carta cargando su icono, la ficha y los eventos
-     * del mouse.
-     * Si la carta no pertenece al cantador, también se genera el efecto hover.
+     * Metodo para inicializar la carta cargando su icono, la ficha y los
+     * eventos del mouse. Si la carta no pertenece al cantador, también se
+     * genera el efecto hover.
      */
     private void iniciar() {
         iconoOriginal = cargarCarta(numeroCarta);
@@ -103,10 +106,9 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo para agrega eventos de interacción con el mouse para la carta
-     * con mauseEntered que aplica el icono con brillo, mouseExited
-     * que restaura el icono original y mouse Pressed qie ejecuta
-     * el metood onclick.
+     * Metodo para agrega eventos de interacción con el mouse para la carta con
+     * mauseEntered que aplica el icono con brillo, mouseExited que restaura el
+     * icono original y mouse Pressed qie ejecuta el metood onclick.
      */
     private void agregarEventosMouse() {
         addMouseListener(new MouseAdapter() {
@@ -130,8 +132,8 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo de accion ejecutada cuando se presiona la carta.
-     * Llama al controlador para colocar una ficha en la posición correspondiente.
+     * Metodo de accion ejecutada cuando se presiona la carta. Llama al
+     * controlador para colocar una ficha en la posición correspondiente.
      */
     private void onclick() {
         RegistroControles controles = RegistroControles.getInstance();
@@ -139,8 +141,8 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo para agregar visualmente una ficha al centro de la carta,
-     * siempre y cuando la ficha no se haya agregado previamente.
+     * Metodo para agregar visualmente una ficha al centro de la carta, siempre
+     * y cuando la ficha no se haya agregado previamente.
      */
     public void agregarFicha() {
         if (ficha != null && ficha.getParent() == null) {
@@ -150,13 +152,30 @@ public class PanelCartita extends javax.swing.JPanel {
             add(ficha);
             revalidate();
             repaint();
+            tirarEfectoSonido();
+        }
+    }
+
+    private void tirarEfectoSonido() {
+        try {
+            String rutaAudio = "/audios/fx/ficha.wav";
+            URL url = getClass().getResource(rutaAudio);
+            if (url != null) {
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioStream);
+                clip.start();
+            }
+        } catch (Exception e) {
+            System.out.println("[FICHA] Error al reproducir el audio");
+            System.out.println(e.getMessage());
         }
     }
 
     /**
-     * Metodo para carga la imagen de la carta según su número.
-     * Escala la imagen dependiendo de si la carta pertenece al cantador o no.
-     * 
+     * Metodo para carga la imagen de la carta según su número. Escala la imagen
+     * dependiendo de si la carta pertenece al cantador o no.
+     *
      * @param numero número identificador de la carta.
      * @return el icono de la carta escalado.
      */
@@ -178,15 +197,15 @@ public class PanelCartita extends javax.swing.JPanel {
         }
         return new ImageIcon(imagenEscalada);
     }
-    
+
     public void actualizarCartaCantador(int carta) {
         iconoOriginal = cargarCarta(carta);
         iconoActual = iconoOriginal;
     }
-    
+
     /**
      * Metodo que carga la ficha que puede colocarse sobre la carta.
-     * 
+     *
      * @return un label con la imagen escalada de la ficha.
      */
     private JLabel cargarFicha() {
@@ -201,10 +220,10 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo para crea un efecto de brillo sobre un icono dado aplicando un factor
-     * de rescale.
-     * 
-     * @param icono  imagen original a modificar.
+     * Metodo para crea un efecto de brillo sobre un icono dado aplicando un
+     * factor de rescale.
+     *
+     * @param icono imagen original a modificar.
      * @param factor intensidad del brillo.
      * @return un nueva imagen con el brillo aplicado.
      */
@@ -224,8 +243,7 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Metodo para Marca visualmente la carta como perteneciente a un jugador
-     * secundario,
-     * cambiando el color de fondo si la carta es abstracta.
+     * secundario, cambiando el color de fondo si la carta es abstracta.
      */
     public void marcarComoJugadorSecundario() {
         if (esAbstracta) {
@@ -236,7 +254,7 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Metodo protegio de JPanel para pintar el Jpanel.
-     * 
+     *
      * @param g graficas de java.
      */
     @Override
@@ -249,9 +267,9 @@ public class PanelCartita extends javax.swing.JPanel {
     }
 
     /**
-     * 
+     *
      * Metodo para verifica si la carta pertenece al cantador.
-     * 
+     *
      * @return true si la carta es del cantador, de lo contrario false.
      */
     public boolean isFlagCantador() {
@@ -260,8 +278,9 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Metodo que define si la carta pertenece al cantador.
-     * 
-     * @param flagCantador valor booleano que indica si la carta es del cantador.
+     *
+     * @param flagCantador valor booleano que indica si la carta es del
+     * cantador.
      */
     public void setFlagCantador(boolean flagCantador) {
         this.flagCantador = flagCantador;
@@ -269,7 +288,7 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Metodo que obtiene la posición de la carta dentro del juego.
-     * 
+     *
      * @return un objeto point con las coordenadas de la carta.
      */
     public Point getPosicion() {
@@ -278,7 +297,7 @@ public class PanelCartita extends javax.swing.JPanel {
 
     /**
      * Metodo para asignar posicion a las cartas.
-     * 
+     *
      * @param posicion valor con las nuevas coordenadas.
      */
     public void setPosicion(Point posicion) {

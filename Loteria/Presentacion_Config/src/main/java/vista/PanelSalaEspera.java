@@ -8,6 +8,10 @@ import Modal.MensajeDialog;
 import controladores.ControlesConfiguracionFactory;
 import enums.TipoMensajePantalla;
 import java.awt.Frame;
+import java.net.URL;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import modelo.MensajeSubject;
 import modelo.ModeloVistaConfiguracionFacade;
 import modelo.SalaSubject;
@@ -32,6 +36,8 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         ventanaPrincipal = ventanaPadre;
     }
 
+    private int contador = 1;
+    
     public void actualizarVista(Subject subject) {
         if (subject instanceof SalaSubject salaSubject) {
             actualizarDatosSala(salaSubject);
@@ -41,7 +47,6 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             actualizarMensaje(subject);
         }
     }
-
     public void actualizarDatosSala(SalaSubject sala) {
         if(sala.getHost() != null){
             panelListaJugadores.actualizarListaJugadores(sala.getJugadores(), sala.getLimiteJugadores());
@@ -49,6 +54,28 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             actualizarBotones(sala);
             panelListaJugadores.revalidate();
             panelListaJugadores.repaint();
+            if(contador == 8){
+                tirarEfectoSonido();
+                contador = 1;
+            } else {
+                contador++;
+            }
+        }
+    }
+    
+    private void tirarEfectoSonido() {
+        try {
+            String rutaAudio = "/audios/fx/unirse.wav";
+            URL url = getClass().getResource(rutaAudio);
+            if (url != null) {
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioStream);
+                clip.start();
+            }
+        } catch (Exception e) {
+            System.out.println("[FICHA] Error al reproducir el audio");
+            System.out.println(e.getMessage());
         }
     }
 
