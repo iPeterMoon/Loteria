@@ -393,21 +393,15 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void cerrarJuegoDefinitivo(String nombreGanador) {
         finalizarRonda("JUEGO TERMINADO - Ganador: " + nombreGanador);
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(5000);
-                System.exit(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
         MensajeDTO mensaje = new MensajeDTO(
                 "¡FIN DEL JUEGO!",
-                "El jugador " + nombreGanador + " ha ganado la partida",
+                "<html><center>El jugador " + nombreGanador + " ha ganado la partida.<br>El juego se cerrará.</center></html>",
                 true,
-                TipoMensajePantalla.INFORMACION
+                enums.TipoMensajePantalla.INFORMACION
         );
-        mostrarMensaje(mensaje);
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            mostrarMensaje(mensaje);
+            System.exit(0);
+        });
     }
 }
