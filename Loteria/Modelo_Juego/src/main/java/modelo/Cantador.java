@@ -20,13 +20,14 @@ public class Cantador extends Subject {
      * Carta que esta siendo actualmente cantada
      */
     private int cartaActual;
-    
+
     /**
      * Mazo (representado como una pila) de cartas que tiene el cantador
      */
     private Stack<Integer> mazo;
-    
-    private boolean enEjecucion;
+
+    private volatile boolean enEjecucion;
+    private volatile boolean detener;
 
     /**
      * Instancia unica de la clase Cantador
@@ -38,6 +39,7 @@ public class Cantador extends Subject {
      */
     private Cantador() {
         this.enEjecucion = false;
+        this.detener = false;
     }
 
     /**
@@ -53,10 +55,11 @@ public class Cantador extends Subject {
     }
 
     /**
-     * Prepara el mazo para una nueva partida 
+     * Prepara el mazo para una nueva partida
+     *
      * @param semilla Semilla con la que se barajeará el mazo
      */
-    public void prepararMazo(Long semilla){
+    public void prepararMazo(Long semilla) {
         reiniciarMazo();
         List<Integer> listaMazo = new ArrayList<>(mazo);
         Collections.shuffle(listaMazo, new Random(semilla));
@@ -65,17 +68,25 @@ public class Cantador extends Subject {
     }
 
     /**
-     * Metodo para reiniciar el mazo de cartas, vuelve a crear un stack y se lo pasa 
-     * al cantador
+     * Metodo para reiniciar el mazo de cartas, vuelve a crear un stack y se lo
+     * pasa al cantador
      */
     private void reiniciarMazo() {
         Stack<Integer> mazo = new Stack<>();
-        for(int i = 1; i <= Cantador.TOTAL_CARTAS_LOTERIA; i++){
+        for (int i = 1; i <= Cantador.TOTAL_CARTAS_LOTERIA; i++) {
             mazo.push(i);
         }
         this.setMazo(mazo);
     }
-    
+
+    public void detenerCanto() {
+        this.detener = true;
+    }
+
+    public boolean isEnEjecucion() {
+        return enEjecucion;
+    }
+
     /**
      * Hilo para cantar cartas. Solo se ejecuta en el modelo del jugador que es
      * host. Quita la carta del mazo, actualiza su carta actual y notifica sobre
@@ -89,16 +100,17 @@ public class Cantador extends Subject {
         }
 
         enEjecucion = true;
+        detener = false;
 
         new Thread(() -> {
             try {
-                while (!mazo.isEmpty()) {
+                while (!mazo.isEmpty() && !detener) {
                     // Quita carta del mazo y actualiza carta actual
                     cartaActual = mazo.pop();
-                    
+
                     // Notifica
                     notifyAllObservers();
-                    
+
                     // Aplicar intervalo
                     Thread.sleep(intervalo);
                 }
@@ -106,12 +118,17 @@ public class Cantador extends Subject {
                 Thread.currentThread().interrupt();
             } finally {
                 enEjecucion = false;
+                if (mazo.isEmpty() && !detener) {
+                    notifyAllObservers();
+                }
             }
         }).start();
     }
-    
+
     /**
-     * Método para eliminar una carta del mazo. Es usado por el resto de jugadores que no son host.
+     * Método para eliminar una carta del mazo. Es usado por el resto de
+     * jugadores que no son host.
+     *
      * @param carta Elemento a quitar del mazo.
      */
     public void quitarCarta(int carta) {

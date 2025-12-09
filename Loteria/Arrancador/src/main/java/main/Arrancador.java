@@ -8,7 +8,7 @@ import interfaces.IModeloVistaJuego;
 import interfaces.IObserver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.Cantador;
+//import modelo.Cantador;
 import modelo.IModeloControl;
 import modelo.IModeloControlAplicacion;
 import modelo.IModeloControlNegocio;

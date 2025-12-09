@@ -6,7 +6,7 @@ import discovery.DiscoveryAssembler;
  *
  * @author pedro
  */
-public class Arrancador {
+public class ArrancadorDiscovery {
 
     public static void main(String[] args){
         

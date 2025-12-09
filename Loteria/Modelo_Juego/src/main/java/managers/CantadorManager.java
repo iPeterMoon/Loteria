@@ -55,6 +55,15 @@ public class CantadorManager implements IObserver {
 
         cantador.iniciarCanto(5000); // Intervalo mock, falta cambiarlo según la dificultad
     }
+    
+    /**
+     * Detiene el canto del cantador en el modelo del jugador que es host.
+     */
+    public void detenerCantador() {
+        if (cantador != null) {
+            cantador.detenerCanto();
+        }
+    }
 
     /**
      * Actualiza la carta de la vista mediante la fachada.
@@ -95,6 +104,12 @@ public class CantadorManager implements IObserver {
     @Override
     public void update(Object object) {
         if (object instanceof Cantador) {
+            if (!cantador.isEnEjecucion() && cantador.getMazo().isEmpty()) {
+                System.out.println("SE ACABARON LAS CARTAS");
+                ModeloJuegoFacade.getInstance().finalizarRonda("Se acabaron las cartas");
+                return;
+            }
+            
             new Thread(() -> {
                 try {
                     enviarCarta();

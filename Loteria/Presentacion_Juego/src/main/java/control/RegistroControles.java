@@ -27,23 +27,17 @@ public class RegistroControles {
     }
 
     public void inicializar(IModeloControl modeloControl) {
-        if (this.controlSeleccionarJugada != null) {
-            //Evitar doble inicialización
-            return;
-        }
-        this.controlSeleccionarJugada = new ControlSeleccionarCarta(modeloControl);
-
-        if (this.controlJugadas != null) {
-            //Evitar doble inicialización
-            return;
+        if (this.controlSeleccionarJugada == null) {
+            this.controlSeleccionarJugada = new ControlSeleccionarCarta(modeloControl);
         }
 
-        this.controlAbandonarPartida = new ControlAbandonarPartida(modeloControl);
-        if (this.controlAbandonarPartida != null) {
-            //Evitar doble inicialización
-            return;
+        if (this.controlJugadas == null) {
+            this.controlJugadas = new ControlJugadas(modeloControl);
         }
-        this.controlAbandonarPartida = new ControlAbandonarPartida(modeloControl);
+
+        if (this.controlAbandonarPartida == null) {
+            this.controlAbandonarPartida = new ControlAbandonarPartida(modeloControl);
+        }
     }
 
     /**

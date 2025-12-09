@@ -4,6 +4,7 @@ import control.ControlAbandonarPartida;
 import control.RegistroControles;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,22 @@ public class PanelJuego extends javax.swing.JPanel {
     private Image imagenFondo;
     private List<PanelJugadorSecundario> panelesJugadoresSecundarios;
 
+    ActionListener listenerCuatroEsquinas = evt -> {
+        RegistroControles.getInstance().getControlJugadas().cantarCuatroEsquinas();
+    };
+
+    ActionListener listenerChorro = evt -> {
+        RegistroControles.getInstance().getControlJugadas().cantarChorro();
+    };
+
+    ActionListener listenerCentro = evt -> {
+        RegistroControles.getInstance().getControlJugadas().cantarCentro();
+    };
+
+    ActionListener listenerLlena = evt -> {
+        RegistroControles.getInstance().getControlJugadas().cantarLlena();
+    };
+
     /**
      * Constructor que crea un nuevo panel de juego, inicializando sus
      * componentes y cargando los botones de jugadas.
@@ -38,18 +55,21 @@ public class PanelJuego extends javax.swing.JPanel {
         botonCentro.setNombreJugada("Centro");
         botonLlena.setNombreJugada("Llena");
 
-        botonCuatroEsquinas.addActionListener((java.awt.event.ActionEvent evt) -> {
-            RegistroControles.getInstance().getControlJugadas().cantarCuatroEsquinas();
-        });
-        botonChorro.addActionListener((java.awt.event.ActionEvent evt) -> {
-            RegistroControles.getInstance().getControlJugadas().cantarChorro();
-        });
-        botonCentro.addActionListener((java.awt.event.ActionEvent evt) -> {
-            RegistroControles.getInstance().getControlJugadas().cantarCentro();
-        });
-        botonLlena.addActionListener((java.awt.event.ActionEvent evt) -> {
-            RegistroControles.getInstance().getControlJugadas().cantarLlena();
-        });
+        agregarListenersBotones();
+    }
+
+    public void agregarListenersBotones() {
+        botonCuatroEsquinas.addActionListener(listenerCuatroEsquinas);
+        botonCuatroEsquinas.setEstado(true);
+
+        botonChorro.addActionListener(listenerChorro);
+        botonChorro.setEstado(true);
+
+        botonCentro.addActionListener(listenerCentro);
+        botonCentro.setEstado(true);
+
+        botonLlena.addActionListener(listenerLlena);
+        botonLlena.setEstado(true);
     }
 
     /**
@@ -72,6 +92,7 @@ public class PanelJuego extends javax.swing.JPanel {
         panelContenedorCantador = new javax.swing.JPanel();
         panelCartaCantador = new vista.PanelCartita();
         lblCarta = new javax.swing.JLabel();
+        panelNotificacion = new vista.PanelNotificacion();
 
         setMaximumSize(new java.awt.Dimension(1336, 768));
         setMinimumSize(new java.awt.Dimension(1336, 768));
@@ -127,11 +148,17 @@ public class PanelJuego extends javax.swing.JPanel {
                 .addGap(217, 217, 217)
                 .addComponent(panelContenedorSecundarios, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelJugadorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonAbandonar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(114, 114, 114)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelJugadorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonAbandonar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(114, 114, 114))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelNotificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(panelTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,11 +186,6 @@ public class PanelJuego extends javax.swing.JPanel {
                 .addComponent(panelContenedorSecundarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(panelJugadorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addComponent(botonAbandonar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -177,7 +199,15 @@ public class PanelJuego extends javax.swing.JPanel {
                             .addComponent(botonChorro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botonCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
-                        .addComponent(botonLlena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(botonLlena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(panelJugadorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(botonAbandonar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelNotificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -216,6 +246,7 @@ public class PanelJuego extends javax.swing.JPanel {
     public void actualizarVista(Subject subject) {
         actualizarJugador(subject);
         actualizarCantador(subject);
+        actualizarJugada(subject);
         repaint();
         revalidate();
     }
@@ -229,6 +260,7 @@ public class PanelJuego extends javax.swing.JPanel {
         if (subject instanceof JugadorSubject jugador) {
 
             if (panelJugadorPrincipal != null && panelJugadorPrincipal.esMismoJugador(jugador)) {
+                panelJugadorPrincipal.setJugador(jugador);
                 panelTarjeta.actualizarFichas(jugador.getTarjeta());
                 return;
             }
@@ -238,7 +270,7 @@ public class PanelJuego extends javax.swing.JPanel {
 
             for (PanelJugadorSecundario panel : copiaPaneles) {
                 if (panel.esMismoJugador(jugador)) {
-                    panel.actualizarTarjetaAbstracta(jugador);
+                    panel.setJugador(jugador);
                     jugadorEncontradoEnSecundarios = true;
                     break;
                 }
@@ -292,8 +324,9 @@ public class PanelJuego extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo para eliminar un jugador secundario del panel.
-     * Busca por nickname, lo elimina de la lista y actualiza la vista.
+     * Metodo para eliminar un jugador secundario del panel. Busca por nickname,
+     * lo elimina de la lista y actualiza la vista.
+     *
      * @param jugador El jugador a eliminar
      */
     public void eliminarJugador(JugadorSubject jugador) {
@@ -304,13 +337,13 @@ public class PanelJuego extends javax.swing.JPanel {
                 break;
             }
         }
-        
+
         if (aEliminar != null) {
             panelesJugadoresSecundarios.remove(aEliminar);
             actualizarPanelesSecundarios();
         }
     }
-    
+
     /**
      * Metodo que refresca la lista de paneles de jugadores secundarios en la
      * interfaz.
@@ -322,6 +355,44 @@ public class PanelJuego extends javax.swing.JPanel {
         }
         repaint();
         revalidate();
+    }
+
+    private void actualizarJugada(Subject subject) {
+        if (subject instanceof JugadaSubject jugada) {
+            String mensaje = jugada.getJugador() + " cantó: " + jugada.getNombre() + "! +" + jugada.getPuntos();
+
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                this.mostrarNotificacion(mensaje);
+            });
+
+            switch (jugada.getNombre()) {
+                case "LLENA" -> {
+                    botonLlena.setEstado(false);
+                    botonLlena.removeActionListener(listenerLlena);
+                }
+                case "CHORRO" -> {
+                    botonChorro.setEstado(false);
+                    botonChorro.removeActionListener(listenerChorro);
+                }
+                case "CUATROESQUINAS" -> {
+                    botonCuatroEsquinas.setEstado(false);
+                    botonCuatroEsquinas.removeActionListener(listenerCuatroEsquinas);
+                }
+                case "CENTRO" -> {
+                    botonCentro.setEstado(false);
+                    botonCentro.removeActionListener(listenerCentro);
+                }
+                default -> {
+                    System.out.println("No existe la jugada: " + jugada.getNombre());
+                }
+            }
+        }
+    }
+
+    private void mostrarNotificacion(String mensaje) {
+        if (panelNotificacion != null) {
+            panelNotificacion.mostrarMensaje(mensaje);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -336,6 +407,7 @@ public class PanelJuego extends javax.swing.JPanel {
     private javax.swing.JPanel panelContenedorSecundarios;
     private vista.PanelJugadorPrincipal panelJugadorPrincipal;
     private vista.PanelJugadorSecundario panelJugadorSecundario2;
+    private vista.PanelNotificacion panelNotificacion;
     private vista.PanelTarjeta panelTarjeta;
     // End of variables declaration//GEN-END:variables
 }

@@ -122,4 +122,6 @@ public interface IModeloJuego {
     public void obtenerSala();
 
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego);
+    
+    public void finalizarRonda(String motivo);
 }
