@@ -7,7 +7,7 @@ package enums;
 public enum TipoNivel {
     BASICO(5000),
     INTERMEDIO(3000),
-    DIFICIL(1000);
+    DIFICIL(2000);
 
     private final int intervalo;
 

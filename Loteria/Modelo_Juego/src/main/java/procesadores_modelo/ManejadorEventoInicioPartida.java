@@ -43,6 +43,10 @@ public class ManejadorEventoInicioPartida extends ManejadorEventos{
         if(sala.isInSala(user)){
             modeloJuego.cerrarSalaEspera();
             modeloJuego.mostrarFramePartida();
+            if(!sala.isJuegoEnCurso()){
+                sala.setJuegoEnCurso(true);
+            }
+            sala.setPartidaEnCurso(true);
         }
     }
     

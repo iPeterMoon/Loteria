@@ -26,7 +26,7 @@ public class NetworkHelper {
                 // Ignorar interfaces apagadas o de loopback (localhost)
                 if (networkInterface.isLoopback() || !networkInterface.isUp()) {
                     continue;
-                }
+                } 
 
                 Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
                 while (addresses.hasMoreElements()) {
@@ -36,18 +36,18 @@ public class NetworkHelper {
                     if (address instanceof Inet4Address) {
                         String ip = address.getHostAddress();
                         
-                        // PRIORIDAD 1: Rangos de VPN Gaming comunes
+                        // PRIORIDAD 1: Rangos locales estándar (192.168.x.x, 10.x.x.x, 172.x.x.x)
+                        // Guardamos esta como "candidata" por si no encontramos una VPN
+                        if (ip.startsWith("192.") || ip.startsWith("10.") || ip.startsWith("172.")) {
+                            ipLocal = ip;
+                        }
+                        
+                        // PRIORIDAD 2: Rangos de VPN Gaming comunes
                         // 25.x.x.x es el clásico de Hamachi
                         // 26.x.x.x es el clásico de Radmin VPN
                         if (ip.startsWith("25.") || ip.startsWith("26.")) {
                             System.out.println("[Red] IP de VPN detectada y seleccionada: " + ip);
                             return ip;
-                        }
-                        
-                        // PRIORIDAD 2: Rangos locales estándar (192.168.x.x, 10.x.x.x, 172.x.x.x)
-                        // Guardamos esta como "candidata" por si no encontramos una VPN
-                        if (ip.startsWith("192.") || ip.startsWith("10.") || ip.startsWith("172.")) {
-                            ipLocal = ip;
                         }
                     }
                 }

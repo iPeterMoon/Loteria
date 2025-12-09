@@ -8,6 +8,7 @@ import eventos.eventos_aplicacion.EventoNuevoHost;
 import java.util.ArrayList;
 import java.util.List;
 import mappers.JugadorMapperModelo;
+import modelo.Cantador;
 import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
@@ -39,5 +40,15 @@ public class ManejadorEventoNuevoHost extends ManejadorEventos{
                 sala.getConfiguracion().getLimiteJugadores(), 
                 sala.getConfiguracion().getDificultad()
         );
+        
+        if(userHost.equals(sala.getJugadorPrincipal().getNickname()) && sala.isPartidaEnCurso()){
+            try{
+                Thread.sleep(500);
+                int intervalo = Sala.getInstance().getConfiguracion().getDificultad().getIntervalo();
+                Cantador.getInstance().iniciarCanto(intervalo);
+            } catch(InterruptedException e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

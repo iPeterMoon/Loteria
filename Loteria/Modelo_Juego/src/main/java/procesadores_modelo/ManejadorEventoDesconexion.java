@@ -1,7 +1,9 @@
 package procesadores_modelo;
 
 import dtos.aplicacion.JugadorDTO;
+import dtos.aplicacion.MensajeDTO;
 import enums.TipoEvento;
+import enums.TipoMensajePantalla;
 import eventos.Evento;
 import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoPeerDesconectado;
@@ -46,6 +48,10 @@ public class ManejadorEventoDesconexion extends ManejadorEventos {
         }
 
         actualizarJugadoresEnVista();
+        
+        if(sala.isJuegoEnCurso() && listaJugadores.isEmpty()){
+            ModeloJuegoFacade.getInstance().cerrarJuegoDefinitivo(sala.getJugadorPrincipal().getNickname());
+        }
     }
 
     private void actualizarJugadoresEnVista() {

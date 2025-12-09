@@ -337,6 +337,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
             vistaConfiguracion.mostrarSalaEspera();
 
             Sala sala = Sala.getInstance();
+            sala.setPartidaEnCurso(false);
             List<JugadorDTO> todosLosJugadores = new ArrayList<>();
 
             if (sala.getJugadorPrincipal() != null) {

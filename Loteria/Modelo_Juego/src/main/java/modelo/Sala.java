@@ -33,6 +33,10 @@ public class Sala {
 
     private Map<JugadasDisponibles, Boolean> estaDisponible;
 
+    private boolean juegoEnCurso = false;
+    
+    private boolean partidaEnCurso = false;
+    
     private static Sala instance;
 
     private Sala() {
@@ -145,4 +149,32 @@ public class Sala {
     public String getNicknameJugadorPrincipal() {
         return jugadorPrincipal.getNickname();
     }
+
+    public Map<JugadasDisponibles, Boolean> getEstaDisponible() {
+        return estaDisponible;
+    }
+
+    public void setEstaDisponible(Map<JugadasDisponibles, Boolean> estaDisponible) {
+        this.estaDisponible = estaDisponible;
+    }
+
+    public boolean isJuegoEnCurso() {
+        return juegoEnCurso;
+    }
+
+    public void setJuegoEnCurso(boolean juegoEnCurso) {
+        this.juegoEnCurso = juegoEnCurso;
+    }
+
+    public boolean isPartidaEnCurso() {
+        return partidaEnCurso;
+    }
+
+    public void setPartidaEnCurso(boolean partidaEnCurso) {
+        this.partidaEnCurso = partidaEnCurso;
+    }
+
+    
+    
+    
 }

@@ -55,15 +55,19 @@ public class InicioPartidaManager {
      * para barajear el mazo y mostrar la pantalla de la partida.
      */
     public void iniciarPartida() {
-        if(!Sala.getInstance().getJugadoresSecundario().isEmpty()){
-            Sala.getInstance().resetearJugadasDisponibles();
+        Sala sala = Sala.getInstance();
+        if(!sala.getJugadoresSecundario().isEmpty()){
+            sala.resetearJugadasDisponibles();
             Cantador.getInstance().detenerCanto();
             
             barajearMazo();
             repartirTarjetas();
             generarEventoInicioPartida();
             mostrarFramePartida();
-            cerrarFrameConfiguracion();
+            if(!sala.isJuegoEnCurso()){
+                sala.setJuegoEnCurso(true);
+            }
+            sala.setPartidaEnCurso(true);
         } else {
             MensajeDTO mensaje = new MensajeDTO("No se puede iniciar", "<html>No puede iniciar la partida si no hay más jugadores</html>", false, TipoMensajePantalla.VALIDACION_SALA_ESPERA);
             ModeloJuegoFacade.getInstance().mostrarMensaje(mensaje);
@@ -161,10 +165,4 @@ public class InicioPartidaManager {
         componentePeer.broadcastEvento(evento);
     }
     
-    private void cerrarFrameConfiguracion(){
-        System.out.println("[InicioPartidaManager] Enviando evento para cerrar FrameConfiguracion...");
-        // El cierre se realiza a través del PantallaActualSubject
-        // El ModeloVistaConfiguracion notificará a través de cerrarVentana()
-        // que establecerá Pantalla.CERRAR
-    }
 }
