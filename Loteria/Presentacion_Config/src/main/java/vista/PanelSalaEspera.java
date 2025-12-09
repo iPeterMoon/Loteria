@@ -24,20 +24,20 @@ import util.Subject;
 public class PanelSalaEspera extends javax.swing.JPanel {
 
     private Frame ventanaPrincipal;
-    
+
     /**
      * Creates new form PanelSalaEspera
      */
     public PanelSalaEspera() {
         initComponents();
     }
-    
+
     public void configurarFramePadre(Frame ventanaPadre) {
         ventanaPrincipal = ventanaPadre;
     }
 
     private int contador = 1;
-    
+
     public void actualizarVista(Subject subject) {
         if (subject instanceof SalaSubject salaSubject) {
             actualizarDatosSala(salaSubject);
@@ -62,7 +62,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void tirarEfectoSonido() {
         try {
             String rutaAudio = "/audios/fx/unirse.wav";
@@ -91,23 +91,58 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         btnAbandonarSala.setVisible(false);
     }
 
-    private void actualizarBotones(SalaSubject sala){
+    private void configurarModoJugadorUnido(SalaSubject sala) {
         String principalNickname = sala.getJugadorPrincipalUser();
-        if(principalNickname != null){
-            btnAbandonarSala.setVisible(true);
-            if(principalNickname.equals(sala.getHost())){
-                btnAccion.setText("Iniciar Partida");
-                btnAccion.setVisible(true);
-                lblEspera.setVisible(false);
-            } else {
-                lblEspera.setVisible(true);
-                btnAccion.setVisible(false);
-            }
+
+        btnAbandonarSala.setVisible(true);
+        lblEspera.setVisible(true); 
+        btnAccion.setVisible(false); 
+        
+        if (principalNickname != null && principalNickname.equals(sala.getHost())) {
+            btnAccion.setText("Iniciar Partida");
+            btnAccion.setVisible(true);
+            lblEspera.setVisible(false);
+        } else {
+            lblEspera.setVisible(true);
+            btnAccion.setVisible(false);
         }
+    }
+
+    private void configurarModoJugadorNoUnidoLimite(SalaSubject sala) {
+        configurarModoJugadorNoUnido(); 
+
+        int jugadoresActuales = sala.getJugadores().size();
+        int limite = sala.getLimiteJugadores();
+
+        if (jugadoresActuales >= limite) {
+            btnAccion.setVisible(false); 
+            lblEspera.setText("Sala llena.");
+            lblEspera.setVisible(true); 
+            btnAbandonarSala.setVisible(false); 
+        } else {
+            btnAccion.setText("Unirme a la sala"); 
+            btnAccion.setVisible(true);
+            lblEspera.setVisible(false);
+            btnAbandonarSala.setVisible(false); 
+        }
+    }
+
+    private void actualizarBotones(SalaSubject sala) {
+        String principalNickname = sala.getJugadorPrincipalUser();
+
+        boolean esJugadorUnido = sala.getJugadores().stream()
+                .anyMatch(j -> j.getNickname().equals(principalNickname));
+
+        if (principalNickname != null && esJugadorUnido) {
+            configurarModoJugadorUnido(sala);
+        } else {
+            configurarModoJugadorNoUnidoLimite(sala);
+        }
+
         repaint();
         revalidate();
     }
-    
+
     private void actualizarMensaje(Subject subject) {
         if (subject instanceof MensajeSubject validacion) {
             if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_SALA_ESPERA) {
@@ -122,7 +157,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             }
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,7 +202,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
 
         lblEspera.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblEspera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblEspera.setText("Esperando a que inicice la partida...");
+        lblEspera.setText("Esperando a que inicie la partida...");
 
         btnAccion.setBackground(new java.awt.Color(100, 13, 95));
         btnAccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -230,10 +265,10 @@ public class PanelSalaEspera extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAbandonarSalaActionPerformed
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
-        if(btnAccion.getText().equals("Unirme a la sala")){
+        if (btnAccion.getText().equals("Unirme a la sala")) {
             ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
             controles.getControlAplicacion().unirseASala();
-        } else if (btnAccion.getText().equals("Iniciar Partida")){
+        } else if (btnAccion.getText().equals("Iniciar Partida")) {
             ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
             controles.getControlIniciarPartida().iniciarPartida();
             // Cerrar la ventana de configuración a través del modelo
