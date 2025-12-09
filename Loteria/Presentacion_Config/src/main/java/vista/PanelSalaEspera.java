@@ -145,7 +145,7 @@ public class PanelSalaEspera extends javax.swing.JPanel {
 
     private void actualizarMensaje(Subject subject) {
         if (subject instanceof MensajeSubject validacion) {
-            if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_SALA_ESPERA) {
+            if (validacion.getTipoMensaje() == TipoMensajePantalla.VALIDACION_SALA_ESPERA || validacion.getTipoMensaje() == TipoMensajePantalla.INFORMACION) {
                 MensajeDialog mensajeDialog = new MensajeDialog(ventanaPrincipal, true);
                 mensajeDialog.setDatos(validacion.getTitulo(), validacion.getMensaje());
                 mensajeDialog.mostrarDialogo();

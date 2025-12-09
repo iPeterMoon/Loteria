@@ -22,5 +22,6 @@ public enum TipoEvento {
     NUEVA_SALA,
     SALIR_SALA_ESPERA,
     NUEVO_HOST,
-    FIN_RONDA
+    FIN_RONDA,
+    FIN_JUEGO
 }

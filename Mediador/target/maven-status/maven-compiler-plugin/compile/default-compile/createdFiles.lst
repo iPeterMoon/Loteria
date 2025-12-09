@@ -31,6 +31,7 @@ util\ConfigLoader.class
 interfaces\aplicacion\IModeloVistaConfiguracion.class
 dtos\aplicacion\SalaDTO.class
 eventos\eventos_aplicacion\EventoCartaCantada.class
+eventos\eventos_aplicacion\EventoFinJuego.class
 dtos\aplicacion\JugadorDTO.class
 eventos\eventos_aplicacion\EventoPeerDesconectado.class
 dtos\peer\PeerInfo.class

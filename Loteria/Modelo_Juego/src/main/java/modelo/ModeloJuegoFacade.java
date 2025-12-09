@@ -24,8 +24,11 @@ import managers.SalaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
 import enums.TipoConfiguracion;
+import enums.TipoMensajePantalla;
 import managers.ConfiguracionManager;
 import enums.TipoNivel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -154,15 +157,15 @@ public class ModeloJuegoFacade implements IModeloJuego {
     public void mostrarFramePartida() {
         // 1. Crear la nueva ventana
         inicioPartidaManager.mostrarFramePartida();
-        
+
         // 2. Inyectar los datos frescos
         Sala sala = Sala.getInstance();
-        
+
         if (sala.getJugadorPrincipal() != null) {
             JugadorDTO dto = JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true);
-            vistaJuego.agregarJugadorPrincipal(dto); 
+            vistaJuego.agregarJugadorPrincipal(dto);
         }
-        
+
         for (Jugador j : sala.getJugadoresSecundario()) {
             JugadorDTO dto = JugadorMapperModelo.toDTO(j, false);
             vistaJuego.agregarJugadorSecundario(dto);
@@ -212,10 +215,24 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
         if (eventoJugada.getTipoJugada().equals("LLENA")) {
             cantadorManager.detenerCantador();
-            finalizarRonda("El jugador " + eventoJugada.getUserSender() + "ganó");
 
-            String nuevoHost = eventoJugada.getUserSender();
-            vistaConfiguracion.actualizarDatosSala(nuevoHost, configuracionJuego.getLimiteJugadores(), configuracionJuego.getDificultad());
+            new Thread(() -> {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ModeloJuegoFacade.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                if (verificarSiAlguienGanoElJuego()) {
+                    return;
+                }
+
+                finalizarRonda("El jugador " + eventoJugada.getUserSender() + " ganó la ronda");
+
+                String nuevoHost = eventoJugada.getUserSender();
+                vistaConfiguracion.actualizarDatosSala(nuevoHost, configuracionJuego.getLimiteJugadores(), configuracionJuego.getDificultad());
+
+            }).start();
         }
     }
 
@@ -331,6 +348,66 @@ public class ModeloJuegoFacade implements IModeloJuego {
             }
 
             actualizarJugadoresSala(todosLosJugadores);
+
+            if (!motivo.startsWith("JUEGO TERMINADO")) {
+                verificarSiAlguienGanoElJuego();
+            }
         }
+    }
+
+    /**
+     * Verifica si algún jugador ha alcanzado o superado el puntaje máximo. Si
+     * es así, inicia el proceso de cierre del juego.
+     *
+     * @return true si el juego terminó, false si continúa.
+     */
+    private boolean verificarSiAlguienGanoElJuego() {
+        Sala sala = Sala.getInstance();
+        int puntajeMeta = sala.getConfiguracion().getPuntajeMax();
+
+        Jugador ganador = null;
+        int maxPuntajeActual = -1;
+
+        if (sala.getJugadorPrincipal() != null) {
+            if (sala.getJugadorPrincipal().getPuntos() > maxPuntajeActual) {
+                maxPuntajeActual = sala.getJugadorPrincipal().getPuntos();
+                ganador = sala.getJugadorPrincipal();
+            }
+        }
+
+        for (Jugador j : sala.getJugadoresSecundario()) {
+            if (j.getPuntos() > maxPuntajeActual) {
+                maxPuntajeActual = j.getPuntos();
+                ganador = j;
+            }
+        }
+
+        if (ganador != null && maxPuntajeActual >= puntajeMeta) {
+            cerrarJuegoDefinitivo(ganador.getNickname());
+            return true;
+        }
+
+        return false;
+    }
+
+    public void cerrarJuegoDefinitivo(String nombreGanador) {
+        finalizarRonda("JUEGO TERMINADO - Ganador: " + nombreGanador);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+                System.exit(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        MensajeDTO mensaje = new MensajeDTO(
+                "¡FIN DEL JUEGO!",
+                "El jugador " + nombreGanador + " ha ganado la partida",
+                true,
+                TipoMensajePantalla.INFORMACION
+        );
+        mostrarMensaje(mensaje);
     }
 }
