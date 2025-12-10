@@ -33,7 +33,7 @@ public class BotonJugada extends javax.swing.JPanel {
      */
     public void setEstado(boolean estado) {
         this.estado = estado;
-        this.setEnabled(estado);
+        this.botonJugada.setEnabled(estado);
     }
 
     /**
