@@ -9,7 +9,7 @@ import util.Subject;
 public class AvatarSubject extends Subject {
 
     private int numeroAvatar = 1;
-    private final int MAX_AVATARES = 10;
+    private final int MAX_AVATARES = 13;
 
     public void moverIzquierda() {
         if (numeroAvatar - 1 >= 1) {
