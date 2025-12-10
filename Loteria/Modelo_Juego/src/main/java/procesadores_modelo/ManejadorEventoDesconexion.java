@@ -1,15 +1,9 @@
 package procesadores_modelo;
 
-import dtos.aplicacion.JugadorDTO;
-import dtos.aplicacion.MensajeDTO;
 import enums.TipoEvento;
-import enums.TipoMensajePantalla;
 import eventos.Evento;
-import eventos.eventos_aplicacion.EventoFicha;
 import eventos.eventos_aplicacion.EventoPeerDesconectado;
-import java.util.ArrayList;
 import java.util.List;
-import mappers.JugadorMapperModelo;
 import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
@@ -55,6 +49,6 @@ public class ManejadorEventoDesconexion extends ManejadorEventos {
     }
 
     private void actualizarJugadoresEnVista() {
-        ModeloJuegoFacade.getInstance().eliminarJugadorDePartida(userDesconectado);
+        ModeloJuegoFacade.getInstance().finalizarRonda("JUEGO TERMINADO: El jugador " + userDesconectado + " se ha desconectado.");
     }
 }

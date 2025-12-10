@@ -3,6 +3,7 @@ package vista;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import util.AudioPlayer;
 
 public class PanelNotificacion extends JComponent {
 
@@ -22,6 +23,9 @@ public class PanelNotificacion extends JComponent {
         this.mensaje = msg;
         this.mostrando = true;
         this.opacidad = 1.0f;
+        
+        String rutaAudio = "/audios/fx/jugada.wav";
+        AudioPlayer.reproducirAudio(this, rutaAudio);
 
         // Reiniciar timer si ya estaba corriendo
         if (timer != null && timer.isRunning()) {

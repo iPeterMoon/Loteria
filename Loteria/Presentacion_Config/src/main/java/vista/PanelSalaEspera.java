@@ -16,6 +16,7 @@ import javax.sound.sampled.Clip;
 import modelo.MensajeSubject;
 import modelo.ModeloVistaConfiguracionFacade;
 import modelo.SalaSubject;
+import util.AudioPlayer;
 import util.Subject;
 
 /**
@@ -62,27 +63,11 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             panelListaJugadores.repaint();
             
             if(contador == 8){
-                tirarEfectoSonido();
+                AudioPlayer.reproducirAudio(this, "/audios/fx/unirse.wav");
                 contador = 1;
             } else {
                 contador++;
             }
-        }
-    }
-
-    private void tirarEfectoSonido() {
-        try {
-            String rutaAudio = "/audios/fx/unirse.wav";
-            URL url = getClass().getResource(rutaAudio);
-            if (url != null) {
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioStream);
-                clip.start();
-            }
-        } catch (Exception e) {
-            System.out.println("[FICHA] Error al reproducir el audio");
-            System.out.println(e.getMessage());
         }
     }
 

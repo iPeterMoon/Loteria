@@ -24,10 +24,8 @@ import managers.SalaManager;
 import mappers.JugadorMapperModelo;
 import enums.JugadasDisponibles;
 import enums.TipoConfiguracion;
-import enums.TipoMensajePantalla;
 import managers.ConfiguracionManager;
 import enums.TipoNivel;
-import eventos.eventos_aplicacion.EventoFinJuego;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import managers.FinalizarJuegoManager;
@@ -238,7 +236,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
                 String nuevoHost = eventoJugada.getUserSender();
                 vistaConfiguracion.actualizarDatosSala(nuevoHost, configuracionJuego.getLimiteJugadores(), configuracionJuego.getDificultad());
-
+                Sala.getInstance().setHost(nuevoHost);
             }).start();
         }
     }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.sound.sampled.*;
 
 import modelo.*;
+import util.AudioPlayer;
 import util.Subject;
 
 /**
@@ -298,19 +299,8 @@ public class PanelJuego extends javax.swing.JPanel {
         if (subject instanceof CantadorSubject cantador) {
             if (panelCartaCantador != null) {
                 panelCartaCantador.actualizarCartaCantador(cantador.getCartaActual());
-                try{
-                    String rutaAudio = "/audios/cartas/"+cantador.getCartaActual()+".wav";
-                    URL url = getClass().getResource(rutaAudio);
-                    if(url != null){
-                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
-                        Clip clip = AudioSystem.getClip();
-                        clip.open(audioStream);
-                        clip.start();
-                    }
-                } catch(Exception e){
-                    System.out.println("[CANTADOR] Error al reproducir el audio");
-                    System.out.println(e.getMessage());
-                }
+                String rutaAudio = "/audios/cartas/"+cantador.getCartaActual()+".wav";
+                AudioPlayer.reproducirAudio(this, rutaAudio);
             }
         }
     }

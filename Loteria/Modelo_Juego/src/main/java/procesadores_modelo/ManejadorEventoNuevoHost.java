@@ -17,7 +17,7 @@ import modelo.Sala;
  *
  * @author petermoon
  */
-public class ManejadorEventoNuevoHost extends ManejadorEventos{
+public class ManejadorEventoNuevoHost extends ManejadorEventos {
 
     @Override
     public void procesar(Evento evento) {
@@ -30,25 +30,26 @@ public class ManejadorEventoNuevoHost extends ManejadorEventos{
 
     private void manejarNuevoHost(EventoNuevoHost evento) {
         Sala sala = Sala.getInstance();
-        
+
         String userHost = evento.getNuevoHostUser();
-        
+
         sala.setHost(userHost);
-        if(sala.getConfiguracion() != null){
+        if (sala.getConfiguracion() != null) {
             ModeloJuegoFacade.getInstance().actualizarDatosSala(
-                    userHost, 
-                    sala.getConfiguracion().getLimiteJugadores(), 
+                    userHost,
+                    sala.getConfiguracion().getLimiteJugadores(),
                     sala.getConfiguracion().getDificultad()
             );
+            //Dormimos tantito por si se acaba la partida
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+            if (userHost.equals(sala.getJugadorPrincipal().getNickname()) && sala.isPartidaEnCurso()) {
+                int intervalo = Sala.getInstance().getConfiguracion().getDificultad().getIntervalo();
+                Cantador.getInstance().iniciarCanto(intervalo);
 
-            if(userHost.equals(sala.getJugadorPrincipal().getNickname()) && sala.isPartidaEnCurso()){
-                try{
-                    Thread.sleep(500);
-                    int intervalo = Sala.getInstance().getConfiguracion().getDificultad().getIntervalo();
-                    Cantador.getInstance().iniciarCanto(intervalo);
-                } catch(InterruptedException e){
-                    System.out.println(e.getMessage());
-                }
             }
         }
     }

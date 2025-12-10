@@ -18,6 +18,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import util.AudioPlayer;
 
 /**
  * clase que representa las 54 cartas del juego.
@@ -158,23 +159,7 @@ public class PanelCartita extends javax.swing.JPanel {
             add(ficha);
             revalidate();
             repaint();
-            tirarEfectoSonido();
-        }
-    }
-
-    private void tirarEfectoSonido() {
-        try {
-            String rutaAudio = "/audios/fx/ficha.wav";
-            URL url = getClass().getResource(rutaAudio);
-            if (url != null) {
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioStream);
-                clip.start();
-            }
-        } catch (Exception e) {
-            System.out.println("[FICHA] Error al reproducir el audio");
-            System.out.println(e.getMessage());
+            AudioPlayer.reproducirAudio(this, "/audios/fx/ficha.wav");
         }
     }
 
