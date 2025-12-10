@@ -146,6 +146,7 @@ public class PanelTarjeta extends javax.swing.JPanel {
                 Boolean tieneFicha = tarjeta.getFichas().get(posicion);
                 if (tieneFicha != null && tieneFicha) {
                     cartita.agregarFicha();
+                    cartita.quitarEventosMouse();
                 }
             }
         }

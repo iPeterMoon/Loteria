@@ -44,6 +44,25 @@ public class PanelCartita extends javax.swing.JPanel {
     private JLabel ficha;
     private boolean esAbstracta = false;
 
+    private MouseAdapter listener = new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            iconoActual = iconoHover;
+            repaint();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            iconoActual = iconoOriginal;
+            repaint();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            onclick();
+        }
+    };
+
     /**
      * Constructor que inicializa el JPanel de la carta del cantador.
      */
@@ -111,24 +130,11 @@ public class PanelCartita extends javax.swing.JPanel {
      * icono original y mouse Pressed qie ejecuta el metood onclick.
      */
     private void agregarEventosMouse() {
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                iconoActual = iconoHover;
-                repaint();
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                iconoActual = iconoOriginal;
-                repaint();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                onclick();
-            }
-        });
+        addMouseListener(listener);
+    }
+    
+    public void quitarEventosMouse() {
+        removeMouseListener(listener);
     }
 
     /**
