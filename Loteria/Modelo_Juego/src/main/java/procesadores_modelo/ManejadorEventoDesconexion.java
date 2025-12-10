@@ -41,14 +41,15 @@ public class ManejadorEventoDesconexion extends ManejadorEventos {
             listaJugadores.removeIf(j -> j.getNickname().equals(userDesconectado));
         }
 
-        actualizarJugadoresEnVista();
-        
-        if(sala.isJuegoEnCurso() && listaJugadores.isEmpty()){
+              
+        if(sala.isJuegoEnCurso() && listaJugadores != null && listaJugadores.isEmpty()){
             ModeloJuegoFacade.getInstance().cerrarJuegoDefinitivo(sala.getJugadorPrincipal().getNickname());
+        } else {
+            actualizarJugadoresEnVista();
         }
     }
 
     private void actualizarJugadoresEnVista() {
-        ModeloJuegoFacade.getInstance().finalizarRonda("JUEGO TERMINADO: El jugador " + userDesconectado + " se ha desconectado.");
+        ModeloJuegoFacade.getInstance().eliminarJugadorDePartida(userDesconectado);
     }
 }
