@@ -57,6 +57,8 @@ public class FinalizarJuegoManager {
         // Si el juego terminó completamente, mostrar menú principal
         // Si es solo fin de ronda, mostrar sala de espera
         if (motivo.startsWith("JUEGO TERMINADO")) {
+            Sala sala = Sala.getInstance();
+            sala.setPartidaEnCurso(false);
             if (vistaConfiguracion != null) {
                 vistaConfiguracion.mostrarMenuPrincipal();
             }
