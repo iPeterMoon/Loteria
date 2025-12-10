@@ -40,6 +40,7 @@ public class PanelAvatar extends javax.swing.JPanel {
         URL recurso = getClass().getResource(url);
         if (recurso == null) {
             System.err.println("No se encontró la imagen: " + url);
+            return null;
         }
         ImageIcon original = new ImageIcon(recurso);
         Image imagenEscalada = original.getImage().getScaledInstance(ANCHO_ICON, ALTO_ICON,
@@ -49,7 +50,11 @@ public class PanelAvatar extends javax.swing.JPanel {
     }
 
     public void actualizarAvatar(int avatar) {
-        iconoActual = cargarAvatar(avatar);
+        ImageIcon nuevoIcono = cargarAvatar(avatar);
+        if(nuevoIcono != null){
+            iconoActual = nuevoIcono;
+            repaint();
+        }
     }
 
     /**

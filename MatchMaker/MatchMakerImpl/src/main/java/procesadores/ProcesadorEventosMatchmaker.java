@@ -18,6 +18,7 @@ public class ProcesadorEventosMatchmaker implements IObserver {
         IHandler nuevaSala = new ManejadorSalaCreada();
         IHandler salidaSala = new ManejadorSalirSalaEspera();
         IHandler desconexion = new ManejadorDesconexion();
+        IHandler finJuego = new ManejadorFinJuego();
 
         manejadorPrincipal = solicitudSala;
         solicitudSala.setNext(salaCreada);
@@ -25,6 +26,7 @@ public class ProcesadorEventosMatchmaker implements IObserver {
         unirseSala.setNext(nuevaSala);
         nuevaSala.setNext(salidaSala);
         salidaSala.setNext(desconexion);
+        desconexion.setNext(finJuego);
     }
 
     private void procesar(Evento evento) {

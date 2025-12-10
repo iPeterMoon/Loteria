@@ -8,6 +8,7 @@ import eventos.Evento;
 import eventos.eventos_aplicacion.EventoInfoSala;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import mappers.JugadorMapperModelo;
 import mappers.SalaMapperModelo;
 import modelo.Jugador;
@@ -33,12 +34,20 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
 
     private void manejarPeticionInfoSala(EventoInfoSala evento) {
 
-        if (evento.getSala() == null) {
-            modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.CREAR_SALA);
+        if (evento.getSala() == null || evento.getSala().getJugadorHost() == null) {
             resetearSala();
-        } else if (!Sala.getInstance().salaCreada()) {
+            
+            SwingUtilities.invokeLater(() -> {
+                modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.CREAR_SALA);
+            });
+            return;
+        } 
+        if (!Sala.getInstance().salaCreada()) {
+            
             SalaDTO salaDTO = evento.getSala();
             configurarSala(salaDTO);
+            
+            modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.UNIRSE_SALA);
         }
 
     }
@@ -49,6 +58,12 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
         sala.setJugadorPrincipal(null);
         sala.getJugadoresSecundario().clear();
         sala.setConfiguracion(null);
+        sala.setHost(null);
+        sala.setJuegoEnCurso(false);
+        sala.setPartidaEnCurso(false);
+        
+        modeloJuegoFacade.actualizarJugadoresSala(new ArrayList<>());
+        modeloJuegoFacade.setJugadorPrincipal(null);
     }
 
     private void configurarSala(SalaDTO salaDTO) {
@@ -74,8 +89,6 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
 
     private void actualizarVista() {
         Sala sala = Sala.getInstance();
-
-        modeloJuegoFacade.cambiarTipoConfiguracion(TipoConfiguracion.UNIRSE_SALA);
 
         modeloJuegoFacade.actualizarDatosSala(
                 sala.getHost(),

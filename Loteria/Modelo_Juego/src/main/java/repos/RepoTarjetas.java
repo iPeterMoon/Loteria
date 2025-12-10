@@ -21,20 +21,45 @@ public class RepoTarjetas {
         int[] arregloCartas = {1,2,3,4,23,24,25,26,33,34,35,36,28,29,30,31};
         tarjetas.add(crearTarjeta(arregloCartas));
         
-        int[] arregloCartas2 = {49,19,9,54,25,20,16,45,2,36,23,35,28,38,41,14};
-        tarjetas.add(crearTarjeta(arregloCartas2));
+        // Tarjeta 1 (Mezcla variada)
+        int[] c1 = {10, 21, 35, 48, 5, 52, 17, 3, 29, 44, 12, 1, 54, 23, 8, 30};
+        tarjetas.add(crearTarjeta(c1));
         
-        int[] arregloCartas3 = {14,48,8,15,39,34,49,45,2,36,29,23,41,11,3,30};
-        tarjetas.add(crearTarjeta(arregloCartas3));
+        // Tarjeta 2
+        int[] c2 = {2, 15, 28, 41, 53, 9, 22, 36, 49, 4, 18, 31, 45, 11, 24, 38};
+        tarjetas.add(crearTarjeta(c2));
+        
+        // Tarjeta 3
+        int[] c3 = {7, 20, 33, 46, 6, 19, 32, 47, 13, 26, 40, 51, 16, 27, 39, 50};
+        tarjetas.add(crearTarjeta(c3));
 
-        int[] arregloCartas4 = {42,20,16,33,35,43,8,17,25,13,34,22,46,26,2,10};
-        tarjetas.add(crearTarjeta(arregloCartas4));
+        // Tarjeta 4
+        int[] c4 = {14, 25, 37, 42, 34, 43, 16, 3, 52, 11, 24, 8, 54, 1, 19, 32};
+        tarjetas.add(crearTarjeta(c4));
 
-        int[] arregloCartas5 = {29,30,15,6,5,2,39,19,13,12,4,50,25,23,26,44};
-        tarjetas.add(crearTarjeta(arregloCartas5));
+        // Tarjeta 5 (Incluye cartas altas)
+        int[] c5 = {50, 51, 52, 53, 1, 2, 3, 4, 25, 26, 27, 28, 10, 20, 30, 40};
+        tarjetas.add(crearTarjeta(c5));
 
-        int[] arregloCartas6 = {48,38,42,34,43,10,46,8,5,30,7,53,33,24,15,25};
-        tarjetas.add(crearTarjeta(arregloCartas6));
+        // Tarjeta 6
+        int[] c6 = {5, 15, 35, 45, 6, 16, 36, 46, 7, 17, 37, 47, 8, 18, 38, 48};
+        tarjetas.add(crearTarjeta(c6));
+        
+        // Tarjeta 7
+        int[] c7 = {9, 19, 29, 39, 12, 22, 32, 42, 14, 24, 34, 44, 13, 23, 33, 43};
+        tarjetas.add(crearTarjeta(c7));
+        
+        // Tarjeta 8 (Dispersa)
+        int[] c8 = {54, 41, 27, 11, 31, 21, 1, 15, 45, 35, 51, 25, 5, 9, 33, 17};
+        tarjetas.add(crearTarjeta(c8));
+        
+        // Tarjeta 9
+        int[] c9 = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32};
+        tarjetas.add(crearTarjeta(c9));
+        
+        // Tarjeta 10
+        int[] c10 = {31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 13, 23, 7, 17};
+        tarjetas.add(crearTarjeta(c10));
     }
 
     private static RepoTarjetas instance;

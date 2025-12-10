@@ -108,7 +108,7 @@ public class ConfiguracionManager {
             return false;
         }
 
-        if (usuarioNuevo.getNickname().trim().length() > 20) {
+        if (usuarioNuevo.getNickname().trim().length() > 12) {
             MensajeDTO mensaje = new MensajeDTO("Usuario invalido", "<html>El nombre de usuario debe tener un máximo de 20 carácteres</html>", false, TipoMensajePantalla.VALIDACION_USUARIO);
             ModeloJuegoFacade.getInstance().mostrarMensaje(mensaje);
             return false;

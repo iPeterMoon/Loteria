@@ -34,20 +34,21 @@ public class ManejadorEventoNuevoHost extends ManejadorEventos{
         String userHost = evento.getNuevoHostUser();
         
         sala.setHost(userHost);
+        if(sala.getConfiguracion() != null){
+            ModeloJuegoFacade.getInstance().actualizarDatosSala(
+                    userHost, 
+                    sala.getConfiguracion().getLimiteJugadores(), 
+                    sala.getConfiguracion().getDificultad()
+            );
 
-        ModeloJuegoFacade.getInstance().actualizarDatosSala(
-                userHost, 
-                sala.getConfiguracion().getLimiteJugadores(), 
-                sala.getConfiguracion().getDificultad()
-        );
-        
-        if(userHost.equals(sala.getJugadorPrincipal().getNickname()) && sala.isPartidaEnCurso()){
-            try{
-                Thread.sleep(500);
-                int intervalo = Sala.getInstance().getConfiguracion().getDificultad().getIntervalo();
-                Cantador.getInstance().iniciarCanto(intervalo);
-            } catch(InterruptedException e){
-                System.out.println(e.getMessage());
+            if(userHost.equals(sala.getJugadorPrincipal().getNickname()) && sala.isPartidaEnCurso()){
+                try{
+                    Thread.sleep(500);
+                    int intervalo = Sala.getInstance().getConfiguracion().getDificultad().getIntervalo();
+                    Cantador.getInstance().iniciarCanto(intervalo);
+                } catch(InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

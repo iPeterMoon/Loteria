@@ -49,8 +49,9 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
         labelPuntaje = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(217, 22, 86));
-        setMaximumSize(new java.awt.Dimension(580, 170));
-        setMinimumSize(new java.awt.Dimension(580, 170));
+        setMaximumSize(new java.awt.Dimension(830, 170));
+        setMinimumSize(new java.awt.Dimension(830, 170));
+        setName(""); // NOI18N
 
         lblNickname.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         lblNickname.setForeground(new java.awt.Color(255, 255, 255));
@@ -82,9 +83,9 @@ public class PanelJugadorIndividual extends javax.swing.JPanel {
                 .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(lblNickname)
-                .addGap(93, 93, 93)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
                 .addComponent(labelPuntaje)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addGap(76, 76, 76)
                 .addComponent(lblCorona)
                 .addGap(34, 34, 34))
         );

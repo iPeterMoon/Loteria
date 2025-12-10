@@ -9,6 +9,7 @@ import eventos.eventos_aplicacion.EventoCartaCantada;
 import eventos.eventos_aplicacion.EventoFinRonda;
 import util.IObserver;
 import interfaces.peer.IPeer;
+import javax.swing.SwingUtilities;
 import modelo.Cantador;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
@@ -51,6 +52,10 @@ public class CantadorManager implements IObserver {
      */
     public void iniciarCanto() {
         Sala sala = Sala.getInstance();
+        if(sala.getHost() == null || sala.getNicknameJugadorPrincipal() == null){
+            return;
+        }
+        
         if (!sala.getHost().equals(sala.getNicknameJugadorPrincipal())) {
             return;
         }
@@ -100,21 +105,35 @@ public class CantadorManager implements IObserver {
         if (object instanceof Cantador) {
             if (!cantador.isEnEjecucion() && cantador.getMazo().isEmpty()) {
                 System.out.println("SE ACABARON LAS CARTAS");
-                EventoFinRonda evento = new EventoFinRonda(Sala.getInstance().getHost(), "SE ACABARON LAS CARTAS");
-                componentePeer.broadcastEvento(evento);
-                ModeloJuegoFacade.getInstance().finalizarRonda("Se acabaron las cartas");
-                return;
+                if(isHost()){
+                    EventoFinRonda evento = new EventoFinRonda(Sala.getInstance().getHost(), "SE ACABARON LAS CARTAS");
+                    componentePeer.broadcastEvento(evento);
+                    ModeloJuegoFacade.getInstance().finalizarRonda("Se acabaron las cartas");
+                    return;
+                }
             }
             
             new Thread(() -> {
                 try {
                     enviarCarta();
                     Thread.sleep(RETRASO_MS);
-                    actualizarCarta();
+                    
+                    SwingUtilities.invokeLater(() -> {
+                        actualizarCarta();
+                    });
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }).start();
         }
+    }
+    
+    private boolean isHost(){
+        Sala sala = Sala.getInstance();
+        String jugador = sala.getJugadorPrincipal() != null ? sala.getJugadorPrincipal().getNickname() : "";
+        String host = sala.getHost();
+        
+        if(host == null) return false;
+        return jugador.equals(host);
     }
 }

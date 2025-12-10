@@ -117,7 +117,7 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
 
     @Override
     public void actualizarJugadorPrincipal(String user) {
-        SalaSubject.getInstance().setJugadorPrincipalUser(user);
+        salaSubject.setJugadorPrincipalUser(user);
     }
 
     @Override
@@ -129,6 +129,12 @@ public class ModeloVistaConfiguracionFacade implements IModeloVistaConfiguracion
     public void mostrarSalaEspera() {
         FrameConfiguracion.getInstancia().setVisible(true);
         pantallaSubject.setPantallaActual(Pantalla.SALA_ESPERA);
+    }
+    
+    @Override
+    public void mostrarMenuPrincipal() {
+        FrameConfiguracion.getInstancia().setVisible(true);
+        pantallaSubject.setPantallaActual(Pantalla.MENU);
     }
     
 }

@@ -27,8 +27,10 @@ import enums.TipoConfiguracion;
 import enums.TipoMensajePantalla;
 import managers.ConfiguracionManager;
 import enums.TipoNivel;
+import eventos.eventos_aplicacion.EventoFinJuego;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import managers.FinalizarJuegoManager;
 
 /**
  * Clase que implementa los métodos de la interfaz IModeloJuego
@@ -48,6 +50,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     private final CantarJugadaManager cantarJugadaManager = new CantarJugadaManager();
     private final SalaManager unirsePartidaManager = new SalaManager();
     private final ConfiguracionManager configuracionManager = new ConfiguracionManager();
+    private final FinalizarJuegoManager finalizarManager = new FinalizarJuegoManager();
 
     private ModeloJuegoFacade() {
     }
@@ -74,6 +77,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         cantadorManager.inicializar(peer);
         cantarJugadaManager.inicializar(peer);
         unirsePartidaManager.inicializar(peer, modeloVistaConfiguracion);
+        finalizarManager.inicializar(peer, modeloVistaJuego, modeloVistaConfiguracion, cantadorManager);
     }
 
     /**
@@ -106,6 +110,9 @@ public class ModeloJuegoFacade implements IModeloJuego {
             vistaConfiguracion.actualizarJugadorPrincipal(jugadorPrincipal.getNickname());
         } else {
             sala.setJugadorPrincipal(null);
+            if(vistaConfiguracion != null){
+                vistaConfiguracion.actualizarJugadorPrincipal(null);
+            }
         }
     }
 
@@ -223,7 +230,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
                     Logger.getLogger(ModeloJuegoFacade.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                if (verificarSiAlguienGanoElJuego()) {
+                if (finalizarManager.verificarSiAlguienGanoElJuego()) {
                     return;
                 }
 
@@ -323,86 +330,10 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     @Override
     public void finalizarRonda(String motivo) {
-        System.out.println("Se acabo la ronda: " + motivo);
-
-        if (cantadorManager != null) {
-            cantadorManager.detenerCantador();
-        }
-
-        if (vistaJuego != null) {
-            vistaJuego.cerrarVentana();
-        }
-
-        if (vistaConfiguracion != null) {
-            vistaConfiguracion.mostrarSalaEspera();
-
-            Sala sala = Sala.getInstance();
-            sala.setPartidaEnCurso(false);
-            List<JugadorDTO> todosLosJugadores = new ArrayList<>();
-
-            if (sala.getJugadorPrincipal() != null) {
-                todosLosJugadores.add(JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true));
-            }
-
-            for (Jugador j : sala.getJugadoresSecundario()) {
-                todosLosJugadores.add(JugadorMapperModelo.toDTO(j, false));
-            }
-
-            actualizarJugadoresSala(todosLosJugadores);
-
-            if (!motivo.startsWith("JUEGO TERMINADO")) {
-                verificarSiAlguienGanoElJuego();
-            }
-        }
-    }
-
-    /**
-     * Verifica si algún jugador ha alcanzado o superado el puntaje máximo. Si
-     * es así, inicia el proceso de cierre del juego.
-     *
-     * @return true si el juego terminó, false si continúa.
-     */
-    private boolean verificarSiAlguienGanoElJuego() {
-        Sala sala = Sala.getInstance();
-        int puntajeMeta = sala.getConfiguracion().getPuntajeMax();
-
-        Jugador ganador = null;
-        int maxPuntajeActual = -1;
-
-        if (sala.getJugadorPrincipal() != null) {
-            if (sala.getJugadorPrincipal().getPuntos() > maxPuntajeActual) {
-                maxPuntajeActual = sala.getJugadorPrincipal().getPuntos();
-                ganador = sala.getJugadorPrincipal();
-            }
-        }
-
-        for (Jugador j : sala.getJugadoresSecundario()) {
-            if (j.getPuntos() > maxPuntajeActual) {
-                maxPuntajeActual = j.getPuntos();
-                ganador = j;
-            }
-        }
-
-        if (ganador != null && maxPuntajeActual >= puntajeMeta) {
-            cerrarJuegoDefinitivo(ganador.getNickname());
-            return true;
-        }
-
-        return false;
+        finalizarManager.finalizarRonda(motivo);
     }
 
     public void cerrarJuegoDefinitivo(String nombreGanador) {
-        finalizarRonda("JUEGO TERMINADO - Ganador: " + nombreGanador);
-
-        MensajeDTO mensaje = new MensajeDTO(
-                "¡FIN DEL JUEGO!",
-                "<html><center>El jugador " + nombreGanador + " ha ganado la partida.<br>El juego se cerrará.</center></html>",
-                true,
-                enums.TipoMensajePantalla.INFORMACION
-        );
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            mostrarMensaje(mensaje);
-            System.exit(0);
-        });
+        finalizarManager.cerrarJuegoDefinitivo(nombreGanador);
     }
 }

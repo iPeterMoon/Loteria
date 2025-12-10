@@ -25,4 +25,6 @@ public interface IModeloVistaConfiguracion {
     public void cerrarVentana();
     
     public void mostrarSalaEspera();
+    
+    public void mostrarMenuPrincipal();
 }

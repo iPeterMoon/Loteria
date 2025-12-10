@@ -9,6 +9,7 @@ import controladores.ControlesConfiguracionFactory;
 import enums.TipoMensajePantalla;
 import java.awt.Frame;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -48,12 +49,18 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         }
     }
     public void actualizarDatosSala(SalaSubject sala) {
+        if(sala.getHost() == null){
+            panelListaJugadores.actualizarListaJugadores(new ArrayList<>(), 4);
+            configurarModoJugadorNoUnido();
+            return;
+        }
         if(sala.getHost() != null){
             panelListaJugadores.actualizarListaJugadores(sala.getJugadores(), sala.getLimiteJugadores());
             labelNivel.setText(sala.getNivel().toString());
             actualizarBotones(sala);
             panelListaJugadores.revalidate();
             panelListaJugadores.repaint();
+            
             if(contador == 8){
                 tirarEfectoSonido();
                 contador = 1;
@@ -130,8 +137,11 @@ public class PanelSalaEspera extends javax.swing.JPanel {
     private void actualizarBotones(SalaSubject sala) {
         String principalNickname = sala.getJugadorPrincipalUser();
 
-        boolean esJugadorUnido = sala.getJugadores().stream()
-                .anyMatch(j -> j.getNickname().equals(principalNickname));
+        boolean esJugadorUnido = false;
+        if(sala.getJugadores() != null && principalNickname != null){
+            esJugadorUnido = sala.getJugadores().stream()
+                    .anyMatch(j -> j.getNickname().equals(principalNickname));
+        }
 
         if (principalNickname != null && esJugadorUnido) {
             configurarModoJugadorUnido(sala);
@@ -151,10 +161,28 @@ public class PanelSalaEspera extends javax.swing.JPanel {
                 mensajeDialog.mostrarDialogo();
 
                 if (validacion.isExitoso()) {
-                    ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
-                    controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                    // Si el mensaje es de fin de juego, cerrar ventana de juego y mostrar menú
+                    if (validacion.getTitulo().contains("FIN DEL JUEGO")) {
+                        cerrarVentanaJuego();
+                        // El flujo ya fue manejado por mostrarMenuPrincipal() en FinalizarJuegoManager
+                        // No hacer nada aquí, dejar que el menú se muestre
+                    } else {
+                        ControlesConfiguracionFactory controles = ControlesConfiguracionFactory.getInstance();
+                        controles.getControlAplicacion().mostrarPanelSalaEsperaJuego();
+                    }
                 }
             }
+        }
+    }
+    
+    private void cerrarVentanaJuego() {
+        try {
+            // Usar reflexión para evitar dependencias directas entre módulos de presentación
+            Class<?> frameJuegoClass = Class.forName("vista.FrameJuego");
+            java.lang.reflect.Method destruirMethod = frameJuegoClass.getMethod("destruirInstancia");
+            destruirMethod.invoke(null);
+        } catch (Exception e) {
+            System.err.println("Error al cerrar ventana de juego: " + e.getMessage());
         }
     }
 
@@ -222,40 +250,41 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEspera, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(lblSala, javax.swing.GroupLayout.PREFERRED_SIZE, 1275, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEspera, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblSala)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(lblNivel)
                         .addGap(18, 18, 18)
                         .addComponent(labelNivel)
-                        .addGap(419, 419, 419)
-                        .addComponent(lblEspera))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(panelListaJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblEspera)
+                        .addGap(61, 61, 61)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAbandonarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

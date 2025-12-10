@@ -27,14 +27,16 @@ public class PanelParametrosPartida extends javax.swing.JPanel {
         initComponents();
         configurarSpinners();
         configurarRadioButtons();
+        
+        radioBtnNivelBasico.setSelected(true);
     }
 
     private void configurarSpinners() {
-        SpinnerNumberModel modeloPuntajeMaximo = new SpinnerNumberModel(0, 0, 100000000, 100);
-        SpinnerNumberModel modeloLlena = new SpinnerNumberModel(0, 0, 100000000, 100);
-        SpinnerNumberModel modeloChorro = new SpinnerNumberModel(0, 0, 100000000, 100);
-        SpinnerNumberModel modeloCuatroEsquinas = new SpinnerNumberModel(0, 0, 100000000, 100);
-        SpinnerNumberModel modeloCentro = new SpinnerNumberModel(0, 0, 100000000, 100);
+        SpinnerNumberModel modeloPuntajeMaximo = new SpinnerNumberModel(500, 0, 100000000, 100);
+        SpinnerNumberModel modeloLlena = new SpinnerNumberModel(200, 0, 100000000, 100);
+        SpinnerNumberModel modeloChorro = new SpinnerNumberModel(100, 0, 100000000, 100);
+        SpinnerNumberModel modeloCuatroEsquinas = new SpinnerNumberModel(100, 0, 100000000, 100);
+        SpinnerNumberModel modeloCentro = new SpinnerNumberModel(100, 0, 100000000, 100);
 
         SpinnerNumberModel modeloLimiteJugadores = new SpinnerNumberModel(2, 2, 4, 1);
 

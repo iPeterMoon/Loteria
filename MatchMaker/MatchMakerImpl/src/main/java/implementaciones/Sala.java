@@ -95,5 +95,9 @@ public class Sala {
     public void limpiarJugadores() {
         this.jugadores.clear();
     }
+    
+    public boolean salaCreada() {
+        return jugadorHost != null && configuracion != null;
+    }
 
 }
