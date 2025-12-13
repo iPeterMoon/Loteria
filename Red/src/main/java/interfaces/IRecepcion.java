@@ -3,13 +3,16 @@ package interfaces;
 import java.io.IOException;
 
 /**
+ * Interfaz que define el contrato ára los componentes encargados de la
+ * recepción de mensajes provenientes de la red.
  *
  * @author Peter
  */
 public interface IRecepcion {
-    
+
     /**
      * Inicia el servidor de escucha de la red en un puerto aleatorio.
+     *
      * @return El puerto en el que el servidor está escuchando.
      * @throws IOException Si el puerto no se puede enlazar.
      */

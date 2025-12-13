@@ -5,47 +5,70 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Clase que almacena el pool de hilos para los componentes de red
- * el pool de hilos lo comparten el componente de envio y el de recepcion
+ * Clase que almacena el pool de hilos para los componentes de red el pool de
+ * hilos lo comparten el componente de envio y el de recepcion
+ *
  * @author Peter
  */
 public class PoolHilos {
 
+    /**
+     * Pool de hilos para ejecutar tareas recurrentes. Se utiliza un
+     * CachedThreadPool para reutilizar hilos cuando sea posible.
+     */
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
+
+    /**
+     * Instancia única del PoolHilos.
+     */
     private static PoolHilos instance;
-    
+
+    /**
+     * Constructor privado.
+     */
     private PoolHilos() {
     }
 
+    /**
+     * Obtiene la instancia única del PoolHilos.
+     *
+     * @return Instancia única del pool de hilos.
+     */
     public static PoolHilos getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new PoolHilos();
         }
         return instance;
     }
 
+    /**
+     * Regresa el ExecutorService que representa el pool de hilos.
+     *
+     * @return Pool de hilos compartido por los componentes de red.
+     */
     public ExecutorService getThreadPool() {
         return threadPool;
     }
-    
+
     /**
-     * Detiene el pool de hilos de forma ordenada para un cierre limpio de la aplicación.
+     * Detiene el pool de hilos de forma ordenada para un cierre limpio de la
+     * aplicación.
      */
     public void shutdown() {
         if (threadPool != null && !threadPool.isShutdown()) {
             System.out.println(">>> [POOL] Iniciando cierre ordenado del Pool de Hilos.");
-            
+
             // Deshabilita la aceptación de nuevas tareas.
-            threadPool.shutdown(); 
-            
+            threadPool.shutdown();
+
             try {
                 //  Espera un tiempo prudente  para que las tareas activas terminen.
                 if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
                     System.err.println(">>> [POOL] No todas las tareas terminaron. Forzando el cierre...");
-                    
+
                     //  Si el tiempo de espera termina, fuerza la interrupción de las tareas pendientes.
-                    threadPool.shutdownNow(); 
-                    
+                    threadPool.shutdownNow();
+
                     //  Espera nuevamente un corto periodo para confirmar la terminación forzada.
                     if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
                         System.err.println(">>> [POOL] El pool no se detuvo.");

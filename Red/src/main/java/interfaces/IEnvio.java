@@ -1,11 +1,13 @@
 package interfaces;
 
 /**
+ * Interfaz que define el contrato para los componentes encargados del envío de
+ * mensajes a través de la red.
  *
  * @author Peter
  */
 public interface IEnvio {
-     
+
     /**
      * Empieza el hilo del cliente para enviar mensajes
      */

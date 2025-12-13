@@ -9,7 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import dtos.Mensaje;
 
 /**
+ * Clase encargada de gestionar el envío de mensajes de red hacia otros nodos.
+ * Funciona como un cliente que procesa una cola de mensajes de salida y los
+ * envía a los destinos correspondientes.
  *
+ * Implementa Runnable para ejecutarse en un hilo independiente y permitir
+ * el envío asíncrono de mensajes sin bloquear el flujo principal de la aplicación.
+ * 
  * @author pedro
  */
 public class ClienteRed implements Runnable {
@@ -29,6 +35,13 @@ public class ClienteRed implements Runnable {
         return instance;
     }
 
+    /**
+     * Hilo principal del cliente de red.
+     * 
+     * Procesa continuamente la cola de mensajes de salida. El hilo se bloquea
+     * hasta que exista un mensaje disponible y posteriormente lo envía al
+     * destinatario correspondiente.
+     */
     @Override
     public void run() {
         System.out.println("[ClienteRed] Procesador de cola de salida iniciado.");
