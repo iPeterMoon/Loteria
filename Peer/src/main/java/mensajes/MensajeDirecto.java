@@ -9,6 +9,9 @@ import eventos.Evento;
  */
 public class MensajeDirecto extends Mensaje {
 
+    /**
+     * Nombre de usuario del peer destinatario.
+     */
     private final String user;
 
     /**
@@ -23,6 +26,11 @@ public class MensajeDirecto extends Mensaje {
         this.user = user;
     }
 
+    /**
+     * Obtiene el nombre de usuario del peer destinatario.
+     *
+     * @return Nombre de usuario del destinatario.
+     */
     public String getUser() {
         return user;
     }

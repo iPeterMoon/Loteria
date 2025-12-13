@@ -8,13 +8,23 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
+ * Clase encargada de gestionar la cola de mensajes entrantes recibidos desde la
+ * red en el componente de Peer.
  *
  * @author norma
  */
 public class IncomingMessageDispatcher {
 
+    /**
+     * Cola bloqueante que almacena los mensajes entrantes.
+     */
     private static BlockingQueue<String> incomingQueue = new LinkedBlockingQueue<>();
 
+    /**
+     * Inserta un mensaje recibido en la cola de entrada.
+     *
+     * @param mensaje Mensaje recibido desde la red.
+     */
     public static void dispatch(String mensaje) {
         if (mensaje == null || incomingQueue == null) {
             System.err.println("Error: Mensaje o cola de entrada nulos en el despachador.");
@@ -28,6 +38,12 @@ public class IncomingMessageDispatcher {
         }
     }
 
+    /**
+     * Obtiene y elimina el siguiente mensaje disponible en la cola de entrada.
+     *
+     * @return Mensaje recibido desde la red.
+     * @throws InterruptedException Si el hilo es interrumpido mientras espera.
+     */
     public static String take() throws InterruptedException{
         return incomingQueue.take();
     }

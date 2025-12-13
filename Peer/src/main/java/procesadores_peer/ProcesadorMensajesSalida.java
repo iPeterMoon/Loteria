@@ -2,13 +2,21 @@ package procesadores_peer;
 
 import network.OutgoingMessageDispatcher;
 
-
 /**
+ * Clase encargada de procesar los mensajes salientes en el peer.
+ * Se ejecuta en un hilo independiente mientras el componente de envío se
+ * encuentra activo.
  *
  * @author Jp
  */
 public class ProcesadorMensajesSalida extends ProcesadorMensajes{
 
+    /**
+     * Constructor.
+     *
+     * Inicializa la cadena de responsabilidad para los mensajes de salida,
+     * estableciendo el orden de los manejadores.
+     */
     public ProcesadorMensajesSalida() {
         // Inicializar manejadores
         ManejadorMensajesSalida envioHeartbeat = new ManejadorEnvioHeartbeat();
@@ -21,6 +29,10 @@ public class ProcesadorMensajesSalida extends ProcesadorMensajes{
         this.manejadorPrincipal = envioHeartbeat;
     }
 
+    /**
+     * Extrae mensajes de la cola de salida y los envía a la cadena de
+     * responsabilidad para su procesamiento.
+     */
     @Override
     public void run() {
         while (isRunning) {

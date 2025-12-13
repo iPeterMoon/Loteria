@@ -17,6 +17,9 @@ import peer.PeersConectados;
  */
 public class ManejadorNuevoPeer extends ManejadorMensajesLlegada {
 
+    /**
+     * Serializador JSON.
+     */
     private final Gson gson = new Gson();
     private PeerInfo nuevoPeer;
     

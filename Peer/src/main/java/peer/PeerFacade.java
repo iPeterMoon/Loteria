@@ -27,6 +27,7 @@ public class PeerFacade implements IPeer {
     /**
      * Inicia los servicios de la lógica de Peer.
      */
+    @Override
     public void start() {
         this.peer.start();
     }
@@ -36,6 +37,7 @@ public class PeerFacade implements IPeer {
      *
      * @param evento Evento a transmitir.
      */
+    @Override
     public void broadcastEvento(Evento evento) {
         this.peer.broadcastEvento(evento);
     }
@@ -46,6 +48,7 @@ public class PeerFacade implements IPeer {
      * @param evento Evento a transmitir.
      * @param user Usuario del Peer destinatario.
      */
+    @Override
     public void directMessage(Evento evento, String user) {
         this.peer.directMessage(evento, user);
     }
@@ -55,6 +58,7 @@ public class PeerFacade implements IPeer {
      *
      * @param user
      */
+    @Override
     public void setUser(String user) {
         this.peer.setUser(user);
     }
@@ -64,6 +68,7 @@ public class PeerFacade implements IPeer {
      *
      * @param observer Objeto que implementa IObserver.
      */
+    @Override
     public void setObserver(IObserver observer) {
         this.peer.setObserver(observer);
     }
@@ -75,6 +80,10 @@ public class PeerFacade implements IPeer {
         this.peer.abandonar(); 
     }
 
+    /**
+     * Detiene todos los servicios asociados al peer y libera los recursos
+     * utilizados.
+     */
     @Override
     public void stop() {
         this.peer.stop();

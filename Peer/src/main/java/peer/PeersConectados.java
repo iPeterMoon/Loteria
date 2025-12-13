@@ -8,20 +8,39 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 /**
+ * Clase que actúa como un registro central de peers conocidos por el peer
+ * local.
  *
  * @author pedro
  */
 public class PeersConectados {
 
+    /**
+     * Instancia única del registro de peers.
+     */
     private static PeersConectados instance;
 
+    /**
+     * Mapa de peers conectados, indexados por su clave ip:puerto.
+     */
     private final Map<String, PeerInfo> listaPeers;
+    
+    /**
+     * Información del peer local.
+     */
     private PeerInfo myInfo;
 
+    /**
+     * Constructor privado. Inicializa la estructura de almacenamiento de peers.
+     */
     private PeersConectados() {
         this.listaPeers = new ConcurrentHashMap<>();
     }
 
+    /**
+     * Obtiene la instancia única de la clase.
+     * @return instancia de PeersConectados.
+     */
     public static PeersConectados getInstance() {
         if (instance == null) {
             synchronized (PeersConectados.class) {
@@ -33,6 +52,10 @@ public class PeersConectados {
         return instance;
     }
 
+    /**
+     * Registra la información del peer local.
+     * @param myInfo Info del peer.
+     */
     public void setMyInfo(PeerInfo myInfo) {
         this.myInfo = myInfo;
     }
@@ -103,8 +126,8 @@ public class PeersConectados {
     /**
      * Metodo para ejecutar un metodo para todos los peers conectados (puede ser
      * un broadcast)
-     *
-     * @param accion
+     *@param mensaje mensaje asociado a la acción
+     * @param accion función a ejecutar por cada peer
      */
     public void ejecutarEnTodos(String mensaje, BiConsumer<PeerInfo, String> accion) {
         for (PeerInfo peer : listaPeers.values()) {
@@ -139,6 +162,9 @@ public class PeersConectados {
         return listaPeers.values();
     }
 
+    /**
+     * Imprime la lista de peers conectados.
+     */
     private void imprimirListaPeers() {
         for (PeerInfo peer : listaPeers.values()) {
             System.out.println(peer.getUser() + "@" + peer.getIp() + ":" + peer.getPort());

@@ -12,7 +12,14 @@ import util.ConfigLoader;
  */
 public class DiscoveryRegistrar {
 
+    /**
+     * Dirección IP del servidor de discovery.
+     */
     private final static String DISCOVERY_IP = ConfigLoader.getInstance().getIpServidor();
+    
+    /**
+     * Puerto del servidor de discovery.
+     */
     private final static int DISCOVERY_PORT = ConfigLoader.getInstance().getPuertoDiscovery(); 
 
     /**

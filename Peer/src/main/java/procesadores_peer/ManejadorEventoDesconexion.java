@@ -5,10 +5,6 @@ import com.google.gson.JsonObject;
 import dtos.peer.PeerInfo;
 import enums.TipoEvento;
 import eventos.eventos_peers.EventoPeerDesconectado;
-
-import java.util.Collection;
-import java.util.Comparator;
-import peer.Peer;
 import peer.PeersConectados;
 
 /**
@@ -19,8 +15,17 @@ import peer.PeersConectados;
  */
 public class ManejadorEventoDesconexion extends ManejadorMensajesLlegada {
 
+    /**
+     * Serializador JSON.
+     */
     private final Gson gson = new Gson();
 
+    /**
+     * Procesa el evento recibido en formato JSON.
+     * Si el manejador actual no reconoce el tipo de evento, debe delegar la solicitud al siguiente manejador.
+     * 
+     * @param json objeto que contiene los datos del evento a procesar.
+     */
     @Override
     public void procesar(JsonObject json) {
         // Validación de existencia de tipoEvento
@@ -40,6 +45,10 @@ public class ManejadorEventoDesconexion extends ManejadorMensajesLlegada {
         }
     }
 
+    /**
+     * Procesa el evento de desconexión del peer.
+     * @param json objeto que contiene los datos del evento
+     */
     private void procesarDesconexion(JsonObject json) {
         PeersConectados peersConectados = PeersConectados.getInstance();
 

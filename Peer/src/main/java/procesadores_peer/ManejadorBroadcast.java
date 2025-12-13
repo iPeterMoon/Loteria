@@ -13,6 +13,9 @@ import peer.PeersConectados;
  */
 public class ManejadorBroadcast extends ManejadorMensajesSalida {
 
+    /**
+     * Serializador JSON.
+     */
     private final Gson gson = new Gson();
 
     @Override

@@ -7,7 +7,6 @@ import dtos.peer.PeerInfo;
 import network.EnvioPeer;
 import mensajes.TipoMensaje;
 import peer.PeersConectados;
-import util.ConfigLoader;
 
 /**
  * Manejador para procesar mensajes directos. Se encarga de enviar mensajes a un
@@ -17,8 +16,17 @@ import util.ConfigLoader;
  */
 public class ManejadorMensajeDirecto extends ManejadorMensajesSalida {
 
+    /**
+     * Serializador JSON.
+     */
     private final Gson gson = new Gson();
 
+    /**
+     * Procesa el evento recibido en formato JSON.
+     * Si el manejador actual no reconoce el tipo de evento, debe delegar la solicitud al siguiente manejador.
+     * 
+     * @param json objeto que contiene los datos del evento a procesar.
+     */
     @Override
     public void procesar(JsonObject json) {
         if(json.has("tipoMensaje")){

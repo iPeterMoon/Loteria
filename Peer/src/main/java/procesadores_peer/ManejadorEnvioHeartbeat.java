@@ -16,8 +16,17 @@ import util.ConfigLoader;
  */
 public class ManejadorEnvioHeartbeat extends ManejadorMensajesSalida {
 
+    /**
+     * Serializador JSON.
+     */
     private final Gson gson = new Gson();
 
+    /**
+     * Procesa el evento recibido en formato JSON.
+     * Si el manejador actual no reconoce el tipo de evento, debe delegar la solicitud al siguiente manejador.
+     * 
+     * @param json objeto que contiene los datos del evento a procesar.
+     */
     @Override
     public void procesar(JsonObject json) {
             if(!json.has("evento")) {
