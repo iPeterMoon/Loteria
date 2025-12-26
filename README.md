@@ -17,7 +17,7 @@ Proyecto de arquitectura de software distribuido que implementa un sistema de ju
 ## 📌 Descripción General
 
 Este proyecto es una aplicación distribuida de lotería que utiliza:
-- **Arquitectura P2P (Peer-to-Peer)** para comunicación entre nodos
+- **Arquitectura P2P (Peer-to-Peer)** para comunicación entre nodos 
 - **Discovery Service** para localización de servicios
 - **MatchMaker Service** para emparejar jugadores en partidas
 - **UI JavaFX** para la interfaz gráfica de configuración y juego
@@ -227,7 +227,7 @@ mvn assembly:assembly
 ### Variables de Configuración
 | Variable | Descripción | Valor por Defecto |
 |----------|-------------|--------------------|
-| `ip_servidor` | IP del servidor central | 10.176.5.135 |
+| `ip_servidor` | IP del servidor central |  |
 | `puerto_discovery` | Puerto del servicio Discovery | 12345 |
 | `puerto_matchmaker` | Puerto del servicio MatchMaker | 12346 |
 | `usuario_matchmaker` | Usuario del servicio MatchMaker | MATCHMAKER |
@@ -295,8 +295,7 @@ mvn -pl :Peer clean install
 
 ## 🤝 Contribuyentes
 
-- **Autor Principal**: Pedro Luna
-- **Contribuyentes**:  
+- **Autor Principal**: Pedro Luna, Denise García, Norma Beltrán, Isabel Rocha, Juan Olivarría
 
 ---
 
