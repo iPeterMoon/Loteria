@@ -87,10 +87,16 @@ public class PanelSalaEspera extends javax.swing.JPanel {
         String principalNickname = sala.getJugadorPrincipalUser();
 
         btnAbandonarSala.setVisible(true);
-        lblEspera.setVisible(true); 
-        btnAccion.setVisible(false); 
-        
-        if (principalNickname != null && principalNickname.equals(sala.getHost())) {
+        lblEspera.setVisible(true);
+        btnAccion.setVisible(false);
+
+        System.out.println("[DIAG][PanelSalaEspera] configurarModoJugadorUnido principalNickname="
+                + principalNickname + " sala.getHost()=" + sala.getHost());
+
+        boolean esHost = principalNickname != null && principalNickname.equals(sala.getHost());
+        boolean haySuficientesJugadores = sala.getJugadores() != null && sala.getJugadores().size() >= 2;
+
+        if (esHost && haySuficientesJugadores) {
             btnAccion.setText("Iniciar Partida");
             btnAccion.setVisible(true);
             lblEspera.setVisible(false);
@@ -127,6 +133,11 @@ public class PanelSalaEspera extends javax.swing.JPanel {
             esJugadorUnido = sala.getJugadores().stream()
                     .anyMatch(j -> j.getNickname().equals(principalNickname));
         }
+
+        System.out.println("[DIAG][PanelSalaEspera] actualizarBotones principalNickname=" + principalNickname
+                + " esJugadorUnido=" + esJugadorUnido + " sala.getHost()=" + sala.getHost()
+                + " jugadores=" + (sala.getJugadores() == null ? "null" : sala.getJugadores().stream()
+                        .map(j -> j.getNickname()).toList()));
 
         if (principalNickname != null && esJugadorUnido) {
             configurarModoJugadorUnido(sala);

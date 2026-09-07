@@ -158,6 +158,7 @@ public class SalaSubject extends Subject {
      * @param jugadores La nueva lista de jugadores.
      */
     public void setJugadores(List<JugadorSalaEsperaDTO> jugadores) {
+        System.out.println("[DIAG][SalaSubject] setJugadores=" + (jugadores == null ? "null" : jugadores.stream().map(JugadorSalaEsperaDTO::getNickname).toList()));
         this.jugadores = jugadores;
         notifyAllObservers();
     }
@@ -171,6 +172,7 @@ public class SalaSubject extends Subject {
      * @param nivel El nuevo nivel de dificultad.
      */
     public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
+        System.out.println("[DIAG][SalaSubject] actualizarDatosSala host=" + host + " (antes hostUser=" + this.hostUser + ")");
         this.hostUser = host;
         this.limiteJugadores = limiteJugadores;
         this.nivel = nivel;
