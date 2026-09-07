@@ -106,7 +106,7 @@ public class Sala {
     }
     
     public boolean isInSala(String user){
-        if (jugadorPrincipal.getNickname().equals(user)){
+        if (jugadorPrincipal != null && jugadorPrincipal.getNickname().equals(user)){
             return true;
         }
         for(Jugador jugador : jugadoresSecundario){
@@ -132,10 +132,10 @@ public class Sala {
                 return;
             }
         }
-        if (jugadorPrincipal.getNickname().equals(nickname)) {
+        if (jugadorPrincipal != null && jugadorPrincipal.getNickname().equals(nickname)) {
             jugadorPrincipal.setPuntos(jugadorPrincipal.getPuntos() + configuracion.getPuintajes().get(jugada));
         }
-        
+
         imprimirPuntajes();
     }
 
@@ -143,11 +143,13 @@ public class Sala {
         for (Jugador jugador : jugadoresSecundario) {
             System.out.println(jugador.getNickname() + ": " + jugador.getPuntos());
         }
-        System.out.println(jugadorPrincipal.getNickname() + ": " + jugadorPrincipal.getPuntos());
+        if (jugadorPrincipal != null) {
+            System.out.println(jugadorPrincipal.getNickname() + ": " + jugadorPrincipal.getPuntos());
+        }
     }
 
     public String getNicknameJugadorPrincipal() {
-        return jugadorPrincipal.getNickname();
+        return jugadorPrincipal != null ? jugadorPrincipal.getNickname() : null;
     }
 
     public Map<JugadasDisponibles, Boolean> getEstaDisponible() {
@@ -174,7 +176,22 @@ public class Sala {
         this.partidaEnCurso = partidaEnCurso;
     }
 
-    
-    
-    
+    /**
+     * Limpia por completo la membresía de esta sala: jugador principal,
+     * jugadores secundarios, configuración, host y banderas de juego/partida
+     * en curso. Se usa cuando este cliente deja de pertenecer a la sala
+     * (la sala se elimina, o el jugador abandona la partida en curso, lo
+     * cual ya lo da de baja del lado del servidor igual que una
+     * desconexión real) para que el estado local no quede desincronizado
+     * del resto de los jugadores.
+     */
+    public void resetear() {
+        jugadorPrincipal = null;
+        jugadoresSecundario.clear();
+        configuracion = null;
+        host = null;
+        juegoEnCurso = false;
+        partidaEnCurso = false;
+    }
+
 }

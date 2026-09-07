@@ -45,7 +45,12 @@ public class SalaManager {
     }
     
     public void abandonarSala(){
-        EventoSalirSalaEspera eventoSalirSalaEspera = new EventoSalirSalaEspera(Sala.getInstance().getJugadorPrincipal().getNickname());
+        String nicknamePrincipal = Sala.getInstance().getNicknameJugadorPrincipal();
+        if (nicknamePrincipal == null) {
+            return;
+        }
+
+        EventoSalirSalaEspera eventoSalirSalaEspera = new EventoSalirSalaEspera(nicknamePrincipal);
         ModeloJuegoFacade.getInstance().setJugadorPrincipal(null);
         componentePeer.directMessage(eventoSalirSalaEspera, ConfigLoader.getInstance().getUsuarioMatchmaker());
         this.componentePeer.setUser(null);

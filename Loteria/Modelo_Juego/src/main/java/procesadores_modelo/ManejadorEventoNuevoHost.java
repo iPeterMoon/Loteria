@@ -46,7 +46,8 @@ public class ManejadorEventoNuevoHost extends ManejadorEventos {
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
-            if (userHost.equals(sala.getJugadorPrincipal().getNickname()) && sala.isPartidaEnCurso()) {
+            String nicknamePrincipal = sala.getNicknameJugadorPrincipal();
+            if (nicknamePrincipal != null && userHost.equals(nicknamePrincipal) && sala.isPartidaEnCurso()) {
                 int intervalo = Sala.getInstance().getConfiguracion().getDificultad().getIntervalo();
                 Cantador.getInstance().iniciarCanto(intervalo);
 

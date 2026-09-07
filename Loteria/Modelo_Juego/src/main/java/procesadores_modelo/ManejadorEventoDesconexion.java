@@ -42,8 +42,30 @@ public class ManejadorEventoDesconexion extends ManejadorEventos {
         }
 
               
-        if(sala.isJuegoEnCurso() && listaJugadores != null && listaJugadores.isEmpty()){
-            ModeloJuegoFacade.getInstance().cerrarJuegoDefinitivo(sala.getJugadorPrincipal().getNickname());
+        String nicknamePrincipal = sala.getNicknameJugadorPrincipal();
+
+        // Un jugador puede abandonar la partida y luego volver a unirse a la
+        // sala (queda como espectador, sin tarjeta repartida en esta ronda).
+        // Ese "reingresado" sigue apareciendo en jugadoresSecundario aunque
+        // no esté jugando de verdad, así que "me quedé solo" debe contar
+        // solo a los que sí tienen tarjeta (participantes activos de la
+        // ronda), no a cualquiera que simplemente esté en la sala.
+        boolean quedanOponentesActivos = listaJugadores != null
+                && listaJugadores.stream().anyMatch(j -> j.getTarjeta() != null);
+
+        if(sala.isJuegoEnCurso() && !quedanOponentesActivos && nicknamePrincipal != null){
+            // Aunque ya no quede nadie jugando activamente esta ronda, puede
+            // seguir habiendo alguien más en la sala (p. ej. un jugador que
+            // abandonó y se reincorporó como espectador). En ese caso no hay
+            // que cerrar/eliminar la sala del todo — solo declarar la ronda
+            // ganada por abandono y regresar a la sala de espera para que
+            // quien quede la pueda seguir usando.
+            boolean haySalaConAlguienMas = listaJugadores != null && !listaJugadores.isEmpty();
+            if (haySalaConAlguienMas) {
+                ModeloJuegoFacade.getInstance().ganarPorAbandono(nicknamePrincipal);
+            } else {
+                ModeloJuegoFacade.getInstance().cerrarJuegoDefinitivo(nicknamePrincipal);
+            }
         } else {
             actualizarJugadoresEnVista();
         }

@@ -53,13 +53,20 @@ public class InicioPartidaManager {
     /**
      * Metodo orquestador para iniciar la partida, hace todo lo necesario
      * para barajear el mazo y mostrar la pantalla de la partida.
+     *
+     * @return true si la partida realmente inició, false si se rechazó
+     * (p. ej. sin más jugadores) — el llamador no debe arrancar el cantador
+     * ni nada más si esto regresa false.
      */
-    public void iniciarPartida() {
+    public boolean iniciarPartida() {
         Sala sala = Sala.getInstance();
+        if (sala.getJugadorPrincipal() == null) {
+            return false;
+        }
         if(!sala.getJugadoresSecundario().isEmpty()){
             sala.resetearJugadasDisponibles();
             Cantador.getInstance().detenerCanto();
-            
+
             barajearMazo();
             repartirTarjetas();
             generarEventoInicioPartida();
@@ -68,9 +75,11 @@ public class InicioPartidaManager {
                 sala.setJuegoEnCurso(true);
             }
             sala.setPartidaEnCurso(true);
+            return true;
         } else {
             MensajeDTO mensaje = new MensajeDTO("No se puede iniciar", "<html>No puede iniciar la partida si no hay más jugadores</html>", false, TipoMensajePantalla.VALIDACION_SALA_ESPERA);
             ModeloJuegoFacade.getInstance().mostrarMensaje(mensaje);
+            return false;
         }
     }
 
@@ -143,8 +152,10 @@ public class InicioPartidaManager {
      * Metodo para iniciar el frame de la partida. 
      */
     public void mostrarFramePartida(){
-        establecerJugadoresEnVista();
-        modeloVista.iniciarFrameJuego();
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            establecerJugadoresEnVista();
+            modeloVista.iniciarFrameJuego();
+        });
     }
 
     /**

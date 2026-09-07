@@ -122,6 +122,13 @@ public interface IModeloJuego {
     public void obtenerSala();
 
     public void crearNuevaSala(ConfiguracionJuegoDTO configuracionJuego);
-    
+
     public void finalizarRonda(String motivo);
+
+    /**
+     * Método para abandonar una partida en curso. A diferencia de
+     * {@link #abandonarSala()}, este notifica a los demás peers de la
+     * partida y limpia el estado del juego (cantador, ventana, sala).
+     */
+    public void abandonarPartida();
 }

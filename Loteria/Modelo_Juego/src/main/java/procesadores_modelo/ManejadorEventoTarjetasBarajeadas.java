@@ -56,7 +56,9 @@ public class ManejadorEventoTarjetasBarajeadas extends ManejadorEventos {
     private void repartirTarjetas(Map<String, Tarjeta> jugadoresTarjetas){
         Sala sala = Sala.getInstance();
         Jugador jugadorPrincipal = sala.getJugadorPrincipal();
-        jugadorPrincipal.setTarjeta(jugadoresTarjetas.get(jugadorPrincipal.getNickname()));
+        if (jugadorPrincipal != null) {
+            jugadorPrincipal.setTarjeta(jugadoresTarjetas.get(jugadorPrincipal.getNickname()));
+        }
         for(Jugador jugador : sala.getJugadoresSecundario()){
             jugador.setTarjeta(jugadoresTarjetas.get(jugador.getNickname()));
         }

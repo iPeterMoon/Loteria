@@ -55,13 +55,10 @@ public class ManejadorEventoInfoSala extends ManejadorEventos {
     private void resetearSala() {
         Sala sala = Sala.getInstance();
 
-        sala.setJugadorPrincipal(null);
-        sala.getJugadoresSecundario().clear();
-        sala.setConfiguracion(null);
-        sala.setHost(null);
-        sala.setJuegoEnCurso(false);
-        sala.setPartidaEnCurso(false);
-        
+        modeloJuegoFacade.detenerJuegoEnCurso();
+
+        sala.resetear();
+
         modeloJuegoFacade.actualizarJugadoresSala(new ArrayList<>());
         modeloJuegoFacade.setJugadorPrincipal(null);
     }

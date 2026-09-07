@@ -16,6 +16,7 @@ import interfaces.aplicacion.IModeloVistaConfiguracion;
 import interfaces.peer.IPeer;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import managers.CantadorManager;
 import managers.CantarJugadaManager;
 import managers.InicioPartidaManager;
@@ -105,12 +106,15 @@ public class ModeloJuegoFacade implements IModeloJuego {
         Sala sala = Sala.getInstance();
         if (jugadorPrincipal != null) {
             sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorPrincipal));
-            vistaConfiguracion.actualizarJugadorPrincipal(jugadorPrincipal.getNickname());
+            String nickname = jugadorPrincipal.getNickname();
+            SwingUtilities.invokeLater(() -> vistaConfiguracion.actualizarJugadorPrincipal(nickname));
         } else {
             sala.setJugadorPrincipal(null);
-            if(vistaConfiguracion != null){
-                vistaConfiguracion.actualizarJugadorPrincipal(null);
-            }
+            SwingUtilities.invokeLater(() -> {
+                if (vistaConfiguracion != null) {
+                    vistaConfiguracion.actualizarJugadorPrincipal(null);
+                }
+            });
         }
     }
 
@@ -142,14 +146,14 @@ public class ModeloJuegoFacade implements IModeloJuego {
     @Override
     public void colocarFicha(EventoFicha ficha) {
         FichaDTO fichaDTO = new FichaDTO(ficha.getUserSender(), ficha.getPosicion());
-        vistaJuego.colocarFicha(fichaDTO);
+        SwingUtilities.invokeLater(() -> vistaJuego.colocarFicha(fichaDTO));
     }
 
     @Override
     public void iniciarPartida() {
-        inicioPartidaManager.iniciarPartida();
-        inicioPartidaManager.mostrarFramePartida();
-        cantadorManager.iniciarCanto();
+        if (inicioPartidaManager.iniciarPartida()) {
+            cantadorManager.iniciarCanto();
+        }
     }
 
     @Override
@@ -160,21 +164,12 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     @Override
     public void mostrarFramePartida() {
-        // 1. Crear la nueva ventana
+        // InicioPartidaManager.mostrarFramePartida() ya agrega el jugador
+        // principal y los secundarios a la vista (establecerJugadoresEnVista)
+        // antes de abrir la ventana; hacerlo de nuevo aquí duplicaba los
+        // paneles de jugador y causaba que la ventana se reacomodara/creciera
+        // justo después de mostrarse.
         inicioPartidaManager.mostrarFramePartida();
-
-        // 2. Inyectar los datos frescos
-        Sala sala = Sala.getInstance();
-
-        if (sala.getJugadorPrincipal() != null) {
-            JugadorDTO dto = JugadorMapperModelo.toDTO(sala.getJugadorPrincipal(), true);
-            vistaJuego.agregarJugadorPrincipal(dto);
-        }
-
-        for (Jugador j : sala.getJugadoresSecundario()) {
-            JugadorDTO dto = JugadorMapperModelo.toDTO(j, false);
-            vistaJuego.agregarJugadorSecundario(dto);
-        }
     }
 
     /**
@@ -184,7 +179,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
      */
     @Override
     public void actualizarCarta(int cartaActual) {
-        vistaJuego.actualizarCarta(cartaActual);
+        SwingUtilities.invokeLater(() -> vistaJuego.actualizarCarta(cartaActual));
     }
 
     /**
@@ -215,7 +210,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         int puntaje = configuracionJuego.getPuintajes().get(JugadasDisponibles.valueOf(jugada));
         JugadaDTO jugadaDTO = new JugadaDTO(usuario, jugada, puntaje);
 
-        vistaJuego.cantarJugada(jugadaDTO);
+        SwingUtilities.invokeLater(() -> vistaJuego.cantarJugada(jugadaDTO));
         Sala.getInstance().agregarPuntaje(eventoJugada.getUserSender(), JugadasDisponibles.valueOf(eventoJugada.getTipoJugada()));
 
         if (eventoJugada.getTipoJugada().equals("LLENA")) {
@@ -235,7 +230,8 @@ public class ModeloJuegoFacade implements IModeloJuego {
                 finalizarRonda("El jugador " + eventoJugada.getUserSender() + " ganó la ronda");
 
                 String nuevoHost = eventoJugada.getUserSender();
-                vistaConfiguracion.actualizarDatosSala(nuevoHost, configuracionJuego.getLimiteJugadores(), configuracionJuego.getDificultad());
+                SwingUtilities.invokeLater(() -> vistaConfiguracion.actualizarDatosSala(
+                        nuevoHost, configuracionJuego.getLimiteJugadores(), configuracionJuego.getDificultad()));
                 Sala.getInstance().setHost(nuevoHost);
             }).start();
         }
@@ -274,7 +270,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
         for (JugadorDTO dto : jugadores) {
             jugadoresSalaEspera.add(JugadorMapperModelo.toSalaEsperaDTO(dto));
         }
-        vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera);
+        SwingUtilities.invokeLater(() -> vistaConfiguracion.actualizarJugadoresSala(jugadoresSalaEspera));
     }
 
     /**
@@ -286,7 +282,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
      */
     @Override
     public void actualizarDatosSala(String host, int limiteJugadores, TipoNivel nivel) {
-        vistaConfiguracion.actualizarDatosSala(host, limiteJugadores, nivel);
+        SwingUtilities.invokeLater(() -> vistaConfiguracion.actualizarDatosSala(host, limiteJugadores, nivel));
     }
 
     @Override
@@ -295,7 +291,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     }
 
     public void mostrarMensaje(MensajeDTO mensaje) {
-        vistaConfiguracion.actualizarMensaje(mensaje);
+        SwingUtilities.invokeLater(() -> vistaConfiguracion.actualizarMensaje(mensaje));
     }
 
     @Override
@@ -305,7 +301,7 @@ public class ModeloJuegoFacade implements IModeloJuego {
     }
 
     public void cambiarTipoConfiguracion(TipoConfiguracion tipoConfiguracion) {
-        vistaConfiguracion.actualizarTipoConfiguracion(tipoConfiguracion);
+        SwingUtilities.invokeLater(() -> vistaConfiguracion.actualizarTipoConfiguracion(tipoConfiguracion));
     }
 
     @Override
@@ -319,11 +315,11 @@ public class ModeloJuegoFacade implements IModeloJuego {
     }
 
     public void cerrarSalaEspera() {
-        vistaConfiguracion.cerrarVentana();
+        SwingUtilities.invokeLater(() -> vistaConfiguracion.cerrarVentana());
     }
 
     public void eliminarJugadorDePartida(String user) {
-        vistaJuego.eliminarJugadorSecundario(user);
+        SwingUtilities.invokeLater(() -> vistaJuego.eliminarJugadorSecundario(user));
     }
 
     @Override
@@ -333,5 +329,18 @@ public class ModeloJuegoFacade implements IModeloJuego {
 
     public void cerrarJuegoDefinitivo(String nombreGanador) {
         finalizarManager.cerrarJuegoDefinitivo(nombreGanador);
+    }
+
+    @Override
+    public void abandonarPartida() {
+        finalizarManager.abandonarPartida();
+    }
+
+    public void detenerJuegoEnCurso() {
+        finalizarManager.detenerJuegoEnCurso();
+    }
+
+    public void ganarPorAbandono(String nombreGanador) {
+        finalizarManager.ganarPorAbandono(nombreGanador);
     }
 }

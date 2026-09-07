@@ -15,6 +15,7 @@ import mappers.JugadorMapperModelo;
 import modelo.Jugador;
 import modelo.ModeloJuegoFacade;
 import modelo.Sala;
+import modelo.Tarjeta;
 
 /**
  *
@@ -38,33 +39,48 @@ public class ManejadorEventoSalaActualizada extends ManejadorEventos {
         List<Jugador> jugadoresSecundarios = new ArrayList<>();
         String nicknamePrincipal = (sala.getJugadorPrincipal() != null) ? sala.getJugadorPrincipal().getNickname() : "";
         
-        // Preservar los puntos acumulados de jugadores existentes (incluyendo el principal)
+        // Preservar los puntos y la tarjeta ya repartida de jugadores existentes
+        // (incluyendo el principal). El roster que manda el Matchmaker no conoce
+        // las tarjetas repartidas peer-to-peer, así que sin esto se perdería la
+        // tarjeta del jugador (y ya no podría colocar fichas) cada vez que este
+        // evento llega en plena partida (p. ej. al reasignarse el host).
         Map<String, Integer> puntosAcumulados = new java.util.HashMap<>();
-        
+        Map<String, Tarjeta> tarjetasAcumuladas = new java.util.HashMap<>();
+
         if (sala.getJugadorPrincipal() != null) {
             puntosAcumulados.put(sala.getJugadorPrincipal().getNickname(), sala.getJugadorPrincipal().getPuntos());
+            if (sala.getJugadorPrincipal().getTarjeta() != null) {
+                tarjetasAcumuladas.put(sala.getJugadorPrincipal().getNickname(), sala.getJugadorPrincipal().getTarjeta());
+            }
         }
-        
+
         List<Jugador> jugadoresActuales = sala.getJugadoresSecundario();
         if (jugadoresActuales != null) {
             for (Jugador j : jugadoresActuales) {
                 puntosAcumulados.put(j.getNickname(), j.getPuntos());
+                if (j.getTarjeta() != null) {
+                    tarjetasAcumuladas.put(j.getNickname(), j.getTarjeta());
+                }
             }
         }
 
-        // Actualizar el jugador principal con sus puntos preservados
+        // Actualizar el jugador principal con sus puntos y tarjeta preservados
         for (JugadorDTO jugadorDTO : jugadoresDTO) {
             if (jugadorDTO.getNickname().equals(nicknamePrincipal)) {
                 // Restaurar puntos acumulados del principal
                 if (puntosAcumulados.containsKey(nicknamePrincipal)) {
                     jugadorDTO.setPuntos(puntosAcumulados.get(nicknamePrincipal));
                 }
-                sala.setJugadorPrincipal(JugadorMapperModelo.toJugador(jugadorDTO));
+                Jugador jugadorPrincipal = JugadorMapperModelo.toJugador(jugadorDTO);
+                if (jugadorPrincipal.getTarjeta() == null && tarjetasAcumuladas.containsKey(nicknamePrincipal)) {
+                    jugadorPrincipal.setTarjeta(tarjetasAcumuladas.get(nicknamePrincipal));
+                }
+                sala.setJugadorPrincipal(jugadorPrincipal);
                 break;
             }
         }
 
-        // Actualizar jugadores secundarios con sus puntos preservados
+        // Actualizar jugadores secundarios con sus puntos y tarjeta preservados
         for (JugadorDTO jugadorDTO : jugadoresDTO) {
             if (!jugadorDTO.getNickname().equals(nicknamePrincipal)) {
                 // Restaurar puntos acumulados si el jugador ya existía
@@ -72,6 +88,9 @@ public class ManejadorEventoSalaActualizada extends ManejadorEventos {
                     jugadorDTO.setPuntos(puntosAcumulados.get(jugadorDTO.getNickname()));
                 }
                 Jugador jugador = JugadorMapperModelo.toJugador(jugadorDTO);
+                if (jugador.getTarjeta() == null && tarjetasAcumuladas.containsKey(jugadorDTO.getNickname())) {
+                    jugador.setTarjeta(tarjetasAcumuladas.get(jugadorDTO.getNickname()));
+                }
                 jugadoresSecundarios.add(jugador);
             }
         }

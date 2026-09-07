@@ -48,6 +48,7 @@ public class ProcesadorEventos implements IObserver {
             manejadorPrincipal.procesar(evento);
         } catch (Exception e) {
             System.err.println("[ProcesadorEventos] Evento inválido: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
