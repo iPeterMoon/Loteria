@@ -27,7 +27,8 @@ public class ControlAbandonarPartida {
     }
 
     /**
-     * Metodo para abandonar la partida (cierra la aplicación)
+     * Metodo para abandonar la partida en curso. Notifica a los demás
+     * jugadores y regresa a la sala de espera; no cierra la aplicación.
      */
     public void abandonarPartida() {
         controlModelo.abandonarPartida();

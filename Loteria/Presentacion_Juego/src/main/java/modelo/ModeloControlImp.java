@@ -102,7 +102,7 @@ public class ModeloControlImp implements IModeloControl {
 
     @Override
     public void abandonarPartida() {
-        System.exit(0);
+        modeloJuego.abandonarPartida();
     }
 
 }
