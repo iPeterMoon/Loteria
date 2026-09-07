@@ -1,5 +1,7 @@
 package procesadores;
 
+import java.util.List;
+
 import dtos.aplicacion.ConfiguracionJuegoDTO;
 import dtos.aplicacion.JugadorDTO;
 import dtos.aplicacion.NuevoUsuarioDTO;
@@ -35,13 +37,19 @@ public class ManejadorUnirseSala extends ManejadorEventos {
     private void manejarUnirseSala(EventoUnirseSala evento) {
 
         int limiteJugadores = sala.getConfiguracion().getLimiteJugadores();
-        int jugadoresActuales = sala.getJugadores().size(); 
+        int jugadoresActuales = sala.getJugadores().size();
+
+        System.out.println("[DIAG][ManejadorUnirseSala] intento unirse=" + evento.getUsuario().getNickname()
+                + " jugadoresActuales=" + jugadoresActuales + " limiteJugadores=" + limiteJugadores);
 
         if (jugadoresActuales >= limiteJugadores) {
+            System.out.println("[DIAG][ManejadorUnirseSala] RECHAZADO por limite: " + evento.getUsuario().getNickname());
             return;
         }
 
         sala.agregarJugador(obtenerJugador(evento));
+
+        System.out.println("[DIAG][ManejadorUnirseSala] jugadores tras agregar=" + jugadoresNicknames(sala.getJugadores()));
 
         EventoInfoSala eventoPeticionInfoSala = new EventoInfoSala(ConfigLoader.getInstance().getUsuarioMatchmaker(), obtenerSalaActual());
         matchmaker.directMessage(eventoPeticionInfoSala, evento.getUserSender());
@@ -65,5 +73,13 @@ public class ManejadorUnirseSala extends ManejadorEventos {
                 sala.getConfiguracion().getPuntajeMax(), sala.getConfiguracion().getDificultad(), sala.getConfiguracion().getPuntajes());
         SalaDTO salaActual = new SalaDTO(sala.getJugadores(), sala.getHost(), configuracionJuego);
         return salaActual;
+    }
+
+    private static String jugadoresNicknames(List<JugadorDTO> jugadores) {
+        java.util.List<String> nicknames = new java.util.ArrayList<>();
+        for (JugadorDTO jugador : jugadores) {
+            nicknames.add(jugador.getNickname());
+        }
+        return nicknames.toString();
     }
 }

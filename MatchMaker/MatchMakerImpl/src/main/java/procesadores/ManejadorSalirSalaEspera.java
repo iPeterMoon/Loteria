@@ -44,6 +44,10 @@ public class ManejadorSalirSalaEspera extends ManejadorEventos {
         } else if(eraHost){
             String nuevoHost = obtenerNuevoHost(jugadorAEliminar);
             if(nuevoHost != null){
+                // Actualizar también el host aquí, no solo avisarle a los
+                // clientes por broadcast -- si no, la próxima desconexión
+                // comparará contra este mismo host ya desactualizado.
+                sala.setHost(nuevoHost);
                 EventoNuevoHost eventoNuevoHost = new EventoNuevoHost(
                         nuevoHost,
                         ConfigLoader.getInstance().getUsuarioMatchmaker()

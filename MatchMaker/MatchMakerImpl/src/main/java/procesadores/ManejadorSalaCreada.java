@@ -34,6 +34,8 @@ public class ManejadorSalaCreada extends ManejadorEventos {
             JugadorDTO host = JugadorMapperMatchmaker.toJugadorDTO(hostDTO);
 
             Sala.getInstance().configurarNuevaSala(configuracion, host);
+            System.out.println("[DIAG][ManejadorSalaCreada] host=" + host.getNickname()
+                    + " jugadores=" + jugadoresNicknames(Sala.getInstance().getJugadores()));
             SalaDTO salaDTO = SalaMapperMatchmaker.toSalaDTO(configuracionDTO);
 
             EventoInfoSala eventoNuevaSala = new EventoInfoSala(ConfigLoader.getInstance().getUsuarioMatchmaker(), salaDTO);
@@ -43,6 +45,14 @@ public class ManejadorSalaCreada extends ManejadorEventos {
             next.procesar(evento);
         }
 
+    }
+
+    private static String jugadoresNicknames(java.util.List<JugadorDTO> jugadores) {
+        java.util.List<String> nicknames = new java.util.ArrayList<>();
+        for (JugadorDTO jugador : jugadores) {
+            nicknames.add(jugador.getNickname());
+        }
+        return nicknames.toString();
     }
 
 }
