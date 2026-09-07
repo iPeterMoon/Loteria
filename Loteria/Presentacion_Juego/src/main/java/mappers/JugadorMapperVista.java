@@ -3,6 +3,7 @@ package mappers;
 import dtos.aplicacion.JugadorDTO;
 import dtos.aplicacion.TarjetaDTO;
 import java.awt.Image;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 import modelo.JugadorSubject;
@@ -27,7 +28,8 @@ public class JugadorMapperVista {
      * @return Una nueva instancia de JugadorSubject.
      */
     public static JugadorSubject toJugadorSubject(JugadorDTO jugadorDTO) {
-        ModeloTarjeta tarjetaJugador = new ModeloTarjeta(jugadorDTO.getTarjeta().getCartas());
+        TarjetaDTO tarjetaDTO = jugadorDTO.getTarjeta();
+        ModeloTarjeta tarjetaJugador = new ModeloTarjeta(tarjetaDTO != null ? tarjetaDTO.getCartas() : new HashMap<>());
         return new JugadorSubject(jugadorDTO.getNickname(), jugadorDTO.getPuntos(), jugadorDTO.getFotoPerfil(), tarjetaJugador, jugadorDTO.isJugadorPrincipal());
     }
 
