@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        POM raíz agregador. NO reemplaza a los poms padre de Discovery/,
+        MatchMaker/ ni Loteria/ (cada uno se sigue usando cuando se compila
+        ese proyecto por separado desde NetBeans). Este pom sirve únicamente
+        para poder compilar TODO el sistema con un solo comando:
+
+            mvn clean install -DskipTests
+
+        Se listan los módulos "hoja" directamente (no los poms agregadores
+        intermedios) para evitar que Red/Mediador/Peer se registren varias
+        veces en el reactor, ya que Discovery/MatchMaker/Loteria también los
+        referencian como módulos propios.
+
+        Maven ordena automáticamente el build según las dependencias
+        declaradas en cada módulo, sin importar el orden en que aparecen
+        aquí abajo.
+    -->
+    <groupId>com.mycompany</groupId>
+    <artifactId>Loteria-Root</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!-- Clases y utilidades compartidas -->
+        <module>Mediador</module>
+        <!-- Componente genérico de red (envío/recepción TCP) -->
+        <module>Red</module>
+        <!-- Peer: usado por el juego y por el MatchMaker -->
+        <module>Peer</module>
+
+        <!-- Servidor de discovery -->
+        <module>Discovery/DiscoveryImpl</module>
+        <module>Discovery/ArrancadorDiscovery</module>
+
+        <!-- Servidor de emparejamiento -->
+        <module>MatchMaker/MatchMakerImpl</module>
+        <module>MatchMaker/ArrancadorMatchMaker</module>
+
+        <!-- Cliente del juego -->
+        <module>Loteria/Modelo_Juego</module>
+        <module>Loteria/Presentacion_Config</module>
+        <module>Loteria/Presentacion_Juego</module>
+        <module>Loteria/Arrancador</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
+    </properties>
+</project>
