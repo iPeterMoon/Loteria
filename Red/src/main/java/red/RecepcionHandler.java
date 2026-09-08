@@ -70,16 +70,36 @@ public class RecepcionHandler implements IRecepcion {
     @Override
     public int empezarEscucha() throws IOException {
         //Iniciar servidor
-        if (serverPort == null) {
+        if (serverPort == null || serverPort == 0) {
             servidor = new ServidorRed();
-            this.serverPort = servidor.getPort();
         } else {
-            servidor = new ServidorRed(serverPort);
+            servidor = crearServidorConFallback(serverPort);
         }
+        this.serverPort = servidor.getPort();
 
         threadPool.submit(servidor);
         threadPool.submit(this::procesarColaEntrada);
         return this.serverPort;
+    }
+
+    /**
+     * Intenta enlazar el servidor al puerto fijo solicitado. Si el puerto ya
+     * está en uso (por ejemplo, otro proceso de la misma aplicación corriendo
+     * en esta misma máquina), cae automáticamente a un puerto aleatorio en
+     * vez de impedir el arranque.
+     *
+     * @param puertoFijo Puerto que se intentará usar primero.
+     * @return Servidor ya enlazado, al puerto fijo o a uno aleatorio.
+     * @throws IOException Si tampoco se pudo enlazar a un puerto aleatorio.
+     */
+    private ServidorRed crearServidorConFallback(int puertoFijo) throws IOException {
+        try {
+            return new ServidorRed(puertoFijo);
+        } catch (IOException e) {
+            System.err.println("[RedImpl] Puerto " + puertoFijo
+                    + " ocupado, se usará uno aleatorio en su lugar: " + e.getMessage());
+            return new ServidorRed();
+        }
     }
 
     /**

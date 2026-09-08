@@ -3,6 +3,7 @@ package network;
 import factory.RedFactory;
 import interfaces.IRecepcion;
 import interfaces.IRedListener;
+import util.ConfigLoader;
 
 /**
  * Clase encargada de escuchar los mensajes entrantes provenientes de la red y
@@ -44,6 +45,7 @@ public class RedListener implements Runnable, IRedListener {
             return -1;
         }
         recepcion.setEventListener(this);
+        recepcion.setServerPort(ConfigLoader.getInstance().getPuertoPeer());
         try {
             int puerto = recepcion.empezarEscucha();
             running = true;

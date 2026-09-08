@@ -22,6 +22,14 @@ public class ConfigLoader {
         int puerto_discovery = 5000;
         int puerto_matchmaker = 6000;
         String usuario_matchmaker = "MATCHMAKER";
+        /**
+         * Puerto fijo en el que cada Peer (jugador o MatchMaker) escucha
+         * conexiones entrantes. Usar un puerto fijo permite abrir una sola
+         * regla de firewall por máquina en vez de uno distinto cada vez que
+         * se reinicia la aplicación. 0 = puerto aleatorio (comportamiento
+         * anterior).
+         */
+        int puerto_peer = 12347;
     }
 
     // Constructor privado para Singleton
@@ -69,6 +77,17 @@ public class ConfigLoader {
 
     public String getUsuarioMatchmaker() {
         return config.usuario_matchmaker;
+    }
+
+    /**
+     * Puerto fijo en el que este Peer debe intentar escuchar. Si el puerto
+     * está ocupado (por ejemplo, dos procesos en la misma máquina), el
+     * componente de recepción cae automáticamente a uno aleatorio.
+     *
+     * @return Puerto configurado, o 0 si se debe usar siempre uno aleatorio.
+     */
+    public int getPuertoPeer() {
+        return config.puerto_peer;
     }
 
 }

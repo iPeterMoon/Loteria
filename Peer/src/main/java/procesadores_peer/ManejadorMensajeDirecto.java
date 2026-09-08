@@ -52,7 +52,40 @@ public class ManejadorMensajeDirecto extends ManejadorMensajesSalida {
     private void procesarMensajeDirecto(JsonObject json) {
         PeerInfo peerDestino = extraerPeerDestinatario(json);
         String evento = extraerEvento(json);
+
+        if (peerDestino == null) {
+            reportarDestinatarioDesconocido(json);
+            return;
+        }
+
         EnvioPeer.getInstance().directMessage(peerDestino, evento);
+    }
+
+    /**
+     * Informa que no se encontró al destinatario e imprime los peers que sí
+     * se conocen, para poder diagnosticar por qué no llegó el registro.
+     *
+     * @param json Json con el formato de MensajeDirecto.java
+     */
+    private void reportarDestinatarioDesconocido(JsonObject json) {
+        String user = json.get("user").getAsString();
+        StringBuilder conocidos = new StringBuilder();
+
+        for (PeerInfo peer : PeersConectados.getInstance().obtenerTodosLosPeers()) {
+            conocidos.append("\n\t- ")
+                    .append(peer.getUser())
+                    .append("@")
+                    .append(peer.getIp())
+                    .append(":")
+                    .append(peer.getPort());
+        }
+
+        if (conocidos.length() == 0) {
+            conocidos.append("\n\t(ninguno: este peer nunca recibió respuesta del discovery)");
+        }
+
+        System.err.println("[ManejadorMensajeDirecto] No se encontró al peer '" + user
+                + "'. Peers conocidos:" + conocidos);
     }
     
     /**
