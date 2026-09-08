@@ -74,6 +74,14 @@ public class Peer {
     private volatile boolean running = false;
 
     /**
+     * Puerto fijo en el que este peer debe escuchar, si se estableció uno
+     * explícitamente con {@link #fijarPuertoEscucha(int)}. Si es null, se usa
+     * el puerto por defecto configurado en configuracion.json
+     * (puerto_peer).
+     */
+    private Integer puertoFijo;
+
+    /**
      * Constructor privado.
      *
      * Inicializa los componentes básicos del peer y prepara la estructura para
@@ -117,6 +125,21 @@ public class Peer {
     }
 
     /**
+     * Fija un puerto de escucha específico para este peer, en lugar del
+     * puerto_peer configurado por defecto. Debe llamarse antes de
+     * {@link #start()}.
+     *
+     * Se usa para procesos que necesitan un puerto propio y predecible, como
+     * el MatchMaker, que suele correr en la misma máquina que un peer del
+     * juego y por lo tanto no puede compartir el mismo puerto fijo con él.
+     *
+     * @param puerto Puerto en el que este peer intentará escuchar.
+     */
+    public void fijarPuertoEscucha(int puerto) {
+        this.puertoFijo = puerto;
+    }
+
+    /**
      * Inicia al Peer. Comienza la escucha de mensajes entrantes, inicia los
      * componentes de envío, registra el peer en el servidor de discovery e
      * inicia el envío periódico de heartbeat.
@@ -148,7 +171,7 @@ public class Peer {
      * peer (IP y puerto).
      */
     private synchronized void empezarEscucha() throws Exception {
-        String key = recepcionHandler.empezarEscucha();
+        String key = recepcionHandler.empezarEscucha(puertoFijo);
         if (key == null) {
             throw new Exception("Error al empezar la escucha");
         }

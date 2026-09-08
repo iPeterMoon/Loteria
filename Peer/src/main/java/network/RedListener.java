@@ -38,20 +38,23 @@ public class RedListener implements Runnable, IRedListener {
      * Configura este objeto como listener de eventos de red, inicia la escucha
      * en un puerto disponible y ejecuta el listener en un hilo independiente.
      *
+     * @param puertoFijo Puerto específico a usar, o null para usar el puerto
+     * por defecto configurado (puerto_peer).
      * @return El puerto en el que se está escuchando, o -1 si ocurre un error.
      */
-    public synchronized int start() {
+    public synchronized int start(Integer puertoFijo) {
         if (running) {
             return -1;
         }
         recepcion.setEventListener(this);
-        recepcion.setServerPort(ConfigLoader.getInstance().getPuertoPeer());
+        int puertoDeseado = (puertoFijo != null) ? puertoFijo : ConfigLoader.getInstance().getPuertoPeer();
+        recepcion.setServerPort(puertoDeseado);
         try {
-            int puerto = recepcion.empezarEscucha();
+            int puertoAsignado = recepcion.empezarEscucha();
             running = true;
             new Thread(this, "RecepcionHandler-Thread").start();
-            System.out.println("[RecepcionHandler] Escuchando en puerto: " + puerto);
-            return puerto;
+            System.out.println("[RecepcionHandler] Escuchando en puerto: " + puertoAsignado);
+            return puertoAsignado;
         } catch (Exception e) {
             System.err.println("[RecepcionHandler] Error al iniciar: " + e.getMessage());
             return -1;

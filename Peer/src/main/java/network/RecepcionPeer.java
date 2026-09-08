@@ -54,13 +54,15 @@ public class RecepcionPeer {
     /**
      * Empieza la recepción de mensajes
      *
+     * @param puertoFijo Puerto específico en el que se debe escuchar, o null
+     * para usar el puerto por defecto (puerto_peer de la configuración).
      * @return El key con la ip y puerto del Peer
      */
-    public String empezarEscucha() {
+    public String empezarEscucha(Integer puertoFijo) {
         try {
             redListener = new RedListener();
             procesador = new ProcesadorMensajesLlegada();
-            int port = redListener.start();
+            int port = redListener.start(puertoFijo);
 
             ejecutarHilos();
 

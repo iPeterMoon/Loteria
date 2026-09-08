@@ -14,6 +14,18 @@ public interface IPeer {
     void start();
 
     /**
+     * Fija un puerto de escucha específico para este peer, en lugar del
+     * puerto_peer configurado por defecto. Debe llamarse antes de
+     * {@link #start()}.
+     *
+     * Se usa para procesos que necesitan un puerto propio y predecible
+     * distinto al de otros peers en la misma máquina (ej. el MatchMaker).
+     *
+     * @param puerto Puerto en el que este peer intentará escuchar.
+     */
+    void fijarPuertoEscucha(int puerto);
+
+    /**
      * Detiene todos los servicios y notifica al servidor.
      */
     void stop();

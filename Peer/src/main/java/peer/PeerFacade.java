@@ -33,6 +33,17 @@ public class PeerFacade implements IPeer {
     }
 
     /**
+     * Fija un puerto de escucha específico para este peer, en lugar del
+     * puerto_peer configurado por defecto. Debe llamarse antes de start().
+     *
+     * @param puerto Puerto en el que este peer intentará escuchar.
+     */
+    @Override
+    public void fijarPuertoEscucha(int puerto) {
+        this.peer.fijarPuertoEscucha(puerto);
+    }
+
+    /**
      * Envía un Evento a todos los Peers conectados (broadcast).
      *
      * @param evento Evento a transmitir.
